@@ -14,7 +14,7 @@ const store = configureStore({
   reducer: rootPersistReducer,
   /**
    * 让缓存生效
-   * @param curryGetDefaultMiddleware 
+   * @param curryGetDefaultMiddleware
    * @returns 
    */
   middleware: curryGetDefaultMiddleware => curryGetDefaultMiddleware({ serializableCheck: false }).concat(loginApi.middleware),

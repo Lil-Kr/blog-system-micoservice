@@ -30,6 +30,8 @@
         <module>picture-server</module>
         <module>monitor-server</module>
         <module>security-server</module>
+        <module>rocketmq1</module>
+        <module>rocketmq2</module>
     </modules>
 
     <properties>

@@ -1,0 +1,40 @@
+server:
+  port: 8070
+  tomcat:
+    uri-encoding: UTF-8
+  max-http-header-size: 80KB
+
+spring:
+  application:
+    name: sys-server-01
+  profiles:
+    active: dev
+  jackson:
+    date-format: yyyy-MM-dd HH:mm:ss
+    default-property-inclusion: non_null
+    time-zone: GMT-8
+    serialization:
+      WRITE_DATES_AS_TIMESTAMPS: false
+  cloud:
+    nacos:
+      discovery:
+        server-addr: http://192.168.88.100:8848
+        username: nacos
+        password: nacos
+        group: DEFAULT_GROUP
+        register-enabled: true
+      config:
+        group: DEFAULT_GROUP
+        share-data-ids: ${spring.application.name}-${spring.profiles.active}
+        server-addr: http://192.168.88.100:8848
+        namespace: public
+  config:
+    import: nacos:application-uat.yml
+
+# mybatis-plus
+mybatis-plus:
+  mapper-locations: classpath:mapper/**/*.xml
+  type-aliases-package: com.cy.sys.pojo.**.*
+  global-config:
+    db-config:
+      table-prefix: sys_

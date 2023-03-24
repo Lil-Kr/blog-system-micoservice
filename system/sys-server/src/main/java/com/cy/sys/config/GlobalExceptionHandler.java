@@ -25,6 +25,8 @@ import java.util.Map;
 @Configuration
 public class GlobalExceptionHandler {
 
+    private static String msg = "msg";
+
     /**
      * 验证异常
      * @param request

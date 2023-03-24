@@ -2,15 +2,15 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0"
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
     <parent>
         <groupId>com.cy</groupId>
         <artifactId>system</artifactId>
         <version>1.0.0</version>
     </parent>
-    <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>user-server</artifactId>
-    <name>user-server</name>
+    <groupId>com.cy.rocketmq1</groupId>
+    <artifactId>rocketmq1</artifactId>
     <version>1.0.0</version>
     <packaging>jar</packaging>
 
@@ -22,14 +22,7 @@
             <version>1.0.0</version>
         </dependency>
 
-        <!-- common-model -->
-        <dependency>
-            <groupId>com.cy</groupId>
-            <artifactId>common-model</artifactId>
-            <version>1.0.0</version>
-        </dependency>
-
-        <!--SpringBoot-->
+        <!-- SpringBoot -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
@@ -57,15 +50,9 @@
             <artifactId>spring-cloud-starter-alibaba-nacos-config</artifactId>
         </dependency>
 
-        <!--openfeign-->
         <dependency>
             <groupId>org.springframework.cloud</groupId>
             <artifactId>spring-cloud-starter-openfeign</artifactId>
-        </dependency>
-
-        <dependency>
-            <groupId>org.springframework.cloud</groupId>
-            <artifactId>spring-cloud-starter-loadbalancer</artifactId>
         </dependency>
 
         <!--MybatisPlus-->
@@ -74,7 +61,7 @@
             <artifactId>mybatis-plus-boot-starter</artifactId>
         </dependency>
 
-        <!--Mysql-->
+        <!--mysql-->
         <dependency>
             <groupId>mysql</groupId>
             <artifactId>mysql-connector-java</artifactId>
@@ -102,29 +89,26 @@
             <artifactId>druid-spring-boot-starter</artifactId>
         </dependency>
 
-        <!--参数校验 start-->
-        <dependency>
-            <groupId>javax.validation</groupId>
-            <artifactId>validation-api</artifactId>
-        </dependency>
-
-        <dependency>
-            <groupId>org.hibernate</groupId>
-            <artifactId>hibernate-validator</artifactId>
-        </dependency>
-        <!--参数校验 end-->
-
         <dependency>
             <groupId>com.google.guava</groupId>
             <artifactId>guava</artifactId>
         </dependency>
 
-        <!--fastjson2-->
+        <dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-collections4</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-lang3</artifactId>
+        </dependency>
+
+        <!--fastjson-->
         <dependency>
             <groupId>com.alibaba.fastjson2</groupId>
             <artifactId>fastjson2</artifactId>
         </dependency>
-
     </dependencies>
 
     <build>
@@ -135,7 +119,7 @@
                 <artifactId>spring-boot-maven-plugin</artifactId>
                 <configuration>
                     <!-- 指定该Main Class为全局的唯一入口 -->
-                    <mainClass>com.cy.sys.SysServerApplication</mainClass>
+                    <mainClass>com.cy.rocketmq1.Rocketmq1Application</mainClass>
                     <layout>ZIP</layout>
                 </configuration>
                 <executions>
