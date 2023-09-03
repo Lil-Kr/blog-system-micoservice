@@ -10,7 +10,7 @@
         <relativePath/>
     </parent>
 
-    <groupId>com.cy</groupId>
+    <groupId>com.cy.blog</groupId>
     <artifactId>system</artifactId>
     <version>1.0.0</version>
     <packaging>pom</packaging>

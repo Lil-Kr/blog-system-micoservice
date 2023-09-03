@@ -4,12 +4,11 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <parent>
-        <groupId>com.cy</groupId>
+        <groupId>com.cy.blog</groupId>
         <artifactId>system</artifactId>
         <version>1.0.0</version>
     </parent>
 
-    <groupId>com.cy.rocketmq2</groupId>
     <artifactId>rocketmq2</artifactId>
     <version>1.0.0</version>
     <packaging>jar</packaging>
@@ -17,7 +16,7 @@
     <dependencies>
         <!--继承common依赖-->
         <dependency>
-            <groupId>com.cy</groupId>
+            <groupId>com.cy.blog</groupId>
             <artifactId>common-tools</artifactId>
             <version>1.0.0</version>
         </dependency>

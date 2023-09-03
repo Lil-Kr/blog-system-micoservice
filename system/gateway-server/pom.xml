@@ -3,7 +3,7 @@
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <parent>
-        <groupId>com.cy</groupId>
+        <groupId>com.cy.blog</groupId>
         <artifactId>system</artifactId>
         <version>1.0.0</version>
     </parent>
@@ -17,7 +17,7 @@
     <dependencies>
         <!--继承common依赖-->
         <dependency>
-            <groupId>com.cy</groupId>
+            <groupId>com.cy.blog</groupId>
             <artifactId>common-model</artifactId>
             <version>1.0.0</version>
             <exclusions>
@@ -93,6 +93,18 @@
                     <artifactId>spring-boot-starter-web</artifactId>
                 </exclusion>-->
             </exclusions>
+        </dependency>
+
+        <!--lombok-->
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+        </dependency>
+
+        <!--fastjson2-->
+        <dependency>
+            <groupId>com.alibaba.fastjson2</groupId>
+            <artifactId>fastjson2</artifactId>
         </dependency>
 
         <!-- sfl4j日志 -->
