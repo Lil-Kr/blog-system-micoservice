@@ -7,7 +7,7 @@ import javax.validation.constraints.NotNull;
 
 @Data
 @ToString
-public class UserDelParam {
+public class UserDeleteParam {
 
     @NotNull(message = "id不能为空")
     private Long id;

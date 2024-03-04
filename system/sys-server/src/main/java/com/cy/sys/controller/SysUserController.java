@@ -3,7 +3,7 @@ package com.cy.sys.controller;
 import com.cy.common.utils.apiUtil.ApiResp;
 import com.cy.sys.pojo.dto.aclmodule.AclModuleDto;
 import com.cy.sys.pojo.entity.SysRole;
-import com.cy.sys.pojo.param.user.UserDelParam;
+import com.cy.sys.pojo.param.user.UserDeleteParam;
 import com.cy.sys.pojo.param.user.UserListPageParam;
 import com.cy.sys.pojo.param.user.UserSaveParam;
 import com.cy.sys.pojo.param.user.UserUpdatePwdParam;
@@ -100,7 +100,7 @@ public class SysUserController {
      * @throws Exception
      */
     @PostMapping("delete")
-    public ApiResp delete(@RequestBody @Valid UserDelParam param) throws Exception {
+    public ApiResp delete(@RequestBody @Valid UserDeleteParam param) throws Exception {
         return sysUserService1.delete(param);
     }
 

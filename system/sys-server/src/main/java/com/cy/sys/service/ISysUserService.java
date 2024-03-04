@@ -3,7 +3,7 @@ package com.cy.sys.service;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.cy.common.utils.apiUtil.ApiResp;
 import com.cy.sys.pojo.entity.SysUser;
-import com.cy.sys.pojo.param.user.UserDelParam;
+import com.cy.sys.pojo.param.user.UserDeleteParam;
 import com.cy.sys.pojo.param.user.UserListPageParam;
 import com.cy.sys.pojo.param.user.UserSaveParam;
 import com.cy.sys.pojo.param.user.UserUpdatePwdParam;
@@ -24,7 +24,7 @@ public interface ISysUserService extends IService<SysUser> {
 
     SysUser findByLoginAccount(String LoginAccount) throws Exception;
 
-    ApiResp delete(UserDelParam param) throws Exception;
+    ApiResp delete(UserDeleteParam param) throws Exception;
 
     ApiResp listPage(UserListPageParam param) throws Exception;
 

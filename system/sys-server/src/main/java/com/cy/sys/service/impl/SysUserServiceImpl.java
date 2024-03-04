@@ -14,7 +14,7 @@ import com.cy.sys.common.constant.InterceptorName;
 import com.cy.sys.common.constant.UserInfoConst;
 import com.cy.sys.dao.SysUserMapper;
 import com.cy.sys.pojo.entity.SysUser;
-import com.cy.sys.pojo.param.user.UserDelParam;
+import com.cy.sys.pojo.param.user.UserDeleteParam;
 import com.cy.sys.pojo.param.user.UserListPageParam;
 import com.cy.sys.pojo.param.user.UserSaveParam;
 import com.cy.sys.pojo.param.user.UserUpdatePwdParam;
@@ -199,7 +199,7 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
      * @throws Exception
      */
     @Override
-    public ApiResp delete(UserDelParam param) throws Exception {
+    public ApiResp delete(UserDeleteParam param) throws Exception {
 
         SysUser user = SysUser.builder()
                 .deleted(1) // 删除状态
