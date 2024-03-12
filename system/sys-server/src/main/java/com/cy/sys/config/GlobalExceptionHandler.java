@@ -49,11 +49,11 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(value = HttpMessageNotReadableException.class)
     @ResponseBody
-    public ApiResp validateException(HttpServletRequest request,
+    public ApiResp<String> validateException(HttpServletRequest request,
                                      HttpMessageNotReadableException exception) throws Exception {
         String message = exception.getMessage();
         Map errorMesssageMap = Maps.newHashMap();
-        errorMesssageMap.put("msg", message);
+        errorMesssageMap.put(msg, message);
         return ApiResp.error(errorMesssageMap.toString());
     }
 
@@ -81,7 +81,7 @@ public class GlobalExceptionHandler {
      */
     @ExceptionHandler(Exception.class)
     @ResponseBody
-    public ApiResp defaultExceptionHandler(HttpServletRequest req, Exception e) throws Exception{
+    public ApiResp<String> defaultExceptionHandler(HttpServletRequest req, Exception e) throws Exception {
         e.printStackTrace();
         return ApiResp.error( "网络异常",e.getLocalizedMessage());
     }
