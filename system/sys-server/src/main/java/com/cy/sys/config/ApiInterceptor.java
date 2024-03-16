@@ -43,7 +43,7 @@ public class ApiInterceptor implements HandlerInterceptor {
      * @param response
      * @throws IOException
      */
-    private void returnErrorResponse(HttpServletResponse response, ApiResp apiResp) throws IOException {
+    private void returnErrorResponse(HttpServletResponse response, ApiResp<String> apiResp) throws IOException {
         response.setContentType("text/json");
         response.setCharacterEncoding("utf-8");
         OutputStream out = null;
