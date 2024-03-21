@@ -76,8 +76,8 @@ public class UserLoginController {
      * @return
      * @throws Exception
      */
-    @RequestMapping("loginOut")
-    public ApiResp loginOut(HttpServletRequest request, HttpServletResponse response) throws Exception {
+    @RequestMapping("logout")
+    public ApiResp logout(HttpServletRequest request, HttpServletResponse response) throws Exception {
         // todo 用户退出登录接口
 
         request.getSession().setAttribute(InterceptorName.userInfo,null);
