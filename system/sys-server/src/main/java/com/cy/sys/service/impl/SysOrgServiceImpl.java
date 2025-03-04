@@ -120,7 +120,7 @@ public class SysOrgServiceImpl extends ServiceImpl<SysOrgMapper, SysOrg> impleme
      * @param after 新组织
      */
     @Transactional
-    protected void updateWithChildOrg(SysOrg before, SysOrg after) {
+    public void updateWithChildOrg(SysOrg before, SysOrg after) {
         // 修改当前组织信息
         sysOrgMapper1.updateById(after);
         // 更新当前组织的子组织

@@ -31,4 +31,5 @@ public interface ISysOrgService extends IService<SysOrg> {
     ApiResp orgListAll(OrgListAllParam param) throws Exception;
 
     ApiResp orgListPage(OrgListAllParam param) throws Exception;
+
 }
