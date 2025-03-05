@@ -4,7 +4,6 @@ import com.baomidou.mybatisplus.extension.service.IService;
 import com.cy.common.utils.apiUtil.ApiResp;
 import com.cy.sys.pojo.entity.SysDict;
 import com.cy.sys.pojo.param.dict.DictSaveParam;
-import org.springframework.stereotype.Service;
 
 /**
  * <p>
@@ -14,7 +13,6 @@ import org.springframework.stereotype.Service;
  * @author Lil-Kr
  * @since 2020-11-29
  */
-@Service
 public interface ISysDictService extends IService<SysDict> {
 
     ApiResp add(DictSaveParam param) throws Exception;
