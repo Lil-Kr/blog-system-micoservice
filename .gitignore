@@ -1,0 +1,111 @@
+# Logs
+logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
+
+node_modules
+dist
+dist-ssr
+*.local
+*/*.tsbuildinfo
+
+# Build and Release Folders
+bin-debug/
+bin-release/
+[Oo]bj/
+[Bb]in/
+
+# Editor directories and files
+.vscode/*
+!.vscode/extensions.json
+.idea
+.DS_Store
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+
+# Other files and folders
+.settings/
+
+# Executables
+*.swf
+*.air
+*.ipa
+*.apk
+
+####################################################### back_system [java]
+# Compiled class file
+*.class
+
+# Log file
+*.log
+
+# BlueJ files
+*.ctxt
+
+# Mobile Tools for Java (J2ME)
+.mtj.tmp/
+
+# Package Files #
+*.jar
+*.war
+*.nar
+*.ear
+*.zip
+*.tar.gz
+*.rar
+
+# eclipse ignore
+.settings/
+.project
+.classpatch
+target
+
+#Intellij idea
+.idea/
+/idea/
+*.ipr
+*.iml
+*.iws
+target
+
+# temp file
+*.log
+*.cache
+*.diff
+*.patch
+*.tmp
+*.tsbuildinfo
+
+# system ignore
+.DS_Store
+Thumbs.db
+
+# virtual machine crash logs, see http://www.java.com/en/download/help/error_hotspot.xml
+hs_err_pid*
+
+# office file
+*.xls
+*.xlsx
+
+# front files
+*.tsbuildinfo
+
+# prod files
+**/*-prod.yml
+**/*-test.yml
+**/*.env.test
+**/*.env.production
+
+# other
+.cursorignore
+**/.cursorignore
+
+# deploy
+deploy/
