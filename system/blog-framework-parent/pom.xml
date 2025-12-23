@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<parent>
+		<groupId>org.cy.micoservice.blog</groupId>
+		<artifactId>system</artifactId>
+		<version>1.0.0</version>
+	</parent>
+	
+	<artifactId>blog-framework-parent</artifactId>
+	<version>1.0.0</version>
+	<packaging>pom</packaging>
+	
+	<modules>
+		<module>blog-framework-cache-starter</module>
+		<module>blog-framework-minio-starter</module>
+		<module>blog-framework-mybatis-starter</module>
+		<module>blog-framework-dubbo-starter</module>
+		<module>blog-framework-web-starter</module>
+		<module>blog-framework-identify-starter</module>
+		<module>blog-framework-rocketmq-starter</module>
+		<module>blog-framework-id-starter</module>
+		<module>blog-framework-elasticsearch-starter</module>
+	</modules>
+	
+	<properties>
+		<maven.compiler.source>17</maven.compiler.source>
+		<maven.compiler.target>17</maven.compiler.target>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+	</properties>
+</project>

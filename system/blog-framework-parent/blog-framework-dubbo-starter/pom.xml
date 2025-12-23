@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <parent>
+    <groupId>org.cy.micoservice.blog</groupId>
+    <artifactId>blog-framework-parent</artifactId>
+    <version>1.0.0</version>
+  </parent>
+  
+  <artifactId>blog-framework-dubbo-starter</artifactId>
+  <packaging>jar</packaging>
+  
+  <properties>
+    <maven.compiler.source>17</maven.compiler.source>
+    <maven.compiler.target>17</maven.compiler.target>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+  </properties>
+  
+  <dependencies>
+    <dependency>
+      <groupId>org.cy.micoservice.blog</groupId>
+      <artifactId>blog-common</artifactId>
+      <version>1.0.0</version>
+    </dependency>
+    
+    <dependency>
+      <groupId>org.apache.dubbo</groupId>
+      <artifactId>dubbo-spring-boot-starter</artifactId>
+      <exclusions>
+        <!-- 排除冲突的SLF4J实现 -->
+        <exclusion>
+          <groupId>org.slf4j</groupId>
+          <artifactId>slf4j-log4j12</artifactId>
+        </exclusion>
+        <exclusion>
+          <groupId>log4j</groupId>
+          <artifactId>log4j</artifactId>
+        </exclusion>
+      </exclusions>
+    </dependency>
+    
+    <!-- validation -->
+    <dependency>
+      <groupId>jakarta.el</groupId>
+      <artifactId>jakarta.el-api</artifactId>
+      <optional>true</optional>
+    </dependency>
+    
+    <dependency>
+      <groupId>jakarta.validation</groupId>
+      <artifactId>jakarta.validation-api</artifactId>
+      <optional>true</optional>
+    </dependency>
+    
+    <dependency>
+      <groupId>org.hibernate</groupId>
+      <artifactId>hibernate-validator</artifactId>
+      <optional>true</optional>
+    </dependency>
+    
+    <dependency>
+      <groupId>junit</groupId>
+      <artifactId>junit</artifactId>
+      <scope>provided</scope>
+    </dependency>
+  </dependencies>
+</project>

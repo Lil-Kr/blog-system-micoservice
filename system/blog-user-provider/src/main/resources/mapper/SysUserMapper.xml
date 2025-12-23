@@ -1,0 +1,363 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.cy.micoservice.blog.user.provider.dao.SysUserMapper">
+
+	<sql id="Table_Name">
+		sys_user
+	</sql>
+
+	<!-- 通用查询结果列 -->
+	<sql id="Base_Column_List">
+		surrogate_id, token, `number`, `account`, `password`, user_name, telephone, email, avatar, org_id, `status`, deleted, remark, operate_ip, creator_id, operator, create_time, update_time
+	</sql>
+
+	<sql id="Base_Join_Column_List">
+		a.surrogate_id, a.token, a.`number`, a.account, a.password, a.user_name, a.telephone, a.email, a.avatar, a.org_id, a.status, a.deleted, a.remark, a.operate_ip, a.creator_id, a.operator, a.create_time, a.update_time
+	</sql>
+
+
+	<update id="updatePasswordById">
+		update sys_user
+		set password = #{param.newPassword}
+		where surrogate_id = #{param.surrogateId}
+			and password = #{param.oldPassword}
+	</update>
+
+	<select id="selectUserPage" resultType="org.cy.micoservice.blog.user.provider.pojo.resp.SysUserResp">
+		select
+		<include refid="Base_Column_List"/>
+		from sys_user
+		<where>
+			<if test="param.userName != null">
+				user_name like concat('%',#{param.userName},'%')
+			</if>
+		</where>
+
+		<if test="param.createTime != null">
+			order by ${param.createTime} desc
+		</if>
+	</select>
+
+	<select id="getUserById" resultType="org.cy.micoservice.blog.user.provider.pojo.resp.SysUserResp">
+		select
+		<include refid="Base_Column_List"/>
+		from sys_user
+		<where>
+			id = #{id}
+		</where>
+	</select>
+
+	<select id="getUserBySurrogateId" resultType="org.cy.micoservice.blog.user.provider.pojo.resp.SysUserResp">
+		select
+			a.surrogate_id,
+			a.token,
+			a.`number`,
+			a.account,
+			a.user_name,
+			a.telephone,
+			a.email,
+			a.org_id,
+			a.status,
+			a.deleted,
+			a.remark,
+			a.operate_ip,
+			a.creator_id,
+			a.operator,
+			a.create_time,
+			a.update_time,
+			b.name as 'orgName'
+		from sys_user as a
+		left join sys_org as b on (a.org_id = b.surrogate_id)
+		<where>
+			a.surrogate_id = #{surrogateId}
+		</where>
+	</select>
+
+	<select id="getUserByToken" resultType="org.cy.micoservice.blog.user.provider.pojo.entity.SysUser">
+		select
+		<include refid="Base_Column_List"/>
+		from sys_user
+		<where>
+			token = #{token}
+		</where>
+	</select>
+
+	<select id="getUserByKeyword" resultType="org.cy.micoservice.blog.user.provider.pojo.resp.SysUserResp">
+		select surrogate_id, token, account, user_name, email
+		from sys_user
+		<where>
+			<if test="param.token != null">
+				and token = #{param.token}
+			</if>
+			<if test="param.account != null">
+				and account = #{param.account}
+			</if>
+			<if test="param.email != null">
+				and email = #{param.email}
+			</if>
+			<if test="param.password != null">
+				and password = #{param.password}
+			</if>
+		</where>
+	</select>
+
+	<!-- 根据账号查询用户 -->
+	<select id="getUserByAccount" resultType="org.cy.micoservice.blog.user.provider.pojo.entity.SysUser">
+		select
+		<include refid="Base_Column_List"/>
+		from sys_user
+		<where>
+			account = #{account}
+		</where>
+	</select>
+
+	<update id="updateUserBySurrogateId">
+		update
+		<include refid="Table_Name"/>
+		<set>
+			<if test="param.number != null and param.number != ''">
+				`number` = #{param.number},
+			</if>
+			<if test="param.account != null and param.account != ''">
+				account = #{param.account},
+			</if>
+			<if test="param.userName != null and param.userName != ''">
+				user_name = #{param.userName},
+			</if>
+			<if test="param.telephone != null and param.telephone != ''">
+				telephone = #{param.telephone},
+			</if>
+			<if test="param.email != null and param.email != ''">
+				email = #{param.email},
+			</if>
+			<if test="param.password != null and param.password != ''">
+				password = #{param.password},
+			</if>
+			<if test="param.status != null">
+				status = #{param.status},
+			</if>
+			<if test="param.remark != null and param.remark != ''">
+				remark = #{param.remark},
+			</if>
+			<if test="param.deleted != null and param.deleted != ''">
+				deleted = #{param.deleted},
+			</if>
+			<if test="param.operateIp != null and param.operateIp != ''">
+				operate_ip = #{param.operateIp},
+			</if>
+			<if test="param.creatorId != null and param.creatorId != ''">
+				creator_id = #{param.creatorId},
+			</if>
+			<if test="param.operator != null and param.operator != ''">
+				operator = #{param.operator},
+			</if>
+			<if test="param.createTime != null">
+				create_time = #{param.createTime},
+			</if>
+			<if test="param.updateTime != null">
+				update_time = #{param.updateTime},
+			</if>
+		</set>
+		<where>
+			surrogate_id = #{param.surrogateId}
+		</where>
+	</update>
+
+	<select id="loginAdmin" resultType="org.cy.micoservice.blog.user.provider.pojo.entity.SysUser">
+		select
+		<include refid="Base_Column_List"/>
+		from sys_user
+		<where>
+			account = #{param.account}
+			and password = #{param.password}
+		</where>
+	</select>
+
+	<select id="pageUserListByOrgId1" resultType="org.cy.micoservice.blog.user.provider.pojo.resp.SysUserResp">
+		select
+			a.surrogate_id,
+			a.token,
+			a.`number`,
+			a.account,
+			a.user_name,
+			a.telephone,
+			a.email,
+			a.org_id,
+			a.status,
+			a.deleted,
+			a.remark,
+			a.operate_ip,
+			a.creator_id,
+			a.operator,
+			a.create_time,
+			a.update_time,
+			b.name as 'orgName'
+		from sys_user as a
+		inner join sys_org as b on (a.org_id = b.surrogate_id)
+		<where>
+			a.org_id = #{param}
+		</where>
+	</select>
+
+	<select id="countUserListByOrgId1" resultType="java.lang.Integer">
+		select count(1)
+		from sys_user as a
+		inner join sys_org as b on (a.org_id = b.surrogate_id)
+		<where>
+			a.org_id = #{param}
+		</where>
+	</select>
+
+	<select id="pageUserList" resultType="org.cy.micoservice.blog.user.provider.pojo.resp.SysUserResp">
+		select
+			a.surrogate_id,
+			a.token,
+			a.`number`,
+			a.account,
+			a.user_name,
+			a.telephone,
+			a.email,
+			a.org_id,
+			a.status,
+			a.deleted,
+			a.remark,
+			a.operate_ip,
+			a.creator_id,
+			a.operator,
+			a.create_time,
+			a.update_time,
+			b.name as 'orgName',
+			c.user_name as 'creator_name',
+			d.account as 'operatorName'
+		from sys_user as a
+		inner join sys_org as b on (a.org_id = b.surrogate_id)
+		inner join sys_user as c on (a.creator_id = c.surrogate_id)
+		inner join sys_user as d on (a.operator = d.surrogate_id)
+		<where>
+			<if test="param.surrogateId != null and param.surrogateId != ''">
+				and a.org_id = #{param.surrogateId}
+			</if>
+			<if test="param.userName != null and param.userName != ''">
+				and a.user_name = #{param.userName}
+			</if>
+			<if test="param.telephone != null and param.telephone != ''">
+				and a.telephone = #{param.telephone}
+			</if>
+			<if test="param.keyWords != null and param.keyWords !='' ">
+				and (
+					a.`number` like concat('%',#{param.keyWords},'%')
+					or
+					a.`user_name` like concat('%',#{param.keyWords},'%')
+					or
+					a.remark like concat('%',#{param.keyWords},'%')
+					or
+					b.name like concat('%',#{param.keyWords},'%')
+				)
+			</if>
+		</where>
+		order by a.create_time desc
+	</select>
+
+	<select id="countUserList" resultType="java.lang.Integer">
+		select count(1)
+		from sys_user as a
+		inner join sys_org as b on (a.org_id = b.surrogate_id)
+		inner join sys_user as c on (a.creator_id = c.surrogate_id)
+		inner join sys_user as d on (a.operator = d.surrogate_id)
+		<where>
+			<if test="param.surrogateId != null and param.surrogateId != ''">
+				and a.org_id = #{param.surrogateId}
+			</if>
+			<if test="param.userName != null and param.userName != ''">
+				and a.user_name = #{param.userName}
+			</if>
+			<if test="param.telephone != null and param.telephone != ''">
+				and a.telephone = #{param.telephone}
+			</if>
+			<if test="param.keyWords != null and param.keyWords !='' ">
+				and (
+					a.`number` like concat('%',#{param.keyWords},'%')
+					or
+					a.`user_name` like concat('%',#{param.keyWords},'%')
+					or
+					a.remark like concat('%',#{param.keyWords},'%')
+					or
+					b.name like concat('%',#{param.keyWords},'%')
+					or
+					a.user_name like concat('%',#{param.keyWords},'%')
+				)
+			</if>
+		</where>
+	</select>
+
+	<select id="selectUserInfoExist" resultType="org.cy.micoservice.blog.user.provider.pojo.resp.SysUserResp">
+		SELECT account,
+		       email,
+		       user_name,
+		       COUNT(1) as 'count'
+		FROM sys_user
+		WHERE account = #{param.account}
+			 OR email = #{param.email}
+			 OR user_name = #{param.userName}
+		GROUP BY account, email, user_name;
+	</select>
+
+	<!--  根据 userIds, 查询用户列表  -->
+	<select id="selectUserListByIds" resultType="org.cy.micoservice.blog.user.provider.pojo.resp.SysUserResp">
+		select
+			a.surrogate_id,
+			a.account,
+			a.user_name,
+			a.remark,
+			a.create_time,
+			a.update_time
+		from sys_user as a
+		<where>
+			a.status = 0
+			and
+			a.surrogate_id in (
+			<foreach collection="userIdList" index="index" item="userId" separator=",">
+				#{userId}
+			</foreach>
+			)
+		</where>
+		order by a.create_time desc
+	</select>
+
+	<!--  查询所有用户列表, 与上一条sql一起使用  -->
+	<select id="selectUserList" resultType="org.cy.micoservice.blog.user.provider.pojo.resp.SysUserResp">
+		select
+			a.surrogate_id,
+			a.account,
+			a.user_name,
+			a.remark,
+			a.create_time,
+			a.update_time
+		from sys_user as a
+		<where>
+			a.status = 0
+		</where>
+		order by a.create_time desc
+	</select>
+
+	<!--  no need order by create_time -->
+	<select id="selectUserAllList" resultType="org.cy.micoservice.blog.user.provider.pojo.entity.SysUser">
+		select
+			a.surrogate_id,
+			a.account,
+			a.user_name,
+			a.remark,
+			a.create_time,
+			a.update_time
+		from sys_user as a
+		<where>
+			a.status = 0
+		</where>
+	</select>
+
+	<update id="updateAvatar">
+		update sys_user
+		set avatar = #{param.avatar}
+		where surrogate_id = #{param.userId}
+	</update>
+</mapper>

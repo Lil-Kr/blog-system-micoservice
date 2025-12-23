@@ -1,0 +1,1 @@
+globalDubboExceptionFilter=org.cy.micoservice.blog.framework.dubbo.starter.GlobalDubboExceptionFilter

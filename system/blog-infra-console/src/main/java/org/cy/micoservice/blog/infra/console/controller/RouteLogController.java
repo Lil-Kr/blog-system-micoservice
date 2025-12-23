@@ -1,0 +1,54 @@
+package org.cy.micoservice.blog.infra.console.controller;
+
+import jakarta.validation.Valid;
+import jakarta.validation.constraints.NotNull;
+import org.cy.micoservice.blog.common.base.ApiResp;
+import org.cy.micoservice.blog.common.base.PageResult;
+import org.cy.micoservice.blog.entity.base.model.BasePageReq;
+import org.cy.micoservice.blog.entity.gateway.model.entity.LogPrintStrategy;
+import org.cy.micoservice.blog.entity.gateway.model.req.LogPrintStrategyAddReq;
+import org.cy.micoservice.blog.entity.gateway.model.req.LogPrintStrategyEditReq;
+import org.cy.micoservice.blog.entity.gateway.model.req.LogPrintStrategyPageReq;
+import org.cy.micoservice.blog.framework.web.starter.annotations.NoAuthCheck;
+import org.cy.micoservice.blog.infra.console.service.LogPrintStrategyService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.*;
+
+/**
+ * @Author: Lil-K
+ * @Date: 2025/12/1
+ * @Description:
+ */
+@RestController
+@RequestMapping("/route/log")
+public class RouteLogController {
+
+  @Autowired
+  private LogPrintStrategyService logPrintStrategyService;
+
+  @NoAuthCheck
+  @PostMapping("/page")
+  public ApiResp<PageResult<LogPrintStrategy>> pageRouteConfigList(@RequestBody @Validated({BasePageReq.GroupPageQuery.class}) LogPrintStrategyPageReq req) {
+    PageResult<LogPrintStrategy> logPrintStrategyPageResult = logPrintStrategyService.pagePrintStrategyList(req);
+    return ApiResp.success(logPrintStrategyPageResult);
+  }
+
+  @NoAuthCheck
+  @PostMapping("/add")
+  public ApiResp<String> add(@RequestBody @Valid LogPrintStrategyAddReq req) {
+    return logPrintStrategyService.add(req);
+  }
+
+  @NoAuthCheck
+  @PostMapping("/edit")
+  public ApiResp<String> edit(@RequestBody @Valid LogPrintStrategyEditReq req) {
+    return logPrintStrategyService.edit(req);
+  }
+
+  @NoAuthCheck
+  @DeleteMapping("/delete/{id}")
+  public ApiResp<String> delete(@PathVariable("id") @NotNull Long id) {
+    return logPrintStrategyService.delete(id);
+  }
+}

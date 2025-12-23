@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WebSocket 测试工具</title>
+    <link href="./css/websocket-test.css" rel="stylesheet" />
+</head>
+<body>
+<div class="container">
+    <h1>WebSocket 测试工具</h1>
+
+    <!-- 配置区域 -->
+    <div class="config-area">
+        <div class="left-config">
+            <!-- WebSocket 连接地址 -->
+            <div class="form-group">
+                <label for="wsUrl">WebSocket 连接地址</label>
+<!--                <input type="text" id="wsUrl" value="ws://localhost:10880/blog/im/chat" placeholder="例如：ws://localhost:10880 或 wss://xxx.com/ws">-->
+                <input type="text" id="wsUrl" value="ws://localhost:10880/blog/im/chat" placeholder="例如：ws://localhost:10880 或 wss://xxx.com/ws">
+            </div>
+
+            <!-- 自定义 HTTP 头 -->
+<!--            <div class="form-group">-->
+<!--                <label>自定义 HTTP 头（握手阶段传递，如 userId/token）</label>-->
+<!--                <div id="headerList">-->
+<!--                    &lt;!&ndash; 默认添加 1 组头信息输入框 &ndash;&gt;-->
+<!--                    <div class="header-item">-->
+<!--                        <input type="text" class="header-key" placeholder="头名称（如 X-User-Id）" value="X-User-Id">-->
+<!--                        <input type="text" class="header-value" placeholder="头值（如 10086）" value="10086">-->
+<!--                        <button class="btn-remove-header" onclick="removeHeader(this)">删除</button>-->
+<!--                    </div>-->
+<!--                </div>-->
+<!--                <button class="btn-add-header" onclick="addHeader()">添加更多头信息</button>-->
+<!--            </div>-->
+
+            <!-- 批量发送配置 -->
+            <div class="form-group">
+                <label>批量发送配置</label>
+                <div class="batch-config">
+                    <input type="number" id="batchCount" value="5" min="1" max="100" placeholder="发送条数（1-100）">
+                    <button class="btn-batch-send" onclick="batchSendMessage()">批量发送</button>
+                </div>
+                <small style="color: #718096; font-size: 12px;">注：批量发送会连续发送指定条数的消息，间隔 100ms</small>
+            </div>
+        </div>
+
+        <div class="right-config">
+            <!-- 发送消息内容 -->
+            <div class="form-group">
+                <label for="sendMessage">发送消息内容</label>
+                <textarea id="sendMessage" rows="6" placeholder="输入要发送的消息内容..."></textarea>
+            </div>
+
+            <!-- 操作按钮 -->
+            <div class="btn-group">
+                <button id="connectBtn" class="btn-connect" onclick="connectWebSocket()">连接 WebSocket</button>
+                <button id="disconnectBtn" class="btn-disconnect" onclick="disconnectWebSocket()" disabled>断开连接</button>
+                <button id="sendBtn" class="btn-send" onclick="sendMessage()" disabled>手动发送</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- 日志区域 -->
+    <div class="log-area">
+        <div class="log-title">交互日志</div>
+        <div id="logContent"></div>
+    </div>
+</div>
+
+<script src="./js/websocket-test.js"></script>
+</body>
+</html>

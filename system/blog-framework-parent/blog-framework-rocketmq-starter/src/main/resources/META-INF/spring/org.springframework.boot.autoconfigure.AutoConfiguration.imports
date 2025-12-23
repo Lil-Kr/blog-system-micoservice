@@ -1,0 +1,3 @@
+org.cy.micoservice.blog.framework.rocketmq.starter.consumer.RocketMQConsumerProperties
+org.cy.micoservice.blog.framework.rocketmq.starter.producer.RocketMQProducerProperties
+org.cy.micoservice.blog.framework.rocketmq.starter.producer.ProducerConfig

@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<parent>
+		<groupId>org.cy.micoservice.blog</groupId>
+		<artifactId>system</artifactId>
+		<version>1.0.0</version>
+	</parent>
+	
+	<artifactId>blog-gateway</artifactId>
+	<packaging>jar</packaging>
+	
+	<properties>
+		<maven.compiler.source>17</maven.compiler.source>
+		<maven.compiler.target>17</maven.compiler.target>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<blog-framework-parent.version>1.0.0</blog-framework-parent.version>
+		<blog-common.version>1.0.0</blog-common.version>
+		<blog-entity.version>1.0.0</blog-entity.version>
+	</properties>
+
+	<dependencies>
+		<dependency>
+			<groupId>org.springframework.cloud</groupId>
+			<artifactId>spring-cloud-starter-gateway</artifactId>
+		</dependency>
+		
+		<dependency>
+			<groupId>org.springframework.cloud</groupId>
+			<artifactId>spring-cloud-starter-loadbalancer</artifactId>
+		</dependency>
+		
+		<dependency>
+			<groupId>com.alibaba.cloud</groupId>
+			<artifactId>spring-cloud-starter-alibaba-nacos-discovery</artifactId>
+		</dependency>
+		
+		<dependency>
+			<groupId>com.alibaba.cloud</groupId>
+			<artifactId>spring-cloud-starter-alibaba-nacos-config</artifactId>
+		</dependency>
+		
+		<dependency>
+			<groupId>org.springframework.cloud</groupId>
+			<artifactId>spring-cloud-starter-bootstrap</artifactId>
+		</dependency>
+		
+		<!-- 用于限流 -->
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-data-redis-reactive</artifactId>
+		</dependency>
+		
+		<!-- test start -->
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<scope>compile</scope>
+			<optional>true</optional>
+		</dependency>
+		<!-- test end -->
+		
+		<!-- 自研组件 -->
+		<dependency>
+			<groupId>org.cy.micoservice.blog</groupId>
+			<artifactId>blog-entity-gateway-model</artifactId>
+			<version>${blog-entity.version}</version>
+		</dependency>
+		
+		<dependency>
+			<groupId>org.cy.micoservice.blog</groupId>
+			<artifactId>blog-gateway-facade</artifactId>
+			<version>${blog-framework-parent.version}</version>
+		</dependency>
+		
+		<dependency>
+			<groupId>org.cy.micoservice.blog</groupId>
+			<artifactId>blog-framework-mybatis-starter</artifactId>
+			<version>${blog-framework-parent.version}</version>
+		</dependency>
+		
+		<dependency>
+			<groupId>org.cy.micoservice.blog</groupId>
+			<artifactId>blog-framework-dubbo-starter</artifactId>
+			<version>${blog-framework-parent.version}</version>
+		</dependency>
+		
+		<dependency>
+			<groupId>org.cy.micoservice.blog</groupId>
+			<artifactId>blog-framework-identify-starter</artifactId>
+			<version>${blog-framework-parent.version}</version>
+		</dependency>
+	</dependencies>
+	
+</project>

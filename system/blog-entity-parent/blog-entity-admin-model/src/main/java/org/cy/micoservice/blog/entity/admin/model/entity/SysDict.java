@@ -1,0 +1,81 @@
+package org.cy.micoservice.blog.entity.admin.model.entity;
+
+import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableId;
+import com.baomidou.mybatisplus.annotation.TableName;
+import com.baomidou.mybatisplus.extension.activerecord.Model;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
+import lombok.*;
+
+import java.io.Serial;
+import java.util.Date;
+
+/**
+ * <p>
+ * 数据字典实体
+ * </p>
+ *
+ * @Author: Lil-K
+ * @since 2020-11-29
+ */
+@Data
+@EqualsAndHashCode(callSuper = false)
+@ToString
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
+@TableName("sys_dict")
+public class SysDict extends Model<SysDict> {
+
+  @Serial
+  private static final long serialVersionUID = 3907370379306169949L;
+  /**
+   * 自增主键
+   */
+  @TableId(value = "id", type = IdType.AUTO)
+  private Long id;
+
+  /**
+   * 数据字典id唯一主键
+   */
+  @JsonSerialize(using = ToStringSerializer.class)
+  private Long surrogateId;
+
+  /**
+   * 数据字典名称
+   */
+  private String name;
+
+  /**
+   * 备注
+   */
+  private String remark;
+
+  /**
+   * 删除状态, 0正常, 1删除
+   */
+  private Integer deleted;
+
+  /**
+   * 操作人
+   */
+  @JsonSerialize(using = ToStringSerializer.class)
+  private Long operator;
+
+  /**
+   * 操作ip
+   */
+  private String operateIp;
+
+  /**
+   * 创建时间
+   */
+  private Date createTime;
+
+  /**
+   * 更改时间
+   */
+  private Date  updateTime;
+
+}

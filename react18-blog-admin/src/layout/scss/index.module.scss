@@ -1,0 +1,14 @@
+body {
+  margin: 0;
+  padding: 0;
+}
+
+.mainLayoutWarpper {
+  display: flex;
+  width: 100vw; /* viewport width */
+  height: 100vh; /* viewport height */
+
+  .sider-warpper {
+    display: flex;
+  }
+}

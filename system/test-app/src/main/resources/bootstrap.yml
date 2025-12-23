@@ -1,0 +1,65 @@
+server:
+  ## dubbo: 7901
+  port: 8888
+  tomcat:
+    uri-encoding: UTF-8
+  servlet:
+    context-path: /api
+
+spring:
+  application:
+    name: test-app
+  cloud:
+    # nacos 配置中心
+    nacos:
+      username: nacos
+      password: nacos
+      discovery:
+        server-addr: 192.168.9.200:8848
+        namespace: blog-mico-service-dev
+      config:
+        import-check:
+          enabled: false
+        # 当前服务启动后去 nacos 中读取配置文件的后缀
+        file-extension: yaml
+        # 读取配置的 nacos 地址
+        server-addr: 192.168.9.200:8848
+        # 读取配置的 nacos 的名空间
+        namespace: blog-mico-service-dev
+    # sentinel 配置
+    sentinel:
+      transport:
+        dashboard: localhost:9992
+      datasource:
+        test-app-flow:
+          nacos:
+            server-addr: 192.168.9.200:8848
+            username: nacos
+            password: nacos
+            namespace: blog-mico-service-dev
+            data-id: ${spring.application.name}-flow-rules
+            group-id: SENTINEL_GROUP
+            rule-type: flow
+            data-type: json
+  config:
+    import:
+      - optional:nacos:test-app.yaml
+
+infra:
+  console:
+    service-name: blog-infra-console
+    service-group: DEFAULT_GROUP
+    sdk:
+      nacos:
+        namespace: blog-mico-service-dev
+        address: 192.168.9.200:8848
+        user: nacos
+        pwd: nacos
+
+blog:
+  identify:
+    secret-key: 8276hkhuy0HUgKJBYq08y12kHUYVBK17gkLUQ24cxqwetsEDDfx
+    access-token:
+      expire-time: 604800
+  auth:
+    template: jwt

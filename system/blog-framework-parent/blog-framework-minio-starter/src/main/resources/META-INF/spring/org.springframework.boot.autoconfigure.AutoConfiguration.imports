@@ -1,0 +1,3 @@
+org.cy.micoservice.blog.framework.minio.starter.config.MinioAutoconfigurationBean
+org.cy.micoservice.blog.framework.minio.starter.service.impl.MinioServiceImpl
+org.cy.micoservice.blog.framework.minio.starter.service.impl.CosUrlCovertServiceImpl

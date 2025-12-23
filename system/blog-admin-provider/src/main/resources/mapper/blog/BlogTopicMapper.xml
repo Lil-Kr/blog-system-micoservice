@@ -1,0 +1,171 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.cy.micoservice.blog.admin.dao.BlogTopicMapper">
+
+	<sql id="Table_Name">
+		blog_topic
+	</sql>
+
+	<sql id="Base_Column_List">
+		id, surrogate_id, `number`, `name`, status, color,  remark, deleted, creator_id, operator, create_time,update_time
+	</sql>
+
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+		delete from <include refid="Table_Name"/>
+		where id = #{id,jdbcType=BIGINT}
+	</delete>
+
+	<insert id="insertSelective" keyColumn="id" keyProperty="id"
+	        parameterType="org.cy.micoservice.blog.admin.pojo.entity.blog.BlogTopic" useGeneratedKeys="true">
+		insert into blog_topic
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="surrogateId != null">
+				surrogate_id,
+			</if>
+			<if test="number != null">
+				`number`,
+			</if>
+			<if test="name != null">
+				`name`,
+			</if>
+			<if test="remark != null">
+				remark,
+			</if>
+			<if test="deleted != null">
+				deleted,
+			</if>
+			<if test="creatorId != null">
+				creator_id,
+			</if>
+			<if test="modifierId != null">
+				operator,
+			</if>
+			<if test="createTime != null">
+				create_time,
+			</if>
+			<if test="updateTime != null">
+				update_time,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="surrogateId != null">
+				#{surrogateId,jdbcType=BIGINT},
+			</if>
+			<if test="number != null">
+				#{number,jdbcType=INTEGER},
+			</if>
+			<if test="name != null">
+				#{name,jdbcType=VARCHAR},
+			</if>
+			<if test="remark != null">
+				#{remark,jdbcType=VARCHAR},
+			</if>
+			<if test="deleted != null">
+				#{deleted,jdbcType=INTEGER},
+			</if>
+			<if test="creatorId != null">
+				#{creatorId,jdbcType=BIGINT},
+			</if>
+			<if test="modifierId != null">
+				#{modifierId,jdbcType=BIGINT},
+			</if>
+			<if test="createTime != null">
+				#{createTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="updateTime != null">
+				#{updateTime,jdbcType=TIMESTAMP},
+			</if>
+		</trim>
+	</insert>
+
+	<update id="updateByPrimaryKeySelective" parameterType="org.cy.micoservice.blog.admin.pojo.entity.blog.BlogTopic">
+		update blog_topic
+		<set>
+			<if test="surrogateId != null">
+				surrogate_id = #{surrogateId,jdbcType=BIGINT},
+			</if>
+			<if test="number != null">
+				`number` = #{number,jdbcType=INTEGER},
+			</if>
+			<if test="name != null">
+				`name` = #{name,jdbcType=VARCHAR},
+			</if>
+			<if test="remark != null">
+				remark = #{remark,jdbcType=VARCHAR},
+			</if>
+			<if test="deleted != null">
+				deleted = #{deleted,jdbcType=INTEGER},
+			</if>
+			<if test="creatorId != null">
+				creator_id = #{creatorId,jdbcType=BIGINT},
+			</if>
+			<if test="modifierId != null">
+				operator = #{modifierId,jdbcType=BIGINT},
+			</if>
+			<if test="createTime != null">
+				create_time = #{createTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="updateTime != null">
+				update_time = #{updateTime,jdbcType=TIMESTAMP},
+			</if>
+		</set>
+		where id = #{id,jdbcType=BIGINT}
+	</update>
+	<update id="updateByPrimaryKey" parameterType="org.cy.micoservice.blog.admin.pojo.entity.blog.BlogTopic">
+		update blog_topic
+		set surrogate_id = #{surrogateId,jdbcType=BIGINT},
+		    `number`     = #{number,jdbcType=INTEGER},
+		    `name`       = #{name,jdbcType=VARCHAR},
+		    remark       = #{remark,jdbcType=VARCHAR},
+		    deleted      = #{deleted,jdbcType=INTEGER},
+		    creator_id   = #{creatorId,jdbcType=BIGINT},
+		    operator     = #{modifierId,jdbcType=BIGINT},
+		    create_time  = #{createTime,jdbcType=TIMESTAMP},
+		    update_time  = #{updateTime,jdbcType=TIMESTAMP}
+		where id = #{id,jdbcType=BIGINT}
+	</update>
+
+	<select id="pageTopicList" resultType="org.cy.micoservice.blog.admin.pojo.resp.blog.BlogTopicResp">
+		select <include refid="Base_Column_List"/>
+		from <include refid="Table_Name"/>
+		<where>
+			<if test="param.surrogateId != null and param.surrogateId != ''">
+				and surrogate_id = #{param.surrogateId}
+			</if>
+			<if test="param.keyWords!=null and param.keyWords!=''">
+				and (
+				`number` like concat('%',#{param.keyWords},'%')
+				or
+				`name` like concat('%',#{param.keyWords},'%')
+				or
+				remark like concat('%',#{param.keyWords},'%')
+				)
+			</if>
+		</where>
+	</select>
+
+	<select id="topicList" resultType="org.cy.micoservice.blog.admin.pojo.entity.blog.BlogTopic">
+		select <include refid="Base_Column_List"/>
+		from <include refid="Table_Name"/>
+		<where>
+			<if test="param.keyWords!=null and param.keyWords!=''">
+				and (
+				`number` like concat('%',#{param.keyWords},'%')
+				or
+				`name` like concat('%',#{param.keyWords},'%')
+				or
+				remark like concat('%',#{param.keyWords},'%')
+				)
+			</if>
+		</where>
+	</select>
+
+	<select id="selectByNumber" resultType="org.cy.micoservice.blog.admin.pojo.entity.blog.BlogTopic">
+		select <include refid="Base_Column_List"/>
+		from <include refid="Table_Name"/>
+		<where>
+			number = #{number}
+		</where>
+	</select>
+
+</mapper>

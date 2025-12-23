@@ -1,0 +1,133 @@
+/* 博客内容 */
+.blog-content-wrapper {
+  // clear float
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    clear: both;
+    margin: 0.5em auto;
+  }
+
+  p {
+    margin: 0.3em auto;
+  }
+
+  .heading-hash {
+    @apply text-indigo-600 font-bold cursor-pointer underline dark:text-fuchsia-400;
+    transition: all 0.3s ease;
+  }
+
+  /* <a /> style */
+  a {
+    @apply text-indigo-600 dark:text-fuchsia-400 dark:hover:text-cyan-500 hover:text-cyan-500 decoration-cyan-600 underline-offset-2;
+    text-decoration: none;
+    position: relative;
+    transition: all 0.3s ease;
+
+    &::after {
+      content: '';
+      position: absolute;
+      left: 0;
+      bottom: -0.1em;
+      height: 0.1em;
+      width: 100%;
+      background-color: currentColor;
+      transform: scaleX(0);
+      transform-origin: left;
+      transition: transform 0.3s ease;
+    }
+
+    &:hover::after {
+      transform: scaleX(1);
+    }
+  }
+
+  /** blockquote **/
+  blockquote {
+    @apply border-l-4 pl-4 ml-2 my-4 not-italic relative rounded-md
+      bg-emerald-100 text-stone-800;
+    border-color: oklch(52.7% 0.154 150.069);
+
+    .purple-dark & {
+      @apply text-white;
+      background-color: #0d001a; // 你自定义的紫黑背景色
+      border-color: #dd62ed; // 或者你想要的暗紫色边框
+    }
+
+    p {
+      @apply mb-2 text-base leading-relaxed;
+    }
+
+    ul {
+      @apply list-disc pl-5 space-y-1;
+    }
+
+    li {
+      @apply text-sm leading-snug;
+    }
+  }
+
+  /* blog image style */
+  .image-block {
+    // 图片靠左
+    text-align: left;
+    margin: 1em 0;
+    img {
+      display: inline-block;
+      height: auto;
+    }
+  }
+
+  /** code Snippet style */
+  pre[class^='language-'] {
+    margin: 1em 0.5em;
+    padding: 1em;
+    border-radius: 0.5em;
+    overflow-x: auto;
+    overflow-y: auto;
+    max-height: 30em; // 30
+    line-height: 1.5em;
+  }
+
+  // code
+  pre[class^='language-'] code {
+    background: none;
+    padding: 0;
+    color: var(--font-color);
+  }
+
+  &.light {
+    --pre-bg: #27272a;
+    --font-color: #fff;
+  }
+
+  // 深色主题(purple-dark)
+  &.purple-dark {
+    --pre-bg: #27272a;
+    --font-color: #fff;
+  }
+}
+
+// fixed copy button
+.code-block-wrapper {
+  position: relative;
+
+  .copy-btn {
+    position: absolute;
+    display: flex;
+    background-color: #1f2937;
+    color: #fff;
+    align-items: center;
+    justify-content: center;
+    top: 1em;
+    right: 1em;
+    z-index: 1000;
+    padding: 0.25em;
+    border-radius: 0.25em;
+    width: 1.75em;
+    height: 1.75em;
+  }
+}

@@ -1,0 +1,308 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+  <parent>
+    <groupId>org.springframework.boot</groupId>
+    <artifactId>spring-boot-starter-parent</artifactId>
+		<version>3.2.4</version>
+		<relativePath/> <!-- lookup parent from repository -->
+  </parent>
+
+	<groupId>org.cy.micoservice.blog</groupId>
+	<artifactId>system</artifactId>
+	<version>1.0.0</version>
+	<packaging>pom</packaging>
+
+	<modules>
+		<module>blog-framework-parent</module>
+		<module>blog-entity-parent</module>
+		<module>blog-common</module>
+		<module>blog-gateway</module>
+		<module>blog-gateway-facade</module>
+		<module>blog-infra-console</module>
+		<module>blog-infra-console-sdk</module>
+		<module>blog-im</module>
+		<module>blog-picture-provider</module>
+		<module>blog-picture-facade</module>
+		<module>blog-picture-api</module>
+		<module>blog-admin-api</module>
+		<module>blog-admin-facade</module>
+		<module>blog-admin-provider</module>
+		<module>blog-user-provider</module>
+		<module>blog-user-facade</module>
+		<module>blog-user-api</module>
+		<module>test-app</module>
+		<module>blog-message-api</module>
+		<module>blog-message-facade</module>
+		<module>blog-message-provider</module>
+		<module>blog-audit-facade</module>
+		<module>blog-audit-provider</module>
+	</modules>
+
+	<properties>
+		<java.version>17</java.version>
+		<maven.compiler.source>17</maven.compiler.source>
+		<maven.compiler.target>17</maven.compiler.target>
+		
+		<!--	spring cloud	-->
+		<spring-cloud.version>2023.0.0</spring-cloud.version>
+		<spring-cloud-alibaba.version>2023.0.1.0</spring-cloud-alibaba.version>
+		<dubbo.version>3.2.0</dubbo.version>
+		<sentinel-datasource.version>1.8.9</sentinel-datasource.version>
+		
+		<!--mybatis-plus-->
+		<mybatis-plus.version>3.5.5</mybatis-plus.version>
+		<druid.version>1.2.6</druid.version>
+		
+		<!--mysql-->
+		<mysql.version>8.4.0</mysql.version>
+		
+		<!-- ES -->
+		<elasticsearch.version>8.10.4</elasticsearch.version>
+		
+		<!-- netty -->
+		<netty-all.version>4.1.89.Final</netty-all.version>
+		
+		<!-- rocket MQ -->
+		<rocketmq.client.version>4.8.0</rocketmq.client.version>
+		
+		<!-- tools -->
+		<minio.version>8.5.17</minio.version>
+		<google-guava.version>33.0.0-jre</google-guava.version>
+		<validation-api.version>2.0.1.Final</validation-api.version>
+		<hibernate-validator.version>8.0.3.Final</hibernate-validator.version>
+		<commons-lang3.version>3.20.0</commons-lang3.version>
+		<commons-collections4.version>4.4</commons-collections4.version>
+		<hutool.version>5.8.26</hutool.version>
+		<gson.version>2.10.1</gson.version>
+		<fastjson2.version>2.0.47</fastjson2.version>
+		<commons-io.version>2.14.0</commons-io.version>
+		<jwt.version>4.2.1</jwt.version>
+		<joda-time.version>2.12.2</joda-time.version>
+		<webp-imageio.version>0.1.6</webp-imageio.version>
+		
+		<!--test-->
+		<junit.version>4.12</junit.version>
+		<junit.jupiter.version>5.9.1</junit.jupiter.version>
+	</properties>
+	
+	<dependencies>
+		<dependency>
+			<groupId>org.projectlombok</groupId>
+			<artifactId>lombok</artifactId>
+			<scope>provided</scope>
+		</dependency>
+	</dependencies>
+	
+	<dependencyManagement>
+		<dependencies>
+			<!-- Spring Cloud 官方 BOM -->
+			<dependency>
+				<groupId>org.springframework.cloud</groupId>
+				<artifactId>spring-cloud-dependencies</artifactId>
+				<version>${spring-cloud.version}</version>
+				<type>pom</type>
+				<scope>import</scope>
+			</dependency>
+			
+			<dependency>
+				<groupId>com.alibaba.cloud</groupId>
+				<artifactId>spring-cloud-alibaba-dependencies</artifactId>
+				<version>${spring-cloud-alibaba.version}</version>
+				<type>pom</type>
+				<scope>import</scope>
+			</dependency>
+			
+			<!-- Dubbo -->
+			<dependency>
+				<groupId>org.apache.dubbo</groupId>
+				<artifactId>dubbo-spring-boot-starter</artifactId>
+				<version>${dubbo.version}</version>
+			</dependency>
+			
+			<!--mybatis plus-->
+			<dependency>
+				<groupId>com.baomidou</groupId>
+				<artifactId>mybatis-plus-spring-boot3-starter</artifactId>
+				<version>${mybatis-plus.version}</version>
+			</dependency>
+
+			<!--MySQL-->
+			<dependency>
+				<groupId>com.mysql</groupId>
+				<artifactId>mysql-connector-j</artifactId>
+				<version>${mysql.version}</version>
+			</dependency>
+
+			<!-- druid 连接池 -->
+			<dependency>
+				<groupId>com.alibaba</groupId>
+				<artifactId>druid-spring-boot-starter</artifactId>
+				<version>${druid.version}</version>
+			</dependency>
+			
+			<!-- ES -->
+			<dependency>
+				<groupId>co.elastic.clients</groupId>
+				<artifactId>elasticsearch-java</artifactId>
+				<version>${elasticsearch.version}</version>
+			</dependency>
+			
+			<!-- guava -->
+			<dependency>
+				<groupId>com.google.guava</groupId>
+				<artifactId>guava</artifactId>
+				<version>${google-guava.version}</version>
+			</dependency>
+			
+			<!-- rocket MQ -->
+			<dependency>
+				<groupId>org.apache.rocketmq</groupId>
+				<artifactId>rocketmq-client</artifactId>
+				<version>${rocketmq.client.version}</version>
+			</dependency>
+
+			<!-- validation -->
+			<dependency>
+				<groupId>jakarta.el</groupId>
+				<artifactId>jakarta.el-api</artifactId>
+				<version>5.0.1</version>
+			</dependency>
+			
+			<dependency>
+				<groupId>jakarta.validation</groupId>
+				<artifactId>jakarta.validation-api</artifactId>
+				<version>3.1.1</version>
+			</dependency>
+
+			<dependency>
+				<groupId>org.hibernate</groupId>
+				<artifactId>hibernate-validator</artifactId>
+				<version>${hibernate-validator.version}</version>
+			</dependency>
+
+			<dependency>
+				<groupId>org.apache.commons</groupId>
+				<artifactId>commons-lang3</artifactId>
+				<version>${commons-lang3.version}</version>
+			</dependency>
+			
+			<dependency>
+				<groupId>org.apache.commons</groupId>
+				<artifactId>commons-collections4</artifactId>
+				<version>${commons-collections4.version}</version>
+			</dependency>
+			
+			<dependency>
+				<groupId>commons-io</groupId>
+				<artifactId>commons-io</artifactId>
+				<version>${commons-io.version}</version>
+			</dependency>
+			
+			<dependency>
+				<groupId>io.minio</groupId>
+				<artifactId>minio</artifactId>
+				<version>${minio.version}</version>
+			</dependency>
+
+			<!--gson-->
+			<dependency>
+				<groupId>com.google.code.gson</groupId>
+				<artifactId>gson</artifactId>
+				<version>${gson.version}</version>
+			</dependency>
+
+			<!-- fastjson2 -->
+			<dependency>
+				<groupId>com.alibaba.fastjson2</groupId>
+				<artifactId>fastjson2</artifactId>
+				<version>${fastjson2.version}</version>
+			</dependency>
+
+			<dependency>
+				<groupId>cn.hutool</groupId>
+				<artifactId>hutool-all</artifactId>
+				<version>${hutool.version}</version>
+			</dependency>
+
+			<!-- JWT -->
+			<dependency>
+				<groupId>com.auth0</groupId>
+				<artifactId>java-jwt</artifactId>
+				<version>${jwt.version}</version>
+			</dependency>
+
+			<dependency>
+				<groupId>joda-time</groupId>
+				<artifactId>joda-time</artifactId>
+				<version>${joda-time.version}</version>
+			</dependency>
+
+			<!-- image io -->
+			<dependency>
+				<groupId>org.sejda.imageio</groupId>
+				<artifactId>webp-imageio</artifactId>
+				<version>${webp-imageio.version}</version>
+			</dependency>
+			
+			<dependency>
+				<groupId>com.alibaba.cloud</groupId>
+				<artifactId>sentinel-datasource-nacos</artifactId>
+				<version>${sentinel-datasource.version}</version>
+			</dependency>
+			
+			<dependency>
+				<groupId>io.netty</groupId>
+				<artifactId>netty-all</artifactId>
+				<version>${netty-all.version}</version>
+			</dependency>
+			
+			<!-- test start -->
+			<dependency>
+				<groupId>junit</groupId>
+				<artifactId>junit</artifactId>
+				<version>${junit.version}</version>
+			</dependency>
+
+			<dependency>
+				<groupId>org.junit.jupiter</groupId>
+				<artifactId>junit-jupiter-api</artifactId>
+				<version>${junit.jupiter.version}</version>
+			</dependency>
+
+			<dependency>
+				<groupId>org.junit.jupiter</groupId>
+				<artifactId>junit-jupiter-engine</artifactId>
+				<version>${junit.jupiter.version}</version>
+			</dependency>
+			<!-- test end -->
+		</dependencies>
+	</dependencyManagement>
+
+	<!--<build>
+		<plugins>
+			<plugin>
+				<groupId>org.springframework.boot</groupId>
+				<artifactId>spring-boot-maven-plugin</artifactId>
+				<configuration>
+					<excludes>
+						<exclude>
+							<groupId>org.projectlombok</groupId>
+							<artifactId>lombok</artifactId>
+						</exclude>
+					</excludes>
+				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-surefire-plugin</artifactId>
+				<version>2.4.1</version>
+				<configuration>
+					<skipTests>true</skipTests>
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>-->
+
+</project>
