@@ -10,15 +10,15 @@ import io.netty.util.AttributeKey;
  */
 public class ContextAttributeUtil {
 
-  public static <T> T get(ChannelHandlerContext context, AttributeKey<Object> attributeKey, Class<T> clazz) {
-    Object value = context.attr(attributeKey).get();
+  public static <T> T get(ChannelHandlerContext ctx, AttributeKey<Object> attributeKey, Class<T> clazz) {
+    Object value = ctx.attr(attributeKey).get();
     if (value == null) {
       return null;
     }
     return (T) clazz.cast(value);
   }
 
-  public static void set(ChannelHandlerContext context, AttributeKey<Object> attributeKey, Object value) {
-    context.attr(attributeKey).set(value);
+  public static void set(ChannelHandlerContext ctx, AttributeKey<Object> attributeKey, Object value) {
+    ctx.attr(attributeKey).set(value);
   }
 }

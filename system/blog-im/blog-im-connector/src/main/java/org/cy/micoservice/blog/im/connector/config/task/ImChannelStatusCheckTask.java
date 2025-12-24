@@ -3,7 +3,7 @@ package org.cy.micoservice.blog.im.connector.config.task;
 import io.netty.channel.ChannelHandlerContext;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.collections4.CollectionUtils;
-import org.cy.micoservice.blog.im.connector.contstants.ImAttributeKeyConstants;
+import org.cy.micoservice.blog.im.connector.config.contstants.ImAttributeKeyConstants;
 import org.cy.micoservice.blog.im.connector.config.ImConnectorProperties;
 import org.cy.micoservice.blog.im.connector.config.cache.ImChannelCache;
 import org.cy.micoservice.blog.im.connector.utils.ChannelHandlerContextUtil;

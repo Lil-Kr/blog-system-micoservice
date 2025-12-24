@@ -2,7 +2,7 @@ package org.cy.micoservice.blog.im.connector.handler.template;
 
 import io.netty.channel.ChannelHandlerContext;
 import lombok.extern.slf4j.Slf4j;
-import org.cy.micoservice.blog.im.facade.router.connector.dto.ImMessageDTO;
+import org.cy.micoservice.blog.im.facade.connector.dto.ImMessageDTO;
 
 /**
  * @Author: Lil-K

@@ -12,7 +12,7 @@ import org.cy.micoservice.blog.audit.facade.dto.AuditResultMessageDTO;
 import org.cy.micoservice.blog.audit.facade.enums.AuditResultCodeEnum;
 import org.cy.micoservice.blog.common.exception.BizException;
 import org.cy.micoservice.blog.framework.rocketmq.starter.consumer.RocketMQConsumerProperties;
-import org.cy.micoservice.blog.im.facade.router.connector.dto.ImMessageDTO;
+import org.cy.micoservice.blog.im.facade.connector.dto.ImMessageDTO;
 import org.cy.micoservice.blog.message.facade.dto.req.im.ImChatReq;
 import org.cy.micoservice.blog.message.facade.enums.ChatMsgStatusEnum;
 import org.cy.micoservice.blog.message.provider.config.MessageApplicationProperties;

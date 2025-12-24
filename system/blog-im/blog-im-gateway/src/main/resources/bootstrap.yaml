@@ -32,6 +32,11 @@ spring:
     import:
       - optional:nacos:blog-im-gateway.yaml
 
+im:
+  connector:
+    cluster:
+      name: im-connector-cluster
+
 logging:
   level:
     org.springframework.cloud.gateway: DEBUG

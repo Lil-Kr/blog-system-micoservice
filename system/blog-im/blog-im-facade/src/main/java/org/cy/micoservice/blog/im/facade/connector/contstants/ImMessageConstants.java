@@ -1,4 +1,4 @@
-package org.cy.micoservice.blog.im.facade.router.connector.contstants;
+package org.cy.micoservice.blog.im.facade.connector.contstants;
 
 /**
  * @Author: Lil-K

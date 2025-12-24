@@ -1,8 +1,8 @@
 package org.cy.micoservice.blog.im.connector.utils;
 
 import io.netty.channel.ChannelHandlerContext;
-import org.cy.micoservice.blog.im.connector.contstants.ImAttributeKeyConstants;
-import org.cy.micoservice.blog.im.facade.router.connector.enums.ImChannelStatusEnum;
+import org.cy.micoservice.blog.im.connector.config.contstants.ImAttributeKeyConstants;
+import org.cy.micoservice.blog.im.facade.connector.enums.ImChannelStatusEnum;
 
 /**
  * @Author: Lil-K

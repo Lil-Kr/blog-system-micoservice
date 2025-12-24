@@ -29,5 +29,4 @@ public class ImPushAsyncTaskSubmitter {
       log.error("im push async task submit failed", e);
     }
   }
-
 }

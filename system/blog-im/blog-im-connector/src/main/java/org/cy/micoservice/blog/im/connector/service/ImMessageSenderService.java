@@ -1,7 +1,7 @@
 package org.cy.micoservice.blog.im.connector.service;
 
 import io.netty.channel.ChannelHandlerContext;
-import org.cy.micoservice.blog.im.facade.router.connector.dto.ImMessageDTO;
+import org.cy.micoservice.blog.im.facade.connector.dto.ImMessageDTO;
 
 /**
  * @Author: Lil-K

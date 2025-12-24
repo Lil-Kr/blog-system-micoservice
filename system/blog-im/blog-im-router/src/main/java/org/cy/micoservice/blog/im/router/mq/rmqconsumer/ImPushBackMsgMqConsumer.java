@@ -9,7 +9,7 @@ import org.apache.rocketmq.client.exception.MQClientException;
 import org.apache.rocketmq.common.consumer.ConsumeFromWhere;
 import org.apache.rocketmq.common.message.MessageExt;
 import org.cy.micoservice.blog.framework.rocketmq.starter.consumer.RocketMQConsumerProperties;
-import org.cy.micoservice.blog.im.facade.router.connector.dto.ImSingleMessageDTO;
+import org.cy.micoservice.blog.im.facade.connector.dto.ImSingleMessageDTO;
 import org.cy.micoservice.blog.im.router.config.ImRouterProperties;
 import org.cy.micoservice.blog.im.router.service.ImPushService;
 import org.springframework.beans.factory.InitializingBean;

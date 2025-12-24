@@ -1,4 +1,4 @@
-package org.cy.micoservice.blog.im.connector.contstants;
+package org.cy.micoservice.blog.im.connector.config.contstants;
 
 /**
  * @Author: Lil-K

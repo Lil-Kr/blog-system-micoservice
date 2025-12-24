@@ -5,7 +5,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.cy.micoservice.blog.im.connector.config.cache.ImChannelCache;
 import org.cy.micoservice.blog.im.connector.service.ImMessageSenderService;
 import org.cy.micoservice.blog.im.connector.service.ImNotifyService;
-import org.cy.micoservice.blog.im.facade.router.connector.dto.ImMessageDTO;
+import org.cy.micoservice.blog.im.facade.connector.dto.ImMessageDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -34,8 +34,8 @@ public class ImNotifyServiceImpl implements ImNotifyService {
     }
 
     /**
-     * 底层逻辑: 如果当前线程是workerGroup的io线程上下文, 则直接进行 socket 的发送逻辑
-     * 如果当前线程是业务线程, 那么就会将投递的消息封装成一个task,
+     * 底层逻辑: 如果当前线程是 workerGroup 的io线程上下文, 则直接进行 socket 的发送逻辑
+     * 如果当前线程是业务线程, 那么就会将投递的消息封装成一个task
      * 然后放入阻塞队列中 (有可能出现堆积, 发送延迟 + 大量对象存在 + 高并发下gc严重的情况), 交给单个IO线程进行同步消费
      *
      * writeAndFlush的执行是线程安全的

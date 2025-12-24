@@ -1,4 +1,4 @@
-package org.cy.micoservice.blog.im.facade.router.connector.dto;
+package org.cy.micoservice.blog.im.facade.connector.dto;
 
 import lombok.Data;
 

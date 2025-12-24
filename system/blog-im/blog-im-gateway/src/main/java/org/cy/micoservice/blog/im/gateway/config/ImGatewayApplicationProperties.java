@@ -25,6 +25,10 @@ public class ImGatewayApplicationProperties {
   @Value("${spring.cloud.nacos.discovery.namespace:}")
   private String nacosNamespace;
 
-  @Value("${im.connector.cluster.name:blog-im-connector-cluster}")
+  /**
+   * 统一管理 im-connector 集群名
+   * blog-im-connector-cluster
+   */
+  @Value("${im.connector.cluster.name:}")
   private String imConnectorClusterName;
 }

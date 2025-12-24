@@ -1,6 +1,6 @@
 package org.cy.micoservice.blog.im.gateway.service;
 
-import org.cy.micoservice.blog.im.gateway.dto.ImConnectorMonitorInfo;
+import org.cy.micoservice.blog.im.gateway.dto.ImConnectorMonitor;
 
 import java.util.List;
 import java.util.Set;
@@ -13,14 +13,13 @@ import java.util.Set;
 public interface ImConnectorMonitorService {
 
   /**
-   * 获取下游所有节点的监控配置信息
+   * 获取下游 im-connector 所有节点的监控配置信息
    * @return
    */
-   List<ImConnectorMonitorInfo> getAll();
+   List<ImConnectorMonitor> getAll();
 
   /**
    * 刷新本地内存
-   *
    * @param nodeAddressSet
    */
   void refreshCache(Set<String> nodeAddressSet);

@@ -1,7 +1,7 @@
-package org.cy.micoservice.blog.im.facade.router.interfaces;
+package org.cy.micoservice.blog.im.facade.interfaces;
 
 import org.cy.micoservice.blog.common.base.RpcResponse;
-import org.cy.micoservice.blog.im.facade.router.connector.dto.ImSingleMessageDTO;
+import org.cy.micoservice.blog.im.facade.connector.dto.ImSingleMessageDTO;
 
 /**
  * @Author: Lil-K

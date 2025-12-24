@@ -1,8 +1,10 @@
 package org.cy.micoservice.blog.im.connector.config.cache;
 
 import io.netty.channel.ChannelHandlerContext;
+import org.apache.commons.collections4.MapUtils;
 import org.apache.commons.lang3.StringUtils;
-import org.cy.micoservice.blog.im.connector.contstants.ImAttributeKeyConstants;
+import org.cy.micoservice.blog.im.connector.config.contstants.ImAttributeKeyConstants;
+import org.cy.micoservice.blog.im.connector.utils.ChannelHandlerContextUtil;
 import org.cy.micoservice.blog.im.connector.utils.ContextAttributeUtil;
 import org.springframework.stereotype.Component;
 
@@ -33,6 +35,21 @@ public class ImChannelCache {
 
   public void remove(Long userId) {
     ctxMap.remove(userId);
+  }
+
+  public Map<Long, ChannelHandlerContext> getAllChannel() {
+    return ctxMap;
+  }
+
+  public boolean isEmpty() {
+    return MapUtils.isEmpty(ctxMap);
+  }
+
+  public void closeAllConnAndClearCache() {
+    for (ChannelHandlerContext ctx : this.getAllChannel().values()) {
+      ChannelHandlerContextUtil.close(ctx);
+    }
+    this.getAllChannel().clear();
   }
 
   /** =================== waitingIdentifyCtxList =================== **/

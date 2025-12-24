@@ -1,4 +1,4 @@
-package org.cy.micoservice.blog.im.facade.router.connector.enums;
+package org.cy.micoservice.blog.im.facade.connector.enums;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

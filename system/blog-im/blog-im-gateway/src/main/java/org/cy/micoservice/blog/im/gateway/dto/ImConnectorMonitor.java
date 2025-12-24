@@ -10,7 +10,7 @@ import lombok.Data;
  */
 @Data
 @Builder
-public class ImConnectorMonitorInfo {
+public class ImConnectorMonitor {
 
   /**
    * im机器 ip 地址

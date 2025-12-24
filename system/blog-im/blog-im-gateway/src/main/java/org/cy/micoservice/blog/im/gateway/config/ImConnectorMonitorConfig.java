@@ -18,7 +18,7 @@ import java.util.Set;
 /**
  * @Author: Lil-K
  * @Date: 2025/12/19
- * @Description: 获取 im-connector连接负载信息的配置
+ * @Description: 获取 im-connector 连接负载信息的配置
  */
 @Slf4j
 @Configuration
@@ -32,7 +32,7 @@ public class ImConnectorMonitorConfig implements InitializingBean {
   private NamingService namingService;
 
   /**
-   * 从 nacos 中获取
+   * 订阅 nacos, nacos主动推送下线的 im-connector 服务节点
    * @throws Exception
    */
   @Override
@@ -51,18 +51,18 @@ public class ImConnectorMonitorConfig implements InitializingBean {
         if (event instanceof NamingEvent) {
           Set<String> imConnectorAddressSet = new HashSet<>();
           for (Instance instance : ((NamingEvent) event).getInstances()) {
-            if (instance.isHealthy()) {
-              imConnectorAddressSet.add(instance.getIp() + ":" + instance.getPort());
-            }
+            // nacos: 过滤掉不健康的实例
+            if (! instance.isHealthy()) continue;
+            imConnectorAddressSet.add(instance.getIp() + ":" + instance.getPort());
           }
-          // 存放在本地缓存
+          // 将最新的配置放入缓存
           imConnectorMonitorService.refreshCache(imConnectorAddressSet);
-          log.info("imConnectorAddressSet:{}", JSONArray.toJSONString(imConnectorAddressSet));
+          log.info("refresh nacos register naming event: {}", JSONArray.toJSONString(imConnectorAddressSet));
         }
       });
-      log.info("subscribe naming event success ,dataId:{}", imGatewayApplicationProperties.getImConnectorClusterName());
+      log.info("subscribe naming event success, dataId: {}", imGatewayApplicationProperties.getImConnectorClusterName());
     } catch (Exception e) {
-      log.error("subscribe naming event error:", e);
+      log.error("subscribe naming event error: ", e);
     }
   }
 }

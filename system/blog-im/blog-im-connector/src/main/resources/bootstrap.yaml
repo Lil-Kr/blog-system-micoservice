@@ -1,12 +1,11 @@
-server:
-  ## dubbo: 8499
-  port: 8401
-  tomcat:
-    uri-encoding: UTF-8
-
 spring:
   application:
     name: blog-im-connector
+  lifecycle:
+    # 关闭阶段超时时间, 确保netty有足够时间关闭
+    timeout-per-shutdown-phase: 90s
+  server:
+    shutdown: graceful
   cloud:
     nacos:
       username: nacos

@@ -118,7 +118,7 @@ function startHeartbeat() {
         if (ws && ws.readyState === WebSocket.OPEN) {
             try {
                 ws.send(JSON.stringify({
-                    body:[123,34,99,111,110,116,101,110,116,34,58,34,112,105,110,103,34,125],
+                    body:'ping heart beat.',
                     code:1101,
                     len:18,
                     magic:0
@@ -232,7 +232,7 @@ function reconnectWebSocket() {
         // 替换全局ws为新ws
         ws = newWs;
         // 重启心跳（绑定全局ws）
-        // startHeartbeat();
+        startHeartbeat();
         // 同步UI状态
         connectBtn.disabled = true;
         disconnectBtn.disabled = false;
@@ -289,7 +289,7 @@ function connectWebSocket() {
             disconnectBtn.disabled = false;
             sendBtn.disabled = false;
             // 启动心跳
-            // startHeartbeat();
+            startHeartbeat();
         };
 
         // 绑定消息处理

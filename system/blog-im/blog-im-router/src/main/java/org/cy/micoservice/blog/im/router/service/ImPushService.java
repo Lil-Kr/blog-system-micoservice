@@ -1,6 +1,6 @@
 package org.cy.micoservice.blog.im.router.service;
 
-import org.cy.micoservice.blog.im.facade.router.connector.dto.ImSingleMessageDTO;
+import org.cy.micoservice.blog.im.facade.connector.dto.ImSingleMessageDTO;
 
 /**
  * @Author: Lil-K

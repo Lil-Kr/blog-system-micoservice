@@ -2,9 +2,9 @@ package org.cy.micoservice.blog.im.connector;
 
 import com.alibaba.fastjson.JSONObject;
 import org.cy.micoservice.blog.framework.identiy.starter.uitls.JWTUtil;
-import org.cy.micoservice.blog.im.facade.router.connector.contstants.ImMessageConstants;
-import org.cy.micoservice.blog.im.facade.router.connector.dto.ImMessageDTO;
-import org.cy.micoservice.blog.im.facade.router.connector.dto.body.ImLoginBody;
+import org.cy.micoservice.blog.im.facade.connector.contstants.ImMessageConstants;
+import org.cy.micoservice.blog.im.facade.connector.dto.ImMessageDTO;
+import org.cy.micoservice.blog.im.facade.connector.dto.body.ImLoginBody;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -47,7 +47,7 @@ public class CreateImMessageBody {
     //需要和im登录逻辑里面的密钥相同
     Map<String, Object> contentBody = new HashMap<>();
     contentBody.put("type", 1);
-    contentBody.put("body", "你好, 小绿书测试发送语句");
+    contentBody.put("body", "你好, 我是 ");
     //10byte + 4byte + 4byte + 2byte = 20byte
     Map<String, Object> imChatReqMap = new HashMap<>();
     imChatReqMap.put("receiverId", receiverId);

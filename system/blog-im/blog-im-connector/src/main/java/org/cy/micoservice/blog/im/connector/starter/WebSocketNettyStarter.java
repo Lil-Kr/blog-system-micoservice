@@ -1,10 +1,8 @@
 package org.cy.micoservice.blog.im.connector.starter;
 
+import com.alibaba.fastjson.JSONObject;
 import io.netty.bootstrap.ServerBootstrap;
-import io.netty.channel.ChannelFuture;
-import io.netty.channel.ChannelInitializer;
-import io.netty.channel.ChannelOption;
-import io.netty.channel.WriteBufferWaterMark;
+import io.netty.channel.*;
 import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.SocketChannel;
 import io.netty.channel.socket.nio.NioServerSocketChannel;
@@ -14,10 +12,16 @@ import io.netty.handler.stream.ChunkedWriteHandler;
 import io.netty.handler.timeout.IdleStateHandler;
 import lombok.extern.slf4j.Slf4j;
 import org.cy.micoservice.blog.im.connector.config.ImConnectorProperties;
-import org.cy.micoservice.blog.im.connector.contstants.WebSocketServerConstants;
+import org.cy.micoservice.blog.im.connector.config.cache.ImChannelCache;
+import org.cy.micoservice.blog.im.connector.config.contstants.WebSocketServerConstants;
+import org.cy.micoservice.blog.im.connector.config.register.ImConnectorNacosRegister;
 import org.cy.micoservice.blog.im.connector.handler.ImMessageHandler;
 import org.cy.micoservice.blog.im.connector.handler.WebSocketShakeHandler;
 import org.cy.micoservice.blog.im.connector.packet.WebSocketEncoder;
+import org.cy.micoservice.blog.im.connector.service.ImMessageSenderService;
+import org.cy.micoservice.blog.im.facade.connector.contstants.ImMessageConstants;
+import org.cy.micoservice.blog.im.facade.connector.dto.ImMessageDTO;
+import org.cy.micoservice.blog.im.facade.connector.dto.body.ImMoveBody;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
@@ -42,6 +46,12 @@ public class WebSocketNettyStarter implements InitializingBean {
   private WebSocketShakeHandler webSocketShakeHandler;
   @Autowired
   private ImMessageHandler imMessageHandler;
+  @Autowired
+  private ImChannelCache imChannelCache;
+  @Autowired
+  private ImConnectorNacosRegister imConnectorNacosRegister;
+  @Autowired
+  private ImMessageSenderService senderService;
 
   private NioEventLoopGroup bossGroup;
 
@@ -153,18 +163,67 @@ public class WebSocketNettyStarter implements InitializingBean {
       .childOption(ChannelOption.SO_KEEPALIVE, true); // 长连接心跳
 
     /**
-     * 优雅关闭
+     * 优雅关闭, 统一由 ImConnectorShutdownListener 进行管理
      */
-    Runtime.getRuntime().addShutdownHook(new Thread(() -> {
-      bossGroup.shutdownGracefully();
-      workerGroup.shutdownGracefully();
-    }));
+    // Runtime.getRuntime().addShutdownHook(new Thread(() -> {
+    //   bossGroup.shutdownGracefully();
+    //   workerGroup.shutdownGracefully();
+    // }));
 
     /**
      * 启动服务
      */
     ChannelFuture channelFuture = bootstrap.bind(imConnectorProperties.getWsPort()).sync();
-    log.info("im server start success, port is : {}", imConnectorProperties.getWsPort());
+    log.info("im server start success, port is: {}", imConnectorProperties.getWsPort());
     channelFuture.channel().closeFuture().sync();
+  }
+
+  /**
+   * Spring boot 优雅关闭时候调用
+   */
+  public void stopWebSocketServer() {
+    try {
+      // 修改 Nacos 上, 当前应用实例修改为 unHealth 状态
+      imConnectorNacosRegister.changeNodeToUnHealth();
+      // 检测连接是否已经迁移完成 60s 时限
+      for (int i = 0; i < 20; i++) {
+        TimeUnit.SECONDS.sleep(3);
+        // 最多 20 次重试推送, 如果一直没有断开连接, 则服务端会识别为是僵尸连接
+        this.broadcastImMoveMsg(i);
+        if (imChannelCache.isEmpty()) {
+          // 说明所有连接已经断开了
+          break;
+        }
+      }
+      // 超时关闭无用连接, (兜底)
+      imChannelCache.closeAllConnAndClearCache();
+      // 正式下线
+    } catch (Exception e) {
+      log.error("stop web socket server error");
+    } finally {
+      // 删除 nacos 上注册的配置实例
+      imConnectorNacosRegister.deregisterTempInstance();
+      workerGroup.shutdownGracefully();
+      bossGroup.shutdownGracefully();
+    }
+  }
+
+  private void broadcastImMoveMsg(int retryTime) {
+    log.info("broadcast im move msg,retryTime: {}", retryTime);
+    /**
+     * 发送move信号给到还在有连接的客户端
+     */
+    for (Long userId : imChannelCache.getAllChannel().keySet()) {
+      ChannelHandlerContext ctx = imChannelCache.get(userId);
+      if (ctx.isRemoved() || ! ctx.channel().isActive()) {
+        continue;
+      }
+      ImMoveBody moveBody = new ImMoveBody();
+      moveBody.setRetryTimes(retryTime);
+      moveBody.setUserId(userId);
+      ImMessageDTO moveMsg = new ImMessageDTO(ImMessageConstants.MOVE_CODE, JSONObject.toJSONString(moveBody));
+      log.info("im move msg: {}", moveMsg);
+      senderService.safeWrite(ctx, moveMsg);
+    }
   }
 }

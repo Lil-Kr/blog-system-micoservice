@@ -11,17 +11,17 @@ import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.cy.micoservice.blog.im.connector.config.ImConnectorProperties;
 import org.cy.micoservice.blog.im.connector.config.cache.ImChannelCache;
-import org.cy.micoservice.blog.im.connector.contstants.ImAttributeKeyConstants;
-import org.cy.micoservice.blog.im.connector.contstants.ImHandshakeConstants;
+import org.cy.micoservice.blog.im.connector.config.contstants.ImAttributeKeyConstants;
+import org.cy.micoservice.blog.im.connector.config.contstants.ImHandshakeConstants;
 import org.cy.micoservice.blog.im.connector.service.ImMessageSenderService;
 import org.cy.micoservice.blog.im.connector.service.ImMonitorService;
 import org.cy.micoservice.blog.im.connector.service.ImPushAsyncService;
 import org.cy.micoservice.blog.im.connector.utils.ContextAttributeUtil;
-import org.cy.micoservice.blog.im.facade.router.connector.contstants.ImMessageConstants;
-import org.cy.micoservice.blog.im.facade.router.connector.dto.ImMessageDTO;
-import org.cy.micoservice.blog.im.facade.router.connector.dto.body.ImShakeHandBody;
-import org.cy.micoservice.blog.im.facade.router.connector.enums.ImChannelStatusEnum;
-import org.cy.micoservice.blog.im.facade.router.connector.enums.ImMessageCodeEnum;
+import org.cy.micoservice.blog.im.facade.connector.contstants.ImMessageConstants;
+import org.cy.micoservice.blog.im.facade.connector.dto.ImMessageDTO;
+import org.cy.micoservice.blog.im.facade.connector.dto.body.ImShakeHandBody;
+import org.cy.micoservice.blog.im.facade.connector.enums.ImChannelStatusEnum;
+import org.cy.micoservice.blog.im.facade.connector.enums.ImMessageCodeEnum;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -139,7 +139,7 @@ public class WebSocketShakeHandler extends ChannelInboundHandlerAdapter {
         imChannelCache.addWaitingIdentifyCtxList(ctx);
       }
 
-      // 统计连接数
+      /** 建立ws连接时: 统计连接数 **/
       imMonitorService.incrConnection();
       log.info("Sent handshake response to client");
     });
@@ -160,6 +160,17 @@ public class WebSocketShakeHandler extends ChannelInboundHandlerAdapter {
   }
 
   /**
+   * 握手连接处理
+   * @param ctx
+   * @throws Exception
+   */
+  @Override
+  public void channelActive(ChannelHandlerContext ctx) throws Exception {
+    super.channelActive(ctx);
+    log.info("WebSocketShakeHandler channelActive: {}", Thread.currentThread().getName());
+  }
+
+  /**
    * 握手断开连接处理
    * @param ctx
    * @throws Exception
@@ -168,7 +179,7 @@ public class WebSocketShakeHandler extends ChannelInboundHandlerAdapter {
   public void channelInactive(ChannelHandlerContext ctx) throws Exception {
     super.channelInactive(ctx);
     log.info("WebSocketShakeHandler channelInactive: {}", Thread.currentThread().getName());
-    // 断开连接时统计断开连接数
+    /** 断开连接时: 统计断开连接数 **/
     imMonitorService.decrConnection();
 
     Long userId = ContextAttributeUtil.get(ctx, ImAttributeKeyConstants.USER_ID, Long.class);
@@ -183,17 +194,6 @@ public class WebSocketShakeHandler extends ChannelInboundHandlerAdapter {
     String logoutTopic = imConnectorProperties.getImLogoutTopicMapping().get(uri);
     ImMessageDTO dto = new ImMessageDTO(ImMessageConstants.LOGOUT_MSG_CODE, "logout");
     imPushAsyncTaskService.sendAsyncLogoutMessageMQ(JSONObject.toJSONString(dto), logoutTopic);
-  }
-
-  /**
-   * 握手连接处理
-   * @param ctx
-   * @throws Exception
-   */
-  @Override
-  public void channelActive(ChannelHandlerContext ctx) throws Exception {
-    super.channelActive(ctx);
-    log.info("WebSocketShakeHandler channelActive: {}", Thread.currentThread().getName());
   }
 
   @Override

@@ -6,8 +6,8 @@ import org.cy.micoservice.blog.common.base.RpcResponse;
 import org.cy.micoservice.blog.common.enums.exception.BizErrorEnum;
 import org.cy.micoservice.blog.common.utils.AssertUtil;
 import org.cy.micoservice.blog.im.connector.service.ImNotifyService;
-import org.cy.micoservice.blog.im.facade.router.connector.dto.ImSingleMessageDTO;
-import org.cy.micoservice.blog.im.facade.router.interfaces.ImNotifyFacade;
+import org.cy.micoservice.blog.im.facade.connector.dto.ImSingleMessageDTO;
+import org.cy.micoservice.blog.im.facade.interfaces.ImNotifyFacade;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

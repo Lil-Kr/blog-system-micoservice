@@ -1,8 +1,8 @@
-package org.cy.micoservice.blog.im.facade.router.connector.dto;
+package org.cy.micoservice.blog.im.facade.connector.dto;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.cy.micoservice.blog.im.facade.router.connector.contstants.ImMessageConstants;
+import org.cy.micoservice.blog.im.facade.connector.contstants.ImMessageConstants;
 
 import java.io.Serial;
 import java.io.Serializable;

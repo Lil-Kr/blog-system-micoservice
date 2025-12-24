@@ -10,11 +10,11 @@ import org.cy.micoservice.blog.im.connector.service.ImMessageSenderService;
 import org.cy.micoservice.blog.im.connector.service.ImPushAsyncService;
 import org.cy.micoservice.blog.im.connector.utils.ChannelHandlerContextUtil;
 import org.cy.micoservice.blog.im.connector.utils.ContextAttributeUtil;
-import org.cy.micoservice.blog.im.connector.contstants.ImAttributeKeyConstants;
-import org.cy.micoservice.blog.im.facade.router.connector.dto.ImMessageDTO;
-import org.cy.micoservice.blog.im.facade.router.connector.dto.body.ImBizMsgResp;
-import org.cy.micoservice.blog.im.facade.router.connector.enums.ImMessageCodeEnum;
-import org.cy.micoservice.blog.im.facade.router.connector.enums.ImMessageStatusEnum;
+import org.cy.micoservice.blog.im.connector.config.contstants.ImAttributeKeyConstants;
+import org.cy.micoservice.blog.im.facade.connector.dto.ImMessageDTO;
+import org.cy.micoservice.blog.im.facade.connector.dto.body.ImBizMsgResp;
+import org.cy.micoservice.blog.im.facade.connector.enums.ImMessageCodeEnum;
+import org.cy.micoservice.blog.im.facade.connector.enums.ImMessageStatusEnum;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -40,7 +40,6 @@ public class ImBizMessageHandler extends AbstractImMessageHandlerTemplate {
   @Override
   protected boolean isSupport(ImMessageDTO dto) {
     boolean support = dto != null && dto.getCode() == ImMessageCodeEnum.BIZ.getCode();
-    log.info("ImBizMessageHandler.isSupport: code={}, support={}",  dto != null ? dto.getCode() : "null", support);
     return support;
   }
 

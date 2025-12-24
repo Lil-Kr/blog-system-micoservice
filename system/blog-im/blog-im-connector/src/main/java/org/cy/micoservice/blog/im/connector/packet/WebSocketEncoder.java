@@ -5,7 +5,7 @@ import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.ChannelOutboundHandlerAdapter;
 import io.netty.channel.ChannelPromise;
 import io.netty.handler.codec.http.websocketx.TextWebSocketFrame;
-import org.cy.micoservice.blog.im.facade.router.connector.dto.ImMessageDTO;
+import org.cy.micoservice.blog.im.facade.connector.dto.ImMessageDTO;
 
 /**
  * @Author: Lil-K
