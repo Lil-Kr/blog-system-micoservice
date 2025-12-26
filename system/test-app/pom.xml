@@ -47,6 +47,27 @@
 			<artifactId>sentinel-datasource-nacos</artifactId>
 		</dependency>
 		
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<scope>compile</scope>
+			<optional>true</optional>
+		</dependency>
+		
+		<dependency>
+			<groupId>org.junit.jupiter</groupId>
+			<artifactId>junit-jupiter-api</artifactId>
+			<scope>compile</scope>
+			<optional>true</optional>
+		</dependency>
+		
+		<dependency>
+			<groupId>org.junit.jupiter</groupId>
+			<artifactId>junit-jupiter-engine</artifactId>
+			<scope>compile</scope>
+			<optional>true</optional>
+		</dependency>
+		
 		<!--自研组件-->
 		<dependency>
 			<groupId>org.cy.micoservice.blog</groupId>
@@ -74,30 +95,15 @@
 		
 		<dependency>
 			<groupId>org.cy.micoservice.blog</groupId>
+			<artifactId>blog-framework-elasticsearch-starter</artifactId>
+			<version>${blog-framework-parent.version}</version>
+		</dependency>
+		
+		<!--<dependency>
+			<groupId>org.cy.micoservice.blog</groupId>
 			<artifactId>blog-infra-console-sdk</artifactId>
 			<version>${blog-infra-console-sdk.version}</version>
-		</dependency>
-		
-		<dependency>
-			<groupId>junit</groupId>
-			<artifactId>junit</artifactId>
-			<scope>compile</scope>
-			<optional>true</optional>
-		</dependency>
-		
-		<dependency>
-			<groupId>org.junit.jupiter</groupId>
-			<artifactId>junit-jupiter-api</artifactId>
-			<scope>compile</scope>
-			<optional>true</optional>
-		</dependency>
-		
-		<dependency>
-			<groupId>org.junit.jupiter</groupId>
-			<artifactId>junit-jupiter-engine</artifactId>
-			<scope>compile</scope>
-			<optional>true</optional>
-		</dependency>
+		</dependency>-->
 	</dependencies>
 	
 	<build>

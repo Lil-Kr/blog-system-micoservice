@@ -13,7 +13,7 @@ import java.util.concurrent.atomic.AtomicBoolean;
 
 /**
  * 压测工具：用于评估 IdService#getId() 在指定并发与时间下的吞吐表现。
- * 单一职责：仅提供压测方法，不引入额外依赖，也不自动触发执行。
+ * 单一职责：仅提供压测方法, 不引入额外依赖, 也不自动触发执行。
  */
 public final class IdServiceBenchmark {
 
@@ -30,8 +30,8 @@ public final class IdServiceBenchmark {
    *
    * @param idService       IdService 实例（例如通过 Spring 注入）
    * @param threads         并发线程数（>=1）
-   * @param durationSeconds 压测持续时间（秒，>=1）
-   * @param warmupSeconds   预热时间（秒，>=0）
+   * @param durationSeconds 压测持续时间（秒, >=1）
+   * @param warmupSeconds   预热时间（秒, >=0）
    * @return BenchmarkResult 结果数据（总请求、耗时、QPS 等）
    */
   public static BenchmarkResult benchmarkGetId(IdService idService,
@@ -49,13 +49,13 @@ public final class IdServiceBenchmark {
       throw new IllegalArgumentException("warmupSeconds must be >= 0");
     }
 
-    // 预热：触发类加载与JIT，避免测量阶段受冷启动干扰
+    // 预热：触发类加载与JIT, 避免测量阶段受冷启动干扰
     if (warmupSeconds > 0) {
       final long warmupEnd = System.nanoTime() + TimeUnit.SECONDS.toNanos(warmupSeconds);
       long spin = 0;
       while (System.nanoTime() < warmupEnd) {
         idService.getId();
-        // 轻度让步，避免单核环境长时间独占
+        // 轻度让步, 避免单核环境长时间独占
         if ((++spin & 0xFFFF) == 0) {
           Thread.yield();
         }

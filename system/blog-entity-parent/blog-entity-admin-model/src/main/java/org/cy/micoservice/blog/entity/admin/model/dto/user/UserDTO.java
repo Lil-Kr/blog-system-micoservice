@@ -47,7 +47,7 @@ public class UserDTO {
     adminUser.setDeleted(0);
     adminUser.setOperateIp("0.0.0.0");
 
-    Date nowDateTime = DateUtil.localDateTimeNow();
+    Date nowDateTime = DateUtil.dateTimeNow();
     adminUser.setCreateTime(nowDateTime);
     adminUser.setUpdateTime(nowDateTime);
     return adminUser;
@@ -76,7 +76,7 @@ public class UserDTO {
     build.setStatus(0);
     build.setDeleted(0);
 
-    Date nowDateTime = DateUtil.localDateTimeNow();
+    Date nowDateTime = DateUtil.dateTimeNow();
     build.setCreateTime(nowDateTime);
     build.setUpdateTime(nowDateTime);
     return build;
@@ -86,7 +86,7 @@ public class UserDTO {
     BeanUtils.copyProperties(req, before);
 
 //    before.setOperator(RequestHolder.getCurrentUser().getSurrogateId());
-    before.setUpdateTime(DateUtil.localDateTimeNow());
+    before.setUpdateTime(DateUtil.dateTimeNow());
     return before;
   }
 }

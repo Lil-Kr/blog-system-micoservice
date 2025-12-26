@@ -5,7 +5,7 @@ import io.netty.channel.ChannelHandlerContext;
 import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.collections4.queue.CircularFifoQueue;
-import org.cy.micoservice.blog.im.facade.connector.dto.ImMessageDTO;
+import org.cy.micoservice.blog.im.facade.dto.connector.ImMessageDTO;
 import org.cy.micoservice.blog.im.connector.config.ImConnectorProperties;
 import org.cy.micoservice.blog.im.connector.service.ImMessageSenderService;
 import org.springframework.beans.factory.InitializingBean;

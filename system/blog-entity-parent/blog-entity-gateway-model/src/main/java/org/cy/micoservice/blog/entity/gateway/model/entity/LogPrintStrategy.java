@@ -47,9 +47,4 @@ public class LogPrintStrategy extends BaseEntity {
    * @see ValidStatusEnum
    */
   private Integer status;
-
-  /**
-   * 删除状态
-   */
-  private Integer deleted;
 }

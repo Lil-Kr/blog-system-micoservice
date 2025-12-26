@@ -25,7 +25,7 @@ public class ImageDTO {
     BeanUtils.copyProperties(imageCategoryReq, imageCategory);
     imageCategory.setSurrogateId(IdWorker.getSnowFlakeId());
 
-    Date nowDateTime = DateUtil.localDateTimeNow();
+    Date nowDateTime = DateUtil.dateTimeNow();
     imageCategory.setStatus(0);// 默认正常
     imageCategory.setDeleted(0);// 暂未使用, 默认 0
     imageCategory.setCreatorId(RequestHolder.getCurrentUser().getSurrogateId());
@@ -40,7 +40,7 @@ public class ImageDTO {
     BeanUtils.copyProperties(imageInfoReq, imageInfo);
     imageInfo.setSurrogateId(IdWorker.getSnowFlakeId());
 
-    Date nowDateTime = DateUtil.localDateTimeNow();
+    Date nowDateTime = DateUtil.dateTimeNow();
     imageInfo.setStatus(0);
     imageInfo.setDeleted(0);
     imageInfo.setCreatorId(RequestHolder.getCurrentUser().getSurrogateId());
@@ -73,7 +73,7 @@ public class ImageDTO {
     imageInfo.setCreatorId(RequestHolder.getCurrentUser().getSurrogateId());
     imageInfo.setOperator(RequestHolder.getCurrentUser().getSurrogateId());
 
-    Date nowDateTime = DateUtil.localDateTimeNow();
+    Date nowDateTime = DateUtil.dateTimeNow();
     imageInfo.setCreateTime(nowDateTime);
     imageInfo.setUpdateTime(nowDateTime);
 

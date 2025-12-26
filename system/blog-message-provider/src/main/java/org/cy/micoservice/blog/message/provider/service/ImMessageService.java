@@ -1,7 +1,7 @@
 package org.cy.micoservice.blog.message.provider.service;
 
 import org.cy.micoservice.blog.audit.facade.dto.AuditResultMessageDTO;
-import org.cy.micoservice.blog.message.facade.dto.req.im.ImChatReq;
+import org.cy.micoservice.blog.message.facade.dto.req.im.ImChatReqDTO;
 
 /**
  * @Author: Lil-K
@@ -12,29 +12,29 @@ public interface ImMessageService {
 
   /**
    * 发送审核mq消息 (兜底逻辑)
-   * @param imChatReq
+   * @param imChatReqDTO
    * @return
    */
-  boolean sendAuditMessageToMQ(ImChatReq imChatReq);
+  boolean sendAuditMessageToMQ(ImChatReqDTO imChatReqDTO);
 
   /**
    * rpc获取文本审核结果 (更快速)
-   * @param imChatReq
+   * @param imChatReqDTO
    * @return
    */
-  AuditResultMessageDTO getTextAuditMessageResult(ImChatReq imChatReq);
+  AuditResultMessageDTO getTextAuditMessageResult(ImChatReqDTO imChatReqDTO);
 
   /**
    * 判断是否是文本类消息
-   * @param imChatReq
+   * @param imChatReqDTO
    * @return
    */
-  boolean isTextMessage(ImChatReq imChatReq);
+  boolean isTextMessage(ImChatReqDTO imChatReqDTO);
 
   /**
    * 判断是否是图片类消息
-   * @param imChatReq
+   * @param imChatReqDTO
    * @return
    */
-  boolean isImageMessage(ImChatReq imChatReq);
+  boolean isImageMessage(ImChatReqDTO imChatReqDTO);
 }

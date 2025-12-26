@@ -78,7 +78,7 @@ public class SysRoleServiceImpl implements SysRoleService {
 		}
 
 		Long surrogateId = IdWorker.getSnowFlakeId(); // surrogateId
-		Date currentTime = DateUtil.localDateTimeNow();// 当前时间
+		Date currentTime = DateUtil.dateTimeNow();// 当前时间
 		SysRole role = SysRole.builder()
 			.surrogateId(surrogateId)
 			.name(req.getName())
@@ -173,7 +173,7 @@ public class SysRoleServiceImpl implements SysRoleService {
 			.status(req.getStatus())
 			.operateIp("127.0.0.1")
 			.operator(RequestHolder.getCurrentUser().getSurrogateId())
-			.updateTime(DateUtil.localDateTimeNow())
+			.updateTime(DateUtil.dateTimeNow())
 			.build();
 
 		int update = roleMapper.update(after, query);
@@ -204,7 +204,7 @@ public class SysRoleServiceImpl implements SysRoleService {
 			.status(req.getStatus())
 			.operateIp("127.0.0.1")
 			.operator(RequestHolder.getCurrentUser().getSurrogateId())
-			.updateTime(DateUtil.localDateTimeNow())
+			.updateTime(DateUtil.dateTimeNow())
 			.build();
 
 		int update = roleMapper.update(build, updateWrapper);

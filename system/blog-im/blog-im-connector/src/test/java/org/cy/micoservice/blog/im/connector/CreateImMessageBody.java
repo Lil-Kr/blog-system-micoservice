@@ -2,9 +2,9 @@ package org.cy.micoservice.blog.im.connector;
 
 import com.alibaba.fastjson.JSONObject;
 import org.cy.micoservice.blog.framework.identiy.starter.uitls.JWTUtil;
-import org.cy.micoservice.blog.im.facade.connector.contstants.ImMessageConstants;
-import org.cy.micoservice.blog.im.facade.connector.dto.ImMessageDTO;
-import org.cy.micoservice.blog.im.facade.connector.dto.body.ImLoginBody;
+import org.cy.micoservice.blog.im.facade.contstants.ImMessageConstants;
+import org.cy.micoservice.blog.im.facade.dto.connector.ImMessageDTO;
+import org.cy.micoservice.blog.im.facade.dto.connector.body.ImLoginBody;
 
 import java.util.HashMap;
 import java.util.Map;

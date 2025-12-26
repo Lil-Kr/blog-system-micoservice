@@ -4,9 +4,9 @@ import io.netty.channel.ChannelHandlerContext;
 import lombok.extern.slf4j.Slf4j;
 import org.cy.micoservice.blog.im.connector.handler.template.AbstractImMessageHandlerTemplate;
 import org.cy.micoservice.blog.im.connector.service.ImMessageSenderService;
-import org.cy.micoservice.blog.im.facade.connector.contstants.ImMessageConstants;
-import org.cy.micoservice.blog.im.facade.connector.dto.ImMessageDTO;
-import org.cy.micoservice.blog.im.facade.connector.enums.ImMessageCodeEnum;
+import org.cy.micoservice.blog.im.facade.contstants.ImMessageConstants;
+import org.cy.micoservice.blog.im.facade.dto.connector.ImMessageDTO;
+import org.cy.micoservice.blog.im.facade.enums.ImMessageCodeEnum;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 

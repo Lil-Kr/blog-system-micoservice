@@ -44,7 +44,7 @@ public class CacheServiceImpl<T> implements CacheService<T> {
       if (!StringUtils.isEmpty(cacheValueStr)) {
         return (T) cacheValueStr;
       }
-      //不能做到100%的单请求查询db控制，还是会有疏漏
+      //不能做到100%的单请求查询db控制, 还是会有疏漏
       T queryObj = supplier.get();
       if (queryObj == null) {
         return null;
@@ -66,7 +66,7 @@ public class CacheServiceImpl<T> implements CacheService<T> {
     if (!StringUtils.isEmpty(cacheValueStr)) {
       return JSON.parseObject(cacheValueStr, clazz);
     }
-    //热点数据（大V用户，很多请求打入到db上）
+    //热点数据（大V用户, 很多请求打入到db上）
     //并发问题
     //如果缓存命中失败
     synchronized (CacheServiceImpl.class) {
@@ -74,7 +74,7 @@ public class CacheServiceImpl<T> implements CacheService<T> {
       if (!StringUtils.isEmpty(cacheValueStr)) {
         return JSON.parseObject(cacheValueStr, clazz);
       }
-      //不能做到100%的单请求查询db控制，还是会有疏漏
+      //不能做到100%的单请求查询db控制, 还是会有疏漏
       T queryObj = supplier.get();
       if (queryObj == null) {
         return null;

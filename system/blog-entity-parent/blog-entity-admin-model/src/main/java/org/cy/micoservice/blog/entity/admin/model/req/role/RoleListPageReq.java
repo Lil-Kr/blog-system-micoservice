@@ -34,7 +34,7 @@ public class RoleListPageReq extends BasePageReq {
 
 
 	/**
-	 * 状态, 0正常，1冻结
+	 * 状态, 0正常, 1冻结
 	 */
 	private Integer status;
 

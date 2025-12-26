@@ -198,7 +198,7 @@ public class SysOrgServiceImpl extends ServiceImpl<SysOrgMapper, SysOrg> impleme
 		if (CollectionUtils.isEmpty(orgList)) {
 			return;
 		}
-		Date now = DateUtil.localDateTimeNow();
+		Date now = DateUtil.dateTimeNow();
 		orgList.forEach(org -> {
 			org.setLevel(LevelUtil.calculateLevel(afterOrg.getLevel(), afterOrg.getId()));
 			org.setUpdateTime(DateUtil.localDateTimeToDate(LocalDateTime.now()));

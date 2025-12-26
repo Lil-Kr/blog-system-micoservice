@@ -2,6 +2,7 @@ package org.cy.micoservice.blog.im.router.mq.rmqconsumer;
 
 import com.alibaba.fastjson2.JSON;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.collections4.CollectionUtils;
 import org.apache.rocketmq.client.consumer.DefaultMQPushConsumer;
 import org.apache.rocketmq.client.consumer.listener.ConsumeConcurrentlyStatus;
 import org.apache.rocketmq.client.consumer.listener.MessageListenerConcurrently;
@@ -9,12 +10,15 @@ import org.apache.rocketmq.client.exception.MQClientException;
 import org.apache.rocketmq.common.consumer.ConsumeFromWhere;
 import org.apache.rocketmq.common.message.MessageExt;
 import org.cy.micoservice.blog.framework.rocketmq.starter.consumer.RocketMQConsumerProperties;
-import org.cy.micoservice.blog.im.facade.connector.dto.ImSingleMessageDTO;
+import org.cy.micoservice.blog.im.facade.dto.router.ImSingleMessageDTO;
+import org.cy.micoservice.blog.im.facade.dto.router.ImBatchMessageDTO;
 import org.cy.micoservice.blog.im.router.config.ImRouterProperties;
 import org.cy.micoservice.blog.im.router.service.ImPushService;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+
+import java.util.List;
 
 /**
  * @Author: Lil-K
@@ -78,8 +82,18 @@ public class ImPushBackMsgMqConsumer implements InitializingBean {
    */
   private void doPushMsgHandler(MessageExt msg) {
     String json = new String(msg.getBody());
-    ImSingleMessageDTO singleMessageDTO = JSON.parseObject(json, ImSingleMessageDTO.class);
-    log.info("singleMessageDTO: {}", singleMessageDTO);
-    imPushService.sendSingleMsgToObject(singleMessageDTO);
+    ImBatchMessageDTO imBatchMessageDTO = JSON.parseObject(json, ImBatchMessageDTO.class);
+    List<ImSingleMessageDTO> imSingleMessageDTOList = imBatchMessageDTO.getImSingleMessageDTOList();
+    if (CollectionUtils.isEmpty(imSingleMessageDTOList)) return;
+
+    imSingleMessageDTOList.parallelStream()
+      .forEach(singleMessageDTO -> {
+        try {
+          log.info("ImPushBackMsgMqConsumer, singleMessageDTO: {}", singleMessageDTO);
+          imPushService.sendSingleMsgToObject(singleMessageDTO);
+        } catch (Exception e) {
+          log.error("send singleMessageDTO error: {}, param is: {}", e, singleMessageDTO);
+        }
+    });
   }
 }

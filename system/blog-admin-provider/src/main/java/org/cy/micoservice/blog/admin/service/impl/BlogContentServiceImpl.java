@@ -254,7 +254,7 @@ public class BlogContentServiceImpl implements BlogContentService {
     }
 
     BeanUtils.copyProperties(req, blogContent);
-    blogContent.setUpdateTime(DateUtil.localDateTimeNow());
+    blogContent.setUpdateTime(DateUtil.dateTimeNow());
     blogContent.setOperator(RequestHolder.getCurrentUser().getSurrogateId());
     blogContent.setLabelIds(req.getLabelIds().stream().map(String::valueOf).collect(Collectors.joining(",")));
 
@@ -285,7 +285,7 @@ public class BlogContentServiceImpl implements BlogContentService {
   public ApiResp<String> publishBlog(BlogContentReq req) {
     BlogContent content = new BlogContent();
     BeanUtils.copyProperties(req, content);
-    Date nowDate = DateUtil.localDateTimeNow();
+    Date nowDate = DateUtil.dateTimeNow();
     content.setPublishTime(nowDate);
     content.setUpdateTime(nowDate);
     Integer update = blogContentMapper.updateStatusBySurrogateId(content);
@@ -335,7 +335,7 @@ public class BlogContentServiceImpl implements BlogContentService {
   @Override
   public ApiResp<BlogRichEditorResp> uploadBlogContentImage(BlogRichEditorImageReq req) throws Exception {
     MultipartFile imageFile = req.getImage();
-    // 检查文件大小，限制为 2MB
+    // 检查文件大小, 限制为 2MB
     long maxSizeInBytes = 2 * 1024 * 1024; // 2MB
     if (imageFile == null || imageFile.getSize() > maxSizeInBytes) {
       return ApiResp.failure(msgService.getMessage(LANG_ZH, "blog.image.upload.error1"));

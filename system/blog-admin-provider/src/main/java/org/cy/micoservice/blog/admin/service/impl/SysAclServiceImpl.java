@@ -87,7 +87,7 @@ public class SysAclServiceImpl extends ServiceImpl<SysAclMapper, SysAcl> impleme
     }
 
     Long surrogateId = IdWorker.getSnowFlakeId(); // surrogateId
-    Date currentTime = DateUtil.localDateTimeNow();// 当前时间
+    Date currentTime = DateUtil.dateTimeNow();// 当前时间
     SysAcl build = SysAcl.builder()
       .surrogateId(surrogateId)
       .number(ACLM_PREV_INFO + surrogateId)
@@ -149,7 +149,7 @@ public class SysAclServiceImpl extends ServiceImpl<SysAclMapper, SysAcl> impleme
     }
 
     // 当前时间
-    Date currentTime = DateUtil.localDateTimeNow();
+    Date currentTime = DateUtil.dateTimeNow();
     SysAcl build = SysAcl.builder()
       .name(req.getName())
       .aclModuleId(req.getAclModuleId())

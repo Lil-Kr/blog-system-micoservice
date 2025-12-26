@@ -179,7 +179,7 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
 			return ApiResp.failure(USER_INFO_ERROR);
 		}
 
-		user.setUpdateTime(DateUtil.localDateTimeNow());
+		user.setUpdateTime(DateUtil.dateTimeNow());
 		Integer update = userMapper.updateUserBySurrogateId(user);
 		if (update < 1) {
 			return ApiResp.warning(USER_INFO_ERROR);

@@ -5,7 +5,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.cy.micoservice.blog.im.connector.config.cache.ImChannelCache;
 import org.cy.micoservice.blog.im.connector.service.ImMessageSenderService;
 import org.cy.micoservice.blog.im.connector.service.ImNotifyService;
-import org.cy.micoservice.blog.im.facade.connector.dto.ImMessageDTO;
+import org.cy.micoservice.blog.im.facade.dto.connector.ImMessageDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

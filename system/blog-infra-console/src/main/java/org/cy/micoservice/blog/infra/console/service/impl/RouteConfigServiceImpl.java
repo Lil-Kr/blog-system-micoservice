@@ -104,7 +104,7 @@ public class RouteConfigServiceImpl implements RouteConfigService {
     routeConfig.setCreateBy("admin");
     routeConfig.setUpdateBy("admin");
 
-    LocalDateTime nowDate = DateUtil.LocalDateTimeNow();
+    LocalDateTime nowDate = DateUtil.localDateTimeNow();
     routeConfig.setCreateTime(nowDate);
     routeConfig.setUpdateTime(nowDate);
     routeConfig.setDeleted(GatewayRouterDeletedEnum.ACTIVE.getCode());
@@ -147,7 +147,7 @@ public class RouteConfigServiceImpl implements RouteConfigService {
     BeanUtils.copyProperties(req, after);
     after.setId(before.getId());
     after.setUpdateBy("admin");
-    after.setUpdateTime(DateUtil.LocalDateTimeNow());
+    after.setUpdateTime(DateUtil.localDateTimeNow());
     int update = routeConfigMapper.updateById(after);
 
     // insert route change log
@@ -161,7 +161,7 @@ public class RouteConfigServiceImpl implements RouteConfigService {
     ChangeBodyDTO changeBodyDTO = new ChangeBodyDTO(before, after);
     routeChangeLog.setChangeBody(JSONObject.toJSONString(changeBodyDTO));
     routeChangeLog.setCreateBy("admin");
-    routeChangeLog.setCreateTime(DateUtil.LocalDateTimeNow());
+    routeChangeLog.setCreateTime(DateUtil.localDateTimeNow());
     routeChangeLog.setDeleted(GatewayRouterDeletedEnum.ACTIVE.getCode());
     // 触发 nacos 更新版本
     Long version = nacosService.incrVersion();
@@ -201,7 +201,7 @@ public class RouteConfigServiceImpl implements RouteConfigService {
     routeChangeLog.setChangeBody(JSONObject.toJSONString(changeBodyDTO));
 
     routeChangeLog.setCreateBy("admin");
-    routeChangeLog.setCreateTime(DateUtil.LocalDateTimeNow());
+    routeChangeLog.setCreateTime(DateUtil.localDateTimeNow());
     routeChangeLog.setDeleted(GatewayRouterDeletedEnum.ACTIVE.getCode());
     int insertLog = routeConfigChangeLogService.create(routeChangeLog);
 

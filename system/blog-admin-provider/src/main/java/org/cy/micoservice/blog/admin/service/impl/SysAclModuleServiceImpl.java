@@ -83,7 +83,7 @@ public class SysAclModuleServiceImpl extends ServiceImpl<SysAclModuleMapper, Sys
     String parentName = LevelUtil.ROOT.equals(level) ? "0" : parentAclModule.getName();
 
     Long surrogateId = IdWorker.getSnowFlakeId(); // surrogateId
-    Date currentTime = DateUtil.localDateTimeNow();// 当前时间
+    Date currentTime = DateUtil.dateTimeNow();// 当前时间
     SysAclModule aclModule = SysAclModule.builder()
       .surrogateId(surrogateId)
       .number(ACLM_PREV_NUMBER_INFO + surrogateId)
@@ -191,7 +191,7 @@ public class SysAclModuleServiceImpl extends ServiceImpl<SysAclModuleMapper, Sys
       .menuUrl(StringUtils.isBlank(req.getMenuUrl()) ? "-" : req.getMenuUrl())
       .status(req.getStatus())
       .remark(req.getRemark())
-      .updateTime(DateUtil.localDateTimeNow())
+      .updateTime(DateUtil.dateTimeNow())
       .operator(RequestHolder.getCurrentUser().getSurrogateId())
       .operateIp("127.0.0.1")
       .build();
@@ -235,7 +235,7 @@ public class SysAclModuleServiceImpl extends ServiceImpl<SysAclModuleMapper, Sys
     aclModuleList.forEach(aclModule -> {
 //			aclModule.setParentName(aclModule.getParentName());
       aclModule.setLevel(LevelUtil.calculateLevel(afterAclModule.getLevel(), afterAclModule.getId()));
-      aclModule.setUpdateTime(DateUtil.localDateTimeNow());
+      aclModule.setUpdateTime(DateUtil.dateTimeNow());
       updateChildAclModuleTree(aclModule);
     });
     // 操作db

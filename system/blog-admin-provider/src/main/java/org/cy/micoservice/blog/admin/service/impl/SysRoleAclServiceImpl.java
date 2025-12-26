@@ -144,7 +144,7 @@ public class SysRoleAclServiceImpl extends ServiceImpl<SysRoleAclMapper, SysRole
 		}
 
 		// 构建新的角色-权限点对象, 然后批量插入
-		Date currentTime = DateUtil.localDateTimeNow();
+		Date currentTime = DateUtil.dateTimeNow();
 		List<SysRoleAcl> roleAclList = aclIdList.stream()
 			.map(aclId -> SysRoleAcl.builder()
 					.surrogateId(IdWorker.getSnowFlakeId())

@@ -10,7 +10,7 @@ import java.util.concurrent.atomic.AtomicLong;
 
 /**
  * 基于日志的轻量级监控器。无需外部指标依赖。
- * 定期打印摘要信息，前缀为"monitor"并附带应用标签。
+ * 定期打印摘要信息, 前缀为"monitor"并附带应用标签。
  */
 public class LoggingIdMonitor implements IdMonitor {
 

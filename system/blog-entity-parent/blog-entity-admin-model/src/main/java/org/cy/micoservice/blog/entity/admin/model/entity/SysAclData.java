@@ -34,7 +34,7 @@ public class SysAclData extends Model<SysAclData> implements Serializable {
 	private Long aclId;
 
 	/**
-	 * 状态，0：可用，1：不可用
+	 * 状态, 0：可用, 1：不可用
 	 */
 	private Integer status;
 
@@ -44,7 +44,7 @@ public class SysAclData extends Model<SysAclData> implements Serializable {
 	private String param;
 
 	/**
-	 * 操作类型，0；等于，1：大于，2：小于，3：大于等于，4：小于等于，5：包含，6：介于之间，。。。
+	 * 操作类型, 0；等于, 1：大于, 2：小于, 3：大于等于, 4：小于等于, 5：包含, 6：介于之间, 。。。
 	 */
 	private Integer operation;
 
@@ -53,7 +53,7 @@ public class SysAclData extends Model<SysAclData> implements Serializable {
 	private String value2;
 
 	/**
-	 * 后续有参数时连接的关系，0:没有其他参数控制，1：与&&，2：或||
+	 * 后续有参数时连接的关系, 0:没有其他参数控制, 1：与&&, 2：或||
 	 */
 	private Integer nextParamOp;
 

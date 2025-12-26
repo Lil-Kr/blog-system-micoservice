@@ -6,7 +6,7 @@ import lombok.Data;
 
 import java.io.Serial;
 import java.io.Serializable;
-import java.util.Date;
+import java.time.LocalDateTime;
 
 /**
  * @Author: Lil-K
@@ -18,6 +18,8 @@ public class BaseEntity implements Serializable {
 
   @Serial
   private static final long serialVersionUID = -3071591161451842453L;
+
+  private Integer deleted;
 
   /**
    * 创建人
@@ -34,10 +36,10 @@ public class BaseEntity implements Serializable {
   /**
    * 创建时间
    */
-  private Date createTime;
+  private LocalDateTime createTime;
 
   /**
    * 更改时间
    */
-  private Date updateTime;
+  private LocalDateTime updateTime;
 }

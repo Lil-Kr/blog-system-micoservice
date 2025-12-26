@@ -20,6 +20,7 @@ import org.cy.micoservice.blog.infra.console.service.LogPrintStrategyService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Objects;
 
@@ -61,8 +62,9 @@ public class LogPrintStrategyServiceImpl implements LogPrintStrategyService {
     convert.setCreatorId(convert.getId());
     convert.setOperatorId(convert.getId());
 
-    convert.setCreateTime(DateUtil.localDateTimeNow());
-    convert.setUpdateTime(DateUtil.localDateTimeNow());
+    LocalDateTime now = DateUtil.localDateTimeNow();
+    convert.setCreateTime(now);
+    convert.setUpdateTime(now);
 
     int insert = logPrintStrategyMapper.insert(convert);
     return insert > 0 ? ApiResp.success() : ApiResp.failure(ApiReturnCodeEnum.ADD_ERROR);

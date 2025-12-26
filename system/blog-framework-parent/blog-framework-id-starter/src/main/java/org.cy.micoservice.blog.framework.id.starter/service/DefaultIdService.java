@@ -8,7 +8,7 @@ import java.util.List;
 
 /**
  * @Author: Lil-K
- * @Description: 小绿书的id服务
+ * @Description: blog的id服务
  */
 public class DefaultIdService implements IdService {
 

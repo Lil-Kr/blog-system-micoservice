@@ -19,7 +19,7 @@ import java.net.URI;
 import java.util.Comparator;
 import java.util.List;
 
-import static org.cy.micoservice.blog.im.facade.connector.contstants.ImMonitorCacheConstant.IM_CONNECTOR_ADDRESS_KEY;
+import static org.cy.micoservice.blog.im.facade.contstants.ImMonitorCacheConstant.IM_CONNECTOR_ADDRESS_KEY;
 import static org.springframework.cloud.gateway.support.ServerWebExchangeUtils.GATEWAY_REQUEST_URL_ATTR;
 
 /**
@@ -66,7 +66,7 @@ public class BlogImWebSocketRouterFilter extends WebsocketRoutingFilter {
    * @return
    */
   private String getLessConnectionNodeAddress() {
-    List<ImConnectorMonitor> imConnectorMonitorList = imConnectorMonitorService.getAll();
+    List<ImConnectorMonitor> imConnectorMonitorList = imConnectorMonitorService.getImConnectorMonitorAllList();
     if (CollectionUtils.isEmpty(imConnectorMonitorList)) {
       log.warn("No Im connector nodes available");
       throw new RuntimeException("No Im connector nodes available");

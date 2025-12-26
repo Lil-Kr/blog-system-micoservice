@@ -31,7 +31,7 @@ public class BeanCopyUtils {
 
 
   /**
-   * 将List对象转换成目标对象，注意实现是 ArrayList
+   * 将List对象转换成目标对象, 注意实现是 ArrayList
    * @param targetClass
    * @param <K>
    * @param <T>

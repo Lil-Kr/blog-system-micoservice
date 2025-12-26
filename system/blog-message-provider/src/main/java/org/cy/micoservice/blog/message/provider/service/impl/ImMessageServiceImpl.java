@@ -18,8 +18,8 @@ import org.cy.micoservice.blog.common.base.RpcResponse;
 import org.cy.micoservice.blog.common.enums.exception.BizErrorEnum;
 import org.cy.micoservice.blog.common.utils.AssertUtil;
 import org.cy.micoservice.blog.framework.rocketmq.starter.producer.RocketMQProducerClient;
-import org.cy.micoservice.blog.message.facade.dto.req.im.ImChatContentReq;
-import org.cy.micoservice.blog.message.facade.dto.req.im.ImChatReq;
+import org.cy.micoservice.blog.message.facade.dto.req.im.ImChatContentDTO;
+import org.cy.micoservice.blog.message.facade.dto.req.im.ImChatReqDTO;
 import org.cy.micoservice.blog.message.provider.config.MessageApplicationProperties;
 import org.cy.micoservice.blog.message.provider.service.ImMessageService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -45,58 +45,58 @@ public class ImMessageServiceImpl implements ImMessageService {
 
   /**
    * send msg to mq for audit service
-   * @param imChatReq
+   * @param imChatReqDTO
    * @return
    */
   @Override
-  public boolean sendAuditMessageToMQ(ImChatReq imChatReq) {
-    String content = imChatReq.getContent();
-    ImChatContentReq imChatContentReq = JSON.parseObject(content, ImChatContentReq.class);
-    Integer type = imChatContentReq.getType();
+  public boolean sendAuditMessageToMQ(ImChatReqDTO imChatReqDTO) {
+    String content = imChatReqDTO.getContent();
+    ImChatContentDTO imChatContentDTO = JSON.parseObject(content, ImChatContentDTO.class);
+    Integer type = imChatContentDTO.getType();
 
     // 图片/文字 均可走mq审核
     if (! AuditTypeEnum.TEXT.getCode().equals(type) && ! AuditTypeEnum.IMAGE.getCode().equals(type)) return false;
 
     // 文本数据信息, 投递到audit服务去
-    AuditMsgDTO auditMsgDTO = this.generateAuditMsgDTO(imChatContentReq, imChatReq.getMsgId());
+    AuditMsgDTO auditMsgDTO = this.generateAuditMsgDTO(imChatContentDTO, imChatReqDTO.getMsgId());
     log.info("send to audit service: auditMsgDTO: {}", auditMsgDTO);
     return this.sendImChatAuditMq(auditMsgDTO);
   }
 
   @Override
-  public AuditResultMessageDTO getTextAuditMessageResult(ImChatReq imChatReq) {
-    AssertUtil.isTrue(this.isTextMessage(imChatReq), BizErrorEnum.PARAM_ERROR);
-    ImChatContentReq chatReqContent = JSON.parseObject(imChatReq.getContent(), ImChatContentReq.class);
-    AuditMsgDTO auditMsgDTO = this.generateAuditMsgDTO(chatReqContent, imChatReq.getMsgId());
+  public AuditResultMessageDTO getTextAuditMessageResult(ImChatReqDTO imChatReqDTO) {
+    AssertUtil.isTrue(this.isTextMessage(imChatReqDTO), BizErrorEnum.PARAM_ERROR);
+    ImChatContentDTO chatReqContent = JSON.parseObject(imChatReqDTO.getContent(), ImChatContentDTO.class);
+    AuditMsgDTO auditMsgDTO = this.generateAuditMsgDTO(chatReqContent, imChatReqDTO.getMsgId());
     RpcResponse<AuditResultMessageDTO> rpcResponse = textAuditFacade.checkTextValid(auditMsgDTO);
     AssertUtil.isTrue(rpcResponse.isSuccess(), BizErrorEnum.SYSTEM_ERROR);
     return rpcResponse.getData();
   }
 
   @Override
-  public boolean isTextMessage(ImChatReq imChatReq) {
-    String content = imChatReq.getContent();
-    ImChatContentReq chatReqContentDTO = JSON.parseObject(content, ImChatContentReq.class);
+  public boolean isTextMessage(ImChatReqDTO imChatReqDTO) {
+    String content = imChatReqDTO.getContent();
+    ImChatContentDTO chatReqContentDTO = JSON.parseObject(content, ImChatContentDTO.class);
     return AuditTypeEnum.TEXT.getCode().equals(chatReqContentDTO.getType());
   }
 
   @Override
-  public boolean isImageMessage(ImChatReq imChatReq) {
-    String content = imChatReq.getContent();
-    ImChatContentReq chatReqContent = JSON.parseObject(content, ImChatContentReq.class);
+  public boolean isImageMessage(ImChatReqDTO imChatReqDTO) {
+    String content = imChatReqDTO.getContent();
+    ImChatContentDTO chatReqContent = JSON.parseObject(content, ImChatContentDTO.class);
     return AuditTypeEnum.IMAGE.getCode().equals(chatReqContent.getType());
   }
 
   /**
    * 生成文本审核消息 DTO
-   * @param imChatContentReq
+   * @param imChatContentDTO
    * @param msgId
    * @return
    */
-  private AuditMsgDTO generateAuditMsgDTO(ImChatContentReq imChatContentReq, String msgId) {
+  private AuditMsgDTO generateAuditMsgDTO(ImChatContentDTO imChatContentDTO, String msgId) {
     ChatTextAuditBody chatTextAuditBody = new ChatTextAuditBody();
     chatTextAuditBody.setMsgId(msgId);
-    chatTextAuditBody.setContent(imChatContentReq.getBody());
+    chatTextAuditBody.setContent(imChatContentDTO.getBody());
 
     TextAuditBody textAuditBody = new TextAuditBody();
     textAuditBody.setBodyType(TextAuditBodyTypeEnum.CHAT.getCode());

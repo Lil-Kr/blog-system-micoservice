@@ -16,7 +16,7 @@ import java.util.concurrent.atomic.AtomicLong;
 /**
  * @Author: Lil-K
  * @Description: 使用Redis快照的实例级观察监控器
- * 定期将当前计数器连同TTL刷新至Redis，因此扫描键即可显示在线实例
+ * 定期将当前计数器连同TTL刷新至Redis, 因此扫描键即可显示在线实例
  */
 public class RedisIdMonitor implements IdMonitor {
 

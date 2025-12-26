@@ -295,7 +295,7 @@ public class WeightedRandomUtil {
   }
 
   /**
-   * 内部静态类，用于批量操作
+   * 内部静态类, 用于批量操作
    */
   public static class Entry {
     private final Object value;

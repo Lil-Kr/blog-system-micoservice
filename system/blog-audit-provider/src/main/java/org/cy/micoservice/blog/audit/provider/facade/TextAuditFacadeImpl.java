@@ -38,7 +38,7 @@ public class TextAuditFacadeImpl implements TextAuditFacade {
     AuditResultDTO auditResultDTO = auditManager.doTextAudit(auditMsgDTO);
     AuditLog auditLog = this.handleAuditResult(auditResultDTO, auditMsgDTO, auditResultDTO.getChannelName());
     if (auditLog != null) {
-      // 只存储不合规的内容即可，避免存储爆炸
+      // 只存储不合规的内容即可, 避免存储爆炸
       auditLogService.save(auditLog);
     }
     AuditResultMessageDTO auditResultMessageDTO = new AuditResultMessageDTO();

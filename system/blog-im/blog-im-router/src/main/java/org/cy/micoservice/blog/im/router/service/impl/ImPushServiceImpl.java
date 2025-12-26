@@ -7,7 +7,7 @@ import org.cy.micoservice.blog.common.base.RpcResponse;
 import org.cy.micoservice.blog.common.enums.response.ApiReturnCodeEnum;
 import org.cy.micoservice.blog.common.utils.AssertUtil;
 import org.cy.micoservice.blog.common.utils.RpcAssertUtil;
-import org.cy.micoservice.blog.im.facade.connector.dto.ImSingleMessageDTO;
+import org.cy.micoservice.blog.im.facade.dto.router.ImSingleMessageDTO;
 import org.cy.micoservice.blog.im.facade.interfaces.ImNotifyFacade;
 import org.cy.micoservice.blog.im.router.constant.ImRouterConstants;
 import org.cy.micoservice.blog.im.router.service.ImPushService;

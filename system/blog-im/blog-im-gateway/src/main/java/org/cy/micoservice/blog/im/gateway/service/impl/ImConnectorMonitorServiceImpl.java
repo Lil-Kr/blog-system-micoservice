@@ -1,7 +1,7 @@
 package org.cy.micoservice.blog.im.gateway.service.impl;
 
 import lombok.extern.slf4j.Slf4j;
-import org.cy.micoservice.blog.im.facade.connector.contstants.ImMonitorCacheConstant;
+import org.cy.micoservice.blog.im.facade.contstants.ImMonitorCacheConstant;
 import org.cy.micoservice.blog.im.gateway.dto.ImConnectorMonitor;
 import org.cy.micoservice.blog.im.gateway.service.ImConnectorMonitorService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,7 +35,7 @@ public class ImConnectorMonitorServiceImpl implements ImConnectorMonitorService 
    * @return
    */
   @Override
-  public List<ImConnectorMonitor> getAll() {
+  public List<ImConnectorMonitor> getImConnectorMonitorAllList() {
     return this.connectionNodeAddress.stream()
       .map(nodeAddress -> nodeAddress.split(":"))
       .filter(addressArr -> addressArr.length == 2)
@@ -53,11 +53,10 @@ public class ImConnectorMonitorServiceImpl implements ImConnectorMonitorService 
           .build();
 
         if (connectionObj == null) {
-          // 机器初始化, 没有连接的情况下, 所以无缓存
+          // 服务初始化, 没有连接的情况下, 无缓存
           imConnectorMonitor.setConnections(0);
         } else {
           imConnectorMonitor.setConnections(Integer.parseInt(String.valueOf(connectionObj)));
-          // imConnectorMonitor.setConnections((int)connectionObj);
         }
         return imConnectorMonitor;
       })

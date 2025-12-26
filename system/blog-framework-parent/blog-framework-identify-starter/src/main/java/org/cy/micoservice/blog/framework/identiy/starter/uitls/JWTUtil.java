@@ -19,7 +19,7 @@ import java.util.function.Function;
 public class JWTUtil {
 
   /**
-   * 密钥，建议使用至少256位长度
+   * 密钥, 建议使用至少256位长度
    */
   private static final String SECRET_KEY = "8276hkhuy0HUgKJBYq08y12kHUYVBK17gkLUQ24cxqwetsEDDfx";
 
@@ -29,7 +29,7 @@ public class JWTUtil {
   private static final long EXPIRATION_TIME = 500 * 1000;
 
   /**
-   * 生成JWT，如果不需要claims的话
+   * 生成JWT, 如果不需要claims的话
    * @param subject
    * @return
    */
@@ -101,7 +101,7 @@ public class JWTUtil {
   }
 
   /**
-   * 获取所有claims，这里Claims可以理解为是一组身份标识
+   * 获取所有claims, 这里Claims可以理解为是一组身份标识
    * @param token
    * @return
    */

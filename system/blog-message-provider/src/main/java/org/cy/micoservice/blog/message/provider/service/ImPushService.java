@@ -1,7 +1,9 @@
 package org.cy.micoservice.blog.message.provider.service;
 
 
-import org.cy.micoservice.blog.message.facade.dto.req.im.ImChatReq;
+import org.cy.micoservice.blog.message.facade.dto.req.im.ImChatReqDTO;
+
+import java.util.List;
 
 /**
  * @Author: Lil-K
@@ -12,7 +14,13 @@ public interface ImPushService {
 
   /**
    * 推送单条消息到router服务消费的mq中
-   * @param imChatReq
+   * @param imChatReqDTO
    */
-  void pushRouterSingleMessage(ImChatReq imChatReq);
+  void singlePushRouterMessage(ImChatReqDTO imChatReqDTO);
+
+  /**
+   * 批量推送消息到mq
+   * @param imChatReqDTOList
+   */
+  void batchPushRouterMessage(List<ImChatReqDTO> imChatReqDTOList);
 }

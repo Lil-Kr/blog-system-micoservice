@@ -16,9 +16,13 @@
 		<maven.compiler.source>17</maven.compiler.source>
 		<maven.compiler.target>17</maven.compiler.target>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		
+		<!---->
+		<blog-common.version>1.0.0</blog-common.version>
 		<blog-entity-parent.version>1.0.0</blog-entity-parent.version>
 		<blog-framework-parent.version>1.0.0</blog-framework-parent.version>
-		<blog-common.version>1.0.0</blog-common.version>
+		
+		<!-- facade -->
 		<blog-message-facade.version>1.0.0</blog-message-facade.version>
 		<blog-audit-facade.version>1.0.0</blog-audit-facade.version>
 		<blog-im-facade.version>1.0.0</blog-im-facade.version>
@@ -57,6 +61,12 @@
 		<!-- 自研组件 -->
 		<dependency>
 			<groupId>org.cy.micoservice.blog</groupId>
+			<artifactId>blog-common</artifactId>
+			<version>${blog-common.version}</version>
+		</dependency>
+		
+		<dependency>
+			<groupId>org.cy.micoservice.blog</groupId>
 			<artifactId>blog-framework-dubbo-starter</artifactId>
 			<version>${blog-framework-parent.version}</version>
 		</dependency>
@@ -81,13 +91,25 @@
 		
 		<dependency>
 			<groupId>org.cy.micoservice.blog</groupId>
-			<artifactId>blog-entity-message-model</artifactId>
-			<version>${blog-entity-parent.version}</version>
+			<artifactId>blog-framework-id-starter</artifactId>
+			<version>${blog-framework-parent.version}</version>
+		</dependency>
+		
+		<dependency>
+			<groupId>org.cy.micoservice.blog</groupId>
+			<artifactId>blog-framework-elasticsearch-starter</artifactId>
+			<version>${blog-framework-parent.version}</version>
 		</dependency>
 		
 		<dependency>
 			<groupId>org.cy.micoservice.blog</groupId>
 			<artifactId>blog-entity-audit-model</artifactId>
+			<version>${blog-entity-parent.version}</version>
+		</dependency>
+		
+		<dependency>
+			<groupId>org.cy.micoservice.blog</groupId>
+			<artifactId>blog-entity-message-model</artifactId>
 			<version>${blog-entity-parent.version}</version>
 		</dependency>
 		

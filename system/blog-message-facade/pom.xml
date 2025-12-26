@@ -17,6 +17,7 @@
 		<maven.compiler.target>17</maven.compiler.target>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<blog-common.version>1.0.0</blog-common.version>
+		<blog-entity-parent.version>1.0.0</blog-entity-parent.version>
 	</properties>
 	
 	<dependencies>
@@ -26,6 +27,15 @@
 			<artifactId>blog-common</artifactId>
 			<version>${blog-common.version}</version>
 			<optional>true</optional>
+			<scope>compile</scope>
+		</dependency>
+		
+		<dependency>
+			<groupId>org.cy.micoservice.blog</groupId>
+			<artifactId>blog-entity-message-model</artifactId>
+			<version>${blog-entity-parent.version}</version>
+			<optional>true</optional>
+			<scope>compile</scope>
 		</dependency>
 	</dependencies>
 </project>

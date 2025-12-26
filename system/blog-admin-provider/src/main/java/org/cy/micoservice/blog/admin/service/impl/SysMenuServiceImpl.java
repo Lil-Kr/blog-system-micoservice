@@ -163,7 +163,7 @@ public class SysMenuServiceImpl implements SysPermissionService {
          */
         List<SysMenu> subMenuList = changeTreeToMenu(aclModuleDto.getAclModuleDtoList(), rootPath + aclModuleDto.getMenuUrl());
 
-        // 如果子菜单列表不为空，才将当前模块作为父菜单
+        // 如果子菜单列表不为空, 才将当前模块作为父菜单
         if (CollectionUtils.isNotEmpty(subMenuList)) {
           menu.setKey(aclModuleDto.getMenuUrl());
           menu.setTitle(aclModuleDto.getName());

@@ -21,7 +21,7 @@ import java.util.Objects;
 /**
  * @Author: Lil-K
  * @Date: Created at 2025/7/20
- * @Description: 对update操作，底层兼容save，saveBatch，update
+ * @Description: 对update操作, 底层兼容save, saveBatch, update
  */
 @Slf4j
 @Intercepts({
@@ -44,14 +44,14 @@ public class EncryptInterceptor implements Interceptor {
       return invocation.proceed();
     }
 
-    // 根据update拦截规则，第0个参数一定是MappedStatement，第1个参数是需要进行判断的参数
+    // 根据update拦截规则, 第0个参数一定是MappedStatement, 第1个参数是需要进行判断的参数
     Object param = invocation.getArgs()[1];
     if (Objects.isNull(param)) {
       return invocation.proceed();
     }
 
     List<Field> encryptFields = FieldUtils.getFieldsListWithAnnotation(param.getClass(), Encrypt.class);
-    // 无字段需要加密，则跳过
+    // 无字段需要加密, 则跳过
     if (CollectionUtils.isEmpty(encryptFields)) {
       return invocation.proceed();
     }

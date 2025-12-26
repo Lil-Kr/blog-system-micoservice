@@ -110,7 +110,7 @@ public class ImageCategoryServiceImpl implements ImageCategoryService {
     }
 
     BeanUtils.copyProperties(req, before);
-    before.setUpdateTime(DateUtil.localDateTimeNow());
+    before.setUpdateTime(DateUtil.dateTimeNow());
     before.setOperator(RequestHolder.getCurrentUser().getSurrogateId());
 
     UpdateWrapper<ImageCategory> updateWrapper = new UpdateWrapper<>();

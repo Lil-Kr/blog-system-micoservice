@@ -33,7 +33,7 @@ public class JsonUtil {
     OBJECT_MAPPER.disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS);
     // 禁用空对象转换失败
     OBJECT_MAPPER.disable(SerializationFeature.FAIL_ON_EMPTY_BEANS);
-    // 美化输出（可选，生产环境建议关闭）
+    // 美化输出（可选, 生产环境建议关闭）
     // OBJECT_MAPPER.enable(SerializationFeature.INDENT_OUTPUT);
 
     // 反序列化配置
@@ -303,7 +303,7 @@ public class JsonUtil {
   /**
    * 判断字符串是否为合法的 JSON 格式
    * @param json JSON 字符串
-   * @return true 合法，false 不合法
+   * @return true 合法, false 不合法
    */
   public static boolean isValidJson(String json) {
     if (Objects.isNull(json) || json.trim().isEmpty()) {

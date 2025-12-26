@@ -44,4 +44,8 @@ public class PageResult<T> implements Serializable {
   public void setTotal(Integer total) {
     this.total = total;
   }
+
+  public static <T> PageResult<T> emptyPage() {
+    return new PageResult<>(null, 0);
+  }
 }

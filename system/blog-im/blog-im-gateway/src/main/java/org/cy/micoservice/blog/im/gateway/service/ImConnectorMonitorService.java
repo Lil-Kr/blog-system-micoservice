@@ -16,7 +16,7 @@ public interface ImConnectorMonitorService {
    * 获取下游 im-connector 所有节点的监控配置信息
    * @return
    */
-   List<ImConnectorMonitor> getAll();
+   List<ImConnectorMonitor> getImConnectorMonitorAllList();
 
   /**
    * 刷新本地内存

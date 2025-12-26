@@ -1,6 +1,6 @@
 package org.cy.micoservice.blog.im.connector.service;
 
-import org.cy.micoservice.blog.im.facade.connector.dto.ImMessageDTO;
+import org.cy.micoservice.blog.im.facade.dto.connector.ImMessageDTO;
 
 /**
  * @Author: Lil-K

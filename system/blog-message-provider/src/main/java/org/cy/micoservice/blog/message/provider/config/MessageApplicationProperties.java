@@ -40,4 +40,15 @@ public class MessageApplicationProperties {
   @Value("${im.route.push.producer-topic:}")
   private String imRoutePushTopic;
 
+  /**
+   * es:
+   */
+  @Value("${es.record.index.alias.chat:blog.message.chat-record}")
+  private String esChatRecordIndexAlias;
+
+  /**
+   * es
+   */
+  @Value("${es.relation.index.alias.chat:blog.message.chat-relation}")
+  private String esChatRelationIndexAlias;
 }

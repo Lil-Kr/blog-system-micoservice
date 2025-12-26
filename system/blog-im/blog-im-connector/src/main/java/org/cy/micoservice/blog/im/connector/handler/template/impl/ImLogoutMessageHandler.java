@@ -12,9 +12,9 @@ import org.cy.micoservice.blog.im.connector.service.ImMessageSenderService;
 import org.cy.micoservice.blog.im.connector.service.ImPushAsyncService;
 import org.cy.micoservice.blog.im.connector.utils.ChannelHandlerContextUtil;
 import org.cy.micoservice.blog.im.connector.utils.ContextAttributeUtil;
-import org.cy.micoservice.blog.im.facade.connector.dto.ImMessageDTO;
-import org.cy.micoservice.blog.im.facade.connector.dto.body.ImLogoutBody;
-import org.cy.micoservice.blog.im.facade.connector.enums.ImMessageCodeEnum;
+import org.cy.micoservice.blog.im.facade.dto.connector.ImMessageDTO;
+import org.cy.micoservice.blog.im.facade.dto.connector.body.ImLogoutBody;
+import org.cy.micoservice.blog.im.facade.enums.ImMessageCodeEnum;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 

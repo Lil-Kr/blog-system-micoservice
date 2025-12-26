@@ -118,7 +118,7 @@ public class SysRoleUserServiceImpl extends ServiceImpl<SysRoleUserMapper, SysRo
 			throw new BizException(msgService.getMessage(LANG_ZH, "sys.role.user.resp.msg5"));
 		}
 
-		Date currentTime = DateUtil.localDateTimeNow();
+		Date currentTime = DateUtil.dateTimeNow();
 		List<SysRoleUser> roleUsers = userIdList.stream()
 			.map(userId -> SysRoleUser.builder()
 				.surrogateId(IdWorker.getSnowFlakeId())

@@ -39,7 +39,7 @@ public class SysLog extends Model<SysLog> {
   private Long surrogateId;
 
   /**
-   * 1组织，2用户，3权限模块, 4权限， 5角色, 6角色用户关系, 7角色权限关系
+   * 1组织, 2用户, 3权限模块, 4权限,  5角色, 6角色用户关系, 7角色权限关系
    */
   private Integer type;
 

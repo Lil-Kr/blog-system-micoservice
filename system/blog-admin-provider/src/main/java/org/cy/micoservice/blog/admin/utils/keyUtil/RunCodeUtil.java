@@ -18,7 +18,7 @@ public class RunCodeUtil {
    * @return 获取三位流水号
    */
   public String getThreePipelineNumbers() {
-    // 这里code可以自定义前缀，例如可以设为 String code = "ZD";
+    // 这里code可以自定义前缀, 例如可以设为 String code = "ZD";
     String code = "";
     int num =  count + 1;
     // 准备数字所需格式化的形式
@@ -28,7 +28,7 @@ public class RunCodeUtil {
   }
 
   /**
-   * @return 获取年月日+三位流水号（根据当天生成的单据数量，生成流水号如：20190522001,20190601001）
+   * @return 获取年月日+三位流水号（根据当天生成的单据数量, 生成流水号如：20190522001,20190601001）
    */
   public static String getFourPipelineNumbers() {
     // 所要获取的流水编码code
@@ -39,13 +39,13 @@ public class RunCodeUtil {
     String dateStr = sdf.format(new Date()).toString();
     // 将格式化好的时间拼接到code上
     code.append(dateStr);
-    // 根据格式化好的String类型的时间，查询数据库中当天所产生的单据数量生成流水号
+    // 根据格式化好的String类型的时间, 查询数据库中当天所产生的单据数量生成流水号
     // 这里的count是需要在数据库中根据当天的日期,查询“单据”的创建时间符合条件的数量
     int num = count + 1;
     DecimalFormat dft = new DecimalFormat(STR_FORMAT);
     // 将获取到的数量按照所需的格式进行格式化
     String strNum = dft.format(num);
-    // 因为code的类型是StingBuffer，所以要将其转换成String类型
+    // 因为code的类型是StingBuffer, 所以要将其转换成String类型
     String autoCode = code.append(strNum).toString();
     return autoCode;
   }

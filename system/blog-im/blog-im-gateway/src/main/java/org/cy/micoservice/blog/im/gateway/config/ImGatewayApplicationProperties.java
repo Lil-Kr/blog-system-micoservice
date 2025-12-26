@@ -26,7 +26,7 @@ public class ImGatewayApplicationProperties {
   private String nacosNamespace;
 
   /**
-   * 统一管理 im-connector 集群名
+   * 统一管理 im-connector 集群名, 用于 nacos 订阅 im-connector 集群下线事件
    * blog-im-connector-cluster
    */
   @Value("${im.connector.cluster.name:}")

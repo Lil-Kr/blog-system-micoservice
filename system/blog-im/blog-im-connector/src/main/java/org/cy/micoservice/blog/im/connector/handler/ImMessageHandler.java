@@ -8,9 +8,9 @@ import io.netty.handler.codec.http.websocketx.TextWebSocketFrame;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.cy.micoservice.blog.im.connector.utils.ChannelHandlerContextUtil;
-import org.cy.micoservice.blog.im.facade.connector.dto.ImMessageDTO;
+import org.cy.micoservice.blog.im.facade.dto.connector.ImMessageDTO;
 import org.cy.micoservice.blog.im.connector.handler.template.ImMessageDispatcher;
-import org.cy.micoservice.blog.im.facade.connector.enums.ImMessageCodeEnum;
+import org.cy.micoservice.blog.im.facade.enums.ImMessageCodeEnum;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 

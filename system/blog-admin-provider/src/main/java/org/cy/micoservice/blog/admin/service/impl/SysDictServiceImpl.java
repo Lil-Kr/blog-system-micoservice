@@ -64,7 +64,7 @@ public class SysDictServiceImpl extends ServiceImpl<SysDictMapper, SysDict> impl
 		}
 
 		Long surrogateId = IdWorker.getSnowFlakeId(); // surrogateId
-		Date currentTime = DateUtil.localDateTimeNow();// 当前时间
+		Date currentTime = DateUtil.dateTimeNow();// 当前时间
 
 		SysDict dict = SysDict.builder()
 			.surrogateId(surrogateId)
@@ -123,7 +123,7 @@ public class SysDictServiceImpl extends ServiceImpl<SysDictMapper, SysDict> impl
 			.deleted(0)
 			.operateIp("127.0.0.1")
 			.operator(RequestHolder.getCurrentUser().getSurrogateId())
-			.updateTime(DateUtil.localDateTimeNow())
+			.updateTime(DateUtil.dateTimeNow())
 			.build();
 
 		try {

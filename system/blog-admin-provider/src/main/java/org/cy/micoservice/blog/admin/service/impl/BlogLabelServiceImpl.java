@@ -87,7 +87,7 @@ public class BlogLabelServiceImpl implements BlogLabelService {
 			return ApiResp.failure(INFO_NOT_EXIST);
 		}
 
-		req.setUpdateTime(DateUtil.localDateTimeNow());
+		req.setUpdateTime(DateUtil.dateTimeNow());
 		req.setOperator(RequestHolder.getCurrentUser().getSurrogateId());
 		Integer count = blogLabelMapper.editBySurrogateId(req);
 

@@ -54,7 +54,7 @@ public class ImConnectorNacosRegister {
       instance.setHealthy(true);
       instance.getMetadata().put("createTime", String.valueOf(System.currentTimeMillis()));
 
-      // 注册临时实例（默认ephemeral=true，无需手动设置）
+      // 注册临时实例（默认ephemeral=true, 无需手动设置）
       namingService.registerInstance(imConnectorProperties.getImConnectorClusterName(), instance);
 
       log.info("registerTempInstance success → serviceName:{}", imConnectorProperties.getImConnectorClusterName());
@@ -86,7 +86,7 @@ public class ImConnectorNacosRegister {
   }
 
   /**
-   * 可选：服务停止时主动注销实例（加速下线，非必须，心跳超时也会自动删）
+   * 可选：服务停止时主动注销实例（加速下线, 非必须, 心跳超时也会自动删）
    */
   public void deregisterTempInstance() {
     if (namingService != null) {

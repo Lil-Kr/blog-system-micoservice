@@ -39,7 +39,7 @@ public class DecryptInterceptor implements Interceptor {
   @Override
   public Object intercept(Invocation invocation) throws Throwable {
     Object result = invocation.proceed();
-    // 无论是返回单个对象还是集合，result都是ArrayList类型
+    // 无论是返回单个对象还是集合, result都是ArrayList类型
     if (ClassUtils.isAssignable(Collection.class, result.getClass())) {
       Collection collectionResult = (Collection) result;
       for (Object resultObj : collectionResult) {
@@ -57,7 +57,7 @@ public class DecryptInterceptor implements Interceptor {
   private void tryDecryptValue(Object resultObj) {
     try {
       List<Field> decryptFields = FieldUtils.getFieldsListWithAnnotation(resultObj.getClass(), Decrypt.class);
-      // 无字段需解密，则跳过
+      // 无字段需解密, 则跳过
       if (CollectionUtils.isEmpty(decryptFields)) {
         return;
       }

@@ -9,9 +9,9 @@ import java.util.List;
 
 /**
  * @Author: Lil-K
- * @Description: 基于Redis的最简workerId分配器，支持原子性循环重置：
- * - 使用Lua脚本执行INCR操作，并在溢出时将计数器重置为(base+1)，以便从下一个槽位继续分配。
- * - 无需注册机制，无需租约管理。
+ * @Description: 基于Redis的最简workerId分配器, 支持原子性循环重置：
+ * - 使用Lua脚本执行INCR操作, 并在溢出时将计数器重置为(base+1), 以便从下一个槽位继续分配。
+ * - 无需注册机制, 无需租约管理。
  */
 public class SimpleRedisWorkerIdAllocator extends AbstractWorkerIdAllocator  {
 
@@ -45,9 +45,9 @@ public class SimpleRedisWorkerIdAllocator extends AbstractWorkerIdAllocator  {
     String lua = "local key = KEYS[1]\n" + // 获取redis-key
       "local max = tonumber(ARGV[1])\n" + // 获取maxWokerId=65536
       "local c = tonumber(redis.call('INCR', key))\n" + // 执行redis incr命令
-      "local base = (c - 1) % max\n" + // 拿到incr值之后，取模。将我们值控制在65536以内。
+      "local base = (c - 1) % max\n" + // 拿到incr值之后, 取模。将我们值控制在65536以内。
       "if c > max then\n" + // 当获取到的workerId超过了65536
-      "  redis.call('SET', key, base + 1)\n" + // 重置workerId，从1重新开始
+      "  redis.call('SET', key, base + 1)\n" + // 重置workerId, 从1重新开始
       "end\n" +
       "return base\n";
     DefaultRedisScript<Long> script = new DefaultRedisScript<>();

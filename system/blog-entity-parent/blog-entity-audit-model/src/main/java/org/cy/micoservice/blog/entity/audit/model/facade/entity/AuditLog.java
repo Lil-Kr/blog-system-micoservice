@@ -13,7 +13,7 @@ import java.time.LocalDateTime;
 /**
  * @Author: Lil-K
  * @Date: 2025/12/15
- * @Description: 审计日志PO 建议做日期的归档 -》当前一个月走热表存储，后续一个月前的数据做冷备份
+ * @Description: 审计日志PO 建议做日期的归档 -》当前一个月走热表存储, 后续一个月前的数据做冷备份
  * 建议: 历史归档数据走离线存储
  */
 @TableName("t_audit_log")
