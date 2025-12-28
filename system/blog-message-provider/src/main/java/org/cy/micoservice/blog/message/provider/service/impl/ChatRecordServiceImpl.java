@@ -4,7 +4,8 @@ import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import org.cy.micoservice.blog.common.base.PageResponse;
+import org.apache.commons.collections4.CollectionUtils;
+import org.cy.micoservice.blog.common.base.provider.PageResponseDTO;
 import org.cy.micoservice.blog.common.utils.BeanCopyUtils;
 import org.cy.micoservice.blog.common.utils.IdGenerateUtil;
 import org.cy.micoservice.blog.entity.message.model.provider.po.ChatRecord;
@@ -19,7 +20,6 @@ import org.cy.micoservice.blog.message.provider.service.ChatRelationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
-import org.springframework.util.CollectionUtils;
 
 import java.util.List;
 
@@ -37,15 +37,15 @@ public class ChatRecordServiceImpl extends ServiceImpl<ChatRecordMapper, ChatRec
 
   @Override
   public boolean add(ChatRecordReqDTO chatRecordReqDTO) {
-    Long relationId = chatRecordReqDTO.getRelationId();
+    // Long relationId = chatRecordReqDTO.getRelationId();
     ChatRelationReqDTO chatRelationReqDTO = new ChatRelationReqDTO();
     chatRelationReqDTO.setContent(chatRecordReqDTO.getContent());
-    chatRelationReqDTO.setRelationId(relationId);
+    // chatRelationReqDTO.setRelationId(relationId);
     chatRelationService.updateRelationByRelationId(chatRelationReqDTO);
-    ChatRecord chatRecordPO = BeanCopyUtils.convert(chatRecordReqDTO, ChatRecord.class);
-    chatRecordPO.setChatId(IdGenerateUtil.generateChatRecordId());
-    chatRecordPO.setStatus(ChatRecordStatusEnum.VALID.getCode());
-    return super.getBaseMapper().insert(chatRecordPO) > 0;
+    ChatRecord chatRecord = BeanCopyUtils.convert(chatRecordReqDTO, ChatRecord.class);
+    chatRecord.setChatId(IdGenerateUtil.generateChatRecordId());
+    chatRecord.setStatus(ChatRecordStatusEnum.VALID.getCode());
+    return super.getBaseMapper().insert(chatRecord) > 0;
   }
 
   /**
@@ -55,25 +55,25 @@ public class ChatRecordServiceImpl extends ServiceImpl<ChatRecordMapper, ChatRec
    * @return
    */
   @Override
-  public PageResponse<ChatRecordRespDTO> queryRecordInPage(ChatRecordPageReqDTO chatRecordPageReqDTO) {
+  public PageResponseDTO<ChatRecordRespDTO> queryRecordInPage(ChatRecordPageReqDTO chatRecordPageReqDTO) {
     if (chatRecordPageReqDTO.getRelationId() == null) {
-      return PageResponse.emptyPage();
+      return PageResponseDTO.emptyPage();
     }
     IPage<ChatRecord> page = new Page<>(chatRecordPageReqDTO.getCurrentPageNum(),chatRecordPageReqDTO.getPageSize());
     LambdaQueryWrapper<ChatRecord> queryWrapper = new LambdaQueryWrapper<>();
     queryWrapper.eq(ChatRecord::getRelationId, chatRecordPageReqDTO.getRelationId());
     queryWrapper.orderByAsc(ChatRecord::getId);
-    IPage<ChatRecord> chatRecordPOPage  = super.getBaseMapper().selectPage(page,queryWrapper);
-    List<ChatRecord> recordPOList = chatRecordPOPage.getRecords();
-    if (CollectionUtils.isEmpty(recordPOList)) {
-      return PageResponse.emptyPage();
+    IPage<ChatRecord> chatRecordPage  = super.getBaseMapper().selectPage(page,queryWrapper);
+    List<ChatRecord> recordList = chatRecordPage.getRecords();
+    if (CollectionUtils.isEmpty(recordList)) {
+      return PageResponseDTO.emptyPage();
     }
-    List<ChatRecordRespDTO> chatRecordRespDTOS = BeanCopyUtils.convertList(recordPOList, ChatRecordRespDTO.class);
-    PageResponse<ChatRecordRespDTO> pageResponseVO = new PageResponse<>();
-    pageResponseVO.setDataList(chatRecordRespDTOS);
-    pageResponseVO.setPage(chatRecordPageReqDTO.getCurrentPageNum());
-    pageResponseVO.setSize(chatRecordPageReqDTO.getPageSize());
-    pageResponseVO.setHasNext(chatRecordPOPage.getTotal() > (chatRecordPOPage.getPages() * chatRecordPOPage.getSize()));
-    return pageResponseVO;
+    List<ChatRecordRespDTO> chatRecordRespDTOS = BeanCopyUtils.convertList(recordList, ChatRecordRespDTO.class);
+    PageResponseDTO<ChatRecordRespDTO> pageResponseDTO = new PageResponseDTO<>();
+    pageResponseDTO.setDataList(chatRecordRespDTOS);
+    pageResponseDTO.setPage(chatRecordPageReqDTO.getCurrentPageNum());
+    pageResponseDTO.setSize(chatRecordPageReqDTO.getPageSize());
+    pageResponseDTO.setHasNext(chatRecordPage.getTotal() > (chatRecordPage.getPages() * chatRecordPage.getSize()));
+    return pageResponseDTO;
   }
 }

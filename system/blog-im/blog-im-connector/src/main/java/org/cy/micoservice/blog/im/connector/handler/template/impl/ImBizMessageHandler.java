@@ -38,8 +38,7 @@ public class ImBizMessageHandler extends AbstractImMessageHandlerTemplate {
 
   @Override
   protected boolean isSupport(ImMessageDTO dto) {
-    boolean support = dto != null && dto.getCode() == ImMessageCodeEnum.BIZ.getCode();
-    return support;
+    return dto != null && dto.getCode() == ImMessageCodeEnum.BIZ.getCode();
   }
 
   @Override
@@ -52,6 +51,7 @@ public class ImBizMessageHandler extends AbstractImMessageHandlerTemplate {
       return;
     }
 
+    // 获取topic
     String topic = this.getCurrentChannelTopic(ctx);
     if (StringUtils.isBlank(topic)) {
       log.error("not match im msg here.");

@@ -23,7 +23,7 @@ import org.cy.micoservice.blog.audit.facade.enums.TextAuditBodyTypeEnum;
 import org.cy.micoservice.blog.audit.provider.config.AuditApplicationProperties;
 import org.cy.micoservice.blog.audit.provider.handler.AuditManager;
 import org.cy.micoservice.blog.audit.provider.service.AuditLogService;
-import org.cy.micoservice.blog.entity.audit.model.facade.entity.AuditLog;
+import org.cy.micoservice.blog.entity.audit.model.facade.po.AuditLog;
 import org.cy.micoservice.blog.audit.facade.enums.AuditRefTypeEnum;
 import org.cy.micoservice.blog.framework.rocketmq.starter.consumer.RocketMQConsumerProperties;
 import org.cy.micoservice.blog.framework.rocketmq.starter.producer.RocketMQProducerClient;
@@ -112,15 +112,15 @@ public class CommonAuditConsumer {
       //发送mq
       sendResponseMsg(auditResultMessageDTO);
 
-      AuditLog auditLogPO = new AuditLog();
-      auditLogPO.setResultCode(auditResultMessageDTO.getCode());
-      auditLogPO.setMessage(auditResultMessageDTO.getMessage());
-      auditLogPO.setRefId(String.valueOf(noteTextAuditBody.getNoteId()));
-      auditLogPO.setEventTime(auditMsgDTO.getEventTime());
-      auditLogPO.setRefType(AuditRefTypeEnum.NOTE_TEXT.getCode());
-      auditLogPO.setChannel(channelName);
+      AuditLog auditLog = new AuditLog();
+      auditLog.setResultCode(auditResultMessageDTO.getCode());
+      auditLog.setMessage(auditResultMessageDTO.getMessage());
+      auditLog.setRefId(String.valueOf(noteTextAuditBody.getNoteId()));
+      auditLog.setEventTime(auditMsgDTO.getEventTime());
+      auditLog.setRefType(AuditRefTypeEnum.NOTE_TEXT.getCode());
+      auditLog.setChannel(channelName);
 
-      return auditLogPO;
+      return auditLog;
     }
     return null;
   }

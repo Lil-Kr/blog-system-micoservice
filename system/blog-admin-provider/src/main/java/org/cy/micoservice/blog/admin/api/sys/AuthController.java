@@ -1,7 +1,7 @@
 package org.cy.micoservice.blog.admin.api.sys;
 
 import org.cy.micoservice.blog.admin.service.SysPermissionService;
-import org.cy.micoservice.blog.common.base.ApiResp;
+import org.cy.micoservice.blog.common.base.api.ApiResp;
 import org.cy.micoservice.blog.framework.web.starter.annotations.CheckAuth;
 import org.cy.micoservice.blog.framework.web.starter.annotations.RecordLogger;
 import org.springframework.beans.factory.annotation.Autowired;

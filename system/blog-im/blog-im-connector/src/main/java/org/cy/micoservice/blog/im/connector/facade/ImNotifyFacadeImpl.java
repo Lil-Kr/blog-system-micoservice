@@ -2,7 +2,7 @@ package org.cy.micoservice.blog.im.connector.facade;
 
 import lombok.extern.slf4j.Slf4j;
 import org.apache.dubbo.config.annotation.DubboService;
-import org.cy.micoservice.blog.common.base.RpcResponse;
+import org.cy.micoservice.blog.common.base.rpc.RpcResponse;
 import org.cy.micoservice.blog.common.enums.exception.BizErrorEnum;
 import org.cy.micoservice.blog.common.utils.AssertUtil;
 import org.cy.micoservice.blog.im.connector.service.ImNotifyService;

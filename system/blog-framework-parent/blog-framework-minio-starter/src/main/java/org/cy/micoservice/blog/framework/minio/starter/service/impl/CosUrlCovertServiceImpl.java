@@ -70,11 +70,11 @@ public class CosUrlCovertServiceImpl implements CosUrlCovertService {
   public Map<String, String> batchGetUserAvatarUrls(List<String> userAvatarCosObjectNames) {
     List<String> cosObjectNames = userAvatarCosObjectNames.stream().map(objectName -> MinioConstants.BASE_AVATAR_PATH + objectName).toList();
     try {
-      Map<String,String> resultMap = minIOService.batchGetPreSignedObjUrls(cosObjectNames,3600);
-      Map<String,String> convertUrlMap = new HashMap<>();
+      Map<String, String> resultMap = minIOService.batchGetPreSignedObjUrls(cosObjectNames, 3600);
+      Map<String, String> convertUrlMap = new HashMap<>();
       for (String cosObjectUrl : resultMap.keySet()) {
         String originObjectName = cosObjectUrl.substring(MinioConstants.BASE_AVATAR_PATH.length());
-        convertUrlMap.put(originObjectName,resultMap.get(cosObjectUrl));
+        convertUrlMap.put(originObjectName, resultMap.get(cosObjectUrl));
       }
       return convertUrlMap;
     } catch (Exception e) {

@@ -10,9 +10,9 @@ import org.cy.micoservice.blog.admin.pojo.req.blog.topic.BlogTopicPageReq;
 import org.cy.micoservice.blog.admin.pojo.req.blog.topic.BlogTopicReq;
 import org.cy.micoservice.blog.admin.pojo.resp.blog.BlogTopicResp;
 import org.cy.micoservice.blog.admin.service.BlogTopicService;
-import org.cy.micoservice.blog.common.base.ApiResp;
-import org.cy.micoservice.blog.common.base.PageResult;
-import org.cy.micoservice.blog.entity.base.model.BasePageReq;
+import org.cy.micoservice.blog.common.base.api.ApiResp;
+import org.cy.micoservice.blog.common.base.api.PageResult;
+import org.cy.micoservice.blog.entity.base.model.api.BasePageReq;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
@@ -34,16 +34,16 @@ public class TopicController {
   @CheckAuth
   @PostMapping("/pageList")
   public ApiResp<PageResult<BlogTopicResp>> pageList(@RequestBody @Validated({BasePageReq.GroupPageQuery.class}) BlogTopicPageReq req) {
-    PageResult<BlogTopicResp> blogTopicVOPageResult = blogTopicService.pageList(req);
-    return ApiResp.success(blogTopicVOPageResult);
+    PageResult<BlogTopicResp> blogTopicPageResult = blogTopicService.pageList(req);
+    return ApiResp.success(blogTopicPageResult);
   }
 
   @RecordLogger
   @CheckAuth
   @PostMapping("/list")
   public ApiResp<PageResult<BlogTopic>> list(@RequestBody @Valid BlogTopicReq req) {
-    PageResult<BlogTopic> blogTopicVOPageResult = blogTopicService.list(req);
-    return ApiResp.success(blogTopicVOPageResult);
+    PageResult<BlogTopic> blogTopicPageResult = blogTopicService.list(req);
+    return ApiResp.success(blogTopicPageResult);
   }
 
   @RecordLogger

@@ -1,7 +1,7 @@
 package org.cy.micoservice.blog.admin.pojo.req.image;
 
 import lombok.Data;
-import org.cy.micoservice.blog.entity.base.model.BaseReq;
+import org.cy.micoservice.blog.entity.base.model.api.BaseReq;
 
 import java.io.Serial;
 

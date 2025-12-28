@@ -1,12 +1,13 @@
 package org.cy.micoservice.blog.message.provider.facade;
 
 import org.apache.dubbo.config.annotation.DubboService;
-import org.cy.micoservice.blog.common.base.PageResponse;
-import org.cy.micoservice.blog.common.base.RpcResponse;
+import org.cy.micoservice.blog.common.base.provider.PageResponseDTO;
+import org.cy.micoservice.blog.common.base.rpc.RpcResponse;
 import org.cy.micoservice.blog.message.facade.dto.req.ChatRelationPageReqDTO;
 import org.cy.micoservice.blog.message.facade.dto.req.ChatRelationReqDTO;
 import org.cy.micoservice.blog.message.facade.dto.resp.ChatRelationRespDTO;
 import org.cy.micoservice.blog.message.facade.interfaces.ChatRelationFacade;
+import org.cy.micoservice.blog.message.provider.service.ChatRelationEsService;
 import org.cy.micoservice.blog.message.provider.service.ChatRelationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -22,27 +23,54 @@ public class ChatRelationFacadeImpl implements ChatRelationFacade {
 
   @Autowired
   private ChatRelationService chatRelationService;
+  @Autowired
+  private ChatRelationEsService chatRelationEsService;
 
+  /**
+   * 新增对话关系
+   * @param chatRelationReqDTO
+   * @return
+   */
   @Override
   public RpcResponse<Boolean> add(ChatRelationReqDTO chatRelationReqDTO) {
-    return RpcResponse.success(chatRelationService.add(chatRelationReqDTO));
+    return RpcResponse.success(chatRelationEsService.add(chatRelationReqDTO));
   }
 
+  /**
+   * 分页查询 chat-relation 列表
+   * @param chatRelationPageReqDTO
+   * @return
+   */
   @Override
-  public RpcResponse<PageResponse<ChatRelationRespDTO>> queryInPage(ChatRelationPageReqDTO chatRelationPageReqDTO) {
-    return RpcResponse.success(chatRelationService.queryInPage(chatRelationPageReqDTO));
+  public RpcResponse<PageResponseDTO<ChatRelationRespDTO>> queryInPage(ChatRelationPageReqDTO chatRelationPageReqDTO) {
+    return RpcResponse.success(chatRelationEsService.listChatRelationFromPage(chatRelationPageReqDTO));
   }
 
+  /**
+   * 更新对话关系信息
+   * @param chatRelationReqDTO
+   * @return
+   */
   @Override
   public RpcResponse<Boolean> updateRelationByRelationId(ChatRelationReqDTO chatRelationReqDTO) {
     return RpcResponse.success(chatRelationService.updateRelationByRelationId(chatRelationReqDTO));
   }
 
+  /**
+   * 查询对话关系信息
+   * @param chatRelationPageReqDTO
+   * @return
+   */
   @Override
   public RpcResponse<ChatRelationRespDTO> queryRelationInfo(ChatRelationPageReqDTO chatRelationPageReqDTO) {
     return RpcResponse.success(chatRelationService.queryRelationInfo(chatRelationPageReqDTO));
   }
 
+  /**
+   * 发送对话并且更新对话关系
+   * @param chatRelationReqDTO
+   * @return
+   */
   @Override
   public RpcResponse<Boolean> addRecordAndUpdateRelation(ChatRelationReqDTO chatRelationReqDTO) {
     return RpcResponse.success(chatRelationService.addRecordAndUpdateRelation(chatRelationReqDTO));

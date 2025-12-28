@@ -11,9 +11,9 @@ import org.cy.micoservice.blog.admin.pojo.req.image.ImageUploadReq;
 import org.cy.micoservice.blog.admin.pojo.resp.image.ImageInfoResp;
 import org.cy.micoservice.blog.admin.pojo.resp.image.ImageUploadResp;
 import org.cy.micoservice.blog.admin.service.ImageInfoService;
-import org.cy.micoservice.blog.common.base.ApiResp;
-import org.cy.micoservice.blog.common.base.PageResult;
-import org.cy.micoservice.blog.entity.base.model.BasePageReq;
+import org.cy.micoservice.blog.common.base.api.ApiResp;
+import org.cy.micoservice.blog.common.base.api.PageResult;
+import org.cy.micoservice.blog.entity.base.model.api.BasePageReq;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
@@ -37,16 +37,16 @@ public class ImageInfoController {
   @CheckAuth
   @PostMapping("/pageList")
   public ApiResp<PageResult<ImageInfoResp>> pageList(@RequestBody @Validated({BasePageReq.GroupPageQuery.class}) ImageInfoPageListReq req) {
-    PageResult<ImageInfoResp> imageInfoVOPageResult = imageInfoService.pageImageInfoList(req);
-    return ApiResp.success(imageInfoVOPageResult);
+    PageResult<ImageInfoResp> imageInfoPageResult = imageInfoService.pageImageInfoList(req);
+    return ApiResp.success(imageInfoPageResult);
   }
 
   @RecordLogger
   @CheckAuth
   @PostMapping("/list")
   public ApiResp<PageResult<ImageInfoResp>> list(@RequestBody @Validated ImageInfoPageListReq req) {
-    PageResult<ImageInfoResp> imageInfoVOPageResult = imageInfoService.imageInfoList(req);
-    return ApiResp.success(imageInfoVOPageResult);
+    PageResult<ImageInfoResp> imageInfoPageResult = imageInfoService.imageInfoList(req);
+    return ApiResp.success(imageInfoPageResult);
   }
 
   @RecordLogger

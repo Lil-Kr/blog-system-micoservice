@@ -16,9 +16,9 @@ public class ChatRelationReqDTO implements Serializable {
   @Serial
   private static final long serialVersionUID = 8688338987939041706L;
 
-  private Long id;
+  private String id;
 
-  private Long relationId;
+  private String relationId;
 
   private String content;
 
@@ -27,4 +27,6 @@ public class ChatRelationReqDTO implements Serializable {
   private Long receiverId;
 
   private Integer type;
+
+  private Long seqNo;
 }

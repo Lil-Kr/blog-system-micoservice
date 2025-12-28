@@ -5,7 +5,7 @@ import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import org.cy.micoservice.blog.common.enums.biz.ValidStatusEnum;
-import org.cy.micoservice.blog.entity.base.model.BaseEntity;
+import org.cy.micoservice.blog.entity.base.model.api.BaseEntity;
 import org.cy.micoservice.blog.entity.gateway.model.enums.LogPrintStrategyTypeEnum;
 
 import java.io.Serial;

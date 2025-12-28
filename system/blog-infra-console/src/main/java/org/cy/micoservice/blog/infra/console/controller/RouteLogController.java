@@ -2,9 +2,9 @@ package org.cy.micoservice.blog.infra.console.controller;
 
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotNull;
-import org.cy.micoservice.blog.common.base.ApiResp;
-import org.cy.micoservice.blog.common.base.PageResult;
-import org.cy.micoservice.blog.entity.base.model.BasePageReq;
+import org.cy.micoservice.blog.common.base.api.ApiResp;
+import org.cy.micoservice.blog.common.base.api.PageResult;
+import org.cy.micoservice.blog.entity.base.model.api.BasePageReq;
 import org.cy.micoservice.blog.entity.gateway.model.entity.LogPrintStrategy;
 import org.cy.micoservice.blog.entity.gateway.model.req.LogPrintStrategyAddReq;
 import org.cy.micoservice.blog.entity.gateway.model.req.LogPrintStrategyEditReq;

@@ -1,6 +1,6 @@
 package org.cy.micoservice.blog.admin.pojo.resp.image;
 
-import org.cy.micoservice.blog.common.base.PageResult;
+import org.cy.micoservice.blog.common.base.api.PageResult;
 import org.cy.micoservice.blog.admin.pojo.entity.image.ImageCategory;
 import lombok.Data;
 import lombok.ToString;

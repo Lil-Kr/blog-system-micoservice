@@ -8,7 +8,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.cy.micoservice.blog.admin.common.holder.RequestHolder;
 import org.cy.micoservice.blog.admin.dao.SysAclModuleMapper;
 import org.cy.micoservice.blog.admin.service.*;
-import org.cy.micoservice.blog.common.base.ApiResp;
+import org.cy.micoservice.blog.common.base.api.ApiResp;
 import org.cy.micoservice.blog.entity.admin.model.dto.acl.AclDto;
 import org.cy.micoservice.blog.entity.admin.model.dto.aclmodule.AclModuleDto;
 import org.cy.micoservice.blog.entity.admin.model.entity.SysAcl;

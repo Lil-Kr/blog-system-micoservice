@@ -3,7 +3,7 @@ package org.cy.micoservice.blog.im.router.service.impl;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.dubbo.config.annotation.DubboReference;
 import org.apache.dubbo.rpc.RpcContext;
-import org.cy.micoservice.blog.common.base.RpcResponse;
+import org.cy.micoservice.blog.common.base.rpc.RpcResponse;
 import org.cy.micoservice.blog.common.enums.response.ApiReturnCodeEnum;
 import org.cy.micoservice.blog.common.utils.AssertUtil;
 import org.cy.micoservice.blog.common.utils.RpcAssertUtil;

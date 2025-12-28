@@ -381,7 +381,6 @@ public class ElasticsearchUtil {
     }
   }
 
-
   /**
    * 批量新增或更新文档
    * @param indexName 索引名称

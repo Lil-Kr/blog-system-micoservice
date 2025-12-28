@@ -2,7 +2,7 @@ package org.cy.micoservice.blog.admin.pojo.req.blog.diary;
 
 import lombok.Data;
 import lombok.ToString;
-import org.cy.micoservice.blog.entity.base.model.BasePageReq;
+import org.cy.micoservice.blog.entity.base.model.api.BasePageReq;
 
 import java.io.Serial;
 

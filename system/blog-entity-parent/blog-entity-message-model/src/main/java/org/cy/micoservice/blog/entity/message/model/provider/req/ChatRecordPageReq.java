@@ -2,7 +2,7 @@ package org.cy.micoservice.blog.entity.message.model.provider.req;
 
 import lombok.Data;
 import lombok.EqualsAndHashCode;
-import org.cy.micoservice.blog.entity.base.model.BasePageReq;
+import org.cy.micoservice.blog.entity.base.model.api.BasePageReq;
 
 import java.io.Serial;
 
@@ -18,4 +18,6 @@ public class ChatRecordPageReq extends BasePageReq {
   private static final long serialVersionUID = 9026089824481664193L;
 
   private Long relationId;
+
+  private Long searchOffset;
 }

@@ -1,4 +1,4 @@
-package org.cy.micoservice.blog.common.base;
+package org.cy.micoservice.blog.common.base.rpc;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

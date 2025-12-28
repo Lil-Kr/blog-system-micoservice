@@ -12,7 +12,7 @@ import org.cy.micoservice.blog.admin.dao.SysUserMapper;
 import org.cy.micoservice.blog.admin.service.CacheService;
 import org.cy.micoservice.blog.admin.service.MessageLangService;
 import org.cy.micoservice.blog.admin.service.SysRoleUserService;
-import org.cy.micoservice.blog.common.base.ApiResp;
+import org.cy.micoservice.blog.common.base.api.ApiResp;
 import org.cy.micoservice.blog.common.exception.BizException;
 import org.cy.micoservice.blog.common.utils.DateUtil;
 import org.cy.micoservice.blog.common.utils.IdWorker;

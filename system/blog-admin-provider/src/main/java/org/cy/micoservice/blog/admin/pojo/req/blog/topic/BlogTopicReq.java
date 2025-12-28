@@ -7,7 +7,7 @@ import lombok.Data;
 import org.cy.micoservice.blog.admin.common.constants.CommonConstants;
 import org.cy.micoservice.blog.admin.pojo.req.blog.category.BlogCategoryReq;
 import org.cy.micoservice.blog.admin.pojo.req.blog.label.BlogLabelReq;
-import org.cy.micoservice.blog.entity.base.model.BaseReq;
+import org.cy.micoservice.blog.entity.base.model.api.BaseReq;
 
 import java.io.Serial;
 import java.util.List;

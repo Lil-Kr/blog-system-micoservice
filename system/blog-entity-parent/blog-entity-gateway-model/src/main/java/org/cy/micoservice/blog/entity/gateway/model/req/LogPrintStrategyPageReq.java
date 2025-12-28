@@ -3,7 +3,7 @@ package org.cy.micoservice.blog.entity.gateway.model.req;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import org.cy.micoservice.blog.common.enums.biz.ValidStatusEnum;
-import org.cy.micoservice.blog.entity.base.model.BasePageReq;
+import org.cy.micoservice.blog.entity.base.model.api.BasePageReq;
 import org.cy.micoservice.blog.entity.gateway.model.enums.LogPrintStrategyTypeEnum;
 
 import java.io.Serial;

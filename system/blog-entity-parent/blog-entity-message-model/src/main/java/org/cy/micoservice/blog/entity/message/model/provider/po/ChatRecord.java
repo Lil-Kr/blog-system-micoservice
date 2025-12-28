@@ -2,7 +2,7 @@ package org.cy.micoservice.blog.entity.message.model.provider.po;
 
 import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
-import org.cy.micoservice.blog.entity.base.model.BaseEntity;
+import org.cy.micoservice.blog.entity.base.model.api.BaseEntity;
 
 import java.io.Serial;
 
@@ -30,7 +30,7 @@ public class ChatRecord extends BaseEntity {
   private Long userId;
 
   // 接收对话的用户id
-  private Long objectId;
+  private Long receiverId;
 
   // 对话内容
   private String content;
@@ -42,5 +42,5 @@ public class ChatRecord extends BaseEntity {
   private Integer status;
 
   // 对话序号
-  private Integer seqNo;
+  private Long seqNo;
 }

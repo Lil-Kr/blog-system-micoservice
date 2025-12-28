@@ -13,6 +13,6 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class TestApplicationConfig {
 
-  @Value("${es.record.index.alias.user-follower-relation:}")
+  @Value("${es.user.follower.index:blog.user.user-follower-relation}")
   private String esRecordIndexAliasUserFollowerRelation;
 }

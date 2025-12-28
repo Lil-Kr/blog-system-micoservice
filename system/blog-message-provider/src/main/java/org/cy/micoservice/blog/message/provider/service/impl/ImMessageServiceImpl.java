@@ -14,7 +14,7 @@ import org.cy.micoservice.blog.audit.facade.dto.text.TextAuditBody;
 import org.cy.micoservice.blog.audit.facade.enums.AuditTypeEnum;
 import org.cy.micoservice.blog.audit.facade.enums.TextAuditBodyTypeEnum;
 import org.cy.micoservice.blog.audit.facade.interfaces.TextAuditFacade;
-import org.cy.micoservice.blog.common.base.RpcResponse;
+import org.cy.micoservice.blog.common.base.rpc.RpcResponse;
 import org.cy.micoservice.blog.common.enums.exception.BizErrorEnum;
 import org.cy.micoservice.blog.common.utils.AssertUtil;
 import org.cy.micoservice.blog.framework.rocketmq.starter.producer.RocketMQProducerClient;

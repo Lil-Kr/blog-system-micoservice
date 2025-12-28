@@ -35,20 +35,26 @@ public class MessageApplicationProperties {
   private String imChatMessageAuditResultTopic;
 
   /**
-   * topic: 推送消息给 im-router IM路由服务
+   * topic: 推送消息给 im-router IM 路由服务
    */
   @Value("${im.route.push.producer-topic:}")
   private String imRoutePushTopic;
 
   /**
-   * es:
+   * es index:
    */
-  @Value("${es.record.index.alias.chat:blog.message.chat-record}")
-  private String esChatRecordIndexAlias;
+  @Value("${es.chat.record.index:blog.message.chat-record}")
+  private String esChatRecordIndex;
 
   /**
-   * es
+   * es index:
    */
-  @Value("${es.relation.index.alias.chat:blog.message.chat-relation}")
-  private String esChatRelationIndexAlias;
+  @Value("${es.chat.relation.index:blog.message.chat-relation}")
+  private String esChatRelationIndex;
+
+  /**
+   * es index:
+   */
+  @Value("${es.chat.box.index:blog.message.chat-box}")
+  private String esChatBoxIndex;
 }

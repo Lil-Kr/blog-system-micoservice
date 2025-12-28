@@ -4,7 +4,7 @@ import com.alibaba.fastjson2.JSONObject;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
-import org.cy.micoservice.blog.common.base.ApiResp;
+import org.cy.micoservice.blog.common.base.api.ApiResp;
 import org.cy.micoservice.blog.common.constants.gateway.GatewayInfraConsoleSdkConstants;
 import org.cy.micoservice.blog.entity.gateway.model.req.RouteConfigQueryListReq;
 import org.cy.micoservice.blog.entity.gateway.model.req.RouteConfigSaveRequest;

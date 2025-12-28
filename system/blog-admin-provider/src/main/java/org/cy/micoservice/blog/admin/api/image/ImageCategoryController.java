@@ -10,9 +10,9 @@ import org.cy.micoservice.blog.admin.pojo.req.image.ImageCategoryPageListReq;
 import org.cy.micoservice.blog.admin.pojo.req.image.ImageCategoryReq;
 import org.cy.micoservice.blog.admin.pojo.resp.image.ImageCategoryResp;
 import org.cy.micoservice.blog.admin.service.ImageCategoryService;
-import org.cy.micoservice.blog.common.base.ApiResp;
-import org.cy.micoservice.blog.common.base.PageResult;
-import org.cy.micoservice.blog.entity.base.model.BasePageReq;
+import org.cy.micoservice.blog.common.base.api.ApiResp;
+import org.cy.micoservice.blog.common.base.api.PageResult;
+import org.cy.micoservice.blog.entity.base.model.api.BasePageReq;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
@@ -37,16 +37,16 @@ public class ImageCategoryController {
   @CheckAuth
   @PostMapping("/pageList")
   public ApiResp<PageResult<ImageCategoryResp>> pageList(@RequestBody @Validated({BasePageReq.GroupPageQuery.class}) ImageCategoryPageListReq req) {
-    PageResult<ImageCategoryResp> blogTopicVOPageResult = imageCategoryService.pageList(req);
-    return ApiResp.success(blogTopicVOPageResult);
+    PageResult<ImageCategoryResp> blogTopicPageResult = imageCategoryService.pageList(req);
+    return ApiResp.success(blogTopicPageResult);
   }
 
   @RecordLogger
   @CheckAuth
   @PostMapping("/list")
   public ApiResp<PageResult<ImageCategoryResp>> list(@RequestBody @Valid ImageCategoryListReq req) {
-    PageResult<ImageCategoryResp> blogTopicVOPageResult = imageCategoryService.list(req);
-    return ApiResp.success(blogTopicVOPageResult);
+    PageResult<ImageCategoryResp> blogTopicPageResult = imageCategoryService.list(req);
+    return ApiResp.success(blogTopicPageResult);
   }
 
   @RecordLogger

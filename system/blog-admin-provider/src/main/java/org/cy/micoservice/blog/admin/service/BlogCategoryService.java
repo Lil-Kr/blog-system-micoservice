@@ -3,8 +3,8 @@ package org.cy.micoservice.blog.admin.service;
 import org.cy.micoservice.blog.admin.pojo.req.blog.category.BlogCategoryPageReq;
 import org.cy.micoservice.blog.admin.pojo.req.blog.category.BlogCategoryReq;
 import org.cy.micoservice.blog.admin.pojo.resp.blog.BlogCategoryResp;
-import org.cy.micoservice.blog.common.base.ApiResp;
-import org.cy.micoservice.blog.common.base.PageResult;
+import org.cy.micoservice.blog.common.base.api.ApiResp;
+import org.cy.micoservice.blog.common.base.api.PageResult;
 
 import java.util.List;
 

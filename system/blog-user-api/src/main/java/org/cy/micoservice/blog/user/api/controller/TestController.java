@@ -2,7 +2,7 @@ package org.cy.micoservice.blog.user.api.controller;
 
 import com.alibaba.fastjson2.JSONObject;
 import lombok.extern.slf4j.Slf4j;
-import org.cy.micoservice.blog.common.base.ApiResp;
+import org.cy.micoservice.blog.common.base.api.ApiResp;
 import org.cy.micoservice.blog.framework.web.starter.annotations.NoAuthCheck;
 import org.cy.micoservice.blog.user.api.vo.req.TestReq;
 import org.springframework.web.bind.annotation.PostMapping;

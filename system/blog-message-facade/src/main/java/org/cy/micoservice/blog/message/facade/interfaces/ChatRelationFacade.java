@@ -1,7 +1,7 @@
 package org.cy.micoservice.blog.message.facade.interfaces;
 
-import org.cy.micoservice.blog.common.base.PageResponse;
-import org.cy.micoservice.blog.common.base.RpcResponse;
+import org.cy.micoservice.blog.common.base.provider.PageResponseDTO;
+import org.cy.micoservice.blog.common.base.rpc.RpcResponse;
 import org.cy.micoservice.blog.message.facade.dto.req.ChatRelationPageReqDTO;
 import org.cy.micoservice.blog.message.facade.dto.req.ChatRelationReqDTO;
 import org.cy.micoservice.blog.message.facade.dto.resp.ChatRelationRespDTO;
@@ -24,7 +24,7 @@ public interface ChatRelationFacade {
    * @param chatRelationPageReqDTO
    * @return
    */
-  RpcResponse<PageResponse<ChatRelationRespDTO>> queryInPage(ChatRelationPageReqDTO chatRelationPageReqDTO);
+  RpcResponse<PageResponseDTO<ChatRelationRespDTO>> queryInPage(ChatRelationPageReqDTO chatRelationPageReqDTO);
 
   /**
    * 更新对话关系信息

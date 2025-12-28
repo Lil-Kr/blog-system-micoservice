@@ -12,7 +12,7 @@ import org.cy.micoservice.blog.admin.service.SysAclModuleService;
 import org.cy.micoservice.blog.admin.service.SysAclService;
 import org.cy.micoservice.blog.admin.service.SysTreeService;
 import org.cy.micoservice.blog.admin.utils.orgUtil.LevelUtil;
-import org.cy.micoservice.blog.common.base.ApiResp;
+import org.cy.micoservice.blog.common.base.api.ApiResp;
 import org.cy.micoservice.blog.common.utils.DateUtil;
 import org.cy.micoservice.blog.common.utils.IdWorker;
 import org.cy.micoservice.blog.entity.admin.model.dto.aclmodule.AclModuleDto;

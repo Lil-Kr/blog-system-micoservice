@@ -1,7 +1,7 @@
 package org.cy.micoservice.blog.audit.provider.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
-import org.cy.micoservice.blog.entity.audit.model.facade.entity.AuditLog;
+import org.cy.micoservice.blog.entity.audit.model.facade.po.AuditLog;
 
 /**
  * @Author: Lil-K

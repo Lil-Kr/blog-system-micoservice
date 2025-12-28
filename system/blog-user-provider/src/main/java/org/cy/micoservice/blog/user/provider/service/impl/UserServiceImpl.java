@@ -1,7 +1,7 @@
 package org.cy.micoservice.blog.user.provider.service.impl;
 
-import org.cy.micoservice.blog.common.base.ApiResp;
-import org.cy.micoservice.blog.common.base.PageResult;
+import org.cy.micoservice.blog.common.base.api.ApiResp;
+import org.cy.micoservice.blog.common.base.api.PageResult;
 import org.cy.micoservice.blog.user.provider.config.UserRedisKeyBuilder;
 import org.cy.micoservice.blog.user.provider.dao.SysUserMapper;
 import org.cy.micoservice.blog.user.provider.pojo.entity.SysUser;

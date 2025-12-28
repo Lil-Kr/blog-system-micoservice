@@ -1,4 +1,4 @@
-package org.cy.micoservice.blog.common.base;
+package org.cy.micoservice.blog.common.base.api;
 
 import java.io.Serial;
 import java.io.Serializable;
@@ -7,7 +7,7 @@ import java.util.List;
 /**
  * @Author: Lil-K
  * @Date: 2025/3/30
- * @Description:
+ * @Description: 分页结果组件
  */
 public class PageResult<T> implements Serializable {
 

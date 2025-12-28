@@ -1,4 +1,4 @@
-package org.cy.micoservice.blog.common.base;
+package org.cy.micoservice.blog.common.base.api;
 
 import lombok.Data;
 import org.cy.micoservice.blog.common.enums.response.ApiReturnCodeEnum;

@@ -17,10 +17,10 @@ public class ChatRelationEs implements Serializable {
   private static final long serialVersionUID = 4155456431095950746L;
 
   // es id
-  private Long id;
+  private String id;
 
   // 关系id
-  private Long relationId;
+  private String relationId;
 
   // 对话id
   private Long chatId;
@@ -31,8 +31,11 @@ public class ChatRelationEs implements Serializable {
   // 接收对话的用户id
   private Long receiverId;
 
-  // 对话内容
-  private String content;
+  /**
+   * 对话内容
+   * @see Content
+   */
+  private Content content;
 
   // 对话类型
   private Integer type;

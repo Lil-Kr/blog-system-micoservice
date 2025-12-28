@@ -1,8 +1,7 @@
 package org.cy.micoservice.blog.admin.pojo.req.blog.label;
 
 import lombok.Data;
-import lombok.ToString;
-import org.cy.micoservice.blog.entity.base.model.BaseReq;
+import org.cy.micoservice.blog.entity.base.model.api.BaseReq;
 
 import java.io.Serial;
 

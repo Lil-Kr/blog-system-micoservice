@@ -1,7 +1,7 @@
 package org.cy.micoservice.blog.audit.provider.dao;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
-import org.cy.micoservice.blog.entity.audit.model.facade.entity.AuditLog;
+import org.cy.micoservice.blog.entity.audit.model.facade.po.AuditLog;
 import org.springframework.stereotype.Repository;
 
 /**

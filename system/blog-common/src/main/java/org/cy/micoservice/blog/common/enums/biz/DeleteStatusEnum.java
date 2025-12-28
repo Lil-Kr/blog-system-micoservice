@@ -13,6 +13,6 @@ public enum DeleteStatusEnum {
   DELETED(DeleteStatusConstants.DELETED, "已删除"),
   ;
 
-  Integer code;
+  int code;
   String desc;
 }

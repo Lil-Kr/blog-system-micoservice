@@ -35,7 +35,7 @@ public class ImChatReqDTO implements Serializable {
   /**
    * 关系id
    */
-  private Long relationId;
+  private String relationId;
 
   /**
    * 唯一消息id
@@ -55,5 +55,5 @@ public class ImChatReqDTO implements Serializable {
   /**
    * 消息顺序
    */
-  private Integer seqNo;
+  private Long seqNo;
 }

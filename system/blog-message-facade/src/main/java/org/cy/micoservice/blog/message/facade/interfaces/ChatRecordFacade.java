@@ -1,7 +1,7 @@
 package org.cy.micoservice.blog.message.facade.interfaces;
 
-import org.cy.micoservice.blog.common.base.PageResponse;
-import org.cy.micoservice.blog.common.base.RpcResponse;
+import org.cy.micoservice.blog.common.base.provider.PageResponseDTO;
+import org.cy.micoservice.blog.common.base.rpc.RpcResponse;
 import org.cy.micoservice.blog.message.facade.dto.req.ChatRecordPageReqDTO;
 import org.cy.micoservice.blog.message.facade.dto.req.ChatRecordReqDTO;
 import org.cy.micoservice.blog.message.facade.dto.resp.ChatRecordRespDTO;
@@ -25,5 +25,5 @@ public interface ChatRecordFacade {
    * @param chatRecordPageReqDTO
    * @return
    */
-  RpcResponse<PageResponse<ChatRecordRespDTO>> queryRecordInPage(ChatRecordPageReqDTO chatRecordPageReqDTO);
+  RpcResponse<PageResponseDTO<ChatRecordRespDTO>> queryRecordInPage(ChatRecordPageReqDTO chatRecordPageReqDTO);
 }

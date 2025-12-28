@@ -61,7 +61,6 @@ public class ImPushServiceImpl implements ImPushService {
    */
   @Override
   public void batchPushRouterMessage(List<ImChatReqDTO> imChatReqDTOList) {
-    ImBatchMessageDTO imBatchMessageDTO = new ImBatchMessageDTO();
     List<ImSingleMessageDTO> imSingleMessageDTOList = imChatReqDTOList.parallelStream()
       .map(imChatReq -> {
         ImMessageDTO imMessageDTO = new ImMessageDTO(ImMessageConstants.BIZ_MSG_CODE, JSONObject.toJSONString(imChatReq));
@@ -71,6 +70,8 @@ public class ImPushServiceImpl implements ImPushService {
         return singleMessageDTO;
       })
       .collect(Collectors.toList());
+
+    ImBatchMessageDTO imBatchMessageDTO = new ImBatchMessageDTO();
     imBatchMessageDTO.setImSingleMessageDTOList(imSingleMessageDTOList);
 
     Message message = new Message();

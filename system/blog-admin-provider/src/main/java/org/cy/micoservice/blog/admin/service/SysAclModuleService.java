@@ -1,7 +1,7 @@
 package org.cy.micoservice.blog.admin.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
-import org.cy.micoservice.blog.common.base.ApiResp;
+import org.cy.micoservice.blog.common.base.api.ApiResp;
 import org.cy.micoservice.blog.entity.admin.model.dto.aclmodule.AclModuleDto;
 import org.cy.micoservice.blog.entity.admin.model.entity.SysAclModule;
 import org.cy.micoservice.blog.entity.admin.model.req.aclmodule.AclModuleListReq;

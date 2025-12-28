@@ -1,6 +1,7 @@
 package org.cy.micoservice.blog.framework.mybatis.starter.interceptor;
 
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.reflect.FieldUtils;
 import org.apache.ibatis.executor.resultset.ResultSetHandler;
 import org.apache.ibatis.plugin.Interceptor;
@@ -11,7 +12,6 @@ import org.cy.micoservice.blog.common.security.Crypto;
 import org.cy.micoservice.blog.framework.mybatis.starter.anno.Decrypt;
 import org.springframework.stereotype.Component;
 import org.springframework.util.ClassUtils;
-import org.springframework.util.CollectionUtils;
 
 import java.lang.reflect.Field;
 import java.sql.Statement;

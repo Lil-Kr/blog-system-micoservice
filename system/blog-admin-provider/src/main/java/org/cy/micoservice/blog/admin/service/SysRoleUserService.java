@@ -1,6 +1,6 @@
 package org.cy.micoservice.blog.admin.service;
 
-import org.cy.micoservice.blog.common.base.ApiResp;
+import org.cy.micoservice.blog.common.base.api.ApiResp;
 import org.cy.micoservice.blog.entity.admin.model.req.roleuser.RoleUserReq;
 import org.cy.micoservice.blog.entity.admin.model.resp.role.RoleUserResp;
 

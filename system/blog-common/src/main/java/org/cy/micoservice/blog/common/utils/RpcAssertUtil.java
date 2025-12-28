@@ -1,6 +1,6 @@
 package org.cy.micoservice.blog.common.utils;
 
-import org.cy.micoservice.blog.common.base.RpcResponse;
+import org.cy.micoservice.blog.common.base.rpc.RpcResponse;
 import org.cy.micoservice.blog.common.exception.BizException;
 
 /**

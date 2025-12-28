@@ -1,7 +1,7 @@
 package org.cy.micoservice.blog.admin.service;
 
-import org.cy.micoservice.blog.common.base.ApiResp;
-import org.cy.micoservice.blog.common.base.PageResult;
+import org.cy.micoservice.blog.common.base.api.ApiResp;
+import org.cy.micoservice.blog.common.base.api.PageResult;
 import org.cy.micoservice.blog.admin.pojo.entity.blog.BlogLabel;
 import org.cy.micoservice.blog.admin.pojo.req.blog.label.BlogLabelListReq;
 import org.cy.micoservice.blog.admin.pojo.req.blog.label.BlogLabelPageReq;

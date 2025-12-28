@@ -23,12 +23,15 @@ public class ChatRelationRespDTO implements Serializable {
 
   private Long receiverId;
 
-  private Long relationId;
+  private String relationId;
 
   private Integer unreadCount;
 
   // 最新的对话内容
   private String content;
+
+  //消息类型
+  private Integer type;
 
   private LocalDateTime latestMsgTime;
 

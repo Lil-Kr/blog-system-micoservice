@@ -1,7 +1,7 @@
 package org.cy.micoservice.blog.user.api.controller;
 
 import lombok.extern.slf4j.Slf4j;
-import org.cy.micoservice.blog.common.base.ApiResp;
+import org.cy.micoservice.blog.common.base.api.ApiResp;
 import org.cy.micoservice.blog.user.api.service.UserProfileService;
 import org.cy.micoservice.blog.user.api.vo.resp.SysUserResp;
 import org.springframework.beans.factory.annotation.Autowired;

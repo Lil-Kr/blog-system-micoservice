@@ -4,7 +4,6 @@ import lombok.Data;
 
 import java.io.Serial;
 import java.io.Serializable;
-import java.time.LocalDateTime;
 
 /**
  * @Author: Lil-K
@@ -20,16 +19,24 @@ public class ChatRelationResp implements Serializable {
 
   private Long userId;
 
+  private String userNickname;
+
+  private String userAvatar;
+
   private Long receiverId;
 
-  private Long relationId;
+  private String relationId;
+
+  private String objectNickname;
+
+  private String objectAvatar;
 
   private Long unreadCount;
 
   // 最新的对话内容
   private String content;
 
-  private LocalDateTime latestMsgTime;
+  private String latestMsgTime;
 
   // 消息总数
   private Long msgCount;

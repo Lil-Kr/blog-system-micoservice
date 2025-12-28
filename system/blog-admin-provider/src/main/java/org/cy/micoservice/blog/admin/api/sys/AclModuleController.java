@@ -5,7 +5,7 @@ import jakarta.validation.constraints.NotNull;
 import org.cy.micoservice.blog.framework.web.starter.annotations.CheckAuth;
 import org.cy.micoservice.blog.framework.web.starter.annotations.RecordLogger;
 import org.cy.micoservice.blog.admin.service.SysAclModuleService;
-import org.cy.micoservice.blog.common.base.ApiResp;
+import org.cy.micoservice.blog.common.base.api.ApiResp;
 import org.cy.micoservice.blog.entity.admin.model.dto.aclmodule.AclModuleDto;
 import org.cy.micoservice.blog.entity.admin.model.req.aclmodule.AclModuleListReq;
 import org.cy.micoservice.blog.entity.admin.model.req.aclmodule.AclModuleReq;

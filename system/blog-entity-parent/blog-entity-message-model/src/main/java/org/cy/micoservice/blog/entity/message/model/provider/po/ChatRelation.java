@@ -3,7 +3,7 @@ package org.cy.micoservice.blog.entity.message.model.provider.po;
 import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
-import org.cy.micoservice.blog.entity.base.model.BaseEntity;
+import org.cy.micoservice.blog.entity.base.model.api.BaseEntity;
 
 import java.io.Serial;
 import java.time.LocalDateTime;
@@ -42,7 +42,7 @@ public class ChatRelation extends BaseEntity {
   // 对话状态
   private Integer status;
 
-  // 已对话条数，前端展示使用
+  // 已对话条数, 前端展示使用
   private Integer msgCount;
 
   // 最新对话时间

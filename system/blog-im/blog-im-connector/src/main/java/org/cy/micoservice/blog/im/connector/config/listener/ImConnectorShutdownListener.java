@@ -8,9 +8,9 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.event.ContextClosedEvent;
 
 /**
- * @Author idea
- * @Date Created at 2025/12/7
- * @Description 监听 im 节点下线事件
+ * @Author: Lil-K
+ * @Date: 2025/12/11
+ * @Description: 监听 im 节点下线事件
  */
 @Slf4j
 @Configuration

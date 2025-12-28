@@ -20,5 +20,5 @@ public class SysDictResp extends SysDict {
 	@Serial
 	private static final long serialVersionUID = 1219364284711528199L;
 
-	private List<SysDictDetailResp> dictDetailVOList;
+	private List<SysDictDetailResp> dictDetailList;
 }

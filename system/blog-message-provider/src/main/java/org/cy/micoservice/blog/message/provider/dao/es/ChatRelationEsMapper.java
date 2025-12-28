@@ -11,10 +11,12 @@ import co.elastic.clients.elasticsearch.core.IndexResponse;
 import co.elastic.clients.elasticsearch.core.SearchRequest;
 import co.elastic.clients.elasticsearch.core.SearchResponse;
 import co.elastic.clients.elasticsearch.core.search.Hit;
+import com.alibaba.fastjson.JSON;
 import jakarta.annotation.Resource;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
-import org.cy.micoservice.blog.common.base.PageResponse;
+import org.cy.micoservice.blog.common.base.provider.PageResponseDTO;
 import org.cy.micoservice.blog.common.enums.biz.DeleteStatusEnum;
 import org.cy.micoservice.blog.common.utils.BeanCopyUtils;
 import org.cy.micoservice.blog.entity.message.model.provider.po.ChatRelationEs;
@@ -36,54 +38,64 @@ import java.util.stream.Collectors;
 /**
  * @Author: Lil-K
  * @Date: 2025/12/26
- * @Description: 会话关系 dao
+ * @Description: 会话关系 mapper
  */
 @Slf4j
 @Repository
 public class ChatRelationEsMapper {
 
-  @Resource
-  private ElasticsearchUtil elasticsearchUtil;
-
   @Autowired
   private MessageApplicationProperties applicationProperties;
-
+  @Resource
+  private ElasticsearchUtil elasticsearchUtil;
   @Autowired
   private ChatRecordEsMapper chatRecordEsMapper;
 
   /**
-   * 会话关系建立保存index
+   * 保存会话关系建立 index
    * @param chatRelationEs
    * @return
    */
-  public boolean indexSaveChatRelation(ChatRelationEs chatRelationEs) {
+  public boolean index(ChatRelationEs chatRelationEs) {
+    Result result = this.indexWithResult(chatRelationEs);
+    return Result.Created == result || Result.Updated == result;
+  }
+
+  /**
+   * index 返回结果类型
+   * @param chatRelationEs
+   * @return
+   */
+  public Result indexWithResult(ChatRelationEs chatRelationEs) {
     long now = System.nanoTime();
     chatRelationEs.setCreateTime(now);
     chatRelationEs.setUpdateTime(now);
     chatRelationEs.setDeleted(DeleteStatusEnum.ACTIVE.getCode());
-    IndexResponse response = elasticsearchUtil.indexDocument(applicationProperties.getEsChatRecordIndexAlias(), String.valueOf(chatRelationEs.getId()), chatRelationEs);
-    return Result.Created == response.result() || Result.Updated == response.result();
+    chatRelationEs.setId(chatRelationEs.getRelationId());
+    IndexResponse response = elasticsearchUtil.indexDocument(applicationProperties.getEsChatRelationIndex(), String.valueOf(chatRelationEs.getId()), chatRelationEs);
+    return response.result();
   }
 
   /**
-   * 批量会话保存index
+   * 批量会话信息保存index
    * @param chatRelationEsList
    * @return
    */
   public boolean bulk(List<ChatRelationEs> chatRelationEsList) {
     long now = System.nanoTime();
-    List<Map<String, Object>> eachRecordList = chatRelationEsList.parallelStream()
+    List<Map<String, Object>> eachRecordList = chatRelationEsList.stream()
       .map(chatRelationEs -> {
-        Map<String, Object> eachItem = new HashMap<>();
+        Map<String, Object> eachItemMap = new HashMap<>();
         chatRelationEs.setCreateTime(now);
         chatRelationEs.setUpdateTime(now);
         chatRelationEs.setDeleted(DeleteStatusEnum.ACTIVE.getCode());
-        eachItem.put(String.valueOf(chatRelationEs.getRelationId()), chatRelationEs);
-        return eachItem;
+        eachItemMap.put(String.valueOf(chatRelationEs.getRelationId()), chatRelationEs);
+        return eachItemMap;
       })
       .collect(Collectors.toList());
+
     try {
-      BulkResponse bulkResponse = elasticsearchUtil.bulkIndexDocuments(applicationProperties.getEsChatRecordIndexAlias(), eachRecordList);
+      BulkResponse bulkResponse = elasticsearchUtil.bulkIndexDocuments(applicationProperties.getEsChatRecordIndex(), eachRecordList);
     } catch (Exception e) {
       log.error("bulk index error", e);
       return false;
@@ -99,7 +111,7 @@ public class ChatRelationEsMapper {
   public boolean updateContentAndMsgCount(ChatRelationEs chatRelationEs) {
     Long msgCount = chatRecordEsMapper.countByRelationId(chatRelationEs.getRelationId());
     chatRelationEs.setMsgCount(msgCount);
-    return this.indexSaveChatRelation(chatRelationEs);
+    return this.index(chatRelationEs);
   }
 
   /**
@@ -107,18 +119,17 @@ public class ChatRelationEsMapper {
    * @param request
    * @return
    */
-  public PageResponse<ChatRelationRespDTO> listChatRelationFromPage(ChatRelationPageReqDTO request) {
+  public PageResponseDTO<ChatRelationRespDTO> listChatRelationFromPage(ChatRelationPageReqDTO request) {
     SearchPageRequest pageRequest = new SearchPageRequest();
+    pageRequest.setIndexName(applicationProperties.getEsChatRelationIndex());
     pageRequest.setPageSize(request.getPageSize());
     pageRequest.setSearchRequest(this.buildSearchRequest(request));
-    pageRequest.setIndexName(applicationProperties.getEsChatRelationIndexAlias());
     try {
       SearchResponse<ChatRelationEs> searchResponse = elasticsearchUtil.searchAfter(pageRequest, ChatRelationEs.class);
       List<Hit<ChatRelationEs>> chatRelationEsHitList = searchResponse.hits().hits();
-      if (chatRelationEsHitList.isEmpty()) {
-        // 没有更多数据, 退出循环
-        return PageResponse.emptyPage();
-      }
+      // 没有更多数据, 退出循环
+      if (chatRelationEsHitList.isEmpty()) return PageResponseDTO.emptyPage();
+
       List<ChatRelationRespDTO> chatRelationRespList = new ArrayList<>();
       boolean hasNext = true;
       for (Hit<ChatRelationEs> hit : chatRelationEsHitList) {
@@ -139,14 +150,14 @@ public class ChatRelationEsMapper {
         chatRelationRespList.add(resp);
       }
 
-      PageResponse<ChatRelationRespDTO> pageResponse = new PageResponse<>();
-      pageResponse.setPage(request.getCurrentPageNum());
-      pageResponse.setSize(request.getPageSize());
-      pageResponse.setDataList(chatRelationRespList);
-      pageResponse.setHasNext(hasNext);
-      return pageResponse;
+      PageResponseDTO<ChatRelationRespDTO> pageResponseDTO = new PageResponseDTO<>();
+      pageResponseDTO.setPage(request.getCurrentPageNum());
+      pageResponseDTO.setSize(request.getPageSize());
+      pageResponseDTO.setDataList(chatRelationRespList);
+      pageResponseDTO.setHasNext(hasNext);
+      return pageResponseDTO;
     } catch (Exception e) {
-      log.error("search error:", e);
+      log.error("chat-relation search error:", e);
       throw new RuntimeException(e);
     }
   }
@@ -165,7 +176,7 @@ public class ChatRelationEsMapper {
     Query userIdQuery = Query.of(q -> q.term(q1 -> q1.field("userId")
       .value(FieldValue.of(request.getUserId()))));
 
-    Query objectIdQuery = Query.of(q -> q.term(q1 -> q1.field("receiverId")
+    Query receiverIdQuery = Query.of(q -> q.term(q1 -> q1.field("receiverId")
       .value(FieldValue.of(request.getUserId()))));
 
     Query deleteQuery = Query.of(q -> q.term(q1 -> q1.field("deleted")
@@ -179,14 +190,14 @@ public class ChatRelationEsMapper {
     Query statusQuery = Query.of(q -> q.term(q1 -> q1.field("type")
       .value(FieldValue.of(ChatRelationTypeEnum.SINGLE_CHAT.getCode()))));
 
-    List<Query> shouldQueryList = Arrays.asList(userIdQuery, objectIdQuery);
+    List<Query> shouldQueryList = Arrays.asList(userIdQuery, receiverIdQuery);
     List<Query> mustQueryList = Arrays.asList(deleteQuery, statusQuery);
     boolBuilder.should(shouldQueryList);
     boolBuilder.must(mustQueryList);
     Query query = Query.of(q -> q.bool(boolBuilder.build()));
     // 构建查询请求
     SearchRequest.Builder requestBuilder = new SearchRequest.Builder()
-      .index(applicationProperties.getEsChatRecordIndexAlias())
+      .index(applicationProperties.getEsChatRecordIndex())
       .query(query)
       .size(request.getPageSize())
       .sort(sortOptions);
@@ -198,5 +209,21 @@ public class ChatRelationEsMapper {
       requestBuilder.searchAfter(searchAfter);
     }
     return requestBuilder.build();
+  }
+
+  /**
+   * 查询会话关系记录 单个
+   * @param chatRelationPageReqDTO
+   * @return
+   */
+  public ChatRelationEs queryRelationInfo(ChatRelationPageReqDTO chatRelationPageReqDTO) {
+    if (chatRelationPageReqDTO == null || chatRelationPageReqDTO.getRelationId()==null) {
+      return null;
+    }
+    List<Object> chatRelationEsList = elasticsearchUtil.termQuery(applicationProperties.getEsChatRelationIndex(), "relationId",
+      chatRelationPageReqDTO.getRelationId(), Object.class);
+    if (CollectionUtils.isEmpty(chatRelationEsList)) return null;
+    Object hitValue = chatRelationEsList.get(0);
+    return JSON.parseObject(JSON.toJSONString(hitValue), ChatRelationEs.class);
   }
 }

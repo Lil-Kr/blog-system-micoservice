@@ -2,7 +2,7 @@ package org.cy.micoservice.blog.gateway.filter;
 
 import com.alibaba.fastjson2.JSON;
 import lombok.extern.slf4j.Slf4j;
-import org.cy.micoservice.blog.common.base.WebResponse;
+import org.cy.micoservice.blog.common.base.api.WebResponse;
 import org.cy.micoservice.blog.gateway.constants.GatewayConstants;
 import org.cy.micoservice.blog.gateway.filter.abst.AbstractGatewayFilter;
 import org.springframework.cloud.gateway.filter.GatewayFilterChain;

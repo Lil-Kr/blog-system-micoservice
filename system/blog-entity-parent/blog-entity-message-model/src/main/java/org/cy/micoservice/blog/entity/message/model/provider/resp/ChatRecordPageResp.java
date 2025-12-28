@@ -17,7 +17,7 @@ public class ChatRecordPageResp implements Serializable {
 
   private String content;
 
-  private Integer seqNo;
+  private Long seqNo;
 
   private String avatar;
 

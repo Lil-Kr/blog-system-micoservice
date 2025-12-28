@@ -6,13 +6,12 @@ import java.util.Map;
 /**
  * @Author: Lil-K
  * @Date: 2025/11/23
- * @Description:
+ * @Description: cos存储url转换服务
  */
 public interface CosUrlCovertService {
 
   /**
    * 获取笔记图片url
-   *
    * @param noteCosObjectName
    * @return
    */
@@ -20,7 +19,6 @@ public interface CosUrlCovertService {
 
   /**
    * 获取笔记图片集合
-   *
    * @param noteCosObjectNames
    * @return
    */
@@ -35,7 +33,6 @@ public interface CosUrlCovertService {
 
   /**
    * 获取用户图片集合
-   *
    * @param noteCosObjectNames
    * @return
    */

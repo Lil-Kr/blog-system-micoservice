@@ -3,7 +3,7 @@ package org.cy.micoservice.blog.audit.provider.service.impl;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.cy.micoservice.blog.audit.provider.dao.AuditLogMapper;
 import org.cy.micoservice.blog.audit.provider.service.AuditLogService;
-import org.cy.micoservice.blog.entity.audit.model.facade.entity.AuditLog;
+import org.cy.micoservice.blog.entity.audit.model.facade.po.AuditLog;
 import org.springframework.stereotype.Service;
 
 /**

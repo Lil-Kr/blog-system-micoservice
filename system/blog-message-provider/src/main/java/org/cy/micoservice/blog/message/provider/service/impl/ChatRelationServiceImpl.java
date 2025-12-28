@@ -5,7 +5,7 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import jakarta.annotation.Resource;
-import org.cy.micoservice.blog.common.base.PageResponse;
+import org.cy.micoservice.blog.common.base.provider.PageResponseDTO;
 import org.cy.micoservice.blog.common.utils.BeanCopyUtils;
 import org.cy.micoservice.blog.common.utils.IdGenerateUtil;
 import org.cy.micoservice.blog.entity.message.model.provider.po.ChatRelation;
@@ -61,7 +61,7 @@ public class ChatRelationServiceImpl extends ServiceImpl<ChatRelationMapper, Cha
       ChatRecordReqDTO chatRecordReqDTO = new ChatRecordReqDTO();
       chatRecordReqDTO.setUserId(chatRelationReqDTO.getReceiverId());
       chatRecordReqDTO.setReceiverId(chatRelationReqDTO.getUserId());
-      chatRecordReqDTO.setRelationId(relationId);
+      // chatRecordReqDTO.setRelationId(relationId);
       chatRecordReqDTO.setContent(chatRelationReqDTO.getContent());
       chatRecordReqDTO.setType(ChatRecordEnum.TEXT.getCode());
       chatRecordService.add(chatRecordReqDTO);
@@ -70,17 +70,17 @@ public class ChatRelationServiceImpl extends ServiceImpl<ChatRelationMapper, Cha
   }
 
   @Override
-  public PageResponse<ChatRelationRespDTO> queryInPage(ChatRelationPageReqDTO chatRelationPageReqDTO) {
-    IPage<ChatRelation> chatRelationPOIPage = new Page<>(chatRelationPageReqDTO.getCurrentPageNum(), chatRelationPageReqDTO.getPageSize());
+  public PageResponseDTO<ChatRelationRespDTO> queryInPage(ChatRelationPageReqDTO chatRelationPageReqDTO) {
+    IPage<ChatRelation> chatRelationIPage = new Page<>(chatRelationPageReqDTO.getCurrentPageNum(), chatRelationPageReqDTO.getPageSize());
     LambdaQueryWrapper<ChatRelation> queryWrapper = new LambdaQueryWrapper<>();
     queryWrapper.eq(ChatRelation::getUserId, chatRelationPageReqDTO.getUserId());
     queryWrapper.orderByDesc(ChatRelation::getLatestMsgTime);
-    IPage<ChatRelation> chatRelationPage = super.getBaseMapper().selectPage(chatRelationPOIPage, queryWrapper);
+    IPage<ChatRelation> chatRelationPage = super.getBaseMapper().selectPage(chatRelationIPage, queryWrapper);
     if (chatRelationPage.getRecords().isEmpty()) {
-      return PageResponse.emptyPage();
+      return PageResponseDTO.emptyPage();
     }
     List<ChatRelationRespDTO> chatRelationRespDTOList = BeanCopyUtils.convertList(chatRelationPage.getRecords(), ChatRelationRespDTO.class);
-    PageResponse<ChatRelationRespDTO> pageResponseDTO = new PageResponse<>();
+    PageResponseDTO<ChatRelationRespDTO> pageResponseDTO = new PageResponseDTO<>();
     pageResponseDTO.setHasNext(chatRelationPage.getTotal() > (chatRelationPage.getPages() * chatRelationPage.getSize()));
     pageResponseDTO.setPage(chatRelationPageReqDTO.getCurrentPageNum());
     pageResponseDTO.setSize(chatRelationPageReqDTO.getPageSize());
@@ -90,7 +90,7 @@ public class ChatRelationServiceImpl extends ServiceImpl<ChatRelationMapper, Cha
 
   @Override
   public boolean updateRelationByRelationId(ChatRelationReqDTO chatRelationReqDTO) {
-    this.getBaseMapper().updateRelationByRelationId(chatRelationReqDTO.getRelationId(),chatRelationReqDTO.getContent());
+    // this.getBaseMapper().updateRelationByRelationId(chatRelationReqDTO.getRelationId(), chatRelationReqDTO.getContent());
     return true;
   }
 

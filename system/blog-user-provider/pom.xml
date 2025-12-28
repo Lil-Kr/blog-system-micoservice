@@ -19,6 +19,7 @@
 		<blog-common.version>1.0.0</blog-common.version>
 		<blog-entity-parent.version>1.0.0</blog-entity-parent.version>
 		<blog-framework-parent.version>1.0.0</blog-framework-parent.version>
+		<blog-user-facade.version>1.0.0</blog-user-facade.version>
 	</properties>
 	
 	<dependencies>
@@ -89,8 +90,14 @@
 		
 		<dependency>
 			<groupId>org.cy.micoservice.blog</groupId>
+			<artifactId>blog-entity-user-model</artifactId>
+			<version>${blog-entity-parent.version}</version>
+		</dependency>
+		
+		<dependency>
+			<groupId>org.cy.micoservice.blog</groupId>
 			<artifactId>blog-user-facade</artifactId>
-			<version>1.0.0</version>
+			<version>${blog-user-facade.version}</version>
 		</dependency>
 	</dependencies>
 	

@@ -1,7 +1,7 @@
 package org.cy.micoservice.blog.infra.console.sdk.core;
 
 import lombok.extern.slf4j.Slf4j;
-import org.cy.micoservice.blog.common.base.ApiResp;
+import org.cy.micoservice.blog.common.base.api.ApiResp;
 import org.cy.micoservice.blog.entity.gateway.model.entity.RouteConfig;
 import org.cy.micoservice.blog.entity.gateway.model.req.RouteConfigQueryListReq;
 import org.cy.micoservice.blog.entity.gateway.model.req.RouteConfigSaveRequest;

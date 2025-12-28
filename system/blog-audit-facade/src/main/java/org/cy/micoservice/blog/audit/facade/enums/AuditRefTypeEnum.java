@@ -8,8 +8,8 @@ import lombok.Getter;
  * @Date: 2025/12/15
  * @Description:
  */
-@AllArgsConstructor
 @Getter
+@AllArgsConstructor
 public enum AuditRefTypeEnum {
 
   NOTE_TEXT(1,"笔记文本检测"),

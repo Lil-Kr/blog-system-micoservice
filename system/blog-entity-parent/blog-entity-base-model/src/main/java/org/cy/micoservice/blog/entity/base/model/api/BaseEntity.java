@@ -1,26 +1,26 @@
-package org.cy.micoservice.blog.entity.base.model;
+package org.cy.micoservice.blog.entity.base.model.api;
 
+import com.baomidou.mybatisplus.annotation.TableLogic;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
 import lombok.Data;
 
 import java.io.Serial;
 import java.io.Serializable;
-import java.util.Date;
+import java.time.LocalDateTime;
 
 /**
  * @Author: Lil-K
  * @Date: 2025/3/30
- * @Description:
+ * @Description: BaseEntity
  */
 @Data
-public class BaseReq implements Serializable {
+public class BaseEntity implements Serializable {
 
   @Serial
-  private static final long serialVersionUID = 4395953837572132402L;
+  private static final long serialVersionUID = -3071591161451842453L;
 
-  private String keyWords;
-
+  @TableLogic(delval = "id", value = "0")
   private Integer deleted;
 
   /**
@@ -38,15 +38,10 @@ public class BaseReq implements Serializable {
   /**
    * 创建时间
    */
-  private Date createTime;
+  private LocalDateTime createTime;
 
   /**
    * 更改时间
    */
-  private Date updateTime;
-
-  /**
-   * 是否排序 ->  0:升序, 1:降序, null:不做排序
-   */
-  private Integer isOrder;
+  private LocalDateTime updateTime;
 }

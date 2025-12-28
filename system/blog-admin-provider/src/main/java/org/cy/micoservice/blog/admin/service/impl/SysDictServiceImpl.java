@@ -11,8 +11,8 @@ import org.cy.micoservice.blog.admin.dao.SysDictDetailMapper;
 import org.cy.micoservice.blog.admin.dao.SysDictMapper;
 import org.cy.micoservice.blog.admin.service.CacheService;
 import org.cy.micoservice.blog.admin.service.SysDictService;
-import org.cy.micoservice.blog.common.base.ApiResp;
-import org.cy.micoservice.blog.common.base.PageResult;
+import org.cy.micoservice.blog.common.base.api.ApiResp;
+import org.cy.micoservice.blog.common.base.api.PageResult;
 import org.cy.micoservice.blog.common.exception.BizException;
 import org.cy.micoservice.blog.common.utils.DateUtil;
 import org.cy.micoservice.blog.common.utils.IdWorker;
@@ -166,14 +166,13 @@ public class SysDictServiceImpl extends ServiceImpl<SysDictMapper, SysDict> impl
 			return ApiResp.failure(INFO_NOT_EXIST);
 		}
 
-		dict.setDictDetailVOList(dictDetailList);
+		dict.setDictDetailList(dictDetailList);
 		return ApiResp.success(dict);
 	}
 
 	@Override
 	public SysDictResp getDict(Long surrogateId) {
-		SysDictResp dictVO = dictMapper.getDict(surrogateId);
-		return dictVO;
+		return dictMapper.getDict(surrogateId);
 	}
 
 	/**

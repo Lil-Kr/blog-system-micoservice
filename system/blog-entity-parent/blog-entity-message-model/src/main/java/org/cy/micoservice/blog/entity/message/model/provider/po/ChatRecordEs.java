@@ -12,6 +12,7 @@ import java.io.Serializable;
  */
 @Data
 public class ChatRecordEs implements Serializable {
+
   @Serial
   private static final long serialVersionUID = -4542825199538538412L;
 

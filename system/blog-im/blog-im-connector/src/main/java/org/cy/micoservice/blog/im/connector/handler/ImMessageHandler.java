@@ -64,7 +64,6 @@ public class ImMessageHandler extends SimpleChannelInboundHandler<TextWebSocketF
 
     // 按照不同的code走不同的处理器
     imMessageDispatcher.handle(context, dto);
-    // log.info("im-connector receive msg: {}", text);
   }
 
   @Override

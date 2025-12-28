@@ -7,8 +7,8 @@ import org.cy.micoservice.blog.admin.pojo.req.blog.content.BlogContentReq;
 import org.cy.micoservice.blog.admin.pojo.req.blog.content.BlogRichEditorImageReq;
 import org.cy.micoservice.blog.admin.pojo.resp.blog.BlogContentGroupResp;
 import org.cy.micoservice.blog.admin.pojo.resp.blog.BlogContentResp;
-import org.cy.micoservice.blog.common.base.ApiResp;
-import org.cy.micoservice.blog.common.base.PageResult;
+import org.cy.micoservice.blog.common.base.api.ApiResp;
+import org.cy.micoservice.blog.common.base.api.PageResult;
 
 import java.util.List;
 

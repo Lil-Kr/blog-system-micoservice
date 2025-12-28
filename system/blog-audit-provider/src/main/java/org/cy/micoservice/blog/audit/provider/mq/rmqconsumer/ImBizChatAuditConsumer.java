@@ -25,7 +25,7 @@ import org.cy.micoservice.blog.audit.facade.enums.TextAuditBodyTypeEnum;
 import org.cy.micoservice.blog.audit.provider.config.AuditApplicationProperties;
 import org.cy.micoservice.blog.audit.provider.handler.AuditManager;
 import org.cy.micoservice.blog.audit.provider.service.AuditLogService;
-import org.cy.micoservice.blog.entity.audit.model.facade.entity.AuditLog;
+import org.cy.micoservice.blog.entity.audit.model.facade.po.AuditLog;
 import org.cy.micoservice.blog.audit.facade.enums.AuditRefTypeEnum;
 import org.cy.micoservice.blog.framework.rocketmq.starter.consumer.RocketMQConsumerProperties;
 import org.cy.micoservice.blog.framework.rocketmq.starter.producer.RocketMQProducerClient;

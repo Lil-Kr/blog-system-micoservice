@@ -3,7 +3,7 @@ package org.cy.micoservice.blog.entity.admin.model.req.dict;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
-import org.cy.micoservice.blog.entity.base.model.BasePageReq;
+import org.cy.micoservice.blog.entity.base.model.api.BasePageReq;
 
 import java.io.Serial;
 
