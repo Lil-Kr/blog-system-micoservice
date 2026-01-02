@@ -105,7 +105,7 @@ public class ImMessageServiceImpl implements ImMessageService {
     AuditMsgDTO auditMsgDTO = new AuditMsgDTO();
     auditMsgDTO.setAuditType(AuditTypeEnum.TEXT.getCode());
     auditMsgDTO.setAuditBody(JSON.toJSONString(textAuditBody));
-    auditMsgDTO.setEventTime(System.currentTimeMillis());
+    auditMsgDTO.setEventTime(System.nanoTime());
     return auditMsgDTO;
   }
 

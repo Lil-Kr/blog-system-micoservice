@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.cy.micoservice.blog.common.enums.response.RpcReturnCodeEnum;
+import org.cy.micoservice.blog.common.exception.BizException;
 
 import java.io.Serial;
 import java.io.Serializable;
@@ -61,5 +62,11 @@ public class RpcResponse<T> implements Serializable {
   public boolean isSuccess() {
     RpcResponse<T> rpcResponse = this;
     return rpcResponse != null && RPC_SUCCESS.getCode().equals(rpcResponse.getCode());
+  }
+
+  public static <T> void isRespSuccess(RpcResponse<T> rpcResponse) {
+    if (! rpcResponse.isSuccess()) {
+      throw new BizException(rpcResponse.getCode(), rpcResponse.getMsg());
+    }
   }
 }

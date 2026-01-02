@@ -32,4 +32,13 @@ public interface ChatRecordEsService {
    * @return
    */
   PageResponseDTO<ChatRecordRespDTO> queryRecordInPage(ChatRecordPageReqDTO chatRecordPageReqDTO);
+
+  /**
+   * 查询未读消息内容
+   * @param beginOffset
+   * @param endOffset
+   * @param relationId
+   * @return
+   */
+  List<ChatRecordRespDTO> queryFromOffset(Long beginOffset, Long endOffset, String relationId);
 }

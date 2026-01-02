@@ -15,7 +15,13 @@ public class BasePageReqDTO implements Serializable {
   @Serial
   private static final long serialVersionUID = 9119261192787695755L;
 
+  /**
+   * 当前页码数
+   */
   private Integer currentPageNum;
 
+  /**
+   * 每页记录数
+   */
   private Integer pageSize;
 }

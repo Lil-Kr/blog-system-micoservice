@@ -4,21 +4,21 @@ import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import jakarta.annotation.Resource;
 import org.cy.micoservice.blog.common.base.provider.PageResponseDTO;
 import org.cy.micoservice.blog.common.utils.BeanCopyUtils;
 import org.cy.micoservice.blog.common.utils.IdGenerateUtil;
-import org.cy.micoservice.blog.entity.message.model.provider.po.ChatRelation;
+import org.cy.micoservice.blog.entity.message.model.provider.po.mysql.ChatRelation;
 import org.cy.micoservice.blog.message.facade.dto.req.ChatRecordReqDTO;
 import org.cy.micoservice.blog.message.facade.dto.req.ChatRelationPageReqDTO;
 import org.cy.micoservice.blog.message.facade.dto.req.ChatRelationReqDTO;
 import org.cy.micoservice.blog.message.facade.dto.resp.ChatRelationRespDTO;
-import org.cy.micoservice.blog.message.facade.enums.ChatRecordStatusEnum;
 import org.cy.micoservice.blog.message.facade.enums.ChatRecordEnum;
+import org.cy.micoservice.blog.message.facade.enums.ChatRecordStatusEnum;
 import org.cy.micoservice.blog.message.facade.enums.ChatRelationStatusEnum;
 import org.cy.micoservice.blog.message.provider.dao.mysql.ChatRelationMapper;
 import org.cy.micoservice.blog.message.provider.service.ChatRecordService;
 import org.cy.micoservice.blog.message.provider.service.ChatRelationService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DuplicateKeyException;
 import org.springframework.stereotype.Service;
 
@@ -33,9 +33,14 @@ import java.util.List;
 @Service
 public class ChatRelationServiceImpl extends ServiceImpl<ChatRelationMapper, ChatRelation> implements ChatRelationService {
 
-  @Resource
+  @Autowired
   private ChatRecordService chatRecordService;
 
+  /**
+   * 新增会话关系
+   * @param chatRelationReqDTO
+   * @return
+   */
   @Override
   public boolean add(ChatRelationReqDTO chatRelationReqDTO) {
     Long relationId = IdGenerateUtil.generateRelationId();
@@ -54,9 +59,10 @@ public class ChatRelationServiceImpl extends ServiceImpl<ChatRelationMapper, Cha
       chatRelationList.add(userChatRelation);
       chatRelationList.add(receiverChatRelation);
       super.saveBatch(chatRelationList);
-    }catch (DuplicateKeyException e){
-      //有可能之前以及有过会话关系
+    } catch (DuplicateKeyException e){
+      // 有可能之前以及有过会话关系
     }
+
     if (chatRelationReqDTO.getContent() != null) {
       ChatRecordReqDTO chatRecordReqDTO = new ChatRecordReqDTO();
       chatRecordReqDTO.setUserId(chatRelationReqDTO.getReceiverId());

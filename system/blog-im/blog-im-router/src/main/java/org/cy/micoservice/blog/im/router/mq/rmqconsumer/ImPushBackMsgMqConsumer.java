@@ -9,6 +9,7 @@ import org.apache.rocketmq.client.consumer.listener.MessageListenerConcurrently;
 import org.apache.rocketmq.client.exception.MQClientException;
 import org.apache.rocketmq.common.consumer.ConsumeFromWhere;
 import org.apache.rocketmq.common.message.MessageExt;
+import org.cy.micoservice.blog.common.constants.CommonFormatConstants;
 import org.cy.micoservice.blog.framework.rocketmq.starter.consumer.RocketMQConsumerProperties;
 import org.cy.micoservice.blog.im.facade.dto.router.ImSingleMessageDTO;
 import org.cy.micoservice.blog.im.facade.dto.router.ImBatchMessageDTO;
@@ -58,7 +59,7 @@ public class ImPushBackMsgMqConsumer implements InitializingBean {
     DefaultMQPushConsumer mqPushConsumer = new DefaultMQPushConsumer();
     mqPushConsumer.setVipChannelEnabled(false);
     mqPushConsumer.setNamesrvAddr(rocketMQConsumerProperties.getNameserver());
-    mqPushConsumer.setConsumerGroup(rocketMQConsumerProperties.getGroup() + "_" + ImPushBackMsgMqConsumer.class.getSimpleName());
+    mqPushConsumer.setConsumerGroup(String.format(CommonFormatConstants.COMMENT_FORMAT_UNDERSCORE_SPLIT, rocketMQConsumerProperties.getGroup(), ImPushBackMsgMqConsumer.class.getSimpleName()));
     mqPushConsumer.setConsumeFromWhere(ConsumeFromWhere.CONSUME_FROM_FIRST_OFFSET);
     mqPushConsumer.setConsumeMessageBatchMaxSize(imRouterProperties.getImRouteTopicConsumerBatchSize());
     mqPushConsumer.subscribe(imRouterProperties.getImRoutePushTopic(), "");

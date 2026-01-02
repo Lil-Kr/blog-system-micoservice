@@ -2,7 +2,6 @@ package org.cy.micoservice.blog.user.provider.pojo.req;
 
 import lombok.Data;
 import lombok.ToString;
-import org.springframework.web.multipart.MultipartFile;
 
 @ToString
 @Data
@@ -65,7 +64,7 @@ public class UserSaveReq {
 //  @Size(groups = {Default.class}, max = 100, message = "备注不能超过100个字符")
   private String remark;
 
-  private MultipartFile avatarFile;
+  // private MultipartFile avatarFile;
 
   private String avatar;
 }

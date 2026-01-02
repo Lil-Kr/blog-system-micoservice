@@ -2,7 +2,7 @@ package org.cy.micoservice.blog.user.provider.pojo.req;
 
 import lombok.Data;
 import lombok.ToString;
-import org.springframework.web.multipart.MultipartFile;
+// import org.springframework.web.multipart.MultipartFile;
 
 /**
  * @Author: Lil-K
@@ -13,7 +13,7 @@ import org.springframework.web.multipart.MultipartFile;
 @Data
 public class AvatarUploadReq {
 
-  private MultipartFile avatarFile;
+  // private MultipartFile avatarFile;
 
   private Long userId;
 

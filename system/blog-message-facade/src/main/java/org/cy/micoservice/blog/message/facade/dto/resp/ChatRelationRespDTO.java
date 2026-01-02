@@ -17,7 +17,7 @@ public class ChatRelationRespDTO implements Serializable {
   @Serial
   private static final long serialVersionUID = -18772251356700819L;
 
-  private Long id;
+  private String id;
 
   private Long userId;
 
@@ -25,7 +25,7 @@ public class ChatRelationRespDTO implements Serializable {
 
   private String relationId;
 
-  private Integer unreadCount;
+  private Long unReadCount;
 
   // 最新的对话内容
   private String content;
@@ -38,5 +38,4 @@ public class ChatRelationRespDTO implements Serializable {
   // 消息总数
   private Long msgCount;
 
-  private Long lastHitValue;
 }

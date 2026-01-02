@@ -25,6 +25,7 @@
 		<!-- facade -->
 		<blog-message-facade.version>1.0.0</blog-message-facade.version>
 		<blog-audit-facade.version>1.0.0</blog-audit-facade.version>
+		<blog-user-facade.version>1.0.0</blog-user-facade.version>
 		<blog-im-facade.version>1.0.0</blog-im-facade.version>
 	</properties>
 	
@@ -124,6 +125,12 @@
 			<groupId>org.cy.micoservice.blog</groupId>
 			<artifactId>blog-audit-facade</artifactId>
 			<version>${blog-audit-facade.version}</version>
+		</dependency>
+		
+		<dependency>
+			<groupId>org.cy.micoservice.blog</groupId>
+			<artifactId>blog-user-facade</artifactId>
+			<version>${blog-user-facade.version}</version>
 		</dependency>
 		
 		<dependency>

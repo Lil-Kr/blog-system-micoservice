@@ -53,4 +53,9 @@ public class CommonConstants {
    */
   public static final String DEFAULT_COLOR = "magenta";
 
+  /**
+   * default number
+   */
+  public static final String DEFAULT_NUMBER_ZERO = "0";
+
 }

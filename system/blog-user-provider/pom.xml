@@ -38,11 +38,6 @@
 			<artifactId>spring-cloud-starter-bootstrap</artifactId>
 		</dependency>
 		
-		<dependency>
-			<groupId>commons-io</groupId>
-			<artifactId>commons-io</artifactId>
-		</dependency>
-		
 		<!-- test start -->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
@@ -62,12 +57,6 @@
 			<groupId>org.cy.micoservice.blog</groupId>
 			<artifactId>blog-common</artifactId>
 			<version>${blog-common.version}</version>
-		</dependency>
-		
-		<dependency>
-			<groupId>org.cy.micoservice.blog</groupId>
-			<artifactId>blog-framework-web-starter</artifactId>
-			<version>${blog-framework-parent.version}</version>
 		</dependency>
 		
 		<dependency>
@@ -103,6 +92,7 @@
 	
 	<build>
 		<plugins>
+			<!-- 将SpringBoot应用打包成jar-->
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>

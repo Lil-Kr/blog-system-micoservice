@@ -11,6 +11,7 @@ import org.apache.rocketmq.common.consumer.ConsumeFromWhere;
 import org.apache.rocketmq.common.message.MessageExt;
 import org.cy.micoservice.blog.audit.facade.dto.AuditResultMessageDTO;
 import org.cy.micoservice.blog.audit.facade.enums.AuditResultCodeEnum;
+import org.cy.micoservice.blog.common.constants.CommonFormatConstants;
 import org.cy.micoservice.blog.framework.rocketmq.starter.consumer.RocketMQConsumerProperties;
 import org.cy.micoservice.blog.framework.rocketmq.starter.producer.RocketMQProducerClient;
 import org.cy.micoservice.blog.message.provider.config.MessageApplicationProperties;
@@ -44,7 +45,7 @@ public class ImChatAuditMessageConsumer implements InitializingBean {
         throw new RuntimeException(e);
       }
     });
-    consumeMqTask.setName("chat-msg-audit-consume-task");
+    consumeMqTask.setName("im-chat-msg-audit-consume-task");
     consumeMqTask.start();
   }
 
@@ -55,7 +56,7 @@ public class ImChatAuditMessageConsumer implements InitializingBean {
     DefaultMQPushConsumer mqPushConsumer = new DefaultMQPushConsumer();
     mqPushConsumer.setVipChannelEnabled(false);
     mqPushConsumer.setNamesrvAddr(rocketMQConsumerProperties.getNameserver());
-    mqPushConsumer.setConsumerGroup(rocketMQConsumerProperties.getGroup() + "_" + ImChatAuditMessageConsumer.class.getSimpleName());
+    mqPushConsumer.setConsumerGroup(String.format(CommonFormatConstants.COMMENT_FORMAT_UNDERSCORE_SPLIT, rocketMQConsumerProperties.getGroup(), ImChatAuditMessageConsumer.class.getSimpleName()));
     mqPushConsumer.setConsumeFromWhere(ConsumeFromWhere.CONSUME_FROM_FIRST_OFFSET);
     mqPushConsumer.setConsumeMessageBatchMaxSize(messageApplicationProperties.getImBizMessageConsumerBatchSize());
     mqPushConsumer.subscribe(messageApplicationProperties.getImChatMessageAuditResultTopic(), "");

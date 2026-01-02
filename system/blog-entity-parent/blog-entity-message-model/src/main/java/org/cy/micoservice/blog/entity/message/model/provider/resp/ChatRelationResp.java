@@ -31,7 +31,7 @@ public class ChatRelationResp implements Serializable {
 
   private String objectAvatar;
 
-  private Long unreadCount;
+  private Long unReadCount;
 
   // 最新的对话内容
   private String content;

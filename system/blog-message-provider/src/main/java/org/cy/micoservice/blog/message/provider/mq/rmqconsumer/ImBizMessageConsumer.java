@@ -10,17 +10,15 @@ import org.apache.rocketmq.common.consumer.ConsumeFromWhere;
 import org.apache.rocketmq.common.message.MessageExt;
 import org.cy.micoservice.blog.audit.facade.dto.AuditResultMessageDTO;
 import org.cy.micoservice.blog.audit.facade.enums.AuditResultCodeEnum;
+import org.cy.micoservice.blog.common.constants.CommonFormatConstants;
 import org.cy.micoservice.blog.common.exception.BizException;
-import org.cy.micoservice.blog.entity.message.model.provider.po.ChatBoxEs;
 import org.cy.micoservice.blog.framework.rocketmq.starter.consumer.RocketMQConsumerProperties;
 import org.cy.micoservice.blog.im.facade.dto.connector.ImMessageDTO;
-import org.cy.micoservice.blog.message.facade.dto.req.ChatRelationReqDTO;
-import org.cy.micoservice.blog.message.facade.dto.req.im.ImChatContentDTO;
 import org.cy.micoservice.blog.message.facade.dto.req.im.ImChatReqDTO;
 import org.cy.micoservice.blog.message.facade.enums.ChatMsgStatusEnum;
 import org.cy.micoservice.blog.message.provider.config.MessageApplicationProperties;
 import org.cy.micoservice.blog.message.provider.config.MessageCacheKeyBuilder;
-import org.cy.micoservice.blog.message.provider.constant.MessageChatRelationConstants;
+import org.cy.micoservice.blog.message.provider.config.async.ChatMessageAsyncTaskSubmitter;
 import org.cy.micoservice.blog.message.provider.service.*;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,6 +26,7 @@ import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Component;
 
 import java.util.*;
+import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.stream.Collectors;
 
@@ -57,7 +56,9 @@ public class ImBizMessageConsumer implements InitializingBean {
   @Autowired
   private MessageCacheKeyBuilder messageCacheKeyBuilder;
   @Autowired
-  private RedisTemplate<String,String> redisTemplate;
+  private RedisTemplate<String, String> redisTemplate;
+  @Autowired
+  private ChatMessageAsyncTaskSubmitter chatMessageAsyncTaskSubmitter;
 
   @Override
   public void afterPropertiesSet() {
@@ -69,7 +70,7 @@ public class ImBizMessageConsumer implements InitializingBean {
         throw new RuntimeException(e);
       }
     });
-    consumeMqTask.setName("im-msg-consume-task");
+    consumeMqTask.setName("im-biz-msg-consume-task");
     consumeMqTask.start();
   }
 
@@ -81,21 +82,21 @@ public class ImBizMessageConsumer implements InitializingBean {
     DefaultMQPushConsumer mqPushConsumer = new DefaultMQPushConsumer();
     mqPushConsumer.setVipChannelEnabled(false);
     mqPushConsumer.setNamesrvAddr(rocketMQConsumerProperties.getNameserver());
-    mqPushConsumer.setConsumerGroup(rocketMQConsumerProperties.getGroup() + "_" + ImBizMessageConsumer.class.getSimpleName());
+    mqPushConsumer.setConsumerGroup(String.format(CommonFormatConstants.COMMENT_FORMAT_UNDERSCORE_SPLIT, rocketMQConsumerProperties.getGroup(), ImBizMessageConsumer.class.getSimpleName()));
     mqPushConsumer.setConsumeFromWhere(ConsumeFromWhere.CONSUME_FROM_FIRST_OFFSET);
     mqPushConsumer.subscribe(messageApplicationProperties.getImBizMessageConsumerTopic(), "");
     mqPushConsumer.setConsumeMessageBatchMaxSize(messageApplicationProperties.getImBizMessageConsumerBatchSize());
     mqPushConsumer.setMessageListener((MessageListenerConcurrently) (messages, context) -> {
       try {
-        List<ImChatReqDTO> imChatReqDTOList = this.doMsgAuditAsyncHandle(messages);
-        //增加消息总数, offset值
+        List<ImChatReqDTO> imChatReqDTOList = this.doMsgAuditAsyncHandler(messages);
+        // 增加消息总数, offset值
         this.incrMsgCountOffset(imChatReqDTOList);
         // 批量保存
         this.syncToEs(imChatReqDTOList);
         // 推送消息到router层处理
         this.batchPushToRoute(imChatReqDTOList);
       } catch (Exception e) {
-        log.error("consumer message has error:", e);
+        log.error("consumer message has error: ", e);
       }
       return ConsumeConcurrentlyStatus.CONSUME_SUCCESS;
     });
@@ -104,62 +105,79 @@ public class ImBizMessageConsumer implements InitializingBean {
   }
 
   /**
-   * 增加消息总数offset
+   * 增加消息总数offset: redis
    * @param imChatReqDTOList
    */
   private void incrMsgCountOffset(List<ImChatReqDTO> imChatReqDTOList) {
-    // todo 后续可以优化, 统计senderId, 减少redis层的io访问
-    // 如果cache没有数据, 只能从es层查询, 但是这部分的量会较少一些
-    imChatReqDTOList.parallelStream()
-      .forEach(imChatReq -> {
-        String cacheKey = messageCacheKeyBuilder.chatRelationMsgCountKey(imChatReq.getSenderId());
-        long number = redisTemplate.opsForHash().increment(cacheKey, imChatReq.getRelationId(), 1);
-        imChatReq.setSeqNo(number);
+    /**
+     * chat_relation_id -> List<ImChatReqDTO>
+     * Map<String, List<ImChatReqDTO>> relationGroupMap
+     */
+    imChatReqDTOList.stream()
+      .collect(Collectors.groupingBy(ImChatReqDTO::getRelationId, HashMap::new, Collectors.toList()))
+      .forEach((key, dtoList) -> {
+        long batchSize = dtoList.size();
+        ImChatReqDTO imChatReqDTO = dtoList.get(0);
+        // 对于同一个 chat_relation_id, 如果 senderId 不同, 说明在同一时间(极短的时间内) 两个人都向对方发送了消息
+        boolean multiSender = dtoList.stream().anyMatch(dto -> ! Objects.equals(dto.getSenderId(), imChatReqDTO.getSenderId()));
+        // 双发几乎在同一时间点向对方发送了消息
+        long startSeqNo = 0L;
+        if (multiSender) {
+          // 发送信息的双发, 依次处理
+          String senderCacheKey = messageCacheKeyBuilder.chatRelationMsgCountKey(imChatReqDTO.getSenderId());
+          redisTemplate.opsForHash().increment(senderCacheKey, imChatReqDTO.getRelationId(), batchSize);
+          String receiverCacheKey = messageCacheKeyBuilder.chatRelationMsgCountKey(imChatReqDTO.getReceiverId());
+          Long endSeqNo = redisTemplate.opsForHash().increment(receiverCacheKey, imChatReqDTO.getRelationId(), batchSize);
+          startSeqNo = endSeqNo - batchSize + 1; // 19 - 4 + 1 = 16
+        } else {
+          String senderCacheKey = messageCacheKeyBuilder.chatRelationMsgCountKey(imChatReqDTO.getSenderId());
+          Long endSeqNo = redisTemplate.opsForHash().increment(senderCacheKey, imChatReqDTO.getRelationId(), batchSize);
+          startSeqNo = endSeqNo - batchSize + 1; // 19 - 4 + 1 = 16
+        }
+        for (ImChatReqDTO dto : dtoList) {
+          dto.setSeqNo(startSeqNo ++);
+        }
       });
+
+
+    /**
+     * todo: 后续可以优化, 统计senderId, 减少redis层的io访问
+     * 如果cache没有数据, 只能从es层查询, 但是这部分的量会较少一些
+     */
+    // imChatReqDTOList.parallelStream()
+    //   .forEach(imChatReqDTO -> {
+    //     String cacheKey = messageCacheKeyBuilder.chatRelationMsgCountKey(imChatReqDTO.getSenderId());
+    //     long endSeqNo = redisTemplate.opsForHash().increment(cacheKey, imChatReqDTO.getRelationId(), 1L);
+    //     imChatReqDTO.setSeqNo(endSeqNo);
+    //   });
   }
 
   /**
-   * todo: 有3个位置对ES写入, 优化 -> 使用多线程机制, 异步写入到ES
-   * 批量保存到ES
+   * 批量保存到 ES
    * @param imChatReqDTOList
    */
   private void syncToEs(List<ImChatReqDTO> imChatReqDTOList) {
-    // 批量保存消息记录
-    chatRecordEsService.bulk(imChatReqDTOList);
-    // 更新relation关系
+    /**
+     * 1. 转化为map, key=relationId, value=imChatReqDTO
+     */
     Map<String, ImChatReqDTO> imChatReqDTOMap = this.getLatestChatByRelationId(imChatReqDTOList);
 
-    List<ChatRelationReqDTO> chatRelationReqDTOList = new ArrayList<>();
-    List<ChatBoxEs> chatBoxEsList = new ArrayList<>();
-    for (String relationId : imChatReqDTOMap.keySet()) {
-      ImChatReqDTO imChatReqDTO = imChatReqDTOMap.get(relationId);
-      ImChatContentDTO imChatContentDTO = JSON.parseObject(imChatReqDTO.getContent(), ImChatContentDTO.class);
-      ChatRelationReqDTO relationReqDTO = new ChatRelationReqDTO();
-      relationReqDTO.setRelationId(relationId);
-      relationReqDTO.setId(relationId);
-      relationReqDTO.setUserId(imChatReqDTO.getSenderId());
-      relationReqDTO.setReceiverId(imChatReqDTO.getReceiverId());
-      relationReqDTO.setSeqNo(imChatReqDTO.getSeqNo());
-      relationReqDTO.setContent(imChatContentDTO.getBody());
-      relationReqDTO.setType(imChatContentDTO.getType());
-      chatRelationReqDTOList.add(relationReqDTO);
-
-      // 收信箱
-      ChatBoxEs chatBoxEs = ChatBoxEs.builder()
-        .id(String.format(MessageChatRelationConstants.RELATION_ID_FORMAT, relationId, imChatReqDTO.getSenderId()))
-        .userId(imChatReqDTO.getSenderId())
-        .relationId(relationId)
-        // 更新发送人的offset
-        .msgOffset(imChatReqDTO.getSeqNo())
-        .updateTime(System.nanoTime())
-        .build();
-      chatBoxEsList.add(chatBoxEs);
-    }
-    // 批量保存会话关系记录
-    chatRelationEsService.bulk(chatRelationReqDTOList);
-
-    // 批量保存发信人的收件箱位置
-    chatBoxEsService.bulk(chatBoxEsList);
+    /**
+     * 2. 并行执行 3 个 IO 操作
+     * 3. 等待全部完成
+     */
+    CompletableFuture.allOf (
+      // 批量保存消息记录
+      chatMessageAsyncTaskSubmitter.runAsync("chat-record", () -> chatRecordEsService.bulk(imChatReqDTOList)),
+      // 批量保存会话关系信息
+      chatMessageAsyncTaskSubmitter.runAsync("chat-relation", () -> chatRelationEsService.bulkMap(imChatReqDTOMap)),
+      // 批量更新发件人的收件箱位置
+      chatMessageAsyncTaskSubmitter.runAsync("chat-box", () -> chatBoxEsService.bulkMap(imChatReqDTOMap))
+    ).whenComplete((v, ex) -> {
+      if (ex != null) {
+        log.error("syncToEs failed", ex);
+      }
+    }).join();
   }
 
   /**
@@ -167,7 +185,7 @@ public class ImBizMessageConsumer implements InitializingBean {
    * @param messages
    * @return
    */
-  private List<ImChatReqDTO> doMsgAuditAsyncHandle(List<MessageExt> messages) {
+  private List<ImChatReqDTO> doMsgAuditAsyncHandler(List<MessageExt> messages) {
     List<ImChatReqDTO> imChatReqDTOList = new CopyOnWriteArrayList<>();
     // 使用并行提升速率
     messages.parallelStream().forEach(msg -> {
@@ -175,7 +193,7 @@ public class ImBizMessageConsumer implements InitializingBean {
       // 审核这里需根据内容决定走不同类型的判断/视频, 图片, 音频, 文字的审核耗时不太一样
       this.doMsgAuditHandle(imChatReqDTO);
       if (Optional.ofNullable(imChatReqDTO).map(ImChatReqDTO::getMsgStatus).isEmpty()) {
-        log.error("invalid msg dto: {}", JSON.toJSONString(imChatReqDTO));
+        log.error("msg audit invalid dto: {}", JSON.toJSONString(imChatReqDTO));
       } else {
         imChatReqDTOList.add(imChatReqDTO);
       }
@@ -193,7 +211,7 @@ public class ImBizMessageConsumer implements InitializingBean {
     if (imMessageService.isTextMessage(imChatReqDTO)) {
       boolean auditStatus = this.doTextAudit(imChatReqDTO);
       if (! auditStatus) {
-        //审核失败 需要返回失败通知给到发送人
+        // 审核失败 需要返回失败通知给到发送人
         imChatReqDTO.setReceiverId(imChatReqDTO.getSenderId());
         imChatReqDTO.setMsgStatus(ChatMsgStatusEnum.INVALID_BODY.getCode());
         return;
@@ -202,7 +220,7 @@ public class ImBizMessageConsumer implements InitializingBean {
     } else if (imMessageService.isImageMessage(imChatReqDTO)) {
       boolean sendStatus = this.doImageAudit(imChatReqDTO);
       if (! sendStatus) {
-        //审核失败 需要返回失败通知给到发送人
+        // 审核失败 需要返回失败通知给到发送人
         imChatReqDTO.setReceiverId(imChatReqDTO.getSenderId());
         imChatReqDTO.setMsgStatus(ChatMsgStatusEnum.SYSTEM_ERROR.getCode());
         return;
@@ -286,10 +304,14 @@ public class ImBizMessageConsumer implements InitializingBean {
         ImChatReqDTO::getRelationId,
         // 下游收集器: 筛选每个分组内seqNo最新的记录
         Collectors.collectingAndThen(
-          Collectors.toList(), list ->
-            // 按seqNo降序排序
-            // 获取排序后的第一条 (最新记录), 无数据时返回null
-            list.stream().max(Comparator.comparing(ImChatReqDTO::getSeqNo)).orElse(null)
+          Collectors.toList(),
+          /**
+           * 按seqNo降序排序
+           * 获取排序后的第一条 (最新记录), 无数据时返回null
+           */
+          list -> list.stream()
+            .max(Comparator.comparing(ImChatReqDTO::getSeqNo))
+            .orElse(null)
         )
       ));
   }

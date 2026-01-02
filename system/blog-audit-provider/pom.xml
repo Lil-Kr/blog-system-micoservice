@@ -61,12 +61,6 @@
 		
 		<dependency>
 			<groupId>org.cy.micoservice.blog</groupId>
-			<artifactId>blog-framework-web-starter</artifactId>
-			<version>${blog-framework-parent.version}</version>
-		</dependency>
-		
-		<dependency>
-			<groupId>org.cy.micoservice.blog</groupId>
 			<artifactId>blog-framework-cache-starter</artifactId>
 			<version>${blog-framework-parent.version}</version>
 		</dependency>
@@ -104,6 +98,7 @@
 	
 	<build>
 		<plugins>
+			<!-- 将SpringBoot应用打包成jar-->
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>

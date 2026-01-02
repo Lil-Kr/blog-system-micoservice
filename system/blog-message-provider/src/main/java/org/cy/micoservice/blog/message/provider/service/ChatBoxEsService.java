@@ -1,8 +1,10 @@
 package org.cy.micoservice.blog.message.provider.service;
 
-import org.cy.micoservice.blog.entity.message.model.provider.po.ChatBoxEs;
+import org.cy.micoservice.blog.entity.message.model.provider.po.es.ChatBoxEs;
+import org.cy.micoservice.blog.message.facade.dto.req.im.ImChatReqDTO;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * @Author: Lil-K
@@ -20,10 +22,17 @@ public interface ChatBoxEsService {
 
   /**
    * 批量更新收件箱信息
+   * @param imChatReqDTOMap
+   * @return
+   */
+  boolean bulkMap(Map<String, ImChatReqDTO> imChatReqDTOMap);
+
+  /**
+   *
    * @param chatBoxEsList
    * @return
    */
-  boolean bulk(List<ChatBoxEs> chatBoxEsList);
+  boolean bulkList(List<ChatBoxEs> chatBoxEsList);
 
   /**
    * 单个查询
@@ -32,4 +41,11 @@ public interface ChatBoxEsService {
    * @return
    */
   ChatBoxEs get(Long userId, Long relationId);
+
+  /**
+   * 支持批量查询用户的已读offset值
+   * @param userId
+   * @return
+   */
+  List<ChatBoxEs> listByUserId(Long userId);
 }

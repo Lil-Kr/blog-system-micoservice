@@ -24,7 +24,7 @@ public interface ChatRelationService {
    * @param chatRelationPageReq
    * @return
    */
-  PageResponseDTO<ChatRelationResp> pageList(ChatRelationPageReq chatRelationPageReq);
+  PageResponseDTO<ChatRelationResp> pageChatRelationList(ChatRelationPageReq chatRelationPageReq);
 
   /**
    * 更新对话关系信息

@@ -13,6 +13,7 @@ import org.springframework.beans.factory.annotation.Value;
 @Configuration
 public class MessageApplicationProperties {
 
+  /** ======================== mq topic config ======================== **/
   /**
    * topic: 消费从 im-connector 发送来的聊天消息
    */
@@ -41,20 +42,35 @@ public class MessageApplicationProperties {
   private String imRoutePushTopic;
 
   /**
-   * es index:
+   * topic: 消费消息, 用户打开聊天窗口
    */
-  @Value("${es.chat.record.index:blog.message.chat-record}")
-  private String esChatRecordIndex;
+  @Value("${im.open.chat.consumer-topic:blog-open-chat-topic}")
+  private String openChatTopic;
 
   /**
-   * es index:
+   * topic: 发送用户进入应用信号, 用于用户的未读消息预加载
+   */
+  @Value("${im.user.enter.consumer-topic:blog-user-enter-topic}")
+  private String userEnterTopic;
+
+  /** ======================== ES index config ======================== **/
+  /**
+   * es index: chat relation
    */
   @Value("${es.chat.relation.index:blog.message.chat-relation}")
   private String esChatRelationIndex;
 
   /**
-   * es index:
+   * es index: chat record
+   */
+  @Value("${es.chat.record.index:blog.message.chat-record}")
+  private String esChatRecordIndex;
+
+  /**
+   * es index: chat receive box
    */
   @Value("${es.chat.box.index:blog.message.chat-box}")
   private String esChatBoxIndex;
+
+  /** ======================== ES index config ======================== **/
 }

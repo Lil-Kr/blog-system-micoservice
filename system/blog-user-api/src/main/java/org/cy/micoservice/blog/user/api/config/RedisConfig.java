@@ -1,4 +1,4 @@
-package org.cy.micoservice.blog.message.provider.config;
+package org.cy.micoservice.blog.user.api.config;
 
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.context.annotation.Bean;
@@ -6,10 +6,9 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.data.redis.connection.RedisConnectionFactory;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.serializer.StringRedisSerializer;
-
 /**
  * @Author: Lil-K
- * @Date: 2025/12/15
+ * @Date: 2025/12/31
  * @Description:
  */
 @Configuration

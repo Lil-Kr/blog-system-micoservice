@@ -6,17 +6,17 @@ import co.elastic.clients.elasticsearch.core.IndexResponse;
 import jakarta.annotation.Resource;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.collections4.CollectionUtils;
-import org.cy.micoservice.blog.entity.message.model.provider.po.ChatBoxEs;
+import org.cy.micoservice.blog.common.enums.biz.DeleteStatusEnum;
+import org.cy.micoservice.blog.entity.message.model.provider.po.es.ChatBoxEs;
 import org.cy.micoservice.blog.framework.elasticsearch.starter.utils.ElasticsearchUtil;
 import org.cy.micoservice.blog.message.provider.config.MessageApplicationProperties;
 import org.springframework.stereotype.Repository;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.HashMap;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
 
 /**
  * @Author: Lil-K
@@ -44,31 +44,22 @@ public class ChatBoxEsMapper {
   }
 
   /**
-   * 批量更新收件箱信息
-   * @param chatBoxEsList
+   * 批量更新收信箱信息
+   * @param eachRecord
    * @return
    */
-  public boolean bulk(List<ChatBoxEs> chatBoxEsList){
-    List<Map<String,Object>> eachRecord = chatBoxEsList.parallelStream()
-      .map(chatBoxEs -> {
-        Map<String, Object> record = new HashMap<>();
-        record.put("id", chatBoxEs.getId());
-        record.put("doc", chatBoxEs);
-        return record;
-      })
-      .collect(Collectors.toList());
-
+  public boolean bulk(List<Map<String, Object>> eachRecord) {
     try {
       elasticsearchUtil.bulkIndexDocuments(applicationProperties.getEsChatBoxIndex(), eachRecord);
       return true;
     } catch (IOException e) {
-      log.error("bulk chat box error", e);
+      log.error("bulk chat-box error: ", e);
     }
     return false;
   }
 
   /**
-   * 查询单个用户的收件箱offset
+   * 查询单个用户对应的收信箱 offset
    * @param userId
    * @param relationId
    * @return
@@ -90,7 +81,7 @@ public class ChatBoxEsMapper {
     Query deletedTermQuery = Query.of(q -> q
       .term(t -> t
         .field("deleted")
-        .value(0)
+        .value(DeleteStatusEnum.ACTIVE.getCode())
       )
     );
     queryList.add(userIdTermQuery);
@@ -101,6 +92,31 @@ public class ChatBoxEsMapper {
 
     if (CollectionUtils.isEmpty(chatBoxEsList)) return null;
 
+    // 有且仅有一条数据
     return chatBoxEsList.get(0);
+  }
+
+  /**
+   * 读取用户的未读消息offset数据
+   * @param userId
+   * @return
+   */
+  public List<ChatBoxEs> listByUserId(Long userId) {
+    Query userIdTermQuery = Query.of(q -> q
+      .term(t -> t
+        .field("userId").value(userId)
+      )
+    );
+    Query deletedTermQuery = Query.of(q -> q
+      .term(t -> t
+        .field("deleted")
+        .value(DeleteStatusEnum.ACTIVE.getCode())
+      )
+    );
+    List<Query> mustList = Arrays.asList(userIdTermQuery, deletedTermQuery);
+    List<ChatBoxEs> chatBoxEsList = elasticsearchUtil.boolQuery(applicationProperties.getEsChatBoxIndex(), mustList,
+      null, null, ChatBoxEs.class);
+    if (CollectionUtils.isEmpty(chatBoxEsList)) return new ArrayList<>();
+    return chatBoxEsList;
   }
 }

@@ -3,9 +3,11 @@ package org.cy.micoservice.blog.message.provider.service;
 import org.cy.micoservice.blog.common.base.provider.PageResponseDTO;
 import org.cy.micoservice.blog.message.facade.dto.req.ChatRelationPageReqDTO;
 import org.cy.micoservice.blog.message.facade.dto.req.ChatRelationReqDTO;
+import org.cy.micoservice.blog.message.facade.dto.req.im.ImChatReqDTO;
 import org.cy.micoservice.blog.message.facade.dto.resp.ChatRelationRespDTO;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * @Author: Lil-K
@@ -20,10 +22,14 @@ public interface ChatRelationEsService {
    */
   boolean add(ChatRelationReqDTO chatRelationReqDTO);
 
+  boolean edit(ChatRelationReqDTO chatRelationReqDTO);
+
   /**
    * 批量保存会话关系数据
+   * @param imChatReqDTOMap
+   * @return
    */
-  boolean bulk(List<ChatRelationReqDTO> chatRelationReqDTOList);
+  boolean bulkMap(Map<String, ImChatReqDTO> imChatReqDTOMap);
 
   /**
    * 分页查询对话关系列表
@@ -38,4 +44,11 @@ public interface ChatRelationEsService {
    * @return
    */
   ChatRelationRespDTO queryRelationInfo(ChatRelationPageReqDTO chatRelationPageReqDTO);
+
+  /**
+   * 根据用户id查询所有会话记录
+   * @param userId
+   * @return
+   */
+  List<ChatRelationRespDTO> listByUserIdOrReceiverId(Long userId);
 }

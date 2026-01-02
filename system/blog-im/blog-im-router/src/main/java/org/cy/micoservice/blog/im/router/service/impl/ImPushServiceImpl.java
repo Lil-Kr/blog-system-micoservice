@@ -6,7 +6,6 @@ import org.apache.dubbo.rpc.RpcContext;
 import org.cy.micoservice.blog.common.base.rpc.RpcResponse;
 import org.cy.micoservice.blog.common.enums.response.ApiReturnCodeEnum;
 import org.cy.micoservice.blog.common.utils.AssertUtil;
-import org.cy.micoservice.blog.common.utils.RpcAssertUtil;
 import org.cy.micoservice.blog.im.facade.dto.router.ImSingleMessageDTO;
 import org.cy.micoservice.blog.im.facade.interfaces.ImNotifyFacade;
 import org.cy.micoservice.blog.im.router.constant.ImRouterConstants;
@@ -45,6 +44,6 @@ public class ImPushServiceImpl implements ImPushService {
 
     // 消息通过rpc推到 im-connector 层
     RpcResponse<Boolean> sendResp = imNotifyFacade.sendSingleMessage(imSingleMessageDTO);
-    RpcAssertUtil.isRespSuccess(sendResp);
+    RpcResponse.isRespSuccess(sendResp);
   }
 }

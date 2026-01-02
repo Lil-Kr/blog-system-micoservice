@@ -1,4 +1,4 @@
-package org.cy.micoservice.blog.entity.message.model.provider.po;
+package org.cy.micoservice.blog.entity.message.model.provider.po.mysql;
 
 import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
@@ -33,7 +33,9 @@ public class ChatRelation extends BaseEntity {
   // 接收对话的用户id
   private Long receiverId;
 
-  // 对话内容
+  /**
+   * 对话内容, 用于展示最后一条记录
+   */
   private String content;
 
   // 对话类型
@@ -43,7 +45,7 @@ public class ChatRelation extends BaseEntity {
   private Integer status;
 
   // 已对话条数, 前端展示使用
-  private Integer msgCount;
+  private Long msgCount;
 
   // 最新对话时间
   private LocalDateTime latestMsgTime;

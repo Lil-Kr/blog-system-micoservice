@@ -21,6 +21,9 @@ public class ApplicationProperties {
   @Value("${im.server.address:ws://localhost:10883/blog/im/chat}")
   private String imServerAddress;
 
-  @Value("${open.chat.topic:blog-open-chat-topic}")
+  /**
+   * topic: 推送消息, 当用户打开聊天窗口
+   */
+  @Value("${im.open.chat.producer-topic:blog-open-chat-topic}")
   private String openChatTopic;
 }

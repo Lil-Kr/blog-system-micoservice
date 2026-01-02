@@ -2,12 +2,13 @@ package org.cy.micoservice.blog.user.api.controller;
 
 import lombok.extern.slf4j.Slf4j;
 import org.cy.micoservice.blog.common.base.api.ApiResp;
+import org.cy.micoservice.blog.framework.web.starter.annotations.NoAuthCheck;
+import org.cy.micoservice.blog.user.api.service.UserEnterService;
 import org.cy.micoservice.blog.user.api.service.UserProfileService;
 import org.cy.micoservice.blog.user.api.vo.resp.SysUserResp;
+import org.cy.micoservice.blog.user.facade.provider.req.UserEnterInitReqDTO;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 /**
  * @Author: Lil-K
@@ -21,14 +22,32 @@ public class UserController {
 
   @Autowired
   private UserProfileService userProfileService;
+  @Autowired
+  private UserEnterService userEnterService;
 
+  @NoAuthCheck
   @GetMapping("/profile")
   public String profile(Long userId) {
     return userProfileService.profile(userId);
   }
 
+  @NoAuthCheck
   @GetMapping("/getUser")
   public ApiResp<SysUserResp> getUser(Long userId) {
     return userProfileService.getUserBySurrogateId(userId);
+  }
+
+  /**
+   * 发送MQ通知, 用户进入程序时触发, 通知下游预加载聊天数据
+   * 这个接口请求量非常大
+   * @return
+   */
+  @NoAuthCheck
+  @PostMapping("/init")
+  public ApiResp<Boolean> init(@RequestBody UserEnterInitReqDTO reqDTO) {
+    // todo: 测试id, 后续删除
+    // reqDTO.setUserId(RequestContext.getUserId());
+
+    return ApiResp.success(userEnterService.enter(reqDTO));
   }
 }

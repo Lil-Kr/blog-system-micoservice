@@ -9,7 +9,6 @@ public interface UserConnectorMappingService {
 
   /**
    * 保存用户id和所连接的机器ip地址
-   *
    * @param userId
    * @param connectorAddress
    * @return
@@ -18,14 +17,12 @@ public interface UserConnectorMappingService {
 
   /**
    * 移除指定用户id所在的机器ip地址记录
-   *
    * @param userId
    */
   void remove(Long userId);
 
   /**
    * 根据用户id获取机器ip
-   *
    * @param userId
    * @return
    */

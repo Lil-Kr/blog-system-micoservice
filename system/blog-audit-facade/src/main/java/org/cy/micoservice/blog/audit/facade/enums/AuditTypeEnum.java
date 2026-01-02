@@ -13,7 +13,7 @@ import lombok.Getter;
 public enum AuditTypeEnum {
 
   TEXT(1,"text"),
-  IMAGE(2,"图片"),
+  IMAGE(2,"image"),
   ;
 
   Integer code;

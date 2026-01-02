@@ -11,7 +11,7 @@ import org.springframework.stereotype.Component;
 @Component
 public class ImRouterRedisKeyBuilder extends RedisKeyBuilder {
 
-  public String getImUserConnectorKey(String userId) {
+  public String imUserConnectorKey(String userId) {
     return super.buildKey(String.format("im_connector:user:%s", userId));
   }
 }

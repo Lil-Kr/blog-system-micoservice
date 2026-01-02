@@ -31,7 +31,7 @@ public abstract class TextAuditHandler implements AuditHandler {
     TextAuditBody textAuditBody = JSON.parseObject(auditMsgDTO.getAuditBody(), TextAuditBody.class);
     Integer bodyType = textAuditBody.getBodyType();
     if (TextAuditBodyTypeEnum.CHAT.getCode().equals(bodyType)) {
-      // 会话消息处理逻辑
+      // 会话消息审核处理逻辑
       AuditResultDTO auditResultDTO = checkContentBody(textAuditBody.getBody());
       if (!auditResultDTO.getSuccess()) {
         return auditResultDTO;

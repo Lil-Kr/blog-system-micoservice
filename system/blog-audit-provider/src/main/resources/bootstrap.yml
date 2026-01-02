@@ -1,9 +1,4 @@
-server:
-  ## dubbo: 7599
-  port: 7501
-  tomcat:
-    uri-encoding: UTF-8
-
+## dubbo: 7599
 spring:
   application:
     name: blog-audit-provider

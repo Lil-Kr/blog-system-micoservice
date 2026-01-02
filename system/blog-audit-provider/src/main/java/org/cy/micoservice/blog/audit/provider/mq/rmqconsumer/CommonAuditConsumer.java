@@ -23,6 +23,7 @@ import org.cy.micoservice.blog.audit.facade.enums.TextAuditBodyTypeEnum;
 import org.cy.micoservice.blog.audit.provider.config.AuditApplicationProperties;
 import org.cy.micoservice.blog.audit.provider.handler.AuditManager;
 import org.cy.micoservice.blog.audit.provider.service.AuditLogService;
+import org.cy.micoservice.blog.common.constants.CommonFormatConstants;
 import org.cy.micoservice.blog.entity.audit.model.facade.po.AuditLog;
 import org.cy.micoservice.blog.audit.facade.enums.AuditRefTypeEnum;
 import org.cy.micoservice.blog.framework.rocketmq.starter.consumer.RocketMQConsumerProperties;
@@ -59,7 +60,7 @@ public class CommonAuditConsumer {
     DefaultMQPushConsumer mqPushConsumer = new DefaultMQPushConsumer();
     mqPushConsumer.setVipChannelEnabled(false);
     mqPushConsumer.setNamesrvAddr(rocketMQConsumerProperties.getNameserver());
-    mqPushConsumer.setConsumerGroup(rocketMQConsumerProperties.getGroup() + "_" + CommonAuditConsumer.class.getSimpleName());
+    mqPushConsumer.setConsumerGroup(String.format(CommonFormatConstants.COMMENT_FORMAT_UNDERSCORE_SPLIT, rocketMQConsumerProperties.getGroup(), CommonAuditConsumer.class.getSimpleName()));
     mqPushConsumer.setConsumeFromWhere(ConsumeFromWhere.CONSUME_FROM_FIRST_OFFSET);
     mqPushConsumer.setConsumeMessageBatchMaxSize(200);
     mqPushConsumer.subscribe(auditApplicationProperties.getCommonAuditTopic(), "");

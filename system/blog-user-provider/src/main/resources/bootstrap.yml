@@ -1,9 +1,4 @@
-server:
-  ## dubbo: 7299
-  port: 7201
-  tomcat:
-    uri-encoding: UTF-8
-
+## dubbo: 7299
 spring:
   application:
     name: blog-user-provider

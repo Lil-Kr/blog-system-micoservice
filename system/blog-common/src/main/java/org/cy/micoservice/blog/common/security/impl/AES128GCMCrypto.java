@@ -31,7 +31,7 @@ public class AES128GCMCrypto implements Crypto {
   }
 
   @Override
-  public String encrypt(String plainText) throws Exception{
+  public String encrypt(String plainText) throws Exception {
     byte[] keyBytes = Base64.getDecoder().decode(key);
     SecretKeySpec secretKey = new SecretKeySpec(keyBytes, ALGORITHM);
 
@@ -54,7 +54,7 @@ public class AES128GCMCrypto implements Crypto {
   }
 
   @Override
-  public String decrypt(String cipherText) throws Exception{
+  public String decrypt(String cipherText) throws Exception {
     byte[] encryptedData = Base64.getDecoder().decode(cipherText);
     byte[] keyBytes = Base64.getDecoder().decode(key);
 

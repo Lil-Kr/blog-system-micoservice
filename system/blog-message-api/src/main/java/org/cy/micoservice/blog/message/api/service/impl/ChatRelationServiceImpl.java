@@ -7,7 +7,6 @@ import org.cy.micoservice.blog.common.base.provider.PageResponseDTO;
 import org.cy.micoservice.blog.common.base.rpc.RpcResponse;
 import org.cy.micoservice.blog.common.utils.BeanCopyUtils;
 import org.cy.micoservice.blog.common.utils.LocalDateTimeTranslatorUtil;
-import org.cy.micoservice.blog.common.utils.RpcAssertUtil;
 import org.cy.micoservice.blog.entity.message.model.provider.req.ChatRelationPageReq;
 import org.cy.micoservice.blog.entity.message.model.provider.req.ChatRelationReq;
 import org.cy.micoservice.blog.entity.message.model.provider.resp.ChatRelationResp;
@@ -39,9 +38,11 @@ public class ChatRelationServiceImpl implements ChatRelationService {
 
   @Autowired
   private CosUrlCovertService cosUrlCovertService;
-  @DubboReference
+
+  @DubboReference(check = false)
   private UserFacade userFacade;
-  @DubboReference
+
+  @DubboReference(check = false)
   private ChatRelationFacade chatRelationFacade;
 
   /**
@@ -51,23 +52,32 @@ public class ChatRelationServiceImpl implements ChatRelationService {
    */
   @Override
   public boolean add(ChatRelationReq chatRelationReq) {
-    ChatRelationReqDTO chatRelationReqDTO = BeanCopyUtils.convert(chatRelationReq,ChatRelationReqDTO.class);
+    ChatRelationReqDTO chatRelationReqDTO = BeanCopyUtils.convert(chatRelationReq, ChatRelationReqDTO.class);
     RpcResponse<Boolean> rpcResponse = chatRelationFacade.add(chatRelationReqDTO);
-    RpcAssertUtil.isRespSuccess(rpcResponse);
+    RpcResponse.isRespSuccess(rpcResponse);
     return rpcResponse.getData();
   }
 
+  /**
+   * 分页查询会话关系列表
+   * @param chatRelationPageReq
+   * @return
+   */
   @Override
-  public PageResponseDTO<ChatRelationResp> pageList(ChatRelationPageReq chatRelationPageReq) {
+  public PageResponseDTO<ChatRelationResp> pageChatRelationList(ChatRelationPageReq chatRelationPageReq) {
     // 对话关系查询请求
     ChatRelationPageReqDTO chatRelationPageReqDTO = BeanCopyUtils.convert(chatRelationPageReq, ChatRelationPageReqDTO.class);
     RpcResponse<PageResponseDTO<ChatRelationRespDTO>> rpcResponse = chatRelationFacade.queryInPage(chatRelationPageReqDTO);
-    RpcAssertUtil.isRespSuccess(rpcResponse);
+    RpcResponse.isRespSuccess(rpcResponse);
     PageResponseDTO<ChatRelationRespDTO> chatRelationPageResp = rpcResponse.getData();
     if (chatRelationPageResp.getDataList().isEmpty()) return PageResponseDTO.emptyPage();
-    Long currentUserId = RequestContext.getUserId();
+    // Long currentUserId = RequestContext.getUserId();
+    // todo: 测试id, 后续删除
+    Long currentUserId = chatRelationPageReq.getUserId();
 
-    // 用户信息请求查询
+    /**
+     * 用户信息请求查询
+     */
     List<Long> receiverIds = new ArrayList<>();
     for (ChatRelationRespDTO relation : chatRelationPageResp.getDataList()) {
       Long receiverId = null;
@@ -78,14 +88,15 @@ public class ChatRelationServiceImpl implements ChatRelationService {
       }
       receiverIds.add(receiverId);
     }
+
     RpcResponse<List<UserRespDTO>> userRpcResp = userFacade.queryInUserIds(receiverIds);
-    RpcAssertUtil.isRespSuccess(userRpcResp);
+    RpcResponse.isRespSuccess(userRpcResp);
 
     Map<Long, UserRespDTO> userMap = userRpcResp.getData().stream().collect(Collectors.toMap(UserRespDTO::getUserId, item -> item));
+    List<String> avatarUrls = userMap.values().stream().map(UserRespDTO::getAvatar).toList();
+    Map<String, String> userAvatarUrlMap = cosUrlCovertService.batchGetUserAvatarUrls(avatarUrls);
 
     List<ChatRelationResp> chatRelationRespList = new ArrayList<>();
-    List<String> avatarUrls = userMap.values().stream().map(UserRespDTO::getAvatar).toList();
-    Map<String,String> userAvatarUrlMap = cosUrlCovertService.batchGetUserAvatarUrls(avatarUrls);
     for (ChatRelationRespDTO relation : chatRelationPageResp.getDataList()) {
       ChatRelationResp chatRelationResp = BeanCopyUtils.convert(relation, ChatRelationResp.class);
       Long relationId = null;
@@ -112,14 +123,14 @@ public class ChatRelationServiceImpl implements ChatRelationService {
   public void updateRelationByRelationId(ChatRelationReq chatRelationReq) {
     ChatRelationReqDTO chatRelationReqDTO = BeanCopyUtils.convert(chatRelationReq,ChatRelationReqDTO.class);
     RpcResponse<Boolean> rpcResponse = chatRelationFacade.updateRelationByRelationId(chatRelationReqDTO);
-    RpcAssertUtil.isRespSuccess(rpcResponse);
+    RpcResponse.isRespSuccess(rpcResponse);
   }
 
   @Override
   public ChatRelationResp getRelationInfo(ChatRelationPageReq chatRelationPageReq) {
     ChatRelationPageReqDTO reqDTO = BeanCopyUtils.convert(chatRelationPageReq,ChatRelationPageReqDTO.class);
     RpcResponse<ChatRelationRespDTO> rpcResponse = chatRelationFacade.queryRelationInfo(reqDTO);
-    RpcAssertUtil.isRespSuccess(rpcResponse);
+    RpcResponse.isRespSuccess(rpcResponse);
     ChatRelationRespDTO chatRelationRespDTO = rpcResponse.getData();
     ChatRelationResp chatRelationResp = BeanCopyUtils.convert(chatRelationRespDTO, ChatRelationResp.class);
 
@@ -133,7 +144,7 @@ public class ChatRelationServiceImpl implements ChatRelationService {
     userIds.add(RequestContext.getUserId());
     userIds.add(trueReceiverId);
     RpcResponse<List<UserRespDTO>> userRpcResp = userFacade.queryInUserIds(userIds);
-    RpcAssertUtil.isRespSuccess(userRpcResp);
+    RpcResponse.isRespSuccess(userRpcResp);
     List<UserRespDTO> userList = userRpcResp.getData();
     if (CollectionUtils.isEmpty(userList)) {
       return chatRelationResp;

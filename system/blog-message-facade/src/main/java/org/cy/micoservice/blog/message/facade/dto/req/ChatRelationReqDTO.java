@@ -20,13 +20,13 @@ public class ChatRelationReqDTO implements Serializable {
 
   private String relationId;
 
-  private String content;
-
   private Long userId;
 
   private Long receiverId;
 
   private Integer type;
+
+  private String content;
 
   private Long seqNo;
 }

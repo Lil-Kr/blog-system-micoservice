@@ -1,9 +1,4 @@
-server:
-  ## dubbo: 7499
-  port: 7401
-  tomcat:
-    uri-encoding: UTF-8
-
+## dubbo: 7499
 spring:
   application:
     name: blog-message-provider

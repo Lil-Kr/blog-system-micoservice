@@ -25,6 +25,10 @@ public class ChatRecordRespDTO implements Serializable {
 
   private Long receiverId;
 
-  //
+  /**
+   * 消息类型
+   */
   private String type;
+
+  private Long chatId;
 }

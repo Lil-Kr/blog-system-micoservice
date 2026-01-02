@@ -38,7 +38,6 @@ public class MinioServiceImpl implements MinioService {
 
   /**
    * 上传文件
-   *
    * @param file       要上传的文件
    * @param objectName 对象名称
    * @throws Exception
@@ -58,7 +57,6 @@ public class MinioServiceImpl implements MinioService {
 
   /**
    * 下载文件
-   *
    * @param objectName 对象名称
    * @return 文件输入流
    * @throws Exception
@@ -74,7 +72,6 @@ public class MinioServiceImpl implements MinioService {
 
   /**
    * 删除文件
-   *
    * @param objectName 对象名称
    * @throws Exception
    */
@@ -89,7 +86,6 @@ public class MinioServiceImpl implements MinioService {
 
   /**
    * 检查文件是否存在
-   *
    * @param objectName 对象名称
    * @return 文件是否存在
    * @throws Exception

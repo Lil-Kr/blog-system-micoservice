@@ -3,6 +3,7 @@ package org.cy.micoservice.blog.message.provider.service.impl;
 import co.elastic.clients.elasticsearch.core.SearchResponse;
 import co.elastic.clients.elasticsearch.core.search.Hit;
 import com.alibaba.fastjson2.JSON;
+import com.alibaba.fastjson2.JSONObject;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.collections4.CollectionUtils;
 import org.cy.micoservice.blog.common.base.provider.PageResponseDTO;
@@ -10,7 +11,8 @@ import org.cy.micoservice.blog.common.enums.biz.DeleteStatusEnum;
 import org.cy.micoservice.blog.common.enums.exception.BizErrorEnum;
 import org.cy.micoservice.blog.common.utils.AssertUtil;
 import org.cy.micoservice.blog.common.utils.BeanCopyUtils;
-import org.cy.micoservice.blog.entity.message.model.provider.po.ChatRecordEs;
+import org.cy.micoservice.blog.entity.message.model.provider.po.es.ChatRecordEs;
+import org.cy.micoservice.blog.framework.elasticsearch.starter.constant.BulkIndexDocumentConstants;
 import org.cy.micoservice.blog.framework.id.starter.service.IdService;
 import org.cy.micoservice.blog.message.facade.dto.req.ChatRecordPageReqDTO;
 import org.cy.micoservice.blog.message.facade.dto.req.ChatRecordReqDTO;
@@ -23,7 +25,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 /**
@@ -40,18 +44,22 @@ public class ChatRecordEsServiceImpl implements ChatRecordEsService {
   @Autowired
   private ChatRecordEsMapper chatRecordEsMapper;
 
+  /**
+   * 新增聊天内容
+   * @param imChatReqDTO
+   * @return
+   */
   @Override
   public boolean index(ImChatReqDTO imChatReqDTO) {
     ChatRecordReqDTO chatRecordReqDTO = new ChatRecordReqDTO();
-    chatRecordReqDTO.setReceiverId(imChatReqDTO.getReceiverId());
     chatRecordReqDTO.setUserId(imChatReqDTO.getSenderId());
+    chatRecordReqDTO.setReceiverId(imChatReqDTO.getReceiverId());
     chatRecordReqDTO.setRelationId(imChatReqDTO.getRelationId());
     // 消息对话内容
     ImChatContentDTO imChatReqContentDTO = JSON.parseObject(imChatReqDTO.getContent(), ImChatContentDTO.class);
     chatRecordReqDTO.setContent(imChatReqContentDTO.getBody());
     chatRecordReqDTO.setType(imChatReqContentDTO.getType());
     /**
-     * todo: 每次保存时都查询一次db, db访问压力比较大
      * 自增的消息 offset
      */
     chatRecordReqDTO.setSeqNo(imChatReqDTO.getSeqNo());
@@ -61,6 +69,7 @@ public class ChatRecordEsServiceImpl implements ChatRecordEsService {
 
     ChatRecordEs chatRecordEs = BeanCopyUtils.convert(chatRecordReqDTO, ChatRecordEs.class);
     chatRecordEs.setId(chatRecordReqDTO.getChatId());
+    log.info("chat record msg: {}", JSONObject.toJSONString(chatRecordEs));
     // 会话id唯一
     return chatRecordEsMapper.index(chatRecordEs);
   }
@@ -71,7 +80,7 @@ public class ChatRecordEsServiceImpl implements ChatRecordEsService {
    */
   @Override
   public void bulk(List<ImChatReqDTO> imChatReqDTOList) {
-    List<ChatRecordEs> chatRecordEsList = imChatReqDTOList.stream()
+    List<Map<String, Object>> bulkList = imChatReqDTOList.stream()
       .map(imChatReq -> {
         ChatRecordReqDTO chatRecordReqDTO = new ChatRecordReqDTO();
         chatRecordReqDTO.setRelationId(imChatReq.getRelationId());
@@ -84,7 +93,7 @@ public class ChatRecordEsServiceImpl implements ChatRecordEsService {
         /**
          * todo: 不推荐每次保存时候都查询一次db, db的访问压力太大了
          * 自增的消息 offset
-         * 每次保存的时候, 先查询缓存, 如果缓存miss, 则查询db --> 还是有一部分请求到DB
+         * 每次保存的时候, 先查询缓存, 如果缓存miss, 则查询db --> 还是有一部分请求到 DB
          * 在外层会话列表展示的时候, 提前将消息总数缓存到redis中, 用纯数字的方式保存, 因为有可能加载到缓存之后, 此时需要做消息的increase的数字
          * 假设一个人有 500 个好友, key -> number, <userId, Map<relationId, count>>, 每次刷新会话列表时, 可以做 ttl 续命操作
          */
@@ -101,12 +110,23 @@ public class ChatRecordEsServiceImpl implements ChatRecordEsService {
         chatRecordEs.setUpdateTime(now);
         return chatRecordEs;
       })
+      .map(chatRecordEs -> {
+        Map<String, Object> chatRecordEsMap = new HashMap<>();
+        chatRecordEsMap.put(BulkIndexDocumentConstants.BULK_INDEX_NAME_ID, String.valueOf(chatRecordEs.getId()));
+        chatRecordEsMap.put(BulkIndexDocumentConstants.BULK_INDEX_NAME_DOC, chatRecordEs);
+        return chatRecordEsMap;
+      })
       .collect(Collectors.toList());
 
-    // 写入不一定立马可以查询到
-    chatRecordEsMapper.bulk(chatRecordEsList);
+    // 写入不能立马可以查询到
+    chatRecordEsMapper.bulk(bulkList);
   }
 
+  /**
+   * 分页查询消息记录
+   * @param chatRecordPageReqDTO
+   * @return
+   */
   @Override
   public PageResponseDTO<ChatRecordRespDTO> queryRecordInPage(ChatRecordPageReqDTO chatRecordPageReqDTO) {
     AssertUtil.isNotNull(chatRecordPageReqDTO, BizErrorEnum.PARAM_ERROR);
@@ -121,19 +141,33 @@ public class ChatRecordEsServiceImpl implements ChatRecordEsService {
         chatRecordRespDTOList.add(chatRecordRespDTO);
         searchOffset = hit.sort().get(0).longValue();
       }
-      PageResponseDTO<ChatRecordRespDTO> chatRecordPageResp = new PageResponseDTO<>();
-      chatRecordPageResp.setDataList(chatRecordRespDTOList);
-      chatRecordPageResp.setSize(chatRecordPageReqDTO.getPageSize());
+
+      PageResponseDTO<ChatRecordRespDTO> pageResponseDTO = new PageResponseDTO<>();
+      pageResponseDTO.setDataList(chatRecordRespDTOList);
+      pageResponseDTO.setSize(chatRecordPageReqDTO.getPageSize());
       if (CollectionUtils.isEmpty(chatRecordRespDTOList)) {
-        chatRecordPageResp.setHasNext(false);
-        return chatRecordPageResp;
+        pageResponseDTO.setHasNext(false);
+        return pageResponseDTO;
       }
-      chatRecordPageResp.setHasNext(true);
-      chatRecordPageResp.setSearchOffset(searchOffset);
-      return chatRecordPageResp;
+      pageResponseDTO.setHasNext(true);
+      pageResponseDTO.setSearchOffset(searchOffset);
+      return pageResponseDTO;
     } catch (Exception e) {
       log.error("chat record es search after error", e);
       throw new RuntimeException(e);
     }
+  }
+
+  /**
+   * 查询未读消息内容
+   * @param beginOffset
+   * @param endOffset
+   * @param relationId
+   * @return
+   */
+  @Override
+  public List<ChatRecordRespDTO> queryFromOffset(Long beginOffset, Long endOffset, String relationId) {
+    List<ChatRecordEs> chatRecordEsList = chatRecordEsMapper.queryFromOffset(beginOffset, endOffset, relationId);
+    return BeanCopyUtils.convertList(chatRecordEsList, ChatRecordRespDTO.class);
   }
 }

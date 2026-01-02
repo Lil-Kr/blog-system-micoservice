@@ -23,12 +23,16 @@ public class BasePageReq extends BaseReq {
   public interface GroupPageQuery{}
 
   /**
+   * 当前页码数
    */
   @NotNull(groups = {GroupPageQuery.class}, message = "current page number cant not be null")
   @Min(groups = {GroupPageQuery.class}, value = 1, message ="page number cant not less than 1")
   @Max(groups = {GroupPageQuery.class}, value = 10, message ="page number cant not greater than 10")
   private Integer currentPageNum;
 
+  /**
+   * 每页记录数
+   */
   @NotNull(groups = {GroupPageQuery.class}, message = "page size cant not be null")
   @Max(groups = {GroupPageQuery.class}, value = 100, message = "page size cant not greater than 100")
   private Integer pageSize;

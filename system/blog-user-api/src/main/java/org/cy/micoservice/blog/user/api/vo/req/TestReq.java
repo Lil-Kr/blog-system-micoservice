@@ -19,7 +19,7 @@ import jakarta.validation.groups.Default;
 @Data
 public class TestReq {
 
-  @NotBlank(groups = {Default.class},message = "用户账号不能为空")
+  @NotBlank(groups = {Default.class}, message = "用户账号不能为空")
   @Size(min = 5, max = 20, message = "账号长度范围在 5~20 个字符之间")
   @Pattern(regexp = CheckUtil.ACCOUNT_REGEXP, message = "账号必须以字母,数字,下划线 开头")
   private String name;

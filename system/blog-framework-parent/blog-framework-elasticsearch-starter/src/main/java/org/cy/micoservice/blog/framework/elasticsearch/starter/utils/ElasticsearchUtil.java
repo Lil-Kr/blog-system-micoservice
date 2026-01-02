@@ -11,6 +11,8 @@ import co.elastic.clients.elasticsearch.core.bulk.BulkOperation;
 import co.elastic.clients.elasticsearch.core.search.Hit;
 import co.elastic.clients.elasticsearch.indices.GetIndexResponse;
 import co.elastic.clients.json.JsonData;
+import org.apache.commons.lang3.StringUtils;
+import org.cy.micoservice.blog.framework.elasticsearch.starter.constant.BulkIndexDocumentConstants;
 import org.cy.micoservice.blog.framework.elasticsearch.starter.dto.SearchPageRequest;
 
 import java.io.IOException;
@@ -37,7 +39,6 @@ public class ElasticsearchUtil {
    * @throws IOException ES 客户端异常
    */
   public <T> SearchResponse<T> searchAfter(SearchPageRequest request, Class<T> clazz) throws IOException {
-
     return esClient.search(
       request.getSearchRequest(),
       clazz
@@ -226,6 +227,25 @@ public class ElasticsearchUtil {
                                List<Query> mustNotQueries,
                                List<Query> shouldQueries,
                                Class<T> clazz) {
+    return this.boolQuery(indexName, mustQueries, mustNotQueries, shouldQueries,clazz,1000);
+  }
+
+  /**
+   * bool查询
+   * @param indexName
+   * @param mustQueries
+   * @param mustNotQueries
+   * @param shouldQueries
+   * @param clazz
+   * @param <T>
+   * @return
+   */
+  public <T> List<T> boolQuery(String indexName,
+                               List<Query> mustQueries,
+                               List<Query> mustNotQueries,
+                               List<Query> shouldQueries,
+                               Class<T> clazz,
+                               Integer maxSize) {
     BoolQuery.Builder boolBuilder = new BoolQuery.Builder();
 
     if (mustQueries != null && !mustQueries.isEmpty()) {
@@ -239,7 +259,7 @@ public class ElasticsearchUtil {
     }
 
     Query query = Query.of(q -> q.bool(boolBuilder.build()));
-    return this.searchDocuments(indexName, query, clazz, 0, Integer.MAX_VALUE);
+    return this.searchDocuments(indexName, query, clazz, 0, maxSize);
   }
 
   /**
@@ -392,10 +412,10 @@ public class ElasticsearchUtil {
     List<BulkOperation> operations = new ArrayList<>();
 
     for (Map<String, Object> doc : documents) {
-      String id = Objects.toString(doc.get("id"), null);
-      Object document = doc.get("doc");
+      String id = Objects.toString(doc.get(BulkIndexDocumentConstants.BULK_INDEX_NAME_ID), null);
+      Object document = doc.get(BulkIndexDocumentConstants.BULK_INDEX_NAME_DOC);
 
-      if (id == null || document == null) {
+      if (StringUtils.isBlank(id) || document == null) {
         continue;
       }
 
@@ -414,7 +434,6 @@ public class ElasticsearchUtil {
   /**
    * 构建Elasticsearch更新脚本
    * 根据要更新的字段列表生成脚本字符串, 支持普通字段和嵌套字段
-   *
    * @param fieldNames 要更新的字段名称集合
    * @return 生成的更新脚本字符串
    */

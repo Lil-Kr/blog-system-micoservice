@@ -3,10 +3,8 @@ package org.cy.micoservice.blog.framework.minio.starter.config;
 
 import io.minio.MinioClient;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.boot.autoconfigure.condition.ConditionalOnBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.data.redis.core.RedisTemplate;
 
 /**
  * @Author: Lil-K
@@ -26,7 +24,6 @@ public class MinioAutoconfigurationBean {
   private String secretKey;
 
   @Bean
-  @ConditionalOnBean(value = {MinioClient.class, RedisTemplate.class})
   public MinioClient minioClient() {
     return MinioClient.builder()
       .endpoint(endpoint)

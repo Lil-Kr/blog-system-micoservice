@@ -25,6 +25,7 @@ import org.cy.micoservice.blog.audit.facade.enums.TextAuditBodyTypeEnum;
 import org.cy.micoservice.blog.audit.provider.config.AuditApplicationProperties;
 import org.cy.micoservice.blog.audit.provider.handler.AuditManager;
 import org.cy.micoservice.blog.audit.provider.service.AuditLogService;
+import org.cy.micoservice.blog.common.constants.CommonFormatConstants;
 import org.cy.micoservice.blog.entity.audit.model.facade.po.AuditLog;
 import org.cy.micoservice.blog.audit.facade.enums.AuditRefTypeEnum;
 import org.cy.micoservice.blog.framework.rocketmq.starter.consumer.RocketMQConsumerProperties;
@@ -62,7 +63,7 @@ public class ImBizChatAuditConsumer {
     DefaultMQPushConsumer mqPushConsumer = new DefaultMQPushConsumer();
     mqPushConsumer.setVipChannelEnabled(false);
     mqPushConsumer.setNamesrvAddr(rocketMQConsumerProperties.getNameserver());
-    mqPushConsumer.setConsumerGroup(rocketMQConsumerProperties.getGroup() + "_" + ImBizChatAuditConsumer.class.getSimpleName());
+    mqPushConsumer.setConsumerGroup(String.format(CommonFormatConstants.COMMENT_FORMAT_UNDERSCORE_SPLIT, rocketMQConsumerProperties.getGroup(), ImBizChatAuditConsumer.class.getSimpleName()));
     mqPushConsumer.setConsumeFromWhere(ConsumeFromWhere.CONSUME_FROM_FIRST_OFFSET);
     mqPushConsumer.setConsumeMessageBatchMaxSize(auditApplicationProperties.getImChatMessageAuditTopicPushSize());
     mqPushConsumer.subscribe(auditApplicationProperties.getImChatMessageAuditTopic(), "");
@@ -128,18 +129,16 @@ public class ImBizChatAuditConsumer {
      * 发送 mq, 回写到消息服务
      */
     this.sendResponseMsg(auditResultMessageDTO);
-    if (! AuditResultCodeEnum.VALID.getCode().equals(auditResultDTO.getCode())) {
-      AuditLog auditLog = new AuditLog();
-      auditLog.setResultCode(auditResultDTO.getCode());
-      auditLog.setMessage(auditResultDTO.getMessage());
-      auditLog.setRefId(chatTextAuditBody.getMsgId());
-      auditLog.setEventTime(auditMsgDTO.getEventTime());
-      auditLog.setRefType(AuditRefTypeEnum.CHAT_TEXT.getCode());
-      auditLog.setChannel(channelName);
-      return auditLog;
-    }
-
-    return null;
+    // 判断是否
+    if (AuditResultCodeEnum.VALID.getCode().equals(auditResultDTO.getCode())) return null;
+    AuditLog auditLog = new AuditLog();
+    auditLog.setResultCode(auditResultDTO.getCode());
+    auditLog.setMessage(auditResultDTO.getMessage());
+    auditLog.setRefId(chatTextAuditBody.getMsgId());
+    auditLog.setEventTime(auditMsgDTO.getEventTime());
+    auditLog.setRefType(AuditRefTypeEnum.CHAT_TEXT.getCode());
+    auditLog.setChannel(channelName);
+    return auditLog;
   }
 
   /**

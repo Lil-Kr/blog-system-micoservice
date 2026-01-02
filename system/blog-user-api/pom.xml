@@ -57,6 +57,18 @@
 		
 		<dependency>
 			<groupId>org.cy.micoservice.blog</groupId>
+			<artifactId>blog-framework-minio-starter</artifactId>
+			<version>${blog-framework-parent.version}</version>
+		</dependency>
+		
+		<dependency>
+			<groupId>org.cy.micoservice.blog</groupId>
+			<artifactId>blog-framework-rocketmq-starter</artifactId>
+			<version>${blog-framework-parent.version}</version>
+		</dependency>
+		
+		<dependency>
+			<groupId>org.cy.micoservice.blog</groupId>
 			<artifactId>blog-user-facade</artifactId>
 			<version>1.0.0</version>
 		</dependency>

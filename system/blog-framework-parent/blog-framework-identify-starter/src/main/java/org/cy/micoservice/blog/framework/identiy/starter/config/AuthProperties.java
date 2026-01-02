@@ -15,9 +15,9 @@ public class AuthProperties {
   @Value("${blog.identify.secret-key:}")
   private String secretKey;
 
-  @Value("${blog.identify.access-token.expire-time:500000}")
+  @Value("${blog.identify.access-token.expire-time:}")
   private Long accessTokenExpireTime;
 
-  @Value("${blog.identify.auth.template:jwt}")
+  @Value("${blog.identify.auth.template:}")
   private String authType;
 }

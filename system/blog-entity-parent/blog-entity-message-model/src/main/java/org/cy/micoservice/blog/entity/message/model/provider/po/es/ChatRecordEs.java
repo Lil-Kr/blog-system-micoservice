@@ -1,27 +1,26 @@
-package org.cy.micoservice.blog.entity.message.model.provider.po;
+package org.cy.micoservice.blog.entity.message.model.provider.po.es;
 
-import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
-import org.cy.micoservice.blog.entity.base.model.api.BaseEntity;
 
 import java.io.Serial;
+import java.io.Serializable;
 
 /**
  * @Author: Lil-K
- * @Date: 2025/12/26
- * @Description:
+ * @Date: 2025/12/25
+ * @Description: 会话聊天记录es对象
  */
 @Data
-@TableName("t_chat_record")
-public class ChatRecord extends BaseEntity {
-  @Serial
-  private static final long serialVersionUID = -3660330681250827415L;
+public class ChatRecordEs implements Serializable {
 
-  // 主键id
+  @Serial
+  private static final long serialVersionUID = -4542825199538538412L;
+
+  // es id
   private Long id;
 
   // 关系id
-  private Long relationId;
+  private String relationId;
 
   // 对话id
   private Long chatId;
@@ -43,4 +42,10 @@ public class ChatRecord extends BaseEntity {
 
   // 对话序号
   private Long seqNo;
+
+  private Integer deleted;
+
+  private Long createTime;
+
+  private Long updateTime;
 }

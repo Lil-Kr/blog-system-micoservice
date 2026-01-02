@@ -17,6 +17,11 @@ public class ImChatReqDTO implements Serializable {
   private static final long serialVersionUID = 1042425958616931346L;
 
   /**
+   * 唯一消息id
+   */
+  private String msgId;
+
+  /**
    * 发送方id
    */
   private Long senderId;
@@ -38,22 +43,17 @@ public class ImChatReqDTO implements Serializable {
   private String relationId;
 
   /**
-   * 唯一消息id
-   */
-  private String msgId;
-
-  /**
-   * 审核状态
-   */
-  private Integer msgStatus;
-
-  /**
    * 链路id
    */
   private String traceId;
 
   /**
-   * 消息顺序
+   * 消息顺序, 用于加载聊天消息时展示的顺序
    */
   private Long seqNo;
+
+  /**
+   * 审核状态
+   */
+  private Integer msgStatus;
 }

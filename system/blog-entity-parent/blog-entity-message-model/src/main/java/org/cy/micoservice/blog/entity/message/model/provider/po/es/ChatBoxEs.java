@@ -1,7 +1,10 @@
-package org.cy.micoservice.blog.entity.message.model.provider.po;
+package org.cy.micoservice.blog.entity.message.model.provider.po.es;
 
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
+
 import java.io.Serial;
 import java.io.Serializable;
 
@@ -12,6 +15,8 @@ import java.io.Serializable;
  */
 @Data
 @Builder
+@AllArgsConstructor
+@NoArgsConstructor
 public class ChatBoxEs implements Serializable {
   @Serial
   private static final long serialVersionUID = -9148498728447188106L;
@@ -37,8 +42,6 @@ public class ChatBoxEs implements Serializable {
   private Long msgOffset;
 
   private Integer deleted;
-
-  private Long createTime;
 
   private Long updateTime;
 }

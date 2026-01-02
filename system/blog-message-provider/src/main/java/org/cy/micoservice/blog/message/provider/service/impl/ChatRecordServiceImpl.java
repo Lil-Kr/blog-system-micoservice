@@ -8,7 +8,7 @@ import org.apache.commons.collections4.CollectionUtils;
 import org.cy.micoservice.blog.common.base.provider.PageResponseDTO;
 import org.cy.micoservice.blog.common.utils.BeanCopyUtils;
 import org.cy.micoservice.blog.common.utils.IdGenerateUtil;
-import org.cy.micoservice.blog.entity.message.model.provider.po.ChatRecord;
+import org.cy.micoservice.blog.entity.message.model.provider.po.mysql.ChatRecord;
 import org.cy.micoservice.blog.message.facade.dto.req.ChatRecordPageReqDTO;
 import org.cy.micoservice.blog.message.facade.dto.req.ChatRecordReqDTO;
 import org.cy.micoservice.blog.message.facade.dto.req.ChatRelationReqDTO;
@@ -49,7 +49,6 @@ public class ChatRecordServiceImpl extends ServiceImpl<ChatRecordMapper, ChatRec
   }
 
   /**
-   * todo: 改为自定义分页, 不使用MP的
    * 分页查询聊天记录
    * @param chatRecordPageReqDTO
    * @return

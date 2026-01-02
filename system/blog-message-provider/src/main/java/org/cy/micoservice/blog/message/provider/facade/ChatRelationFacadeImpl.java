@@ -37,7 +37,7 @@ public class ChatRelationFacadeImpl implements ChatRelationFacade {
   }
 
   /**
-   * 分页查询 chat-relation 列表
+   * 分页查询 用户 -> chat-relation 列表
    * @param chatRelationPageReqDTO
    * @return
    */
@@ -47,6 +47,17 @@ public class ChatRelationFacadeImpl implements ChatRelationFacade {
   }
 
   /**
+   * 查询对话关系信息
+   * @param chatRelationPageReqDTO
+   * @return
+   */
+  @Override
+  public RpcResponse<ChatRelationRespDTO> queryRelationInfo(ChatRelationPageReqDTO chatRelationPageReqDTO) {
+    return RpcResponse.success(chatRelationEsService.queryRelationInfo(chatRelationPageReqDTO));
+  }
+
+  /**
+   * 废弃
    * 更新对话关系信息
    * @param chatRelationReqDTO
    * @return
@@ -57,16 +68,7 @@ public class ChatRelationFacadeImpl implements ChatRelationFacade {
   }
 
   /**
-   * 查询对话关系信息
-   * @param chatRelationPageReqDTO
-   * @return
-   */
-  @Override
-  public RpcResponse<ChatRelationRespDTO> queryRelationInfo(ChatRelationPageReqDTO chatRelationPageReqDTO) {
-    return RpcResponse.success(chatRelationService.queryRelationInfo(chatRelationPageReqDTO));
-  }
-
-  /**
+   * 废弃
    * 发送对话并且更新对话关系
    * @param chatRelationReqDTO
    * @return

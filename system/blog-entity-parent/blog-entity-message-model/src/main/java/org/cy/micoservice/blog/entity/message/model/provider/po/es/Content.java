@@ -1,4 +1,4 @@
-package org.cy.micoservice.blog.entity.message.model.provider.po;
+package org.cy.micoservice.blog.entity.message.model.provider.po.es;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -23,7 +23,7 @@ public class Content implements Serializable {
   private static final long serialVersionUID = -3124149548368964811L;
 
   /**
-   * 对话类型
+   * 对话类型: org.cy.micoservice.blog.message.facade.enums.ChatRelationTypeEnum
    */
   private Integer type;
 

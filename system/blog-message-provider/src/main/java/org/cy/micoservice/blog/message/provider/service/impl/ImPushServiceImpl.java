@@ -75,8 +75,8 @@ public class ImPushServiceImpl implements ImPushService {
     imBatchMessageDTO.setImSingleMessageDTOList(imSingleMessageDTOList);
 
     Message message = new Message();
-    message.setBody(JSONObject.toJSONString(imBatchMessageDTO).getBytes(StandardCharsets.UTF_8));
     message.setTopic(messageApplicationProperties.getImRoutePushTopic());
+    message.setBody(JSONObject.toJSONString(imBatchMessageDTO).getBytes(StandardCharsets.UTF_8));
     try {
       log.info("topic: {}, push single msg: {}", messageApplicationProperties.getImRoutePushTopic(), JSON.toJSONString(imBatchMessageDTO));
       SendResult sendResult = rocketMQProducerClient.send(message);

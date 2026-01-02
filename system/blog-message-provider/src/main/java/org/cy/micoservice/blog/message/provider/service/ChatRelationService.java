@@ -13,7 +13,7 @@ import org.cy.micoservice.blog.message.facade.dto.resp.ChatRelationRespDTO;
 public interface ChatRelationService {
 
   /**
-   * 新增对话关系
+   * 新增会话关系
    * @param chatRelationReqDTO
    */
   boolean add(ChatRelationReqDTO chatRelationReqDTO);

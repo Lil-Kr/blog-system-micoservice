@@ -18,8 +18,7 @@ public class WYTextAuditHandler extends TextAuditHandler {
   public AuditResultDTO checkContentBody(String content) {
     //可能会对接第三方接口, 所以这里需要考虑第三方崩溃的异常场景
     try {
-      //todo
-      //真实对接第三方接口
+      //todo: 真实对接第三方接口
     } catch (Exception e) {
       log.error("unknow third error:", e);
       return AuditResultDTO.thirdError("unknow third error");

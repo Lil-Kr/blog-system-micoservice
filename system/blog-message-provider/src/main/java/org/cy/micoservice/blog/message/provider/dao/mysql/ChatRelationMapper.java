@@ -3,7 +3,7 @@ package org.cy.micoservice.blog.message.provider.dao.mysql;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Update;
-import org.cy.micoservice.blog.entity.message.model.provider.po.ChatRelation;
+import org.cy.micoservice.blog.entity.message.model.provider.po.mysql.ChatRelation;
 import org.springframework.stereotype.Repository;
 
 /**

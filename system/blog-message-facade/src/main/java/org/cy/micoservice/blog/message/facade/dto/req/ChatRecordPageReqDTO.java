@@ -18,7 +18,7 @@ public class ChatRecordPageReqDTO extends BasePageReqDTO {
   @Serial
   private static final long serialVersionUID = 159229236141000627L;
 
-  private Long relationId;
+  private String relationId;
 
   private Long searchOffset;
 }

@@ -13,7 +13,7 @@ import lombok.Getter;
 public enum ChatRelationTypeEnum {
 
   SINGLE_CHAT(1,"私聊"),
-  GROUP_CHAT(1,"群聊"),
+  GROUP_CHAT(2,"群聊"),
     ;
 
   int code;

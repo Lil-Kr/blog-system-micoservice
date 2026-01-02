@@ -57,7 +57,7 @@ public class ImChannelStatusCheckTask implements InitializingBean {
           for (String channelId : needRemoveChannelIdList) {
             ChannelHandlerContext oldCtx = imChannelCache.removeWaitingIdentifyCtx(channelId);
             if (Objects.isNull(oldCtx)) {
-              log.warn("remove failed, channelId:{}", channelId);
+              log.warn("remove failed, channelId: {}", channelId);
               continue;
             }
             // 关闭连接, 释放内存

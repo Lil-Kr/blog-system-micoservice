@@ -1,4 +1,4 @@
-package org.cy.micoservice.blog.entity.message.model.provider.po;
+package org.cy.micoservice.blog.entity.message.model.provider.po.es;
 
 import lombok.Data;
 
@@ -16,19 +16,29 @@ public class ChatRelationEs implements Serializable {
   @Serial
   private static final long serialVersionUID = 4155456431095950746L;
 
-  // es id
+  /**
+   * es id
+   */
   private String id;
 
-  // 关系id
+  /**
+   * 关系id
+   */
   private String relationId;
 
-  // 对话id
+  /**
+   * 对话id
+   */
   private Long chatId;
 
-  // 用户id
+  /**
+   * 用户id
+   */
   private Long userId;
 
-  // 接收对话的用户id
+  /**
+   * 接收对话的用户id
+   */
   private Long receiverId;
 
   /**
@@ -37,13 +47,14 @@ public class ChatRelationEs implements Serializable {
    */
   private Content content;
 
-  // 对话类型
-  private Integer type;
-
-  // 对话状态
+  /**
+   * 对话状态
+   */
   private Integer status;
 
-  // 消息总数
+  /**
+   * 消息总数
+   */
   private Long msgCount;
 
   private Integer deleted;

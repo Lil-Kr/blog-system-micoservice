@@ -17,9 +17,9 @@ import java.util.Map;
 public class CreateImMessageBody {
 
   private static ImMessageDTO createLoginMsg(Long userId) {
-    //需要和im登录逻辑里面的密钥相同
+    // 需要和im登录逻辑里面的密钥相同
     String imSecretKey = "PIhqklxMNarWuqoNFFGJ5QGgesg==hkl1UBGlqopaKHKq9123h1";
-    //设置长期有效
+    // 设置长期有效
     String loginToken = JWTUtil.generateToken(String.valueOf(userId), new HashMap<>(), imSecretKey, 1000 * 24 * 3600 * 1000L);
     ImLoginBody imLoginBody = new ImLoginBody();
     imLoginBody.setToken(loginToken);
@@ -51,7 +51,7 @@ public class CreateImMessageBody {
     //10byte + 4byte + 4byte + 2byte = 20byte
     Map<String, Object> imChatReqMap = new HashMap<>();
     imChatReqMap.put("receiverId", receiverId);
-    imChatReqMap.put("relationId", 20991L);
+    imChatReqMap.put("relationId", "109891-708913");
     imChatReqMap.put("content", contentBody);
     ImMessageDTO imMessageDTO = new ImMessageDTO(ImMessageConstants.BIZ_MSG_CODE, JSONObject.toJSONString(imChatReqMap));
     return imMessageDTO;
