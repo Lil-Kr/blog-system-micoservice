@@ -4,7 +4,6 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import org.cy.micoservice.blog.common.enums.biz.ValidStatusEnum;
 import org.cy.micoservice.blog.entity.base.model.api.BasePageReq;
-import org.cy.micoservice.blog.entity.gateway.model.enums.LogPrintStrategyTypeEnum;
 
 import java.io.Serial;
 
@@ -28,7 +27,7 @@ public class LogPrintStrategyPageReq extends BasePageReq {
 
   /**
    * 策略类型
-   * @see LogPrintStrategyTypeEnum
+   * @see org.cy.micoservice.blog.gateway.facade.enums.LogPrintStrategyTypeEnum
    */
   private String strategyType;
 

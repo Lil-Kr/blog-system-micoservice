@@ -42,7 +42,7 @@ public class BlogLabelServiceImpl implements BlogLabelService {
 		List<BlogLabelResp> pageList = blogLabelMapper.pageList(req);
 		Integer count = blogLabelMapper.getCountByList(req);
 		if (CollectionUtils.isEmpty(pageList)) {
-			return new PageResult<>(new ArrayList<>(0), 0);
+			return PageResult.emptyPage();
 		}else {
 			return new PageResult<>(pageList, count);
 		}
@@ -60,7 +60,7 @@ public class BlogLabelServiceImpl implements BlogLabelService {
 		}
 
 		if (CollectionUtils.isEmpty(labelList)) {
-			return new PageResult<>(new ArrayList<>(0), 0);
+			return PageResult.emptyPage();
 		}
 		return new PageResult<>(labelList, labelList.size());
 	}

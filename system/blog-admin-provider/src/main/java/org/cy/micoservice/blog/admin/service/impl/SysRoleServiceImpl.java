@@ -53,7 +53,7 @@ public class SysRoleServiceImpl implements SysRoleService {
 		List<SysRoleResp> roleList = roleMapper.pageRoleList(req);
 		Integer count = roleMapper.countRolePage(req);
 		if (CollectionUtils.isEmpty(roleList)) {
-			return new PageResult<>(new ArrayList<>(0), 0);
+			return PageResult.emptyPage();
 		}else {
 			return new PageResult<>(roleList, count);
 		}

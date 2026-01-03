@@ -34,7 +34,7 @@ public class RouteConfig implements Serializable {
 
   /**
    * 留给后续做rpc转发扩展用
-   * http, dubbo
+   * http / dubbo
    */
   @TableField("`schema`")
   private String schema;
@@ -59,18 +59,19 @@ public class RouteConfig implements Serializable {
   private String uri;
 
   /**
-   * dubbo路由请求参数的class路径
+   * dubbo路由请求参数的 class path
    */
   private String dubboInvokeParamClass;
 
   /**
    * 认证类型
-   * @see org.cy.micoservice.blog.gateway.facade.enums.GatewayRouterAuthTypeEnum
+   * see org.cy.micoservice.blog.gateway.facade.enums.GatewayRouterAuthTypeEnum
    */
   private String authType;
 
   /**
-   * 状态: 0, 1
+   * 生效状态: 0, 1
+   * see org.cy.micoservice.blog.gateway.facade.enums.GatewayRouterStatusEnum
    */
   @TableField("`status`")
   private Integer status;

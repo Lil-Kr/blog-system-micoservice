@@ -2,7 +2,6 @@ package org.cy.micoservice.blog.entity.gateway.model.req;
 
 import jakarta.validation.constraints.*;
 import lombok.Data;
-import org.cy.micoservice.blog.entity.gateway.model.enums.LogPrintStrategyTypeEnum;
 
 import java.io.Serial;
 import java.io.Serializable;
@@ -27,7 +26,7 @@ public class LogPrintStrategyAddReq implements Serializable {
 
   /**
    * 策略类型
-   * @see LogPrintStrategyTypeEnum
+   * @see org.cy.micoservice.blog.gateway.facade.enums.LogPrintStrategyTypeEnum
    */
   @NotBlank(message = "strategyType 不能为空")
   @Size(min = 1, max = 32, message = "strategyType 长度必须在 1 ~ 32 范围")

@@ -6,7 +6,6 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import org.cy.micoservice.blog.common.enums.biz.ValidStatusEnum;
 import org.cy.micoservice.blog.entity.base.model.api.BaseEntity;
-import org.cy.micoservice.blog.entity.gateway.model.enums.LogPrintStrategyTypeEnum;
 
 import java.io.Serial;
 
@@ -33,7 +32,7 @@ public class LogPrintStrategy extends BaseEntity {
 
   /**
    * 策略类型
-   * @see LogPrintStrategyTypeEnum
+   * org.cy.micoservice.blog.gateway.facade.enums.LogPrintStrategyTypeEnum
    */
   private String strategyType;
 

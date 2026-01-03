@@ -19,7 +19,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Objects;
@@ -47,7 +46,7 @@ public class BlogCategoryServiceImpl implements BlogCategoryService {
     List<BlogCategoryResp> pageList = blogCategoryMapper.pageCategoryList(req);
     Integer count = blogCategoryMapper.getCountByList(req);
     if (CollectionUtils.isEmpty(pageList)) {
-        return new PageResult<>(new ArrayList<>(0), 0);
+        return PageResult.emptyPage();
     }else {
         return new PageResult<>(pageList, count);
     }
@@ -62,7 +61,7 @@ public class BlogCategoryServiceImpl implements BlogCategoryService {
     }
 
     if (CollectionUtils.isEmpty(blogCategoryList)) {
-      return new PageResult<>(new ArrayList<>(0), 0);
+      return PageResult.emptyPage();
     }
 
     return new PageResult<>(blogCategoryList, blogCategoryList.size());

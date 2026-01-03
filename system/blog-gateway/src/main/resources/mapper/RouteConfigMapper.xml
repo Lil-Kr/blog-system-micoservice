@@ -8,7 +8,7 @@
 
 	<!-- 通用查询结果列 -->
 	<sql id="Base_Column_List">
-		id, `schema`, `method`, `path`, uri, dubbo_invoke_param_class, auth_type, status, create_by, create_time, update_by, update_time, deleted
+		id, `schema`, `method`, `path`, uri, dubbo_invoke_param_class, auth_type, `status`, deleted, create_by, update_by, create_time, update_time
 	</sql>
 	
 	<select id="routeConfigAllValidaList" resultType="org.cy.micoservice.blog.entity.gateway.model.entity.RouteConfig">
@@ -16,7 +16,7 @@
 		from <include refid="Table_Name" />
 		<where>
 			<if test="status != null">
-				status = #{status}
+				`status` = #{status}
 			</if>
 		</where>
 	</select>

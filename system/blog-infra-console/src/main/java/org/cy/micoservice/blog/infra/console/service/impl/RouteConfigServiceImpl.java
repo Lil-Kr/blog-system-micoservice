@@ -10,16 +10,16 @@ import org.cy.micoservice.blog.common.enums.response.ApiReturnCodeEnum;
 import org.cy.micoservice.blog.common.utils.AssertUtil;
 import org.cy.micoservice.blog.common.utils.DateUtil;
 import org.cy.micoservice.blog.common.utils.IdWorker;
-import org.cy.micoservice.blog.entity.gateway.model.dto.ChangeBodyDTO;
 import org.cy.micoservice.blog.entity.gateway.model.entity.RouteChangeLog;
+import org.cy.micoservice.blog.entity.gateway.model.entity.RouteConfig;
 import org.cy.micoservice.blog.entity.gateway.model.req.RouteConfigAddReq;
 import org.cy.micoservice.blog.entity.gateway.model.req.RouteConfigEditReq;
 import org.cy.micoservice.blog.entity.gateway.model.req.RouteConfigQueryPageReq;
 import org.cy.micoservice.blog.entity.gateway.model.req.RouteConfigQueryReq;
-import org.cy.micoservice.blog.entity.gateway.model.entity.RouteConfig;
-import org.cy.micoservice.blog.entity.gateway.model.enums.GatewayRouterChangeEventEnum;
-import org.cy.micoservice.blog.entity.gateway.model.enums.GatewayRouterDeletedEnum;
-import org.cy.micoservice.blog.entity.gateway.model.enums.GatewayRouterStatusEnum;
+import org.cy.micoservice.blog.gateway.facade.dto.ChangeBodyDTO;
+import org.cy.micoservice.blog.gateway.facade.enums.GatewayRouterChangeEventEnum;
+import org.cy.micoservice.blog.gateway.facade.enums.GatewayRouterDeletedEnum;
+import org.cy.micoservice.blog.gateway.facade.enums.GatewayRouterStatusEnum;
 import org.cy.micoservice.blog.infra.console.dao.RouteConfigMapper;
 import org.cy.micoservice.blog.infra.console.service.NacosService;
 import org.cy.micoservice.blog.infra.console.service.RouteConfigChangeLogService;
@@ -61,7 +61,7 @@ public class RouteConfigServiceImpl implements RouteConfigService {
   public PageResult<RouteConfig> pageRouteConfigList(RouteConfigQueryPageReq req) {
     List<RouteConfig> pageList = routeConfigMapper.pageRouteConfigList(req);
     if (CollectionUtils.isEmpty(pageList)) {
-      return new PageResult<>(pageList, 0);
+      return PageResult.emptyPage();
     }
     Integer count = routeConfigMapper.pageRouteConfigListCount(req);
 

@@ -1,4 +1,5 @@
-package org.cy.micoservice.blog.entity.gateway.model.enums;
+package org.cy.micoservice.blog.gateway.facade.enums;
+
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
@@ -9,10 +10,9 @@ import lombok.Getter;
  */
 @Getter
 @AllArgsConstructor
-public enum GatewayRouterDeletedEnum {
-
-  ACTIVE(0, "活跃"),
-  DELETED(1, "已删除"),
+public enum GatewayRouterStatusEnum {
+  VALID(0, "生效"),
+  INVALID(1, "失效"),
   ;
 
   Integer code;

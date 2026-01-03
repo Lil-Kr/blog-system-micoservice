@@ -2,7 +2,7 @@ package org.cy.micoservice.blog.gateway.filter;
 
 import lombok.extern.slf4j.Slf4j;
 import org.cy.micoservice.blog.entity.gateway.model.entity.RouteConfig;
-import org.cy.micoservice.blog.gateway.constants.GatewayConstants;
+import org.cy.micoservice.blog.gateway.facade.constants.GatewayConstants;
 import org.cy.micoservice.blog.gateway.filter.abst.AbstractGatewayFilter;
 import org.cy.micoservice.blog.gateway.service.RouteCacheService;
 import org.springframework.beans.factory.annotation.Autowired;

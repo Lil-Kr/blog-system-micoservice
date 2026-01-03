@@ -6,8 +6,8 @@ import org.apache.dubbo.rpc.service.GenericService;
 import org.cy.micoservice.blog.common.constants.gateway.GatewayInfraConsoleSdkConstants;
 import org.cy.micoservice.blog.common.utils.JsonUtil;
 import org.cy.micoservice.blog.entity.gateway.model.entity.RouteConfig;
-import org.cy.micoservice.blog.gateway.constants.GatewayConstants;
-import org.cy.micoservice.blog.entity.gateway.model.enums.GatewayRouterSchemaEnum;
+import org.cy.micoservice.blog.gateway.facade.enums.GatewayRouterSchemaEnum;
+import org.cy.micoservice.blog.gateway.facade.constants.GatewayConstants;
 import org.cy.micoservice.blog.gateway.filter.abst.AbstractGatewayFilter;
 import org.cy.micoservice.blog.gateway.service.DubboInvokeService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,9 +38,7 @@ public class DubboInvokeFilter extends AbstractGatewayFilter implements Ordered 
   @Override
   protected boolean isSupport(ServerWebExchange exchange) {
     Object obj = exchange.getAttributes().get(GatewayConstants.GatewayAttrKey.X_ROUTE);
-    if (Objects.isNull(obj)) {
-      return false;
-    }
+    if (Objects.isNull(obj)) return false;
     RouteConfig routeConfig = (RouteConfig) obj;
     return GatewayRouterSchemaEnum.DUBBO.getCode().equals(routeConfig.getSchema());
   }

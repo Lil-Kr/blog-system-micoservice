@@ -3,6 +3,7 @@ package org.cy.micoservice.blog.gateway.facade.dto;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.cy.micoservice.blog.entity.gateway.model.entity.RouteConfig;
 
 import java.io.Serial;
 import java.io.Serializable;
@@ -20,8 +21,8 @@ public class ChangeBodyDTO implements Serializable {
   @Serial
   private static final long serialVersionUID = -8040738653677134129L;
 
-  private String before;
+  private RouteConfig before;
 
-  private String after;
+  private RouteConfig after;
 
 }

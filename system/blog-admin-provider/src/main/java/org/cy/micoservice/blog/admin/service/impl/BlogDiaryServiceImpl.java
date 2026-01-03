@@ -43,7 +43,7 @@ public class BlogDiaryServiceImpl implements BlogDiaryService {
     Integer count = diaryMapper.countPageDiaryList(req);
 
     if (CollectionUtils.isEmpty(pageList)) {
-      return new PageResult<>(new ArrayList<>(0), 0);
+      return PageResult.emptyPage();
     }
     return new PageResult<>(pageList, count);
   }

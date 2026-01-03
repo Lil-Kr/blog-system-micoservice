@@ -5,7 +5,7 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import lombok.extern.slf4j.Slf4j;
 import org.cy.micoservice.blog.common.enums.biz.DeleteStatusEnum;
 import org.cy.micoservice.blog.entity.gateway.model.entity.LogPrintStrategy;
-import org.cy.micoservice.blog.entity.gateway.model.enums.LogPrintStrategyTypeEnum;
+import org.cy.micoservice.blog.gateway.facade.enums.LogPrintStrategyTypeEnum;
 import org.cy.micoservice.blog.gateway.dao.LogPrintStrategyMapper;
 import org.cy.micoservice.blog.gateway.facade.dto.LogRequestDTO;
 import org.cy.micoservice.blog.gateway.facade.print.*;

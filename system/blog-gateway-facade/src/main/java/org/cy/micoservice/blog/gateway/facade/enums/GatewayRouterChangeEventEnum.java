@@ -1,4 +1,4 @@
-package org.cy.micoservice.blog.entity.gateway.model.enums;
+package org.cy.micoservice.blog.gateway.facade.enums;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

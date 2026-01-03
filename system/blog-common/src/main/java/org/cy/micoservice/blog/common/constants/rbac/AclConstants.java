@@ -1,4 +1,4 @@
-package org.cy.micoservice.blog.common.constants;
+package org.cy.micoservice.blog.common.constants.rbac;
 
 /**
  * @Author: Lil-K

@@ -4,7 +4,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.cy.micoservice.blog.common.enums.response.RpcReturnCodeEnum;
 import org.cy.micoservice.blog.common.utils.AssertUtil;
 import org.cy.micoservice.blog.entity.gateway.model.entity.RouteConfig;
-import org.cy.micoservice.blog.entity.gateway.model.enums.GatewayRouterSchemaEnum;
+import org.cy.micoservice.blog.gateway.facade.enums.GatewayRouterSchemaEnum;
 import org.cy.micoservice.blog.gateway.service.RouteDefinitionWriterService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cloud.gateway.event.RefreshRoutesEvent;

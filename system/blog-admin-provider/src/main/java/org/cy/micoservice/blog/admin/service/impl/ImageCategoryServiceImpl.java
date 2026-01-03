@@ -48,7 +48,7 @@ public class ImageCategoryServiceImpl implements ImageCategoryService {
     List<ImageCategoryResp> list = imageCategoryMapper.pageList(req);
     Integer total = imageCategoryMapper.total(req);
     if (CollectionUtils.isEmpty(list)) {
-      return new PageResult<>(new ArrayList<>(0), 0);
+      return PageResult.emptyPage();
     } else {
       return new PageResult<>(list, total);
     }
@@ -58,7 +58,7 @@ public class ImageCategoryServiceImpl implements ImageCategoryService {
   public PageResult<ImageCategoryResp> list(ImageCategoryListReq req) {
     List<ImageCategoryResp> list = imageCategoryMapper.imageCategoryList(req);
     if (CollectionUtils.isEmpty(list)) {
-      return new PageResult<>(new ArrayList<>(0), 0);
+      return PageResult.emptyPage();
     }
 
     return new PageResult<>(list, list.size());

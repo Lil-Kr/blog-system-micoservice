@@ -220,7 +220,7 @@ public class SysOrgServiceImpl extends ServiceImpl<SysOrgMapper, SysOrg> impleme
 		List<SysOrgResp> pageList = orgMapper.pageList(req);
 		Integer count = orgMapper.countByList(req);
 		if (CollectionUtils.isEmpty(pageList)) {
-			return new PageResult<>(new ArrayList<>(0), 0);
+			return PageResult.emptyPage();
 		}
 		return new PageResult<>(pageList, count);
 	}

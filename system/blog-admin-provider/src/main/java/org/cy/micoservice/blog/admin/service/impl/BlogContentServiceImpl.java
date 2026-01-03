@@ -135,7 +135,7 @@ public class BlogContentServiceImpl implements BlogContentService {
     List<BlogContentResp> pageList = blogContentMapper.pageContentList(req);
     Integer count = blogContentMapper.pageContentCount(req);
     if (CollectionUtils.isEmpty(pageList)) {
-      return new PageResult<>(new ArrayList<>(0), 0);
+      return PageResult.emptyPage();
     }
     pageList.forEach(item -> {
       // label info
@@ -170,7 +170,7 @@ public class BlogContentServiceImpl implements BlogContentService {
   public PageResult<BlogContentResp> contentList(BlogContentPageReq req) {
     List<BlogContentResp> list = blogContentMapper.contentList(req);
     if (CollectionUtils.isEmpty(list)) {
-      return new PageResult<>(new ArrayList<>(0), 0);
+      return PageResult.emptyPage();
     }
 
     list.forEach(item -> {
@@ -442,7 +442,7 @@ public class BlogContentServiceImpl implements BlogContentService {
     req.setIsOrder(1);
     List<BlogContentResp> pageList = blogContentMapper.pageFrontContentList(req);
     if (CollectionUtils.isEmpty(pageList)) {
-      return new PageResult<>(new ArrayList<>(0), 0);
+      return PageResult.emptyPage();
     }
     Integer count = blogContentMapper.pageFrontContentCount(req);
 

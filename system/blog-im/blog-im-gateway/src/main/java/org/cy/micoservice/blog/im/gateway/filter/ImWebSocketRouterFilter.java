@@ -29,12 +29,12 @@ import static org.springframework.cloud.gateway.support.ServerWebExchangeUtils.G
  */
 @Slf4j
 @Component
-public class BlogImWebSocketRouterFilter extends WebsocketRoutingFilter {
+public class ImWebSocketRouterFilter extends WebsocketRoutingFilter {
 
   @Autowired
   private ImConnectorMonitorService imConnectorMonitorService;
 
-  public BlogImWebSocketRouterFilter(WebSocketClient webSocketClient, WebSocketService webSocketService, ObjectProvider<List<HttpHeadersFilter>> headersFiltersProvider) {
+  public ImWebSocketRouterFilter(WebSocketClient webSocketClient, WebSocketService webSocketService, ObjectProvider<List<HttpHeadersFilter>> headersFiltersProvider) {
     super(webSocketClient, webSocketService, headersFiltersProvider);
   }
 

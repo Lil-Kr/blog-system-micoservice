@@ -198,7 +198,7 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
 		if (CollectionUtils.isNotEmpty(list)) {
 			return new PageResult<>(list, count);
 		} else {
-			return new PageResult<>(new ArrayList<>(0), 0);
+			return PageResult.emptyPage();
 		}
 	}
 

@@ -35,9 +35,7 @@ public class ImPushServiceImpl implements ImPushService {
     AssertUtil.isNotNull(imSingleMessageDTO.getReceiverId(), ApiReturnCodeEnum.PARAMETER_ERROR);
     String address = userConnectorMappingService.getAddressByUserId(imSingleMessageDTO.getReceiverId());
     if (StringUtils.isBlank(address)) {
-      /**
-       * todo: 对方不在线, 需要做离线的消息处理
-       */
+      // 对方不在线, 需要做离线的消息处理
       return;
     }
     RpcContext.getServiceContext().setAttachment(ImRouterConstants.IM_ROUTER_DUBBO_CONSTANTS, address);

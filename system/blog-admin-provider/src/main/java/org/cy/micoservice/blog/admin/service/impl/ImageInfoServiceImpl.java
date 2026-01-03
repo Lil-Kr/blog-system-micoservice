@@ -33,7 +33,6 @@ import java.io.InputStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Objects;
@@ -74,7 +73,7 @@ public class ImageInfoServiceImpl implements ImageInfoService {
     Integer count = imageInfoMapper.pageImageInfoListCount(req);
 //    pageList.forEach(item -> item.setImageCategoryName(CacheManager.getImageCategoryCacheMap().getOrDefault(item.getImageCategoryId(),"")));
     if (CollectionUtils.isEmpty(pageList)) {
-      return new PageResult<>(new ArrayList<>(0), 0);
+      return PageResult.emptyPage();
     }else {
       return new PageResult<>(pageList, count);
     }
@@ -84,7 +83,7 @@ public class ImageInfoServiceImpl implements ImageInfoService {
   public PageResult<ImageInfoResp> imageInfoList(ImageInfoPageListReq req) {
     List<ImageInfoResp> list = imageInfoMapper.imageInfoList(req);
     if (CollectionUtils.isEmpty(list)) {
-      return new PageResult<>(new ArrayList<>(0), 0);
+      return PageResult.emptyPage();
     }else {
       return new PageResult<>(list, list.size());
     }

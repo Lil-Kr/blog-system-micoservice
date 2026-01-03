@@ -25,6 +25,18 @@ public class ImGatewayApplicationProperties {
   @Value("${spring.cloud.nacos.discovery.namespace:}")
   private String nacosNamespace;
 
+  @Value("${im.websocket.router.name:websocket-route}")
+  private String websocketRouteName;
+
+  @Value("${im.websocket.router.path:/blog/im/**}")
+  private String websocketRoutePath;
+
+  /**
+   * url根据环境不同进行更换
+   */
+  @Value("${im.websocket.router.url:ws://localhost:10880/}")
+  private String websocketRouteUrl;
+
   /**
    * 统一管理 im-connector 集群名, 用于 nacos 订阅 im-connector 集群下线事件
    * blog-im-connector-cluster

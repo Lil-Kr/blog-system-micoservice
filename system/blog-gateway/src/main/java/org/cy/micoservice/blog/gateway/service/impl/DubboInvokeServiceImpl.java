@@ -6,8 +6,9 @@ import org.apache.dubbo.config.ApplicationConfig;
 import org.apache.dubbo.config.ReferenceConfig;
 import org.apache.dubbo.config.RegistryConfig;
 import org.apache.dubbo.rpc.service.GenericService;
+import org.cy.micoservice.blog.gateway.config.GatewayApplicationProperties;
 import org.cy.micoservice.blog.gateway.service.DubboInvokeService;
-import org.springframework.beans.factory.annotation.Value;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.Map;
@@ -22,8 +23,8 @@ import java.util.concurrent.ConcurrentHashMap;
 @Service
 public class DubboInvokeServiceImpl implements DubboInvokeService {
 
-  @Value("${spring.application.name:}")
-  private String appName;
+  @Autowired
+  private GatewayApplicationProperties applicationProperties;
 
   private RegistryConfig registryConfig;
 
@@ -33,28 +34,34 @@ public class DubboInvokeServiceImpl implements DubboInvokeService {
 
   @Override
   public void initConfig() {
+    StringBuilder nacosConfig = new StringBuilder()
+      .append("nacos://" + applicationProperties.getServerAddr() + "?")
+      .append("namespace=" + applicationProperties.getNamespace() + "&")
+      .append("username=" + applicationProperties.getUsername() + "&")
+      .append("password=" + applicationProperties.getPassword())
+    ;
     registryConfig = new RegistryConfig();
-    registryConfig.setAddress("nacos://192.168.9.200:8848?namespace=blog-mico-service-dev&username=nacos&password=nacos");
+    registryConfig.setAddress(nacosConfig.toString());
 
     applicationConfig = new ApplicationConfig();
-    applicationConfig.setName(appName);
+    applicationConfig.setName(applicationProperties.getAppName());
     log.info("Registry address: {}", registryConfig.getAddress());
     log.info("Application name: {}", applicationConfig.getName());
   }
 
   @Override
-  public GenericService get(String uri) {
-    return referenceConfigMap.getOrDefault(uri, null);
+  public GenericService get(String rpcUri) {
+    return referenceConfigMap.getOrDefault(rpcUri, null);
   }
 
   @Override
-  public boolean save(String uri) {
-    if (StringUtils.isBlank(uri)) return false;
-    log.info("dubbo uri: {}", uri);
+  public boolean save(String rpcUri) {
+    if (StringUtils.isBlank(rpcUri)) return false;
+    log.info("dubbo uri: {}", rpcUri);
 
     ReferenceConfig<GenericService> reference = new ReferenceConfig<>();
     reference.setRegistry(registryConfig);
-    reference.setInterface(uri);
+    reference.setInterface(rpcUri);
     // 开启泛化调用
     reference.setGeneric("true");
     // 不检查服务提供者是否存在, 防止启动失败
@@ -62,7 +69,7 @@ public class DubboInvokeServiceImpl implements DubboInvokeService {
     reference.setApplication(applicationConfig);
 
     GenericService genericService = reference.get();
-    referenceConfigMap.put(uri, genericService);
+    referenceConfigMap.put(rpcUri, genericService);
     return true;
   }
 }

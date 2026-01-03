@@ -148,7 +148,7 @@ public class SysDictDetailServiceImpl extends ServiceImpl<SysDictDetailMapper, S
 		List<SysDictDetailResp> pageList = dictDetailMapper.pageDictDetailListById(req);
 		Integer count = dictDetailMapper.countPageDictDetail(req);
 		if (CollectionUtils.isEmpty(pageList)) {
-			return new PageResult<>(new ArrayList<>(0), 0);
+			return PageResult.emptyPage();
 		}else {
 			return new PageResult<>(pageList, count);
 		}

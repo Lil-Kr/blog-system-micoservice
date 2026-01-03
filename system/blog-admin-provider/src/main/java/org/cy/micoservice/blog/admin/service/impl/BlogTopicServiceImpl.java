@@ -20,7 +20,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Objects;
@@ -46,7 +45,7 @@ public class BlogTopicServiceImpl implements BlogTopicService {
   public PageResult<BlogTopicResp> pageList(BlogTopicPageReq req) {
     List<BlogTopicResp> blogTopicList = blogTopicMapper.pageTopicList(req);
     if (CollectionUtils.isEmpty(blogTopicList)) {
-      return new PageResult<>(new ArrayList<>(0), 0);
+      return PageResult.emptyPage();
     } else {
       return new PageResult<>(blogTopicList, blogTopicList.size());
     }
@@ -60,7 +59,7 @@ public class BlogTopicServiceImpl implements BlogTopicService {
       cacheService.saveBlogTopicCache(topicList);
     }
     if (CollectionUtils.isEmpty(topicList)) {
-      return new PageResult<>(new ArrayList<>(0), 0);
+      return PageResult.emptyPage();
     }
     return new PageResult<>(topicList, topicList.size());
   }

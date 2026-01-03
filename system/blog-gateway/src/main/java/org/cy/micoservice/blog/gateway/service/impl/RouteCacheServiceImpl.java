@@ -9,6 +9,8 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.concurrent.ConcurrentHashMap;
 
+import static org.cy.micoservice.blog.common.constants.CommonFormatConstants.COMMENT_FORMAT_COLON_SPLIT;
+
 /**
  * @Author: Lil-K
  * @Date: 2025/11/28
@@ -17,15 +19,13 @@ import java.util.concurrent.ConcurrentHashMap;
 @Service
 public class RouteCacheServiceImpl implements RouteCacheService {
 
-  private static final String KEY_FORMAT = "%s:%s";
-
   private Map<String, RouteConfig> routeConfigMap = new ConcurrentHashMap<>();
 
   @Override
   public RouteConfig get(String method, String path) {
     if (StringUtils.isBlank(method) || StringUtils.isBlank(path)) return null;
 
-    String key = String.format(KEY_FORMAT, method, path);
+    String key = String.format(COMMENT_FORMAT_COLON_SPLIT, method, path);
     return routeConfigMap.getOrDefault(key, null);
   }
 
@@ -34,7 +34,7 @@ public class RouteCacheServiceImpl implements RouteCacheService {
     if (Objects.isNull(routeConfig) || StringUtils.isBlank(routeConfig.getMethod()) || StringUtils.isBlank(routeConfig.getPath())) {
       return false;
     }
-    String key = String.format(KEY_FORMAT, routeConfig.getMethod(), routeConfig.getPath());
+    String key = String.format(COMMENT_FORMAT_COLON_SPLIT, routeConfig.getMethod(), routeConfig.getPath());
     routeConfigMap.put(key, routeConfig);
     return true;
   }
@@ -44,7 +44,7 @@ public class RouteCacheServiceImpl implements RouteCacheService {
     if (StringUtils.isBlank(method) || StringUtils.isBlank(path)) {
       return false;
     }
-    String key = String.format(KEY_FORMAT, method, path);
+    String key = String.format(COMMENT_FORMAT_COLON_SPLIT, method, path);
     return routeConfigMap.remove(key) != null;
   }
 }

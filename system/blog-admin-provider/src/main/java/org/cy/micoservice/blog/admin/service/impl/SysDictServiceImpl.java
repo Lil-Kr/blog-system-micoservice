@@ -187,7 +187,7 @@ public class SysDictServiceImpl extends ServiceImpl<SysDictMapper, SysDict> impl
 		if (CollectionUtils.isNotEmpty(pageList)) {
 			return new PageResult<>(pageList, count);
 		}else {
-			return new PageResult<>(new ArrayList<>(0), 0);
+			return PageResult.emptyPage();
 		}
 	}
 

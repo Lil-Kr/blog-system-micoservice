@@ -1,4 +1,4 @@
-package org.cy.micoservice.blog.gateway.constants;
+package org.cy.micoservice.blog.gateway.facade.constants;
 
 import lombok.Data;
 

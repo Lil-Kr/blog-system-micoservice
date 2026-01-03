@@ -1,7 +1,6 @@
 package org.cy.micoservice.blog.gateway.config;
 
 import com.alibaba.fastjson2.JSON;
-import com.alibaba.fastjson2.JSONObject;
 import com.alibaba.nacos.api.NacosFactory;
 import com.alibaba.nacos.api.config.ConfigService;
 import com.alibaba.nacos.api.config.listener.Listener;
@@ -11,15 +10,15 @@ import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.collections4.CollectionUtils;
 import org.cy.micoservice.blog.entity.gateway.model.entity.RouteChangeLog;
 import org.cy.micoservice.blog.entity.gateway.model.entity.RouteConfig;
-import org.cy.micoservice.blog.entity.gateway.model.enums.GatewayRouterChangeEventEnum;
-import org.cy.micoservice.blog.entity.gateway.model.enums.GatewayRouterStatusEnum;
+import org.cy.micoservice.blog.gateway.facade.dto.ChangeBodyDTO;
+import org.cy.micoservice.blog.gateway.facade.enums.GatewayRouterChangeEventEnum;
+import org.cy.micoservice.blog.gateway.facade.enums.GatewayRouterStatusEnum;
 import org.cy.micoservice.blog.gateway.facade.utils.NacosRouteVersionUtils;
 import org.cy.micoservice.blog.gateway.service.RouteCacheService;
 import org.cy.micoservice.blog.gateway.service.RouteConfigChangeLogService;
 import org.cy.micoservice.blog.gateway.service.RouteConfigService;
 import org.cy.micoservice.blog.gateway.service.RouteDefinitionWriterService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Configuration;
 
 import java.util.HashSet;
@@ -37,59 +36,40 @@ import java.util.concurrent.Executor;
 @Configuration
 public class RouteConfigRefreshListener {
 
-  @Value("${spring.cloud.nacos.discovery.server-addr:}")
-  private String serverAddr;
+  private static final Long NACOS_TIMEOUT_MS = 10000L;
 
-  @Value("${spring.cloud.nacos.discovery.namespace:}")
-  private String namespace;
+  private Long currentVersion = 0L;
 
-  @Value("${spring.cloud.nacos.username:}")
-  private String username;
-
-  @Value("${spring.cloud.nacos.password:}")
-  private String password;
-
-  @Value("${blog.gateway.refresh.data-id:}")
-  private String refreshDataId;
-
-  @Value("${blog.gateway.refresh.group:}")
-  private String refreshGroup;
-
-  private final Long NACOS_TIMEOUT_MS = 10000l;
-
-  private Long currentVersion = 0l;
-
+  @Autowired
+  private GatewayApplicationProperties applicationProperties;
   @Autowired
   private RouteDefinitionWriterService routeDefinitionWriterService;
-
   @Autowired
   private RouteConfigService routerConfigService;
-
   @Autowired
   private RouteConfigChangeLogService routeConfigChangeLogService;
-
   @Autowired
   private RouteCacheService routeCacheService;
 
   /**
-   * 绑定注册器
+   * 绑定注册器, 监听nacos的变化通知
    */
   @PostConstruct
   public void registryRouteConfigRefreshListener() throws NacosException {
     Properties properties = new Properties();
-    properties.put("serverAddr", serverAddr);
-    properties.put("namespace", namespace);
-    properties.put("username", username);
-    properties.put("password", password);
+    properties.put("serverAddr", applicationProperties.getServerAddr());
+    properties.put("namespace", applicationProperties.getNamespace());
+    properties.put("username", applicationProperties.getUsername());
+    properties.put("password", applicationProperties.getPassword());
     ConfigService configService = NacosFactory.createConfigService(properties);
-    String dataId = refreshDataId;
-    String group = refreshGroup;
+    String dataId = applicationProperties.getRefreshDataId();
+    String group = applicationProperties.getRefreshGroup();
     String config = configService.getConfig(dataId, group, NACOS_TIMEOUT_MS);
-    log.info("first load config is : {}", config);
+    log.info("first load config is: {}", config);
 
     Long version = NacosRouteVersionUtils.parseConfigVersionFromConfig(config);
     this.currentVersion = version;
-    log.info("first load config version is : {}", version);
+    log.info("first load config version is: {}", version);
 
     /**
      * 订阅 Nacos
@@ -97,7 +77,7 @@ public class RouteConfigRefreshListener {
     configService.addListener(dataId, group, new Listener() {
       @Override
       public Executor getExecutor() {
-        // 暂时为空
+        // 暂时为空, 如果不想用nacos的内置线程池, 可以这里注入一个
         return null;
       }
 
@@ -110,7 +90,7 @@ public class RouteConfigRefreshListener {
 
           // reload from mysql config then refresh local gateway config
           List<RouteChangeLog> routeChangeLogList = routeConfigChangeLogService.findGtVersion(currentVersion);
-          routeChangeLogHandle(routeChangeLogList);
+          routeChangeLogHandler(routeChangeLogList);
 
           currentVersion = version;
         }
@@ -122,17 +102,16 @@ public class RouteConfigRefreshListener {
    * 更新Gateway中的路由配置数据
    * @param routeChangeLogList
    */
-  private void routeChangeLogHandle(List<RouteChangeLog> routeChangeLogList) {
+  private void routeChangeLogHandler(List<RouteChangeLog> routeChangeLogList) {
     Set<Long> saveConfigIds = new HashSet<>();
     Set<Long> deletedConfigIds = new HashSet<>();
 
     for (RouteChangeLog routeChangeLog : routeChangeLogList) {
       String changeEvent = routeChangeLog.getChangeEvent();
       String changeBody = routeChangeLog.getChangeBody();
-      JSONObject changeBodyJsonObj = JSON.parseObject(changeBody);
+      ChangeBodyDTO changeBodyDTO = JSON.parseObject(changeBody, ChangeBodyDTO.class);
       if (GatewayRouterChangeEventEnum.UPDATE.getCode().equals(changeEvent)) {
-        String afterBody = changeBodyJsonObj.getString("after");
-        RouteConfig afterRouteConfig = JSON.parseObject(afterBody, RouteConfig.class);
+        RouteConfig afterRouteConfig = changeBodyDTO.getAfter();
         Integer status = afterRouteConfig.getStatus();
 
         if (GatewayRouterStatusEnum.INVALID.getCode().equals(status)) {
@@ -142,16 +121,14 @@ public class RouteConfigRefreshListener {
           saveConfigIds.add(routeChangeLog.getConfigId());
           routeCacheService.put(afterRouteConfig);
         }
-
       } else if (GatewayRouterChangeEventEnum.DELETED.getCode().equals(changeEvent)) {
-        String beforeBody = changeBodyJsonObj.getString("before");
-        RouteConfig beforeRouteConfig = JSON.parseObject(beforeBody, RouteConfig.class);
+        RouteConfig beforeRouteConfig = changeBodyDTO.getBefore();
         deletedConfigIds.add(routeChangeLog.getConfigId());
         routeCacheService.remove(beforeRouteConfig.getMethod(), beforeRouteConfig.getPath());
       }
     }
 
-    if (CollectionUtils.isNotEmpty(saveConfigIds)) {
+    if (CollectionUtils.isEmpty(saveConfigIds)) {
       List<RouteConfig> needSaveConfigs = routerConfigService.findInConfigIds(saveConfigIds);
       for (RouteConfig needSaveConfig : needSaveConfigs) {
         boolean success = routeDefinitionWriterService.save(needSaveConfig);

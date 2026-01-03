@@ -1,6 +1,6 @@
 package org.cy.micoservice.blog.im.gateway.config;
 
-import org.cy.micoservice.blog.im.gateway.contstants.WebSocketGatewayConstants;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cloud.gateway.route.RouteLocator;
 import org.springframework.cloud.gateway.route.builder.RouteLocatorBuilder;
 import org.springframework.context.annotation.Bean;
@@ -14,13 +14,16 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class WebSocketRouteConfig {
 
+  @Autowired
+  private ImGatewayApplicationProperties applicationProperties;
+
   @Bean
   public RouteLocator websocketRouteLocator(RouteLocatorBuilder builder) {
     return builder.routes()
-      .route(WebSocketGatewayConstants.WEBSOCKET_ROUTE_NAME,
+      .route(applicationProperties.getWebsocketRouteName(),
         r -> r
-          .path(WebSocketGatewayConstants.WEBSOCKET_ROUTE_PATH)
-          .uri(WebSocketGatewayConstants.WEBSOCKET_ROUTE_URL))
+          .path(applicationProperties.getWebsocketRoutePath())
+          .uri(applicationProperties.getWebsocketRouteUrl()))
       .build();
   }
 }

@@ -36,6 +36,11 @@ im:
   connector:
     cluster:
       name: im-connector-cluster
+  websocket:
+    router:
+      name: websocket-route
+      path: /blog/im/**
+      url: ws://localhost:10880/
 
 logging:
   level:

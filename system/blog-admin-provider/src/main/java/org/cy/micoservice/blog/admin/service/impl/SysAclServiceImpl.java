@@ -189,7 +189,7 @@ public class SysAclServiceImpl extends ServiceImpl<SysAclMapper, SysAcl> impleme
     List<SysAclResp> list = aclMapper.pageAclList(req);
     Integer count = aclMapper.countPageAclList(req);
     if (CollectionUtils.isEmpty(list)) {
-      return new PageResult<>(new ArrayList<>(0), 0);
+      return PageResult.emptyPage();
     }
     return new PageResult<>(list, count);
   }

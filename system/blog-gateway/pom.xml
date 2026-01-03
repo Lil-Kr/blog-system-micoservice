@@ -65,12 +65,6 @@
 		<!-- 自研组件 -->
 		<dependency>
 			<groupId>org.cy.micoservice.blog</groupId>
-			<artifactId>blog-entity-gateway-model</artifactId>
-			<version>${blog-entity.version}</version>
-		</dependency>
-		
-		<dependency>
-			<groupId>org.cy.micoservice.blog</groupId>
 			<artifactId>blog-gateway-facade</artifactId>
 			<version>${blog-framework-parent.version}</version>
 		</dependency>

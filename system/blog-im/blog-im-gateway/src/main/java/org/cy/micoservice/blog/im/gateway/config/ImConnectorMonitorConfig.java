@@ -5,6 +5,7 @@ import com.alibaba.nacos.api.NacosFactory;
 import com.alibaba.nacos.api.naming.NamingService;
 import com.alibaba.nacos.api.naming.listener.NamingEvent;
 import lombok.extern.slf4j.Slf4j;
+import org.cy.micoservice.blog.common.constants.CommonFormatConstants;
 import org.cy.micoservice.blog.im.gateway.service.ImConnectorMonitorService;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -48,15 +49,9 @@ public class ImConnectorMonitorConfig implements InitializingBean {
       namingService.subscribe(imGatewayApplicationProperties.getImConnectorClusterName(), event -> {
         // 事件触发时的回调逻辑（实时执行）
         if (event instanceof NamingEvent) {
-          // Set<String> imConnectorAddressSet = new HashSet<>();
-          // for (Instance instance : ((NamingEvent) event).getInstances()) {
-          //   // nacos: 过滤掉不健康的实例
-          //   if (! instance.isHealthy() || ! instance.isEnabled()) continue;
-          //   imConnectorAddressSet.add(instance.getIp() + ":" + instance.getPort());
-          // }
           Set<String> imConnectorAddressSet = ((NamingEvent) event).getInstances().stream()
             .filter(instance -> instance.isHealthy() && instance.isEnabled()) // nacos: 过滤掉不健康的实例
-            .map(instance -> String.format("%s:%s", instance.getIp(), instance.getPort())) // 转为 ip:port 格式
+            .map(instance -> String.format(CommonFormatConstants.COMMENT_FORMAT_COLON_SPLIT, instance.getIp(), instance.getPort())) // 转为 ip:port 格式
             .collect(Collectors.toSet());
 
           // 将最新的配置放入缓存

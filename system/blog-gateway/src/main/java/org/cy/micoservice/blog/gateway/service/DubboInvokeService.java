@@ -16,7 +16,7 @@ public interface DubboInvokeService {
    * @param uri
    * @return
    */
-  GenericService get(String uri);
+  GenericService get(String rpcUri);
 
-  boolean save(String uri);
+  boolean save(String rpcUri);
 }

@@ -1,7 +1,7 @@
 package org.cy.micoservice.blog.gateway.filter;
 
 import lombok.extern.slf4j.Slf4j;
-import org.cy.micoservice.blog.gateway.constants.GatewayConstants;
+import org.cy.micoservice.blog.gateway.facade.constants.GatewayConstants;
 import org.cy.micoservice.blog.gateway.filter.abst.AbstractGatewayFilter;
 import org.springframework.cloud.gateway.filter.GatewayFilterChain;
 import org.springframework.core.Ordered;

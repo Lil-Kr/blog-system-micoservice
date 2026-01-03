@@ -35,6 +35,7 @@ public class RouteChangeLog implements Serializable {
 
   /**
    * {"before":"xxx", "after":"xxxxx"}
+   *
    */
   private String changeBody;
 
