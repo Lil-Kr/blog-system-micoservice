@@ -16,7 +16,7 @@ import java.util.List;
  *  Mapper 接口
  * </p>
  *
- * @Author Lil-K
+ * @Author: Lil-K
  * @since 2024-03-31
  */
 @Repository

@@ -4,23 +4,25 @@ import lombok.extern.slf4j.Slf4j;
 import org.cy.micoservice.blog.common.base.api.ApiResp;
 import org.cy.micoservice.blog.entity.gateway.model.entity.RouteConfig;
 import org.cy.micoservice.blog.entity.gateway.model.req.RouteConfigQueryListReq;
-import org.cy.micoservice.blog.entity.gateway.model.req.RouteConfigSaveRequest;
+import org.cy.micoservice.blog.entity.gateway.model.req.RouteConfigSaveReq;
 import org.cy.micoservice.blog.infra.console.sdk.config.FeignClientFactory;
 import org.cy.micoservice.blog.infra.console.sdk.config.NacosServiceDiscovery;
 import org.cy.micoservice.blog.infra.console.sdk.config.SdkProperties;
 import org.cy.micoservice.blog.infra.console.sdk.http.InfraConsoleFacade;
 import org.springframework.beans.BeanUtils;
+import org.springframework.stereotype.Component;
 
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
 /**
- * @Author Lil-K
+ * @Author: Lil-K
  * @Date: Created at 2025/10/5
  * @Description: 基础控制台client
  */
 @Slf4j
+@Component
 public class InfraConsoleClient {
 
   private SdkProperties sdkProperties;
@@ -32,7 +34,7 @@ public class InfraConsoleClient {
   }
 
   public void init() throws Exception {
-    log.info("sdkProperties:{}", sdkProperties);
+    log.info("sdkProperties: {}", sdkProperties);
     // 1. 初始化 Nacos 服务发现
     nacosServiceDiscovery = new NacosServiceDiscovery(sdkProperties.getNacosAddress(),
       sdkProperties.getNacosNamespace(),
@@ -47,25 +49,30 @@ public class InfraConsoleClient {
     log.info("InfraConsoleClient init success");
   }
 
+  private InfraConsoleFacade getInfraConsoleFacade() {
+    return infraConsoleFacade;
+  }
+
   /**
    * 创建路由配置
    * @param request
    * @return
    */
-  public ApiResp<Long> createRouteConfig(RouteConfigSaveRequest request) {
+  public ApiResp<Long> createRouteConfig(RouteConfigSaveReq request) {
     return this.getInfraConsoleFacade().createRouteConfig(request);
   }
 
-  public Set<RouteConfigSaveRequest> routeList(RouteConfigQueryListReq req) {
+  /**
+   * 查询所有
+   * @param req
+   * @return
+   */
+  public Set<RouteConfigSaveReq> routeList(RouteConfigQueryListReq req) {
     ApiResp<List<RouteConfig>> resp = this.getInfraConsoleFacade().routeList(req);
     return resp.getData().stream().map(routeConfig -> {
-      RouteConfigSaveRequest request = new RouteConfigSaveRequest();
+      RouteConfigSaveReq request = new RouteConfigSaveReq();
       BeanUtils.copyProperties(routeConfig, request);
       return request;
     }).collect(Collectors.toSet());
-  }
-
-  private InfraConsoleFacade getInfraConsoleFacade() {
-    return infraConsoleFacade;
   }
 }

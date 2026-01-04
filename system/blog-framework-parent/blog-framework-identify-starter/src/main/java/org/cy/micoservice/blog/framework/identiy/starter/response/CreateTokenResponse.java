@@ -24,5 +24,4 @@ public class CreateTokenResponse {
    */
   private Long expireAt;
 
-
 }

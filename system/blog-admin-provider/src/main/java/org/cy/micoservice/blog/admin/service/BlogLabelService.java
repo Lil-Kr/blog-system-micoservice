@@ -9,7 +9,7 @@ import org.cy.micoservice.blog.admin.pojo.req.blog.label.BlogLabelReq;
 import org.cy.micoservice.blog.admin.pojo.resp.blog.BlogLabelResp;
 
 /**
- * @Author Lil-K
+ * @Author: Lil-K
  * @since 2024-03-31
  */
 public interface BlogLabelService {

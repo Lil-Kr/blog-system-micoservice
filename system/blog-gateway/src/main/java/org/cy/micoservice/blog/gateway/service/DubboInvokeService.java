@@ -13,7 +13,7 @@ public interface DubboInvokeService {
 
   /**
    * 获取泛化调用实例
-   * @param uri
+   * @param rpcUri
    * @return
    */
   GenericService get(String rpcUri);

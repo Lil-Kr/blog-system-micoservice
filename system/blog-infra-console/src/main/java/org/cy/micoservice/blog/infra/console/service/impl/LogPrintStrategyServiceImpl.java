@@ -29,8 +29,8 @@ import java.util.Objects;
  * @Date: 2025/12/1
  * @Description: 网关打印策略
  */
-@Service
 @Slf4j
+@Service
 public class LogPrintStrategyServiceImpl implements LogPrintStrategyService {
 
   @Autowired

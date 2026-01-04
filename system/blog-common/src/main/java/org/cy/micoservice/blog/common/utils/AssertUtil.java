@@ -93,7 +93,7 @@ public class AssertUtil {
    * flag == true
    * @param flag
    */
-  public static void isTrue(boolean flag, BaseError baseError) {
+  public static void isTrue(Boolean flag, BaseError baseError) {
     if (!flag) {
       throw new BizException(baseError);
     }
@@ -103,7 +103,7 @@ public class AssertUtil {
    * flag == false
    * @param flag
    */
-  public static void isFalse(boolean flag) {
+  public static void isFalse(Boolean flag) {
     if (flag) {
       throw new RpcException(RpcReturnCodeEnum.RPC_REQUEST_ERROR);
     }

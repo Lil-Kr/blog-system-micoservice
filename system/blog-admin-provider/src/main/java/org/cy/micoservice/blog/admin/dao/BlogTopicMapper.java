@@ -11,7 +11,7 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 /**
- * @Author Lil-K
+ * @Author: Lil-K
  * @since 2024-03-31
  */
 @Repository

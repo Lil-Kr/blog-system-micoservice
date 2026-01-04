@@ -12,7 +12,7 @@ import lombok.Getter;
 @AllArgsConstructor
 public enum GatewayRouterStatusEnum {
   VALID(0, "生效"),
-  INVALID(1, "失效"),
+  INVALID(1, "不可用"),
   ;
 
   Integer code;

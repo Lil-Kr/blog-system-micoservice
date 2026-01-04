@@ -17,7 +17,7 @@ import java.util.List;
  *  服务类
  * </p>
  *
- * @Author Lil-K
+ * @Author: Lil-K
  * @since 2024-03-31
  */
 public interface BlogContentService {

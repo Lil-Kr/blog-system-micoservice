@@ -1,5 +1,6 @@
 package org.cy.micoservice.blog.infra.console.sdk.config;
 
+import lombok.extern.slf4j.Slf4j;
 import org.cy.micoservice.blog.infra.console.sdk.core.InfraConsoleClient;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnBean;
 import org.springframework.context.annotation.Bean;
@@ -9,6 +10,7 @@ import org.springframework.context.annotation.Bean;
  * @Date: Created at 2025/10/5
  * @Description: 控制台sdk自动初始化配置类
  */
+@Slf4j
 public class InfraConsoleSdkAutoConfiguration {
 
   @Bean
@@ -24,8 +26,8 @@ public class InfraConsoleSdkAutoConfiguration {
     return client;
   }
 
-  @Bean
-  public RequestMappingConfiguration requestMappingConfiguration() {
-    return new RequestMappingConfiguration();
-  }
+  // @Bean
+  // public RequestMappingConfiguration requestMappingConfiguration() {
+  //   return new RequestMappingConfiguration();
+  // }
 }

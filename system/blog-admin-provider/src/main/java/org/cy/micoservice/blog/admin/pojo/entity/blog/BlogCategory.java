@@ -12,7 +12,7 @@ import java.io.Serializable;
 import java.util.Date;
 
 /**
- * @Author Lil-K
+ * @Author: Lil-K
  * @since 2024-03-31
  */
 @EqualsAndHashCode(callSuper = false)

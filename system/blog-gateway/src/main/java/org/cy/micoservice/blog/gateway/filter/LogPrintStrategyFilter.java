@@ -59,21 +59,6 @@ public class LogPrintStrategyFilter extends AbstractGatewayFilter implements Ord
   }
 
   /**
-   * 获取http请求头
-   * @param request
-   * @return
-   */
-  private Map<String, List<String>> getHttpHeaders(ServerHttpRequest request) {
-    HttpHeaders headers = request.getHeaders();
-    Map<String, List<String>> headerMap = new HashMap<>();
-    for (String headerName : headers.keySet()) {
-      List<String> list = headers.get(headerName);
-      headerMap.put(headerName, list);
-    }
-    return headerMap;
-  }
-
-  /**
    * 获取日志打印请求 DTO
    * @param exchange
    * @return
@@ -88,9 +73,24 @@ public class LogPrintStrategyFilter extends AbstractGatewayFilter implements Ord
     logRequestDTO.setEventTime(System.currentTimeMillis());
     logRequestDTO.setPath(path);
     logRequestDTO.setServiceName(routeConfig.getUri());
-    logRequestDTO.setHeaders(getHttpHeaders(request));
+    logRequestDTO.setHeaders(this.getHttpHeaders(request));
     logRequestDTO.setUserId(tokenBodyResponse.getSubject() == null ? null : Long.parseLong(tokenBodyResponse.getSubject()));
 
     return logRequestDTO;
+  }
+
+  /**
+   * 获取http请求头
+   * @param request
+   * @return
+   */
+  private Map<String, List<String>> getHttpHeaders(ServerHttpRequest request) {
+    HttpHeaders headers = request.getHeaders();
+    Map<String, List<String>> headerMap = new HashMap<>();
+    for (String headerName : headers.keySet()) {
+      List<String> list = headers.get(headerName);
+      headerMap.put(headerName, list);
+    }
+    return headerMap;
   }
 }

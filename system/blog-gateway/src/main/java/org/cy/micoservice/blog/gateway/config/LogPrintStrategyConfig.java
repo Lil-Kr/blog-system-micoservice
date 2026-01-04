@@ -22,5 +22,4 @@ public class LogPrintStrategyConfig {
   public void initLogPrintStrategy() {
     logPrintStrategyService.loadProperties();
   }
-
 }

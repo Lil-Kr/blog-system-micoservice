@@ -2,7 +2,7 @@ package org.cy.micoservice.blog.audit.facade.interfaces;
 
 import org.cy.micoservice.blog.audit.facade.dto.AuditMsgDTO;
 import org.cy.micoservice.blog.audit.facade.dto.AuditResultMessageDTO;
-import org.cy.micoservice.blog.common.base.rpc.RpcResponse;
+import org.cy.micoservice.blog.common.base.provider.RpcResponse;
 
 /**
  * @Author: Lil-K

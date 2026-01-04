@@ -20,6 +20,8 @@ import org.cy.micoservice.blog.gateway.facade.dto.ChangeBodyDTO;
 import org.cy.micoservice.blog.gateway.facade.enums.GatewayRouterChangeEventEnum;
 import org.cy.micoservice.blog.gateway.facade.enums.GatewayRouterDeletedEnum;
 import org.cy.micoservice.blog.gateway.facade.enums.GatewayRouterStatusEnum;
+import org.cy.micoservice.blog.infra.console.config.InfraCacheKeyBuilder;
+import org.cy.micoservice.blog.infra.console.constant.InfraConstants;
 import org.cy.micoservice.blog.infra.console.dao.RouteConfigMapper;
 import org.cy.micoservice.blog.infra.console.service.NacosService;
 import org.cy.micoservice.blog.infra.console.service.RouteConfigChangeLogService;
@@ -29,6 +31,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Objects;
@@ -45,17 +48,16 @@ public class RouteConfigServiceImpl implements RouteConfigService {
 
   @Autowired
   private RouteConfigMapper routeConfigMapper;
-
   @Autowired
   private RouteConfigChangeLogService routeConfigChangeLogService;
-
   @Autowired
   private NacosService nacosService;
-
   @Autowired
   private RedisTemplate<String, String> redisTemplate;
-
-  private final String LOCK_KEY = "blog_infra_console:changeRouteLock";
+  @Autowired
+  private InfraCacheKeyBuilder infraCacheKeyBuilder;
+  // cache key
+  private final String LOCK_KEY = infraCacheKeyBuilder.changeRouteConfigKey(InfraConstants.CHANGE_ROUTE_CONFIG_KEY);
 
   @Override
   public PageResult<RouteConfig> pageRouteConfigList(RouteConfigQueryPageReq req) {
@@ -64,7 +66,6 @@ public class RouteConfigServiceImpl implements RouteConfigService {
       return PageResult.emptyPage();
     }
     Integer count = routeConfigMapper.pageRouteConfigListCount(req);
-
     return new PageResult<>(pageList, count);
   }
 

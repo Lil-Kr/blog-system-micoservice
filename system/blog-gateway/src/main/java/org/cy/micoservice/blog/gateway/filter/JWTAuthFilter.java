@@ -55,14 +55,12 @@ public class JWTAuthFilter extends AbstractGatewayFilter implements Initializing
       exchange.getAttributes().put(GatewayConstants.GatewayAttrKey.X_ROUTE_ERROR_CODE, "500");
       exchange.getAttributes().put(GatewayConstants.GatewayAttrKey.X_ROUTE_ERROR_MSG, "invalid authorization");
       return chain.filter(exchange);
-    } else {
-      TokenBodyResponse tokenBodyResponse = authTemplate.extraAttrsFromToken(authorization);
-
-      String requestBlogServiceToken = this.createTokenBodyJson(authorization);
-      exchange.getAttributes().put(GatewayConstants.GatewayAttrKey.X_JWT_INFO, tokenBodyResponse);
-      exchange.getRequest().mutate().header(GatewayHeadersConstants.X_GATEWAY_IDENTIFY, requestBlogServiceToken);
-      return chain.filter(exchange);
     }
+    TokenBodyResponse tokenBodyResponse = authTemplate.extraAttrsFromToken(authorization);
+    String requestBlogServiceToken = this.createTokenBodyJson(authorization);
+    exchange.getAttributes().put(GatewayConstants.GatewayAttrKey.X_JWT_INFO, tokenBodyResponse);
+    exchange.getRequest().mutate().header(GatewayHeadersConstants.X_GATEWAY_IDENTIFY, requestBlogServiceToken);
+    return chain.filter(exchange);
   }
 
   @Override
@@ -86,7 +84,7 @@ public class JWTAuthFilter extends AbstractGatewayFilter implements Initializing
     try {
       return aes128GCMCrypto.encrypt(jsonStr);
     } catch (Exception e) {
-      log.error("encrypt error", e);
+      log.error("JWTAuthFilter encrypt error:", e);
     }
     return null;
   }

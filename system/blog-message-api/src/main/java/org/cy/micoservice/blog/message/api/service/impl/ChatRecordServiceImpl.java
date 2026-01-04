@@ -5,7 +5,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.dubbo.config.annotation.DubboReference;
 import org.cy.micoservice.blog.common.base.provider.PageResponseDTO;
-import org.cy.micoservice.blog.common.base.rpc.RpcResponse;
+import org.cy.micoservice.blog.common.base.provider.RpcResponse;
 import org.cy.micoservice.blog.common.utils.AssertUtil;
 import org.cy.micoservice.blog.common.utils.BeanCopyUtils;
 import org.cy.micoservice.blog.entity.message.model.provider.req.ChatRecordPageReq;

@@ -1,6 +1,6 @@
 package org.cy.micoservice.blog.user.facade.interfaces;
 
-import org.cy.micoservice.blog.common.base.rpc.RpcResponse;
+import org.cy.micoservice.blog.common.base.provider.RpcResponse;
 import org.cy.micoservice.blog.user.facade.dto.req.TestReq;
 import org.cy.micoservice.blog.user.facade.dto.resp.SysUserDTO;
 import org.cy.micoservice.blog.user.facade.dto.resp.UserRespDTO;

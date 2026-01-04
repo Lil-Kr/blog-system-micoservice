@@ -14,7 +14,7 @@ import org.cy.micoservice.blog.audit.facade.enums.TextAuditBodyTypeEnum;
 import org.cy.micoservice.blog.audit.facade.interfaces.TextAuditFacade;
 import org.cy.micoservice.blog.audit.provider.handler.AuditManager;
 import org.cy.micoservice.blog.audit.provider.service.AuditLogService;
-import org.cy.micoservice.blog.common.base.rpc.RpcResponse;
+import org.cy.micoservice.blog.common.base.provider.RpcResponse;
 import org.cy.micoservice.blog.entity.audit.model.facade.po.AuditLog;
 import org.cy.micoservice.blog.audit.facade.enums.AuditRefTypeEnum;
 import org.springframework.beans.BeanUtils;

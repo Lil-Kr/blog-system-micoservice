@@ -6,8 +6,9 @@ import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.cy.micoservice.blog.common.base.api.ApiResp;
 import org.cy.micoservice.blog.common.constants.gateway.GatewayInfraConsoleSdkConstants;
+import org.cy.micoservice.blog.common.enums.biz.AuthTypeEnum;
 import org.cy.micoservice.blog.entity.gateway.model.req.RouteConfigQueryListReq;
-import org.cy.micoservice.blog.entity.gateway.model.req.RouteConfigSaveRequest;
+import org.cy.micoservice.blog.entity.gateway.model.req.RouteConfigSaveReq;
 import org.cy.micoservice.blog.infra.console.sdk.core.InfraConsoleClient;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -25,35 +26,34 @@ import java.util.stream.Collectors;
 /**
  * @Author: Lil-K
  * @Date: 2025/11/27
- * @Description:
+ * @Description: 加载所有的api接口
+ * todo: 这个配置每个api层都需要独立写, 不能写到这个sdk中, 这里为了方便测试
  */
 @Slf4j
 @Component
 public class RequestMappingConfiguration implements CommandLineRunner {
-
   @Value("${spring.application.name:}")
-  private String applicationName;
+  private String appName;
 
   @Value("${server.servlet.context-path:}")
   private String servletPath;
 
   @Autowired
   private RequestMappingHandlerMapping requestMappingHandlerMapping;
-
   @Autowired
   private InfraConsoleClient infraConsoleClient;
 
   @Override
   public void run(String... args) throws Exception {
     RouteConfigQueryListReq req = new RouteConfigQueryListReq();
-    req.setUri(GatewayInfraConsoleSdkConstants.LB_SERVICE_PREFIX + applicationName);
-    Set<RouteConfigSaveRequest> routeConfigs = infraConsoleClient.routeList(req);
+    req.setUri(GatewayInfraConsoleSdkConstants.LB_SERVICE_PREFIX + appName);
+    Set<RouteConfigSaveReq> routeConfigs = infraConsoleClient.routeList(req);
 
     Set<String> invalidUrls = new HashSet<>();
     invalidUrls.add(GatewayInfraConsoleSdkConstants.API_ERROR_SIGN_PATH);
 
     Map<RequestMappingInfo, HandlerMethod> handlerMethods = requestMappingHandlerMapping.getHandlerMethods();
-    Set<RouteConfigSaveRequest> routeConfigSaveRequestSet = handlerMethods.keySet().stream()
+    Set<RouteConfigSaveReq> routeConfigSaveReqSet = handlerMethods.keySet().stream()
       .filter(requestMappingInfo -> {
         String requestPath = requestMappingInfo.getPathPatternsCondition().getPatternValues().stream().findAny().map(String::toString).orElse("");
         if (StringUtils.isBlank(requestPath)) {
@@ -71,24 +71,24 @@ public class RequestMappingConfiguration implements CommandLineRunner {
       }).map(requestMappingInfo -> {
         String requestPath = requestMappingInfo.getPathPatternsCondition().getPatternValues().stream().findAny().map(String::toString).orElse("");
         String requestMethod = requestMappingInfo.getMethodsCondition().getMethods().stream().findFirst().map(Enum::name).orElse("");
-        RouteConfigSaveRequest routeConfigSaveRequest = new RouteConfigSaveRequest();
-        routeConfigSaveRequest.setSchema(GatewayInfraConsoleSdkConstants.HTTP_PROTOCOL);
-        routeConfigSaveRequest.setMethod(requestMethod);
-        routeConfigSaveRequest.setUri(GatewayInfraConsoleSdkConstants.LB_SERVICE_PREFIX + applicationName);
-        routeConfigSaveRequest.setPath(servletPath + requestPath);
-        routeConfigSaveRequest.setAuthType("jwt");
-        return routeConfigSaveRequest;
+        RouteConfigSaveReq routeConfigSaveReq = new RouteConfigSaveReq();
+        routeConfigSaveReq.setSchema(GatewayInfraConsoleSdkConstants.HTTP_PROTOCOL);
+        routeConfigSaveReq.setMethod(requestMethod);
+        routeConfigSaveReq.setUri(GatewayInfraConsoleSdkConstants.LB_SERVICE_PREFIX + appName);
+        routeConfigSaveReq.setPath(servletPath + requestPath);
+        routeConfigSaveReq.setAuthType(AuthTypeEnum.JWT.getCode());
+        return routeConfigSaveReq;
       }).collect(Collectors.toSet());
 
     // 获取增量更新记录
-    routeConfigSaveRequestSet.removeAll(routeConfigs);
-    if (CollectionUtils.isEmpty(routeConfigSaveRequestSet)) {
+    routeConfigSaveReqSet.removeAll(routeConfigs);
+    if (CollectionUtils.isEmpty(routeConfigSaveReqSet)) {
       log.info("don't need update route config anymore");
       return;
     }
 
     // insert into DB
-    for (RouteConfigSaveRequest request : routeConfigSaveRequestSet) {
+    for (RouteConfigSaveReq request : routeConfigSaveReqSet) {
       ApiResp<Long> routeConfig = infraConsoleClient.createRouteConfig(request);
       log.info("route config create response: {}", JSONObject.toJSONString(routeConfig));
     }

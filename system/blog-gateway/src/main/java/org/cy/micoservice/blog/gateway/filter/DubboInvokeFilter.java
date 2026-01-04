@@ -67,9 +67,11 @@ public class DubboInvokeFilter extends AbstractGatewayFilter implements Ordered 
     log.info("dobbuUri: {}, dobbUriArray: {}", dobbUriArray[0], dobbUriArray[1]);
     GenericService genericService = dubboInvokeService.get(dobbUriArray[0]);
 
-    Object[] params = getDubboInvokeParam(exchange);
+    Object[] params = this.getDubboInvokeParam(exchange);
 
-    // 转发调用 dubbo 服务api
+    /**
+     * 重点: 转发调用 dubbo 服务api
+     */
     Object result = genericService.$invoke(dobbUriArray[1], new String[]{routeConfig.getDubboInvokeParamClass()}, params);
     ServerHttpResponse response = exchange.getResponse();
     response.getHeaders().setContentType(MediaType.APPLICATION_JSON);

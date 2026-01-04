@@ -7,7 +7,7 @@ import org.springframework.stereotype.Repository;
  * Mapper 接口
  * </p>
  *
- * @Author Lil-K
+ * @Author: Lil-K
  * @since 2024-11-24
  */
 @Repository

@@ -11,7 +11,7 @@ import org.springframework.context.annotation.Configuration;
  */
 @Data
 @Configuration
-public class TestApplicationConfig {
+public class TestApplicationProperties {
 
   @Value("${es.user.follower.index:blog.user.user-follower-relation}")
   private String esRecordIndexAliasUserFollowerRelation;

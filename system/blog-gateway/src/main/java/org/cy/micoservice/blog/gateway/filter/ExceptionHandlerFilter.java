@@ -39,9 +39,9 @@ public class ExceptionHandlerFilter extends AbstractGatewayFilter implements Ord
     String errorMsg = (String) exchange.getAttributes().get(GatewayConstants.GatewayAttrKey.X_ROUTE_ERROR_MSG);
     WebResponse<Object> error = WebResponse.busError(Integer.parseInt(errorCode), errorMsg);
     ServerHttpResponse response = exchange.getResponse();
-    response.getHeaders().setContentType(MediaType.APPLICATION_JSON);
     response.setStatusCode(HttpStatus.BAD_GATEWAY);
-    return exchange.getResponse().writeWith(
+    response.getHeaders().setContentType(MediaType.APPLICATION_JSON);
+    return response.writeWith(
       Mono.fromSupplier(() -> {
         DataBufferFactory factory = exchange.getResponse().bufferFactory();
         return factory.wrap(JSON.toJSONBytes(error));

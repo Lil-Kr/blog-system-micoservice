@@ -2,7 +2,7 @@ package org.cy.micoservice.blog.message.provider.facade;
 
 import org.apache.dubbo.config.annotation.DubboService;
 import org.cy.micoservice.blog.common.base.provider.PageResponseDTO;
-import org.cy.micoservice.blog.common.base.rpc.RpcResponse;
+import org.cy.micoservice.blog.common.base.provider.RpcResponse;
 import org.cy.micoservice.blog.message.facade.dto.req.ChatRelationPageReqDTO;
 import org.cy.micoservice.blog.message.facade.dto.req.ChatRelationReqDTO;
 import org.cy.micoservice.blog.message.facade.dto.resp.ChatRelationRespDTO;

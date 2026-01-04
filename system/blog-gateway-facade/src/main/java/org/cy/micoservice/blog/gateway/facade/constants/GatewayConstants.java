@@ -9,6 +9,8 @@ import lombok.Data;
  */
 public class GatewayConstants {
 
+  public static final String AUTH_HEADER_NAME = "auth_header_token";
+
   @Data
   public static class GatewayAttrKey {
     public static String X_ROUTE = "x-route";

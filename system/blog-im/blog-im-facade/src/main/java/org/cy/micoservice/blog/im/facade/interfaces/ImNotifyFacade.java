@@ -1,6 +1,6 @@
 package org.cy.micoservice.blog.im.facade.interfaces;
 
-import org.cy.micoservice.blog.common.base.rpc.RpcResponse;
+import org.cy.micoservice.blog.common.base.provider.RpcResponse;
 import org.cy.micoservice.blog.im.facade.dto.router.ImSingleMessageDTO;
 
 /**

@@ -91,7 +91,7 @@ public class RouteConfigRefreshListener {
           // reload from mysql config then refresh local gateway config
           List<RouteChangeLog> routeChangeLogList = routeConfigChangeLogService.findGtVersion(currentVersion);
           routeChangeLogHandler(routeChangeLogList);
-
+          // 更新版本号(追加)
           currentVersion = version;
         }
       }
@@ -128,7 +128,7 @@ public class RouteConfigRefreshListener {
       }
     }
 
-    if (CollectionUtils.isEmpty(saveConfigIds)) {
+    if (CollectionUtils.isNotEmpty(saveConfigIds)) {
       List<RouteConfig> needSaveConfigs = routerConfigService.findInConfigIds(saveConfigIds);
       for (RouteConfig needSaveConfig : needSaveConfigs) {
         boolean success = routeDefinitionWriterService.save(needSaveConfig);

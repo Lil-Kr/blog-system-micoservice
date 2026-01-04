@@ -5,10 +5,11 @@ import com.alibaba.nacos.api.config.ConfigService;
 import com.alibaba.nacos.api.exception.NacosException;
 import lombok.extern.slf4j.Slf4j;
 import org.cy.micoservice.blog.gateway.facade.utils.NacosRouteVersionUtils;
+import org.cy.micoservice.blog.infra.console.config.InfraApplicationProperties;
 import org.cy.micoservice.blog.infra.console.service.NacosService;
 import org.springframework.beans.factory.DisposableBean;
 import org.springframework.beans.factory.InitializingBean;
-import org.springframework.beans.factory.annotation.Value;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.Properties;
@@ -22,37 +23,23 @@ import java.util.Properties;
 @Service
 public class NacosServiceImpl implements NacosService, InitializingBean, DisposableBean {
 
-  @Value("${spring.cloud.nacos.discovery.server-addr:}")
-  private String serverAddr;
+  @Autowired
+  private InfraApplicationProperties applicationProperties;
 
-  @Value("${spring.cloud.nacos.discovery.namespace:}")
-  private String namespace;
-
-  @Value("${spring.cloud.nacos.username:}")
-  private String username;
-
-  @Value("${spring.cloud.nacos.password:}")
-  private String password;
-
-  @Value("${blog.gateway.refresh.data-id:}")
-  private String refreshDataId;
-
-  @Value("${blog.gateway.refresh.group:}")
-  private String refreshGroup;
-
+  // nacos config
   private ConfigService configService;
 
   @Override
   public Long incrVersion() throws NacosException {
     try {
-      String config = configService.getConfig(refreshDataId, refreshGroup, 5000);
+      String config = configService.getConfig(applicationProperties.getRefreshDataId(), applicationProperties.getRefreshGroup(), 5000);
       long version = NacosRouteVersionUtils.parseConfigVersionFromConfig(config);
       /**
        * 这里有并发问题, 防止多个线程同时更新 version + 1
        */
       version = version + 1;
       String finalString = NacosRouteVersionUtils.formatConfigVersion(version);
-      boolean published = configService.publishConfig(refreshDataId, refreshGroup, finalString, "properties");
+      boolean published = configService.publishConfig(applicationProperties.getRefreshDataId(), applicationProperties.getRefreshGroup(), finalString, "properties");
 
       log.info("publish status: {}", published);
       configService.shutDown();
@@ -66,10 +53,10 @@ public class NacosServiceImpl implements NacosService, InitializingBean, Disposa
   @Override
   public void afterPropertiesSet() throws Exception {
     Properties properties = new Properties();
-    properties.put("serverAddr", serverAddr);
-    properties.put("namespace", namespace);
-    properties.put("username", username);
-    properties.put("password", password);
+    properties.put("serverAddr", applicationProperties.getServerAddr());
+    properties.put("namespace", applicationProperties.getNamespace());
+    properties.put("username", applicationProperties.getUsername());
+    properties.put("password", applicationProperties.getPassword());
     configService = NacosFactory.createConfigService(properties);
   }
 

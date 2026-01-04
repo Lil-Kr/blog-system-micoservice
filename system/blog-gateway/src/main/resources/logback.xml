@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+    <!-- 控制台输出（可选，用于开发环境） -->
+    <appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level %logger{50} - %msg%n</pattern>
+        </encoder>
+    </appender>
+
+    <!-- 滚动文件输出（同步基础配置） -->
+    <appender name="FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <!-- 日志文件路径及名称 -->
+        <file>/data/logs/app.log</file>
+
+        <!-- 滚动策略：时间+大小组合策略 -->
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <!-- 归档文件命名格式（按天归档） -->
+            <fileNamePattern>logs/app.%d{yyyy-MM-dd}.%i.log</fileNamePattern>
+            <!-- 归档文件保留7天 -->
+            <maxHistory>7</maxHistory>
+            <!-- 总归档文件大小限制（可选，防止磁盘占满） -->
+            <totalSizeCap>10GB</totalSizeCap>
+
+            <!-- 按大小拆分策略 -->
+            <timeBasedFileNamingAndTriggeringPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
+                <!-- 单文件最大1GB -->
+                <maxFileSize>1GB</maxFileSize>
+            </timeBasedFileNamingAndTriggeringPolicy>
+        </rollingPolicy>
+
+        <!-- 日志格式编码器 -->
+        <encoder>
+            <pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level %logger{50} - %msg%n</pattern>
+            <charset>UTF-8</charset>
+        </encoder>
+    </appender>
+
+    <!-- 异步输出配置 -->
+    <appender name="ASYNC_FILE" class="ch.qos.logback.classic.AsyncAppender">
+        <!-- 引用同步文件输出器 -->
+        <appender-ref ref="FILE" />
+        <!-- 队列容量（默认256，高并发场景可增大） -->
+        <queueSize>1024</queueSize>
+        <!-- 当队列满时，选择直接拒绝，而非阻塞当前线程 -->
+        <neverBlock>true</neverBlock>
+        <!-- 忽略ERROR级别以下的日志丢失（可选） -->
+        <discardingThreshold>0</discardingThreshold>
+    </appender>
+
+    <!-- 根日志配置 -->
+    <root level="INFO">
+        <!-- 生产环境建议关闭控制台输出，仅保留异步文件输出 -->
+        <!-- <appender-ref ref="CONSOLE" /> -->
+        <appender-ref ref="ASYNC_FILE" />
+    </root>
+</configuration>
