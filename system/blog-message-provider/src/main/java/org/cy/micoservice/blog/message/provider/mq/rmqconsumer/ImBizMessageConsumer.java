@@ -168,11 +168,11 @@ public class ImBizMessageConsumer implements InitializingBean {
      */
     CompletableFuture.allOf (
       // 批量保存消息记录
-      chatMessageAsyncTaskSubmitter.runAsync("chat-record", () -> chatRecordEsService.bulk(imChatReqDTOList)),
+      chatMessageAsyncTaskSubmitter.runAsync("chat-record", () -> chatRecordEsService.bulk(imChatReqDTOList), () -> {}, 300),
       // 批量保存会话关系信息
-      chatMessageAsyncTaskSubmitter.runAsync("chat-relation", () -> chatRelationEsService.bulkMap(imChatReqDTOMap)),
+      chatMessageAsyncTaskSubmitter.runAsync("chat-relation", () -> chatRelationEsService.bulkMap(imChatReqDTOMap), () -> {}, 300),
       // 批量更新发件人的收件箱位置
-      chatMessageAsyncTaskSubmitter.runAsync("chat-box", () -> chatBoxEsService.bulkMap(imChatReqDTOMap))
+      chatMessageAsyncTaskSubmitter.runAsync("chat-box", () -> chatBoxEsService.bulkMap(imChatReqDTOMap), () -> {}, 300)
     ).whenComplete((v, ex) -> {
       if (ex != null) {
         log.error("syncToEs failed", ex);

@@ -9,15 +9,14 @@ import org.springframework.beans.factory.annotation.Value;
  * @Description:
  */
 @Data
-
 public class AuthProperties {
 
-  @Value("${blog.identify.secret-key:}")
+  @Value("${identify.secret-key:}")
   private String secretKey;
 
-  @Value("${blog.identify.access-token.expire-time:}")
+  @Value("${identify.access-token.expire-time:}")
   private Long accessTokenExpireTime;
 
-  @Value("${blog.identify.auth.template:}")
+  @Value("${identify.auth.template:}")
   private String authType;
 }

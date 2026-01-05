@@ -13,8 +13,10 @@ import org.cy.micoservice.blog.gateway.service.RouteDefinitionWriterService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.ExecutionException;
 
 /**
  * @Author: Lil-K
@@ -40,16 +42,21 @@ public class RouteDefinitionConfig {
    * 网关服务启动时执行该方法
    */
   @PostConstruct
-  public void initRouteDefinition() {
+  public void initRouteDefinition() throws ExecutionException, InterruptedException {
     log.info("first loading route config from db start");
     // 异步读取DB中的route config 数据
     CompletableFuture<List<RouteConfig>> routeConfigListFuture =
-      taskSubmitter.supplyAsync("query-route-config-data", () -> routerConfigService.routeConfigAllValidaList());
+      taskSubmitter.supplyAsync("query-route-config-data",
+        () -> routerConfigService.routeConfigAllValidaList(),
+        Collections::emptyList,
+        200);
+
     // 异步执行dubbo初始化配置
-    CompletableFuture<Void> initDubboInvoke = taskSubmitter.runAsync("init-dubbo-nacos-config", this::initDubboInvoke);
+    CompletableFuture<Void> initDubboInvoke =
+      taskSubmitter.runAsync("init-dubbo-nacos-config", this::initDubboInvoke, () -> {}, 50);
     CompletableFuture.allOf(routeConfigListFuture, initDubboInvoke).join();
 
-    List<RouteConfig> routeConfigList = routeConfigListFuture.join();
+    List<RouteConfig> routeConfigList = routeConfigListFuture.get();
     for (RouteConfig routeConfig : routeConfigList) {
       if (GatewayRouterSchemaEnum.HTTP.getCode().equals(routeConfig.getSchema())) {
         routeDefinitionWriterService.save(routeConfig);

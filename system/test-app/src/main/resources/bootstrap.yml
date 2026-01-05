@@ -1,5 +1,5 @@
 server:
-  ## dubbo: 7901
+  ## dubbo: 8899
   port: 8888
   tomcat:
     uri-encoding: UTF-8
@@ -45,6 +45,24 @@ spring:
     import:
       - optional:nacos:test-app.yaml
 
+# spring boot 3.x 专属 Actuator + prometheus 配置
+management:
+  endpoints:
+    web:
+      exposure:
+        include: [prometheus, health, info]
+      base-path: /actuator
+  metrics:
+    tags:
+      application: ${spring.application.name} # 全局标签，所有指标都会携带该 key-value
+    export:
+      prometheus:
+        enabled: true
+  # 可选：健康检查详细程度
+  endpoint:
+    health:
+      show-details: always  # 始终显示健康检查详细信息，按需配置（never/when_authorized/always）
+
 infra:
   console:
     service-name: blog-infra-console
@@ -56,10 +74,9 @@ infra:
         user: nacos
         pwd: nacos
 
-blog:
-  identify:
-    secret-key: 8276hkhuy0HUgKJBYq08y12kHUYVBK17gkLUQ24cxqwetsEDDfx
-    access-token:
-      expire-time: 604800
-  auth:
-    template: jwt
+identify:
+  secret-key: PIhqklxMNarWuqoNFFGJ5QGgesg==hkl1UBGlqopaKHKq9123h1
+  access-token:
+    expire-time: 604800
+auth:
+  template: jwt

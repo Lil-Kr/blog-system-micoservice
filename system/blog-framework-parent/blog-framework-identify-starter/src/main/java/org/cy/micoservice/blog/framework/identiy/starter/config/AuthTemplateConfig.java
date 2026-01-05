@@ -1,5 +1,6 @@
 package org.cy.micoservice.blog.framework.identiy.starter.config;
 
+import org.cy.micoservice.blog.framework.identiy.starter.constant.IdentifyConstants;
 import org.cy.micoservice.blog.framework.identiy.starter.template.AuthTemplate;
 import org.cy.micoservice.blog.framework.identiy.starter.template.impl.JWTAuthTemplateImpl;
 import org.springframework.context.annotation.Bean;
@@ -18,7 +19,7 @@ public class AuthTemplateConfig {
 
   @Bean
   public AuthTemplate authTemplate (AuthProperties authProperties) {
-    if ("jwt".endsWith(authProperties.getAuthType())) {
+    if (IdentifyConstants.JWT.endsWith(authProperties.getAuthType())) {
       return new JWTAuthTemplateImpl(authProperties);
     }
 

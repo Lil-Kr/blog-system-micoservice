@@ -15,6 +15,7 @@ import java.util.function.Function;
  * @Author: Lil-K
  * @Date: 2025/11/29
  * @Description: 身份认证统一 template
+ * 密钥通过每个工程的配置传递, 不需要HardCode
  */
 public class JWTUtil {
 
@@ -45,11 +46,11 @@ public class JWTUtil {
    */
   public static String generateToken(String subject, Map<String, Object> claims, String secretKey, Long expirationTime) {
     return Jwts.builder()
-      .setClaims(claims)
-      .setSubject(subject)
-      .setIssuedAt(new Date(System.currentTimeMillis()))
-      .setExpiration(new Date(System.currentTimeMillis() + expirationTime))
-      .signWith(getSigningKey(secretKey), SignatureAlgorithm.HS256)
+      .setClaims(claims) // 声明特殊标识, 相对固定的
+      .setSubject(subject) // 主体信息, 唯一标识
+      .setIssuedAt(new Date(System.currentTimeMillis())) // 签发时间
+      .setExpiration(new Date(System.currentTimeMillis() + expirationTime)) // 过期时间
+      .signWith(getSigningKey(secretKey), SignatureAlgorithm.HS256) // 签名
       .compact();
   }
 

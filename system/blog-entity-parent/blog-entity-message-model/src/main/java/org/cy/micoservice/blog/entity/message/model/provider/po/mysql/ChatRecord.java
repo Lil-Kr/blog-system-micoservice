@@ -2,6 +2,7 @@ package org.cy.micoservice.blog.entity.message.model.provider.po.mysql;
 
 import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import org.cy.micoservice.blog.entity.base.model.api.BaseEntity;
 
 import java.io.Serial;
@@ -12,6 +13,7 @@ import java.io.Serial;
  * @Description:
  */
 @Data
+@EqualsAndHashCode(callSuper = true)
 @TableName("t_chat_record")
 public class ChatRecord extends BaseEntity {
   @Serial

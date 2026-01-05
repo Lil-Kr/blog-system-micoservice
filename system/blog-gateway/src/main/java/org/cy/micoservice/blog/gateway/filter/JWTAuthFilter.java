@@ -19,6 +19,8 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.server.ServerWebExchange;
 import reactor.core.publisher.Mono;
 
+import java.util.Objects;
+
 /**
  * @Author: Lil-K
  * @Date: 2025/11/29
@@ -41,10 +43,8 @@ public class JWTAuthFilter extends AbstractGatewayFilter implements Initializing
   @Override
   protected boolean isSupport(ServerWebExchange exchange) {
     RouteConfig routeConfig = exchange.getAttribute(GatewayConstants.GatewayAttrKey.X_ROUTE);
-    if (GatewayRouterAuthTypeEnum.JWT.getCode().equals(routeConfig.getAuthType())) {
-      return exchange.getAttributes().get(GatewayConstants.GatewayAttrKey.X_AUTHORIZATION) != null;
-    }
-    return false;
+    if (Objects.isNull(routeConfig) || ! GatewayRouterAuthTypeEnum.JWT.getCode().equals(routeConfig.getAuthType())) return false;
+    return exchange.getAttributes().get(GatewayConstants.GatewayAttrKey.X_AUTHORIZATION) != null;
   }
 
   @Override

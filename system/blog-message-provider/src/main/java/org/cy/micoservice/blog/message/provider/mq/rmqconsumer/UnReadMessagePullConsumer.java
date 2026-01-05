@@ -31,6 +31,7 @@ import org.springframework.stereotype.Component;
 
 import java.util.*;
 import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.ExecutionException;
 import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
 
@@ -99,7 +100,7 @@ public class UnReadMessagePullConsumer implements InitializingBean {
    * 检查用户是否有未读消息
    * @param messages
    */
-  private void unReadMsgCheckAndPullHandler(List<MessageExt> messages) {
+  private void unReadMsgCheckAndPullHandler(List<MessageExt> messages) throws ExecutionException, InterruptedException {
     for (MessageExt msg : messages) {
       UserEnterInitReqDTO  userEnterInitReqDTO = JSON.parseObject(msg.getBody(), UserEnterInitReqDTO.class);
       Long userId = userEnterInitReqDTO.getUserId();
@@ -108,21 +109,25 @@ public class UnReadMessagePullConsumer implements InitializingBean {
       CompletableFuture<List<ChatRelationRespDTO>> relationFuture =
         chatMessageAsyncTaskSubmitter.supplyAsync(
           "query-chat-relation",
-          () -> chatRelationEsService.listByUserIdOrReceiverId(userId)
+          () -> chatRelationEsService.listByUserIdOrReceiverId(userId),
+          Collections::emptyList,
+          200
         );
 
       // 查询当前用户收信箱的已读offset
       CompletableFuture<List<ChatBoxEs>> chatBoxFuture =
         chatMessageAsyncTaskSubmitter.supplyAsync(
           "query-chat-box",
-          () -> chatBoxEsService.listByUserId(userId)
+          () -> chatBoxEsService.listByUserId(userId),
+          Collections::emptyList,
+          200
         );
       CompletableFuture.allOf(relationFuture, chatBoxFuture).join();
 
       // 获取返回的 chat_relation 数据
-      List<ChatRelationRespDTO> chatRelationRespDTOList = relationFuture.join();
+      List<ChatRelationRespDTO> chatRelationRespDTOList = relationFuture.get();
       // 获取返回的 chat_box 数据
-      List<ChatBoxEs> chatBoxEsList = chatBoxFuture.join();
+      List<ChatBoxEs> chatBoxEsList = chatBoxFuture.get();
       Map<String, ChatBoxEs> chatBoxEsMap = chatBoxEsList.stream()
         .collect(Collectors.toMap(ChatBoxEs::getRelationId, item -> item));
 

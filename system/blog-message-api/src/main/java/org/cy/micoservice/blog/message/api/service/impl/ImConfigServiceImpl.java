@@ -1,6 +1,7 @@
 package org.cy.micoservice.blog.message.api.service.impl;
 
 import org.cy.micoservice.blog.entity.message.model.provider.resp.ImConfigResp;
+import org.cy.micoservice.blog.framework.identiy.starter.config.AuthProperties;
 import org.cy.micoservice.blog.framework.identiy.starter.uitls.JWTUtil;
 import org.cy.micoservice.blog.message.api.config.ApplicationProperties;
 import org.cy.micoservice.blog.message.api.service.ImConfigService;
@@ -21,11 +22,14 @@ public class ImConfigServiceImpl implements ImConfigService {
   @Autowired
   private ApplicationProperties applicationProperties;
 
+  @Autowired
+  private AuthProperties authProperties;
+
   @Override
   public ImConfigResp getImChatConfig(Long userId) {
     // im token的有效期-7天
     String loginToken = JWTUtil.generateToken(String.valueOf(userId), new HashMap<>(),
-      applicationProperties.getImSecretKey(), TimeUnit.DAYS.toMillis(7));
+      authProperties.getSecretKey(), TimeUnit.DAYS.toMillis(7));
     return ImConfigResp
       .builder()
       .imServerAddress(applicationProperties.getImServerAddress())
