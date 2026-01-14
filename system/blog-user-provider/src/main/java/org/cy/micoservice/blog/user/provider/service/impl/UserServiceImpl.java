@@ -2,11 +2,11 @@ package org.cy.micoservice.blog.user.provider.service.impl;
 
 import org.cy.micoservice.blog.common.base.api.ApiResp;
 import org.cy.micoservice.blog.common.base.api.PageResult;
+import org.cy.micoservice.blog.entity.user.model.provider.po.User;
+import org.cy.micoservice.blog.entity.user.model.provider.req.*;
+import org.cy.micoservice.blog.entity.user.model.provider.resp.UserResp;
 import org.cy.micoservice.blog.user.provider.config.UserRedisKeyBuilder;
-import org.cy.micoservice.blog.user.provider.dao.SysUserMapper;
-import org.cy.micoservice.blog.user.provider.pojo.entity.SysUser;
-import org.cy.micoservice.blog.user.provider.pojo.req.*;
-import org.cy.micoservice.blog.user.provider.pojo.resp.SysUserResp;
+import org.cy.micoservice.blog.user.provider.dao.UserMapper;
 import org.cy.micoservice.blog.user.provider.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -20,7 +20,7 @@ import org.springframework.stereotype.Service;
 public class UserServiceImpl implements UserService {
 
   @Autowired
-  private SysUserMapper userMapper;
+  private UserMapper userMapper;
 
   @Autowired
   private UserRedisKeyBuilder userRedisKeyBuilder;
@@ -31,17 +31,17 @@ public class UserServiceImpl implements UserService {
   }
 
   @Override
-  public SysUser getUserById(Long id) {
-    return userMapper.getUserById(id);
+  public User getUserById(Long userId) {
+    return userMapper.getUserById(userId);
   }
 
   @Override
-  public SysUserResp getUserBySurrogateId(Long surrogateId) {
+  public UserResp getUserBySurrogateId(Long surrogateId) {
     return userMapper.getUserBySurrogateId(surrogateId);
   }
 
   @Override
-  public ApiResp<SysUser> adminLogin(UserLoginAdminReq req) {
+  public ApiResp<User> adminLogin(UserLoginAdminReq req) {
     return null;
   }
 
@@ -56,7 +56,7 @@ public class UserServiceImpl implements UserService {
   }
 
   @Override
-  public PageResult<SysUserResp> pageList(UserListPageReq req) {
+  public PageResult<UserResp> pageList(UserListPageReq req) {
     return null;
   }
 
@@ -70,8 +70,4 @@ public class UserServiceImpl implements UserService {
     return null;
   }
 
-  @Override
-  public ApiResp<String> uploadAvatar(AvatarUploadReq req) throws Exception {
-    return null;
-  }
 }

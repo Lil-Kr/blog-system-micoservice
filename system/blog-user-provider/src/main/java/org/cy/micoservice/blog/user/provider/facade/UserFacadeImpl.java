@@ -6,11 +6,12 @@ import lombok.extern.slf4j.Slf4j;
 import org.apache.dubbo.config.annotation.DubboService;
 import org.cy.micoservice.blog.common.base.provider.RpcResponse;
 import org.cy.micoservice.blog.common.utils.BeanCopyUtils;
+import org.cy.micoservice.blog.entity.user.model.provider.po.User;
+import org.cy.micoservice.blog.entity.user.model.provider.resp.UserResp;
 import org.cy.micoservice.blog.user.facade.dto.req.TestReq;
 import org.cy.micoservice.blog.user.facade.dto.resp.SysUserDTO;
 import org.cy.micoservice.blog.user.facade.dto.resp.UserRespDTO;
 import org.cy.micoservice.blog.user.facade.interfaces.UserFacade;
-import org.cy.micoservice.blog.user.provider.pojo.resp.SysUserResp;
 import org.cy.micoservice.blog.user.provider.service.UserService;
 import org.cy.micoservice.blog.user.provider.service.UserShardService;
 import org.springframework.beans.BeanUtils;
@@ -32,13 +33,13 @@ public class UserFacadeImpl implements UserFacade {
   private UserShardService userShardService;
 
   @Override
-  public String queryUserById(Long userId) {
-    return userService.queryUserById(120000l);
+  public User queryUserById(Long userId) {
+    return userService.getUserById(userId);
   }
 
   @Override
   public SysUserDTO getUserBySurrogateId(Long surrogateId) {
-    SysUserResp user = userService.getUserBySurrogateId(surrogateId);
+    UserResp user = userService.getUserBySurrogateId(surrogateId);
     SysUserDTO dto = new SysUserDTO();
     BeanUtils.copyProperties(user, dto);
     return dto;

@@ -103,7 +103,7 @@ public class MinioServiceImpl implements MinioService {
   /**
    * 获取私有桶中文件的预签名 URL
    * @param objectName   要访问的文件对象名称
-   * @param expireSecond 预签名 URL 的有效时长（秒）
+   * @param expireSecond 预签名 URL 的有效时长(秒)
    * @return 预签名 URL
    */
   @Override

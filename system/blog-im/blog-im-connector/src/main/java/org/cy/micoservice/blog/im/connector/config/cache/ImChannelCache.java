@@ -52,7 +52,7 @@ public class ImChannelCache {
     this.getAllChannel().clear();
   }
 
-  /** =================== waitingIdentifyCtxList =================== **/
+  /** =================== waitingIdentifyCtxList: 待认证的WS链接 =================== **/
   private List<ChannelHandlerContext> waitingIdentifyCtxList = new CopyOnWriteArrayList<>();
 
   public List<ChannelHandlerContext> getWaitingIdentifyCtxList() {
@@ -69,9 +69,8 @@ public class ImChannelCache {
 
   public ChannelHandlerContext removeWaitingIdentifyCtx(String channelId) {
     if (StringUtils.isBlank(channelId)) return null;
-
     // 使用 indexOf 和 remove 方法替代迭代器 remove 操作
-    for (int i = 0; i < this.waitingIdentifyCtxList.size(); i++) {
+    for (int i = 0; i < this.waitingIdentifyCtxList.size(); i ++) {
       ChannelHandlerContext ctx = this.waitingIdentifyCtxList.get(i);
       String currentChannelId = ContextAttributeUtil.get(ctx, ImAttributeKeyConstants.CHANNEL_ID, String.class);
       if (channelId.equals(currentChannelId)) {

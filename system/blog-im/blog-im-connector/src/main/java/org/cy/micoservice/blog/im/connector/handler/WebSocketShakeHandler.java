@@ -61,7 +61,7 @@ public class WebSocketShakeHandler extends ChannelInboundHandlerAdapter {
 
     boolean release = true;
     try {
-      // 判断当前请求是否时完整的http数据包
+      // 判断当前请求是否为完整的http数据包
       if (msg instanceof FullHttpRequest) {
         log.info("Received FullHttpRequest for URI: {}", ((FullHttpRequest) msg).uri());
         // 握手协议处理

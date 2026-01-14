@@ -6,7 +6,7 @@ import org.cy.micoservice.blog.common.constants.gateway.GatewayInfraConsoleSdkCo
 import org.cy.micoservice.blog.entity.gateway.model.entity.RouteConfig;
 import org.cy.micoservice.blog.gateway.config.async.GatewayAsyncTaskSubmitter;
 import org.cy.micoservice.blog.gateway.facade.enums.GatewayRouterSchemaEnum;
-import org.cy.micoservice.blog.gateway.service.DubboInvokeService;
+import org.cy.micoservice.blog.gateway.service.DubboInvokerService;
 import org.cy.micoservice.blog.gateway.service.RouteCacheService;
 import org.cy.micoservice.blog.gateway.service.RouteConfigService;
 import org.cy.micoservice.blog.gateway.service.RouteDefinitionWriterService;
@@ -34,7 +34,7 @@ public class RouteDefinitionConfig {
   @Autowired
   private RouteCacheService routeCacheService;
   @Autowired
-  private DubboInvokeService dubboInvokeService;
+  private DubboInvokerService dubboInvokerService;
   @Autowired
   private GatewayAsyncTaskSubmitter taskSubmitter;
 
@@ -49,11 +49,11 @@ public class RouteDefinitionConfig {
       taskSubmitter.supplyAsync("query-route-config-data",
         () -> routerConfigService.routeConfigAllValidaList(),
         Collections::emptyList,
-        200);
+        200L);
 
     // 异步执行dubbo初始化配置
     CompletableFuture<Void> initDubboInvoke =
-      taskSubmitter.runAsync("init-dubbo-nacos-config", this::initDubboInvoke, () -> {}, 50);
+      taskSubmitter.runAsync("init-dubbo-nacos-config", this::initDubboInvoke, () -> {}, 100L);
     CompletableFuture.allOf(routeConfigListFuture, initDubboInvoke).join();
 
     List<RouteConfig> routeConfigList = routeConfigListFuture.get();
@@ -73,7 +73,7 @@ public class RouteDefinitionConfig {
    * 初始化dubbo
    */
   private void initDubboInvoke() {
-    dubboInvokeService.initConfig();
+    dubboInvokerService.initConfig();
   }
 
   /**
@@ -85,6 +85,6 @@ public class RouteDefinitionConfig {
     originUri = originUri.replaceAll(GatewayInfraConsoleSdkConstants.DUBBO_URL_PREFIX, "");
     // org.cy.micoservice.blog.user.facade.interfaces.UserFacade#test
     String[] uriArray = originUri.split("#");
-    dubboInvokeService.save(uriArray[0]);
+    dubboInvokerService.save(uriArray[0]);
   }
 }

@@ -47,6 +47,7 @@
 			<artifactId>spring-cloud-starter-bootstrap</artifactId>
 		</dependency>
 		
+		
 		<!-- 用于限流 -->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>

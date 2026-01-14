@@ -14,7 +14,7 @@ public class WeightedRandomUtil {
   private final Map<String, Object> dataMap = new HashMap<>();
   // 存储权重配置
   private final Map<String, Integer> weightMap = new HashMap<>();
-  // 缓存的前缀和数组（优化查询性能）
+  // 缓存的前缀和数组(优化查询性能)
   private volatile String[] keys;
   private volatile int[] prefixWeights;
   private volatile int totalWeight;
@@ -26,7 +26,7 @@ public class WeightedRandomUtil {
    * 添加/更新键值对和权重
    * @param key    键
    * @param value  值
-   * @param weight 权重（必须>0）
+   * @param weight 权重(必须>0)
    */
   public void put(String key, Object value, int weight) {
     if (key == null || value == null) {
@@ -73,7 +73,7 @@ public class WeightedRandomUtil {
   /**
    * 更新指定Key的权重
    * @param key    键
-   * @param weight 新权重（必须>0）
+   * @param weight 新权重(必须>0)
    */
   public void updateWeight(String key, int weight) {
     if (weight <= 0) {
@@ -268,7 +268,7 @@ public class WeightedRandomUtil {
   }
 
   /**
-   * 重建前缀和数组（内部使用）
+   * 重建前缀和数组(内部使用)
    */
   private void rebuildPrefixWeights() {
     int size = weightMap.size();
@@ -316,7 +316,7 @@ public class WeightedRandomUtil {
   private static final WeightedRandomUtil DEFAULT_INSTANCE = new WeightedRandomUtil();
 
   /**
-   * 获取默认实例（单例）
+   * 获取默认实例(单例)
    *
    * @return 默认权重工具实例
    */

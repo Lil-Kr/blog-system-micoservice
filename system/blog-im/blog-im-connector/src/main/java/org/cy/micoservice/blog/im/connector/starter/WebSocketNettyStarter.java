@@ -183,7 +183,7 @@ public class WebSocketNettyStarter implements InitializingBean {
    */
   public void stopWebSocketServer() {
     try {
-      // 修改 Nacos 上, 当前应用实例修改为 unHealth 状态
+      // 修改 Nacos 上, 当前应用实例修改为 unHealth 状态, 并通知
       imConnectorNacosRegister.changeNodeToUnHealth();
       // 检测连接是否已经迁移完成 60s 时限
       for (int i = 0; i < 20; i++) {
@@ -211,7 +211,7 @@ public class WebSocketNettyStarter implements InitializingBean {
   private void broadcastImMoveMsg(int retryTime) {
     log.info("broadcast im move msg,retryTime: {}", retryTime);
     /**
-     * 发送move信号给到还在有连接的客户端
+     * 发送 move 信号给到还在有连接的客户端
      */
     for (Long userId : imChannelCache.getAllChannel().keySet()) {
       ChannelHandlerContext ctx = imChannelCache.get(userId);
@@ -223,6 +223,7 @@ public class WebSocketNettyStarter implements InitializingBean {
       moveBody.setUserId(userId);
       ImMessageDTO moveMsg = new ImMessageDTO(ImMessageConstants.MOVE_CODE, JSONObject.toJSONString(moveBody));
       log.info("im move msg: {}", moveMsg);
+      // 通知客户端做重连操作
       senderService.safeWrite(ctx, moveMsg);
     }
   }

@@ -5,7 +5,8 @@
   <parent>
     <groupId>org.springframework.boot</groupId>
     <artifactId>spring-boot-starter-parent</artifactId>
-		<version>3.2.4</version>
+<!--		<version>3.2.4</version>-->
+	  <version>3.0.4</version>
 		<relativePath/> <!-- lookup parent from repository -->
   </parent>
 
@@ -26,9 +27,9 @@
 		<module>blog-picture-provider</module>
 		<module>blog-picture-facade</module>
 		<module>blog-picture-api</module>
-		<module>blog-admin-api</module>
+		<!--<module>blog-admin-api</module>
 		<module>blog-admin-facade</module>
-		<module>blog-admin-provider</module>
+		<module>blog-admin-provider</module>-->
 		<module>blog-user-provider</module>
 		<module>blog-user-facade</module>
 		<module>blog-user-api</module>
@@ -46,17 +47,20 @@
 		<maven.compiler.target>17</maven.compiler.target>
 		
 		<!--	spring cloud	-->
-		<spring-cloud.version>2023.0.0</spring-cloud.version>
-		<spring-cloud-alibaba.version>2023.0.1.0</spring-cloud-alibaba.version>
+		<spring-cloud.version>2022.0.0</spring-cloud.version>
+		<spring-cloud-alibaba.version>2022.0.0.2</spring-cloud-alibaba.version>
 		<dubbo.version>3.2.0</dubbo.version>
 		<sentinel-datasource.version>1.8.9</sentinel-datasource.version>
 		
 		<!--mybatis-plus-->
 		<mybatis-plus.version>3.5.5</mybatis-plus.version>
-		<druid.version>1.2.6</druid.version>
+<!--		<druid.version>1.2.6</druid.version>-->
 		
 		<!--mysql-->
 		<mysql.version>8.4.0</mysql.version>
+		
+		<!--sharding jdbc-->
+		<sharding.jdbc.version>5.2.1</sharding.jdbc.version>
 		
 		<!-- ES -->
 		<elasticsearch.version>8.10.4</elasticsearch.version>
@@ -64,8 +68,9 @@
 		<!-- netty -->
 		<netty-all.version>4.1.89.Final</netty-all.version>
 		
-		<!-- rocket MQ -->
+		<!-- Rocket MQ -->
 		<rocketmq.client.version>4.8.0</rocketmq.client.version>
+		<kafka.client.version>3.9.1</kafka.client.version>
 		
 		<!-- tools -->
 		<minio.version>8.5.17</minio.version>
@@ -136,10 +141,17 @@
 			</dependency>
 
 			<!-- druid 连接池 -->
-			<dependency>
+			<!--<dependency>
 				<groupId>com.alibaba</groupId>
 				<artifactId>druid-spring-boot-starter</artifactId>
 				<version>${druid.version}</version>
+			</dependency>-->
+			
+			<!-- sharding jdbc -->
+			<dependency>
+				<groupId>org.apache.shardingsphere</groupId>
+				<artifactId>shardingsphere-jdbc-core</artifactId>
+				<version>${sharding.jdbc.version}</version>
 			</dependency>
 			
 			<!-- ES -->
@@ -156,11 +168,18 @@
 				<version>${google-guava.version}</version>
 			</dependency>
 			
-			<!-- rocket MQ -->
+			<!-- Rocket MQ -->
 			<dependency>
 				<groupId>org.apache.rocketmq</groupId>
 				<artifactId>rocketmq-client</artifactId>
 				<version>${rocketmq.client.version}</version>
+			</dependency>
+			
+			<!-- kafka -->
+			<dependency>
+				<groupId>org.apache.kafka</groupId>
+				<artifactId>kafka-clients</artifactId>
+				<version>${kafka.client.version}</version>
 			</dependency>
 
 			<!-- validation -->

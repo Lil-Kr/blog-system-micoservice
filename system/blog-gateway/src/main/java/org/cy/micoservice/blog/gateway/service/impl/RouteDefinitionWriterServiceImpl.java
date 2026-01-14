@@ -62,9 +62,6 @@ public class RouteDefinitionWriterServiceImpl implements RouteDefinitionWriterSe
       predicateDefinitionList.add(path);
       routeDefinition.setPredicates(predicateDefinitionList);
 
-      if (routeConfig.getPath().equals("/api/test/test1")) {
-      }
-
       routeDefinitionWriter.save(Mono.just(routeDefinition)).subscribe();
       // Nacos 2.2.0 需要手动刷新
       publisher.publishEvent(new RefreshRoutesEvent(REFRESH_KEY));

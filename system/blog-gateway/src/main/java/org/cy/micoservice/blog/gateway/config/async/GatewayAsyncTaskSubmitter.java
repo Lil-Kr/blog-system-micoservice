@@ -43,7 +43,7 @@ public class GatewayAsyncTaskSubmitter {
    * @param timeoutMs
    * @return
    */
-  public CompletableFuture<Void> runAsync(String name, Runnable task, Runnable fallback, long timeoutMs) {
+  public CompletableFuture<Void> runAsync(String name, Runnable task, Runnable fallback, Long timeoutMs) {
     // 1. 队列过载保护
     if (executor.getQueue().size() > OVER_LIMIT_QUEUE_SIZE_1) {
       log.warn("[{}] async queue overloaded, fallback directly", name);
@@ -97,7 +97,7 @@ public class GatewayAsyncTaskSubmitter {
     new ThreadPoolExecutor.CallerRunsPolicy()
   );
 
-  public <T> CompletableFuture<T> supplyAsync(String taskName, Supplier<T> task, Supplier<T> fallback, long timeoutMs) {
+  public <T> CompletableFuture<T> supplyAsync(String taskName, Supplier<T> task, Supplier<T> fallback, Long timeoutMs) {
     // 队列打满时直接走兜底，防止雪崩
     if (submitTaskPool.getQueue().size() > OVER_LIMIT_QUEUE_SIZE_2) {
       log.warn("[{}] async queue overloaded, use fallback", taskName);

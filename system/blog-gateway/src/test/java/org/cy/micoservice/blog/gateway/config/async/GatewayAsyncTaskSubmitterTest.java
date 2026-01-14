@@ -30,7 +30,7 @@ public class GatewayAsyncTaskSubmitterTest {
           }
         },
         Collections::emptyList,
-        200
+        200L
       );
     CompletableFuture.allOf(relationFuture).join();
     List<String> list = relationFuture.get();
@@ -53,7 +53,7 @@ public class GatewayAsyncTaskSubmitterTest {
           }
         },
         Collections::emptyList,
-        200
+        200L
       );
     CompletableFuture.allOf(relationFuture).join();
     List<String> list = relationFuture.get();

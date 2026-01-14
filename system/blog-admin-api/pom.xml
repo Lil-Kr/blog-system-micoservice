@@ -18,6 +18,10 @@
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<blog-framework-parent.version>1.0.0</blog-framework-parent.version>
 		<blog-common.version>1.0.0</blog-common.version>
+		<blog-entity-parent.version>1.0.0</blog-entity-parent.version>
+		<blog-admin-facade.version>1.0.0</blog-admin-facade.version>
+		<blog-gateway-facade.version>1.0.0</blog-gateway-facade.version>
+		<infra-console-sdk>1.0.0</infra-console-sdk>
 	</properties>
 
 	<dependencies>
@@ -53,6 +57,30 @@
 			<groupId>org.cy.micoservice.blog</groupId>
 			<artifactId>blog-framework-dubbo-starter</artifactId>
 			<version>${blog-framework-parent.version}</version>
+		</dependency>
+		
+		<dependency>
+			<groupId>org.cy.micoservice.blog</groupId>
+			<artifactId>blog-framework-cache-starter</artifactId>
+			<version>${blog-framework-parent.version}</version>
+		</dependency>
+		
+		<dependency>
+			<groupId>org.cy.micoservice.blog</groupId>
+			<artifactId>blog-infra-console-sdk</artifactId>
+			<version>${infra-console-sdk}</version>
+		</dependency>
+		
+		<dependency>
+			<groupId>org.cy.micoservice.blog</groupId>
+			<artifactId>blog-admin-facade</artifactId>
+			<version>${blog-admin-facade.version}</version>
+		</dependency>
+		
+		<dependency>
+			<groupId>org.cy.micoservice.blog</groupId>
+			<artifactId>blog-entity-admin-model</artifactId>
+			<version>${blog-entity-parent.version}</version>
 		</dependency>
 	</dependencies>
 	

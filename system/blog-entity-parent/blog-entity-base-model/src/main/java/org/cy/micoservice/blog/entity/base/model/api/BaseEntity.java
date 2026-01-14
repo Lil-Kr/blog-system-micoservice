@@ -1,6 +1,5 @@
 package org.cy.micoservice.blog.entity.base.model.api;
 
-import com.baomidou.mybatisplus.annotation.TableLogic;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
 import lombok.Data;
@@ -20,7 +19,10 @@ public class BaseEntity implements Serializable {
   @Serial
   private static final long serialVersionUID = -3071591161451842453L;
 
-  @TableLogic(delval = "id", value = "0")
+  private Long userId;
+
+  private Long adminId;
+
   private Integer deleted;
 
   /**

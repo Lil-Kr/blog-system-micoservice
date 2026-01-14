@@ -99,6 +99,12 @@
 		
 		<dependency>
 			<groupId>org.cy.micoservice.blog</groupId>
+			<artifactId>blog-infra-console-sdk</artifactId>
+			<version>${blog-infra-console-sdk.version}</version>
+		</dependency>
+		
+		<dependency>
+			<groupId>org.cy.micoservice.blog</groupId>
 			<artifactId>blog-framework-identify-starter</artifactId>
 			<version>${blog-framework-parent.version}</version>
 		</dependency>

@@ -1,8 +1,6 @@
 server:
   ## dubbo: 6199
   port: 6101
-  tomcat:
-    uri-encoding: UTF-8
 
 spring:
   application:

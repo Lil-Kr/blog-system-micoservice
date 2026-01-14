@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="org.cy.micoservice.blog.admin.dao.SysOrgMapper">
+<mapper namespace="org.cy.micoservice.blog.admin.provider.dao.SysOrgMapper">
 
 	<!-- 通用查询映射结果 -->
-	<resultMap id="BaseResultMap" type="org.cy.micoservice.blog.entity.admin.model.entity.SysOrg">
+	<resultMap id="BaseResultMap" type="org.cy.micoservice.blog.entity.admin.model.entity.sys.SysOrg">
 		<id column="id" property="id"/>
 		<result column="surrogate_id" property="surrogateId"/>
 		<result column="number" property="number"/>
@@ -46,7 +46,7 @@
 		where parent_id = #{parentId}
 	</select>
 
-	<select id="pageList" resultType="org.cy.micoservice.blog.entity.admin.model.resp.org.SysOrgResp">
+	<select id="pageList" resultType="org.cy.micoservice.blog.entity.admin.model.resp.sys.org.SysOrgResp">
 		select
 		a.id,
 		a.surrogate_id,
@@ -65,7 +65,7 @@
 		c.`name` as 'parent_name'
 		from sys_org as a
 		left join sys_org as c on (a.parent_id = c.surrogate_id)
-		left join sys_user as b on (a.operator = b.surrogate_id)
+		left join sys_admin as b on (a.operator = b.surrogate_id)
 		<where>
 			<if test="param.surrogateId != null">
 				and a.surrogate_id = #{param.surrogateId}
@@ -114,7 +114,7 @@
 		</where>
 	</select>
 
-	<select id="retrieveAllList" resultType="org.cy.micoservice.blog.entity.admin.model.resp.org.SysOrgResp">
+	<select id="retrieveAllList" resultType="org.cy.micoservice.blog.entity.admin.model.resp.sys.org.SysOrgResp">
 		select
 		<include refid="Base_Column_List"/>
 		from sys_org

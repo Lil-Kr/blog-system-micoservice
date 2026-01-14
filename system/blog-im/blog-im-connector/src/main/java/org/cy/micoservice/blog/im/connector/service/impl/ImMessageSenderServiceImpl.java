@@ -81,10 +81,10 @@ public class ImMessageSenderServiceImpl implements ImMessageSenderService, Initi
         try {
           if (this.retryQueue.isEmpty()) {
             TimeUnit.MILLISECONDS.sleep(500);
-          } else {
-            ImRetryTask imRetryTask = this.retryQueue.poll();
-            this.executeRetryTask(imRetryTask);
+            continue;
           }
+          ImRetryTask imRetryTask = this.retryQueue.poll();
+          this.executeRetryTask(imRetryTask);
         } catch (Exception e) {
           log.error("retry queue consume task interrupted: {}", e.getMessage());
           // 中断当前线程执行, 跳出循环

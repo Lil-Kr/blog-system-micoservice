@@ -19,6 +19,10 @@ public class BaseReq implements Serializable {
   @Serial
   private static final long serialVersionUID = 4395953837572132402L;
 
+  private Long userId;
+
+  private Long adminId;
+
   private String keyWords;
 
   private Integer deleted;

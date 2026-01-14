@@ -4,6 +4,7 @@ import com.alibaba.fastjson2.JSONObject;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.extern.slf4j.Slf4j;
 import org.cy.micoservice.blog.framework.web.starter.annotations.NoAuthCheck;
+import org.cy.micoservice.blog.framework.web.starter.web.RequestContext;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Map;
@@ -35,11 +36,11 @@ public class TestController {
     return "test-app test2 success";
   }
 
-  @NoAuthCheck
   @GetMapping("/test3")
   public String test3() {
     log.info("GET success:{}", "test3");
-    return "test-app test3 success";
+    Long userId = RequestContext.getUserId();
+    return "test-app test3 success" + "userId: " + userId;
   }
 
   // @NoAuthCheck

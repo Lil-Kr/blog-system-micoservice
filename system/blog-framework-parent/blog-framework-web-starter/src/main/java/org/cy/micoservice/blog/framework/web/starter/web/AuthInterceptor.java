@@ -30,10 +30,7 @@ import java.util.Objects;
 @Configuration
 public class AuthInterceptor implements HandlerInterceptor, InitializingBean {
 
-//  @DubboReference(check = false)
-//  private IAuthFacade authFacade;
-
-  @Value("${blog.gateway.decrypty.secret_key:PxMNarWuqoNFFGJ5QGgesg==}")
+  @Value("${gateway.decrypty.secret-key:PxMNarWuqoNFFGJ5QGgesg==}")
   private String decryptSecretKey;
 
   private AES128GCMCrypto aes128GCMCrypto;
@@ -62,13 +59,16 @@ public class AuthInterceptor implements HandlerInterceptor, InitializingBean {
       String decryptBody = aes128GCMCrypto.decrypt(identifyHeader);
       JSONObject jsonObject = JSON.parseObject(decryptBody);
       RequestContext.set(RequestEnum.USER_ID, jsonObject.getLongValue("userId"));
-      // RequestContext.set(RequestEnum.USER_ID, 109891L);
-      // RequestContext.set(RequestEnum.USER_ID, 708913L);
     } catch (Exception e) {
       log.info("login error msg: ", e);
       throw new BizException(ApiReturnCodeEnum.NO_ACCESS);
     }
     return true;
+  }
+
+  @Override
+  public void afterCompletion(HttpServletRequest request, HttpServletResponse response, Object handler, Exception ex) throws Exception {
+    RequestContext.remove();
   }
 
   @Override

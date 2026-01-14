@@ -79,6 +79,18 @@
 		
 		<dependency>
 			<groupId>org.cy.micoservice.blog</groupId>
+			<artifactId>blog-framework-sharding-jdbc-starter</artifactId>
+			<version>${blog-framework-parent.version}</version>
+		</dependency>
+		
+		<dependency>
+			<groupId>org.cy.micoservice.blog</groupId>
+			<artifactId>blog-framework-id-starter</artifactId>
+			<version>${blog-framework-parent.version}</version>
+		</dependency>
+		
+		<dependency>
+			<groupId>org.cy.micoservice.blog</groupId>
 			<artifactId>blog-entity-user-model</artifactId>
 			<version>${blog-entity-parent.version}</version>
 		</dependency>

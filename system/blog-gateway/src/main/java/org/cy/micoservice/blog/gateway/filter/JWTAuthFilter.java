@@ -24,7 +24,7 @@ import java.util.Objects;
 /**
  * @Author: Lil-K
  * @Date: 2025/11/29
- * @Description: 统一认证鉴权 filter
+ * @Description: (3). 统一认证鉴权 filter
  */
 @Slf4j
 @Component
@@ -63,11 +63,6 @@ public class JWTAuthFilter extends AbstractGatewayFilter implements Initializing
     return chain.filter(exchange);
   }
 
-  @Override
-  public int getOrder() {
-    return GatewayConstants.GatewayOrder.AUTH_FILTER_ORDER;
-  }
-
   /**
    * 创建传递给下游的json对象体
    * @param authorization
@@ -92,5 +87,10 @@ public class JWTAuthFilter extends AbstractGatewayFilter implements Initializing
   @Override
   public void afterPropertiesSet() throws Exception {
     this.aes128GCMCrypto = new AES128GCMCrypto("PxMNarWuqoNFFGJ5QGgesg==");
+  }
+
+  @Override
+  public int getOrder() {
+    return GatewayConstants.GatewayOrder.AUTH_FILTER_ORDER;
   }
 }

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="org.cy.micoservice.blog.admin.dao.BlogCategoryMapper">
+<mapper namespace="org.cy.micoservice.blog.admin.provider.dao.BlogCategoryMapper">
 
 	<sql id="Table_Name">
 		blog_category
@@ -43,7 +43,7 @@
 		where surrogate_id = #{surrogateId}
 	</delete>
 
-	<select id="getTypeList" resultType="org.cy.micoservice.blog.admin.pojo.resp.blog.BlogCategoryResp">
+	<select id="getTypeList" resultType="org.cy.micoservice.blog.admin.provider.pojo.resp.blog.BlogCategoryResp">
 		select <include refid="Base_Column_List"/>
 		from <include refid="Table_Name"/>
 		<where>
@@ -79,7 +79,7 @@
 		</foreach>
 	</delete>
 
-	<select id="pageCategoryList" resultType="org.cy.micoservice.blog.admin.pojo.resp.blog.BlogCategoryResp">
+	<select id="pageCategoryList" resultType="org.cy.micoservice.blog.entity.admin.model.resp.blog.BlogCategoryResp">
 		select <include refid="Base_Column_List"/>
 		from <include refid="Table_Name"/>
 		<where>
@@ -126,7 +126,7 @@
 		</where>
 	</select>
 
-	<select id="selectBySurrogateId" resultType="org.cy.micoservice.blog.admin.pojo.entity.blog.BlogCategory">
+	<select id="selectBySurrogateId" resultType="org.cy.micoservice.blog.entity.admin.model.entity.blog.BlogCategory">
 		select <include refid="Base_Column_List"/>
 		from <include refid="Table_Name"/>
 		<where>
@@ -134,7 +134,7 @@
 		</where>
 	</select>
 
-	<select id="selectByNumber" resultType="org.cy.micoservice.blog.admin.pojo.entity.blog.BlogCategory">
+	<select id="selectByNumber" resultType="org.cy.micoservice.blog.entity.admin.model.entity.blog.BlogCategory">
 		select <include refid="Base_Column_List"/>
 		from <include refid="Table_Name"/>
 		<where>
@@ -142,7 +142,7 @@
 		</where>
 	</select>
 
-	<select id="categoryList" resultType="org.cy.micoservice.blog.admin.pojo.resp.blog.BlogCategoryResp">
+	<select id="categoryList" resultType="org.cy.micoservice.blog.entity.admin.model.resp.blog.BlogCategoryResp">
 		select <include refid="Base_Column_List"/>
 		from <include refid="Table_Name"/>
 		<where>
@@ -170,7 +170,7 @@
 		</if>
 	</select>
 
-	<select id="frontList" resultType="org.cy.micoservice.blog.admin.pojo.resp.blog.BlogCategoryResp">
+	<select id="frontList" resultType="org.cy.micoservice.blog.entity.admin.model.resp.blog.BlogCategoryResp">
 
 	</select>
 

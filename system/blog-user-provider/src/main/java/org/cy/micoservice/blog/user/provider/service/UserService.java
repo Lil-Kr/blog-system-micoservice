@@ -2,9 +2,9 @@ package org.cy.micoservice.blog.user.provider.service;
 
 import org.cy.micoservice.blog.common.base.api.ApiResp;
 import org.cy.micoservice.blog.common.base.api.PageResult;
-import org.cy.micoservice.blog.user.provider.pojo.entity.SysUser;
-import org.cy.micoservice.blog.user.provider.pojo.req.*;
-import org.cy.micoservice.blog.user.provider.pojo.resp.SysUserResp;
+import org.cy.micoservice.blog.entity.user.model.provider.po.User;
+import org.cy.micoservice.blog.entity.user.model.provider.req.*;
+import org.cy.micoservice.blog.entity.user.model.provider.resp.UserResp;
 
 /**
  * @Author: Lil-K
@@ -15,21 +15,20 @@ public interface UserService {
 
   String queryUserById(Long userId);
 
-  SysUser getUserById(Long id);
+  User getUserById(Long id);
 
-  SysUserResp getUserBySurrogateId(Long surrogateId);
+  UserResp getUserBySurrogateId(Long surrogateId);
 
-  ApiResp<SysUser> adminLogin(UserLoginAdminReq req);
+  ApiResp<User> adminLogin(UserLoginAdminReq req);
 
   ApiResp<Integer> registerAdmin(UserRegisterReq req);
 
   ApiResp<String> add(UserSaveReq req);
 
-  PageResult<SysUserResp> pageList(UserListPageReq req);
+  PageResult<UserResp> pageList(UserListPageReq req);
 
   ApiResp<String> edit(UserSaveReq req);
 
   ApiResp<String> delete(Long surrogateId);
 
-  ApiResp<String> uploadAvatar(AvatarUploadReq req) throws Exception;
 }

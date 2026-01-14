@@ -2,8 +2,11 @@ package org.cy.micoservice.blog.framework.dubbo.starter.picture;
 
 import org.apache.dubbo.config.spring.context.annotation.EnableDubbo;
 import org.springframework.boot.SpringApplication;
+import org.springframework.boot.WebApplicationType;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
+
+import java.util.concurrent.CountDownLatch;
 
 /**
  * @Author: Lil-K
@@ -14,7 +17,12 @@ import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 @EnableDiscoveryClient
 @EnableDubbo
 public class PictureApplication {
-  public static void main(String[] args) {
-    SpringApplication.run(PictureApplication.class, args);
+  
+  public static void main(String[] args) throws InterruptedException {
+    SpringApplication springApplication = new SpringApplication(PictureApplication.class);
+    springApplication.setWebApplicationType(WebApplicationType.NONE);
+    springApplication.run(args);
+    CountDownLatch count = new CountDownLatch(1);
+    count.await();
   }
 }

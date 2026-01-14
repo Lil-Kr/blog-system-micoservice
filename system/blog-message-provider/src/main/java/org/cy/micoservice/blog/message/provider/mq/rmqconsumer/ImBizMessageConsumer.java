@@ -88,6 +88,7 @@ public class ImBizMessageConsumer implements InitializingBean {
     mqPushConsumer.setConsumeMessageBatchMaxSize(messageApplicationProperties.getImBizMessageConsumerBatchSize());
     mqPushConsumer.setMessageListener((MessageListenerConcurrently) (messages, context) -> {
       try {
+        // 消息审核
         List<ImChatReqDTO> imChatReqDTOList = this.doMsgAuditAsyncHandler(messages);
         // 增加消息总数, offset值
         this.incrMsgCountOffset(imChatReqDTOList);

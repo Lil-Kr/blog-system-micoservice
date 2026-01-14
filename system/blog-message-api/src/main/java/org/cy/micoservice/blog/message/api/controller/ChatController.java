@@ -91,16 +91,16 @@ public class ChatController {
 
   /**
    * 用户发送聊天信息
-   * @param chatRecordReq
+   * @param req
    * @return
    */
   @NoAuthCheck
   @PostMapping("/record/sendMsg")
-  public ApiResp<Boolean> sendMsg(@RequestBody ChatRecordReq chatRecordReq) {
-    AssertUtil.isTrue(chatRecordReq != null && chatRecordReq.getRelationId() != null && chatRecordReq.getContent() != null, BizErrorEnum.PARAM_ERROR);
-    chatRecordReq.setUserId(RequestContext.getUserId());
-    chatRecordReq.setType(ChatRecordTypeEnum.TEXT.getCode());
-    return ApiResp.success(chatRecordService.add(chatRecordReq));
+  public ApiResp<Boolean> sendMsg(@RequestBody ChatRecordReq req) {
+    AssertUtil.isTrue(req != null && req.getRelationId() != null && req.getContent() != null, BizErrorEnum.PARAM_ERROR);
+    req.setUserId(RequestContext.getUserId());
+    req.setType(ChatRecordTypeEnum.TEXT.getCode());
+    return ApiResp.success(chatRecordService.add(req));
   }
 
   /**

@@ -5,7 +5,7 @@ import com.google.common.collect.Lists;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
-import org.cy.micoservice.blog.entity.admin.model.entity.SysOrg;
+import org.cy.micoservice.blog.entity.admin.model.entity.sys.SysOrg;
 import org.springframework.beans.BeanUtils;
 
 import java.io.Serial;

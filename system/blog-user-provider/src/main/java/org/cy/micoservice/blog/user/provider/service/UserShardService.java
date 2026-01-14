@@ -1,6 +1,6 @@
 package org.cy.micoservice.blog.user.provider.service;
 
-import org.cy.micoservice.blog.entity.user.model.provider.po.UserShard;
+import org.cy.micoservice.blog.entity.user.model.provider.po.User;
 
 import java.util.List;
 
@@ -16,5 +16,5 @@ public interface UserShardService {
    * @param userIds
    * @return
    */
-  List<UserShard> queryInUserIds(List<Long> userIds);
+  List<User> queryInUserIds(List<Long> userIds);
 }

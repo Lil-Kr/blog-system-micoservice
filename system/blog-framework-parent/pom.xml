@@ -21,8 +21,10 @@
 		<module>blog-framework-web-starter</module>
 		<module>blog-framework-identify-starter</module>
 		<module>blog-framework-rocketmq-starter</module>
+		<module>blog-framework-kafka-starter</module>
 		<module>blog-framework-id-starter</module>
 		<module>blog-framework-elasticsearch-starter</module>
+		<module>blog-framework-sharding-jdbc-starter</module>
 	</modules>
 	
 	<properties>

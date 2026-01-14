@@ -1,6 +1,6 @@
 package org.cy.micoservice.blog.user.provider.service.impl;
 
-import org.cy.micoservice.blog.entity.user.model.provider.po.UserShard;
+import org.cy.micoservice.blog.entity.user.model.provider.po.User;
 import org.cy.micoservice.blog.user.provider.service.UserShardService;
 import org.springframework.stereotype.Service;
 
@@ -15,7 +15,7 @@ import java.util.List;
 @Service
 public class UserShardServiceImpl implements UserShardService {
   @Override
-  public List<UserShard> queryInUserIds(List<Long> userIds) {
+  public List<User> queryInUserIds(List<Long> userIds) {
     return new ArrayList<>();
   }
 }

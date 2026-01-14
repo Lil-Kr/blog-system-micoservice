@@ -10,6 +10,16 @@
 	
 	<artifactId>blog-admin-provider</artifactId>
 	<packaging>jar</packaging>
+	
+	<properties>
+		<maven.compiler.source>17</maven.compiler.source>
+		<maven.compiler.target>17</maven.compiler.target>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<blog-common.version>1.0.0</blog-common.version>
+		<blog-entity-parent.version>1.0.0</blog-entity-parent.version>
+		<blog-framework-parent.version>1.0.0</blog-framework-parent.version>
+		<blog-admin-facade.version>1.0.0</blog-admin-facade.version>
+	</properties>
 
 	<dependencies>
 		<dependency>
@@ -82,38 +92,38 @@
 		<!-- 自定义组件 -->
 		<dependency>
 			<groupId>org.cy.micoservice.blog</groupId>
-			<artifactId>blog-framework-web-starter</artifactId>
-			<version>1.0.0</version>
+			<artifactId>blog-common</artifactId>
+			<version>${blog-common.version}</version>
 		</dependency>
 		
 		<dependency>
 			<groupId>org.cy.micoservice.blog</groupId>
 			<artifactId>blog-framework-dubbo-starter</artifactId>
-			<version>1.0.0</version>
-		</dependency>
-		
-		<dependency>
-			<groupId>org.cy.micoservice.blog</groupId>
-			<artifactId>blog-common</artifactId>
-			<version>1.0.0</version>
-		</dependency>
-		
-		<dependency>
-			<groupId>org.cy.micoservice.blog</groupId>
-			<artifactId>blog-admin-facade</artifactId>
-			<version>1.0.0</version>
-		</dependency>
-		
-		<dependency>
-			<groupId>org.cy.micoservice.blog</groupId>
-			<artifactId>blog-entity-admin-model</artifactId>
-			<version>1.0.0</version>
+			<version>${blog-framework-parent.version}</version>
 		</dependency>
 		
 		<dependency>
 			<groupId>org.cy.micoservice.blog</groupId>
 			<artifactId>blog-framework-mybatis-starter</artifactId>
-			<version>1.0.0</version>
+			<version>${blog-framework-parent.version}</version>
+		</dependency>
+		
+		<dependency>
+			<groupId>org.cy.micoservice.blog</groupId>
+			<artifactId>blog-framework-cache-starter</artifactId>
+			<version>${blog-framework-parent.version}</version>
+		</dependency>
+		
+		<dependency>
+			<groupId>org.cy.micoservice.blog</groupId>
+			<artifactId>blog-framework-id-starter</artifactId>
+			<version>${blog-framework-parent.version}</version>
+		</dependency>
+		
+		<dependency>
+			<groupId>org.cy.micoservice.blog</groupId>
+			<artifactId>blog-admin-facade</artifactId>
+			<version>${blog-admin-facade.version}</version>
 		</dependency>
 	</dependencies>
 

@@ -3,7 +3,7 @@ package org.cy.micoservice.blog.entity.admin.model.dto.acl;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
-import org.cy.micoservice.blog.entity.admin.model.entity.SysAcl;
+import org.cy.micoservice.blog.entity.admin.model.entity.sys.SysAcl;
 import org.springframework.beans.BeanUtils;
 
 import java.io.Serial;

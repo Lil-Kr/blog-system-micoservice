@@ -1,6 +1,7 @@
 package org.cy.micoservice.blog.user.api.service;
 
 import org.cy.micoservice.blog.common.base.api.ApiResp;
+import org.cy.micoservice.blog.entity.user.model.provider.po.User;
 import org.cy.micoservice.blog.user.api.vo.resp.SysUserResp;
 
 /**
@@ -10,7 +11,7 @@ import org.cy.micoservice.blog.user.api.vo.resp.SysUserResp;
  */
 public interface UserProfileService {
 
-  String profile(Long id);
+  User profile(Long id);
 
   ApiResp<SysUserResp> getUserBySurrogateId(Long surrogateId);
 }

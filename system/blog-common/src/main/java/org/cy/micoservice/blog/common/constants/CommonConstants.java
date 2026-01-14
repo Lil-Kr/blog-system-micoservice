@@ -13,40 +13,40 @@ public class CommonConstants {
   public static final String LANG_ZH = "zh";
   public static final String LANG_EN = "en";
 
-  /**
-   * image
-   */
-  public static final String IMAGE_TYPE_SUFFIX = "webp";
-  /**
-   * bus type
-   */
-  public static final String BUS_CREATE = "create";
-  public static final String BUS_EDIT = "edit";
-  public static final String BUS_DELETE = "delete";
-  public static final String BUS_DELETE_BATCH = "delete_batch";
-
-  /**
-   * org
-   */
-  public static final String ORG_PREV_NUMBER_INFO = "ORG";
-
-  /**
-   * acl ACLM
-   */
-  public static final String ACLM_PREV_NUMBER_INFO = "ACLM";
-  public static final String ACLM_PREV_INFO = "ACL";
-
-  /**
-   * cache manager key
-   */
-  // label
-  public static final String CACHE_KEY_BLOG_LABEL_LIST = "blog-label-list";
-  // category
-  public static final String CACHE_KEY_BLOG_CATEGORY_LIST = "blog-category-list";
-  // topic
-  public static final String CACHE_KEY_BLOG_TOPIC_LIST = "blog-topic-list";
-  // admin acl
-  public static final String CACHE_KEY_ADMIN_ADL_LIST = "sys-admin-acl-list";
+  // /**
+  //  * image
+  //  */
+  // public static final String IMAGE_TYPE_SUFFIX = "webp";
+  // /**
+  //  * bus type
+  //  */
+  // public static final String BUS_CREATE = "create";
+  // public static final String BUS_EDIT = "edit";
+  // public static final String BUS_DELETE = "delete";
+  // public static final String BUS_DELETE_BATCH = "delete_batch";
+  //
+  // /**
+  //  * org
+  //  */
+  // public static final String ORG_PREV_NUMBER_INFO = "ORG";
+  //
+  // /**
+  //  * acl ACLM
+  //  */
+  // public static final String ACLM_PREV_NUMBER_INFO = "ACLM";
+  // public static final String ACLM_PREV_INFO = "ACL";
+  //
+  // /**
+  //  * cache manager key
+  //  */
+  // // label
+  // public static final String CACHE_KEY_BLOG_LABEL_LIST = "blog-label-list";
+  // // category
+  // public static final String CACHE_KEY_BLOG_CATEGORY_LIST = "blog-category-list";
+  // // topic
+  // public static final String CACHE_KEY_BLOG_TOPIC_LIST = "blog-topic-list";
+  // // admin acl
+  // public static final String CACHE_KEY_ADMIN_ADL_LIST = "sys-admin-acl-list";
 
   /**
    * default color

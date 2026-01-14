@@ -9,7 +9,7 @@ import org.cy.micoservice.blog.entity.gateway.model.entity.RouteConfig;
 import org.cy.micoservice.blog.gateway.facade.enums.GatewayRouterSchemaEnum;
 import org.cy.micoservice.blog.gateway.facade.constants.GatewayConstants;
 import org.cy.micoservice.blog.gateway.filter.abst.AbstractGatewayFilter;
-import org.cy.micoservice.blog.gateway.service.DubboInvokeService;
+import org.cy.micoservice.blog.gateway.service.DubboInvokerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cloud.gateway.filter.GatewayFilterChain;
 import org.springframework.core.Ordered;
@@ -26,14 +26,14 @@ import java.util.Objects;
 /**
  * @Author: Lil-K
  * @Date: 2025/11/29
- * @Description: dubbo 路由转发 filter
+ * @Description: (6). dubbo 路由转发 filter
  */
 @Slf4j
 @Component
 public class DubboInvokeFilter extends AbstractGatewayFilter implements Ordered {
 
   @Autowired
-  private DubboInvokeService dubboInvokeService;
+  private DubboInvokerService dubboInvokerService;
 
   @Override
   protected boolean isSupport(ServerWebExchange exchange) {
@@ -46,7 +46,7 @@ public class DubboInvokeFilter extends AbstractGatewayFilter implements Ordered 
   @Override
   protected Mono<Void> doFilter(ServerWebExchange exchange, GatewayFilterChain chain) {
     RouteConfig routeConfig = (RouteConfig)exchange.getAttributes().get(GatewayConstants.GatewayAttrKey.X_ROUTE);
-    return dubboInvoke(exchange, routeConfig);
+    return this.dubboInvoke(exchange, routeConfig);
   }
 
   @Override
@@ -65,7 +65,7 @@ public class DubboInvokeFilter extends AbstractGatewayFilter implements Ordered 
     dobbuUri = dobbuUri.replaceAll(GatewayInfraConsoleSdkConstants.DUBBO_URL_PREFIX, "");
     String[] dobbUriArray = dobbuUri.split("#");
     log.info("dobbuUri: {}, dobbUriArray: {}", dobbUriArray[0], dobbUriArray[1]);
-    GenericService genericService = dubboInvokeService.get(dobbUriArray[0]);
+    GenericService genericService = dubboInvokerService.get(dobbUriArray[0]);
 
     Object[] params = this.getDubboInvokeParam(exchange);
 

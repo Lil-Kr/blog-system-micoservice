@@ -46,8 +46,8 @@ public class ImWebSocketRouterFilter extends WebsocketRoutingFilter {
 
     if (upgradeHeader != null && upgradeHeader.toLowerCase().contains("websocket")) {
       try {
-        String targetUrlStr = this.getLessConnectionNodeAddress() + request.getPath();
-        URI targetUri = URI.create(targetUrlStr);
+        String downStreamUri = this.getLessConnectionNodeAddress() + request.getPath();
+        URI targetUri = URI.create(downStreamUri);
 
         // 实现最终的转发处理逻辑
         exchange.getAttributes().put(GATEWAY_REQUEST_URL_ATTR, targetUri);
@@ -75,6 +75,7 @@ public class ImWebSocketRouterFilter extends WebsocketRoutingFilter {
     ImConnectorMonitor imConnectorMonitor = imConnectorMonitorList.stream()
       .min(Comparator.comparingInt(ImConnectorMonitor::getConnections))
       .orElseThrow(() -> new IllegalStateException("No available IM connector node"));
+
     String address = String.format(IM_CONNECTOR_ADDRESS_KEY, "ws://", imConnectorMonitor.getIp(), imConnectorMonitor.getPort());
     log.info("Selected IM connector node with least connections: {} (connections: {})", address, imConnectorMonitor.getConnections());
     return address;

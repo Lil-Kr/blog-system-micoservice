@@ -1,0 +1,9 @@
+java -javaagent:./opentelemetry-javaagent.jar \
+  -Dotel.service.name=test-app \
+  -Dotel.exporter.otlp.protocol=grpc \
+  -Dotel.traces.exporter=otlp \
+  -Dotel.exporter.otlp.endpoint=http://localhost:4319 \
+  -Dotel.exporter.otlp.insecure=true \
+  -Dotel.instrumentation.common.default-enabled=true \
+  -Dotel.logs.exporter=none \
+  -jar ./target/test-app-1.0.0.jar

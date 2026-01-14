@@ -65,10 +65,11 @@ public class ImOpenChatWindowConsumer implements InitializingBean {
       try {
         this.openChatWindowHandler(messages);
         log.info("receive open chat info");
+        return ConsumeConcurrentlyStatus.CONSUME_SUCCESS;
       } catch (Exception e) {
         log.error("consumer message has error:", e);
+        return ConsumeConcurrentlyStatus.RECONSUME_LATER;
       }
-      return ConsumeConcurrentlyStatus.CONSUME_SUCCESS;
     });
     mqPushConsumer.start();
     log.info("ImOpenChatWindowConsumer started!");

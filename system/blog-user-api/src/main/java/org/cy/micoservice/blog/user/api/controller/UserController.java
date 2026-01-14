@@ -2,6 +2,7 @@ package org.cy.micoservice.blog.user.api.controller;
 
 import lombok.extern.slf4j.Slf4j;
 import org.cy.micoservice.blog.common.base.api.ApiResp;
+import org.cy.micoservice.blog.entity.user.model.provider.po.User;
 import org.cy.micoservice.blog.framework.web.starter.annotations.NoAuthCheck;
 import org.cy.micoservice.blog.user.api.service.UserEnterService;
 import org.cy.micoservice.blog.user.api.service.UserProfileService;
@@ -26,9 +27,10 @@ public class UserController {
   private UserEnterService userEnterService;
 
   @NoAuthCheck
-  @GetMapping("/profile")
-  public String profile(Long userId) {
-    return userProfileService.profile(userId);
+  @GetMapping("/profile/{userId}")
+  public ApiResp<User> profile(@PathVariable("userId") Long userId) {
+    User user = userProfileService.profile(userId);
+    return ApiResp.success(user);
   }
 
   @NoAuthCheck

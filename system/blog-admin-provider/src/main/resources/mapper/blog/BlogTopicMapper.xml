@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="org.cy.micoservice.blog.admin.dao.BlogTopicMapper">
+<mapper namespace="org.cy.micoservice.blog.admin.provider.dao.BlogTopicMapper">
 
 	<sql id="Table_Name">
 		blog_topic
@@ -16,7 +16,7 @@
 	</delete>
 
 	<insert id="insertSelective" keyColumn="id" keyProperty="id"
-	        parameterType="org.cy.micoservice.blog.admin.pojo.entity.blog.BlogTopic" useGeneratedKeys="true">
+	        parameterType="org.cy.micoservice.blog.entity.admin.model.entity.blog.BlogTopic" useGeneratedKeys="true">
 		insert into blog_topic
 		<trim prefix="(" suffix=")" suffixOverrides=",">
 			<if test="surrogateId != null">
@@ -78,7 +78,7 @@
 		</trim>
 	</insert>
 
-	<update id="updateByPrimaryKeySelective" parameterType="org.cy.micoservice.blog.admin.pojo.entity.blog.BlogTopic">
+	<update id="updateByPrimaryKeySelective" parameterType="org.cy.micoservice.blog.entity.admin.model.entity.blog.BlogTopic">
 		update blog_topic
 		<set>
 			<if test="surrogateId != null">
@@ -111,7 +111,7 @@
 		</set>
 		where id = #{id,jdbcType=BIGINT}
 	</update>
-	<update id="updateByPrimaryKey" parameterType="org.cy.micoservice.blog.admin.pojo.entity.blog.BlogTopic">
+	<update id="updateByPrimaryKey" parameterType="org.cy.micoservice.blog.entity.admin.model.entity.blog.BlogTopic">
 		update blog_topic
 		set surrogate_id = #{surrogateId,jdbcType=BIGINT},
 		    `number`     = #{number,jdbcType=INTEGER},
@@ -125,7 +125,7 @@
 		where id = #{id,jdbcType=BIGINT}
 	</update>
 
-	<select id="pageTopicList" resultType="org.cy.micoservice.blog.admin.pojo.resp.blog.BlogTopicResp">
+	<select id="pageTopicList" resultType="org.cy.micoservice.blog.entity.admin.model.resp.blog.BlogTopicResp">
 		select <include refid="Base_Column_List"/>
 		from <include refid="Table_Name"/>
 		<where>
@@ -144,7 +144,7 @@
 		</where>
 	</select>
 
-	<select id="topicList" resultType="org.cy.micoservice.blog.admin.pojo.entity.blog.BlogTopic">
+	<select id="topicList" resultType="org.cy.micoservice.blog.entity.admin.model.entity.blog.BlogTopic">
 		select <include refid="Base_Column_List"/>
 		from <include refid="Table_Name"/>
 		<where>
@@ -160,7 +160,7 @@
 		</where>
 	</select>
 
-	<select id="selectByNumber" resultType="org.cy.micoservice.blog.admin.pojo.entity.blog.BlogTopic">
+	<select id="selectByNumber" resultType="org.cy.micoservice.blog.entity.admin.model.entity.blog.BlogTopic">
 		select <include refid="Base_Column_List"/>
 		from <include refid="Table_Name"/>
 		<where>

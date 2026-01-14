@@ -31,7 +31,7 @@ public class NacosServiceDiscovery {
     }
 
     /**
-     * 获取一个健康实例（随机负载均衡）
+     * 获取一个健康实例(随机负载均衡)
      */
     public Instance getRandomHealthyInstance(String serviceName, String group) throws NacosException {
         List<Instance> instances = namingService.selectInstances(serviceName, group, true);

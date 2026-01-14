@@ -4,8 +4,8 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
 import lombok.extern.slf4j.Slf4j;
-import org.cy.micoservice.blog.entity.admin.model.entity.SysOrg;
-import org.cy.micoservice.blog.entity.admin.model.req.org.OrgReq;
+import org.cy.micoservice.blog.entity.admin.model.entity.sys.SysOrg;
+import org.cy.micoservice.blog.entity.admin.model.req.sys.org.OrgReq;
 import org.springframework.beans.BeanUtils;
 
 import java.io.Serial;

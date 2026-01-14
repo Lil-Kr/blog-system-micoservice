@@ -1,0 +1,30 @@
+services:
+  test-app-docker-1:
+    image: test-app:v1.0.0
+    container_name: test-app-docker-1
+    restart: always
+    ports:
+      - "8888:8888"
+    environment:
+      - TZ=Asia/Shanghai
+      - DUBBO_PORT_TO_REGISTRY=8899
+      - DUBBO_PORT_TO_BIND=8899
+      - JAVA_OPTS=-XX:MetaspaceSize=128m -XX:MaxMetaspaceSize=128m -Xms512m -Xmx512m -Xmn128m -Xss256k
+        -javaagent:/app/agent/opentelemetry-javaagent.jar
+        -Dotel.service.name=test-app
+        -Dotel.exporter.otlp.protocol=grpc
+        -Dotel.traces.exporter=otlp
+        -Dotel.exporter.otlp.endpoint=http://192.168.9.200:4319
+        -Dotel.exporter.otlp.insecure=true
+        -Dotel.instrumentation.common.default-enabled=true
+        -Dotel.logs.exporter=none
+    volumes:
+      - /opt/install/app/agent:/app/agent
+    # 健康检查
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8888/actuator/health"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+    networks:
+      - app-network

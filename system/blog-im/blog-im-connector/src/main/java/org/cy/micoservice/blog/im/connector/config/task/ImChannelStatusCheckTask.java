@@ -40,6 +40,8 @@ public class ImChannelStatusCheckTask implements InitializingBean {
           TimeUnit.SECONDS.sleep(15);
           long nowTime = System.currentTimeMillis();
           List<ChannelHandlerContext> ctxSnapshotList = imChannelCache.getWaitingIdentifyCtxList();
+          if (CollectionUtils.isEmpty(ctxSnapshotList)) continue;
+
           List<String> needRemoveChannelIdList = new ArrayList<>();
           for (ChannelHandlerContext ctx : ctxSnapshotList) {
             long shakeHandTime = ContextAttributeUtil.get(ctx, ImAttributeKeyConstants.SHAKE_HAND_TIME, Long.class);
@@ -50,10 +52,9 @@ public class ImChannelStatusCheckTask implements InitializingBean {
             }
           }
 
-          if (CollectionUtils.isEmpty(needRemoveChannelIdList)) {
-            continue;
-          }
+          if (CollectionUtils.isEmpty(needRemoveChannelIdList)) continue;
 
+          // 逐个关闭链接
           for (String channelId : needRemoveChannelIdList) {
             ChannelHandlerContext oldCtx = imChannelCache.removeWaitingIdentifyCtx(channelId);
             if (Objects.isNull(oldCtx)) {

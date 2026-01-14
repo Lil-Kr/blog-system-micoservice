@@ -16,7 +16,7 @@ import reactor.core.publisher.Mono;
 /**
  * @Author: Lil-K
  * @Date: 2025/11/28
- * @Description: http请求转发合法性校验
+ * @Description: (1). http请求转发合法性校验
  */
 @Slf4j
 @Component

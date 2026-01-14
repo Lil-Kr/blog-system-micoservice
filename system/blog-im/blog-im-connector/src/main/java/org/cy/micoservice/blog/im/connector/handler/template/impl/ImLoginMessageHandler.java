@@ -27,6 +27,8 @@ import org.springframework.stereotype.Component;
 import java.util.Map;
 import java.util.UUID;
 
+import static org.cy.micoservice.blog.common.constants.CommonFormatConstants.COMMENT_FORMAT_COLON_SPLIT;
+
 /**
  * @Author: Lil-K
  * @Date: 2025/12/10
@@ -95,6 +97,7 @@ public class ImLoginMessageHandler extends AbstractImMessageHandlerTemplate {
     ContextAttributeUtil.set(ctx, ImAttributeKeyConstants.IDENTIFY_STATUS, ImChannelStatusEnum.HAS_IDENTIFY.getCode());
 
     String channelId = ContextAttributeUtil.get(ctx, ImAttributeKeyConstants.CHANNEL_ID, String.class);
+    // 认证通过后, 移除等待认证列表中的信息, 并添加到
     imChannelCache.removeWaitingIdentifyCtx(channelId);
     imChannelCache.put(Long.parseLong(userId), ctx);
   }
@@ -104,7 +107,7 @@ public class ImLoginMessageHandler extends AbstractImMessageHandlerTemplate {
    * @return
    */
   private String readLocalAddress() {
-    return String.format("%s:%s", NetUtils.getLocalHost(), imConnectorProperties.getDubboProtocolPort());
+    return String.format(COMMENT_FORMAT_COLON_SPLIT, NetUtils.getLocalHost(), imConnectorProperties.getDubboProtocolPort());
   }
 
   /**

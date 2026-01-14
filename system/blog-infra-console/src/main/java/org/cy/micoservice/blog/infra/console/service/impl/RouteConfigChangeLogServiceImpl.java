@@ -2,7 +2,7 @@ package org.cy.micoservice.blog.infra.console.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import org.cy.micoservice.blog.entity.gateway.model.entity.RouteChangeLog;
-import org.cy.micoservice.blog.infra.console.dao.RouteChangeLogMapper;
+import org.cy.micoservice.blog.infra.console.dao.gateway.RouteChangeLogMapper;
 import org.cy.micoservice.blog.infra.console.service.RouteConfigChangeLogService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

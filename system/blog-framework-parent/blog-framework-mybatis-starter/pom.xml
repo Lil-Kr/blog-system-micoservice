@@ -32,17 +32,17 @@
 			</exclusions>
 		</dependency>
 		
-		<dependency>
+		<!--<dependency>
 			<groupId>com.alibaba</groupId>
 			<artifactId>druid-spring-boot-starter</artifactId>
 			<exclusions>
-				<!-- 排除旧版 SLF4J API 以兼容 Spring Boot 3 -->
+				&lt;!&ndash; 排除旧版 SLF4J API 以兼容 Spring Boot 3 &ndash;&gt;
 				<exclusion>
 					<groupId>org.slf4j</groupId>
 					<artifactId>slf4j-api</artifactId>
 				</exclusion>
 			</exclusions>
-		</dependency>
+		</dependency>-->
 		
 		<dependency>
 			<groupId>com.mysql</groupId>

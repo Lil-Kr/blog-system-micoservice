@@ -1,11 +1,7 @@
-server:
-  port: 8102
-  tomcat:
-    uri-encoding: UTF-8
-
+## dubbo: 7599
 spring:
   application:
-    name: blog-auth-provider
+    name: blog-admin-provider
   cloud:
     nacos:
       username: nacos
@@ -24,4 +20,4 @@ spring:
         namespace: blog-mico-service-dev
   config:
     import:
-      - optional:nacos:blog-auth-provider.yaml
+      - optional:nacos:blog-admin-provider.yaml

@@ -74,7 +74,7 @@ public class IdWorker {
         lastTimestamp - timestamp));
     }
 
-    //获取当前时间戳如果等于上次时间戳（同一毫秒内）, 则在序列号加一；否则序列号赋值为0, 从0开始。
+    //获取当前时间戳如果等于上次时间戳(同一毫秒内), 则在序列号加一；否则序列号赋值为0, 从0开始。
     if (lastTimestamp == timestamp) {
       sequence = (sequence + 1) & sequenceMask;
       if (sequence == 0) {

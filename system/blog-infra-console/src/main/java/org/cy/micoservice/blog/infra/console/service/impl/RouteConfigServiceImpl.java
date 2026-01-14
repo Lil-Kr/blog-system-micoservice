@@ -6,27 +6,31 @@ import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.collections4.CollectionUtils;
 import org.cy.micoservice.blog.common.base.api.ApiResp;
 import org.cy.micoservice.blog.common.base.api.PageResult;
+import org.cy.micoservice.blog.common.constants.gateway.GatewayInfraConsoleSdkConstants;
 import org.cy.micoservice.blog.common.enums.response.ApiReturnCodeEnum;
 import org.cy.micoservice.blog.common.utils.AssertUtil;
+import org.cy.micoservice.blog.common.utils.BeanCopyUtils;
 import org.cy.micoservice.blog.common.utils.DateUtil;
-import org.cy.micoservice.blog.common.utils.IdWorker;
 import org.cy.micoservice.blog.entity.gateway.model.entity.RouteChangeLog;
 import org.cy.micoservice.blog.entity.gateway.model.entity.RouteConfig;
 import org.cy.micoservice.blog.entity.gateway.model.req.RouteConfigAddReq;
 import org.cy.micoservice.blog.entity.gateway.model.req.RouteConfigEditReq;
 import org.cy.micoservice.blog.entity.gateway.model.req.RouteConfigQueryPageReq;
 import org.cy.micoservice.blog.entity.gateway.model.req.RouteConfigQueryReq;
+import org.cy.micoservice.blog.framework.id.starter.service.IdService;
 import org.cy.micoservice.blog.gateway.facade.dto.ChangeBodyDTO;
 import org.cy.micoservice.blog.gateway.facade.enums.GatewayRouterChangeEventEnum;
 import org.cy.micoservice.blog.gateway.facade.enums.GatewayRouterDeletedEnum;
+import org.cy.micoservice.blog.gateway.facade.enums.GatewayRouterSchemaEnum;
 import org.cy.micoservice.blog.gateway.facade.enums.GatewayRouterStatusEnum;
 import org.cy.micoservice.blog.infra.console.config.InfraCacheKeyBuilder;
 import org.cy.micoservice.blog.infra.console.constant.InfraConstants;
-import org.cy.micoservice.blog.infra.console.dao.RouteConfigMapper;
+import org.cy.micoservice.blog.infra.console.dao.gateway.RouteConfigMapper;
 import org.cy.micoservice.blog.infra.console.service.NacosService;
 import org.cy.micoservice.blog.infra.console.service.RouteConfigChangeLogService;
 import org.cy.micoservice.blog.infra.console.service.RouteConfigService;
 import org.springframework.beans.BeanUtils;
+import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
@@ -44,7 +48,7 @@ import java.util.concurrent.TimeUnit;
  */
 @Slf4j
 @Service
-public class RouteConfigServiceImpl implements RouteConfigService {
+public class RouteConfigServiceImpl implements RouteConfigService, InitializingBean {
 
   @Autowired
   private RouteConfigMapper routeConfigMapper;
@@ -56,8 +60,10 @@ public class RouteConfigServiceImpl implements RouteConfigService {
   private RedisTemplate<String, String> redisTemplate;
   @Autowired
   private InfraCacheKeyBuilder infraCacheKeyBuilder;
+  @Autowired
+  private IdService idService;
   // cache key
-  private final String LOCK_KEY = infraCacheKeyBuilder.changeRouteConfigKey(InfraConstants.CHANGE_ROUTE_CONFIG_KEY);
+  private String LOCK_KEY;
 
   @Override
   public PageResult<RouteConfig> pageRouteConfigList(RouteConfigQueryPageReq req) {
@@ -89,18 +95,12 @@ public class RouteConfigServiceImpl implements RouteConfigService {
     Boolean lockStatus = redisTemplate.opsForValue().setIfAbsent(LOCK_KEY, "1", 3, TimeUnit.SECONDS);
     AssertUtil.isTrue(lockStatus, ApiReturnCodeEnum.SYSTEM_ERROR);
 
-//    QueryWrapper<RouteConfig> wrapper = new QueryWrapper<>();
-//    wrapper.eq("`method`", req.getMethod());
-//    wrapper.eq("`path`", req.getPath());
-//    RouteConfig config = routeConfigMapper.selectOne(wrapper);
-//    if (Objects.nonNull(config)) {
-//      return ApiResp.failure(ReturnCodeEnum.INFO_EXIST);
-//    }
+    if (GatewayRouterSchemaEnum.DUBBO.getCode().equals(req.getSchema())) {
+      req.setUri(GatewayInfraConsoleSdkConstants.DUBBO_URL_PREFIX + req.getProviderInterface() + "#" + req.getProviderInterfaceMethod());
+    }
 
-    RouteConfig routeConfig = new RouteConfig();
-    BeanUtils.copyProperties(req, routeConfig);
-
-    routeConfig.setId(IdWorker.getSnowFlakeId());
+    RouteConfig routeConfig = BeanCopyUtils.convert(req, RouteConfig.class);
+    routeConfig.setId(idService.getId());
     routeConfig.setStatus(GatewayRouterStatusEnum.INVALID.getCode());
     routeConfig.setCreateBy("admin");
     routeConfig.setUpdateBy("admin");
@@ -113,7 +113,7 @@ public class RouteConfigServiceImpl implements RouteConfigService {
 
     // insert route change log
     RouteChangeLog routeChangeLog = new RouteChangeLog();
-    routeChangeLog.setId(IdWorker.getSnowFlakeId());
+    routeChangeLog.setId(idService.getId());
     routeChangeLog.setConfigId(routeConfig.getId());
     routeChangeLog.setChangeEvent(GatewayRouterChangeEventEnum.INSERT.getCode());
 
@@ -155,7 +155,7 @@ public class RouteConfigServiceImpl implements RouteConfigService {
     RouteChangeLog routeChangeLog = new RouteChangeLog();
     BeanUtils.copyProperties(after, routeChangeLog);
 
-    routeChangeLog.setId(IdWorker.getSnowFlakeId());
+    routeChangeLog.setId(idService.getId());
     routeChangeLog.setConfigId(before.getId());
     routeChangeLog.setChangeEvent(GatewayRouterChangeEventEnum.UPDATE.getCode());
 
@@ -191,7 +191,7 @@ public class RouteConfigServiceImpl implements RouteConfigService {
 
     // insert route change log
     RouteChangeLog routeChangeLog = new RouteChangeLog();
-    routeChangeLog.setId(IdWorker.getSnowFlakeId());
+    routeChangeLog.setId(idService.getId());
     routeChangeLog.setConfigId(before.getId());
     // 触发 nacos 更新版本
     Long version = nacosService.incrVersion();
@@ -215,5 +215,10 @@ public class RouteConfigServiceImpl implements RouteConfigService {
   public ApiResp<List<RouteChangeLog>> getConfigLog(Long configId) {
     List<RouteChangeLog> logList = routeConfigChangeLogService.selectById(configId);
     return ApiResp.success(logList);
+  }
+
+  @Override
+  public void afterPropertiesSet() throws Exception {
+    this.LOCK_KEY = infraCacheKeyBuilder.changeRouteConfigKey(InfraConstants.CHANGE_ROUTE_CONFIG_KEY);
   }
 }

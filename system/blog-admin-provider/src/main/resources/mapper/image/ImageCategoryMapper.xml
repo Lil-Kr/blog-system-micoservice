@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="org.cy.micoservice.blog.admin.dao.ImageCategoryMapper">
+<mapper namespace="org.cy.micoservice.blog.admin.provider.dao.ImageCategoryMapper">
 
 	<sql id="Table_Name">
 		image_category
@@ -12,7 +12,7 @@
 		<!--@sql from image_category -->
 	</sql>
 
-	<select id="pageList" resultType="org.cy.micoservice.blog.admin.pojo.resp.image.ImageCategoryResp">
+	<select id="pageList" resultType="org.cy.micoservice.blog.entity.admin.model.resp.image.ImageCategoryResp">
 		select <include refid="Base_Column_List" />
 		from <include refid="Table_Name" />
 		<where>
@@ -53,7 +53,7 @@
 		</where>
 	</select>
 
-	<select id="imageCategoryList" resultType="org.cy.micoservice.blog.admin.pojo.resp.image.ImageCategoryResp">
+	<select id="imageCategoryList" resultType="org.cy.micoservice.blog.entity.admin.model.resp.image.ImageCategoryResp">
 		select <include refid="Base_Column_List"/>
 		from <include refid="Table_Name" />
 		<where>
@@ -76,13 +76,13 @@
 		</if>
 	</select>
 
-	<select id="get" resultType="org.cy.micoservice.blog.admin.pojo.resp.image.ImageCategoryResp">
+	<select id="get" resultType="org.cy.micoservice.blog.entity.admin.model.resp.image.ImageCategoryResp">
 		select <include refid="Base_Column_List"/>
 		from <include refid="Table_Name" />
 		where surrogate_id = #{surrogateId}
 	</select>
 
-	<select id="imageCategoryNameList" resultType="org.cy.micoservice.blog.admin.pojo.resp.image.ImageCategoryResp">
+	<select id="imageCategoryNameList" resultType="org.cy.micoservice.blog.entity.admin.model.resp.image.ImageCategoryResp">
 		select surrogate_id, `name`
 		from <include refid="Table_Name" />
 		where status = 0

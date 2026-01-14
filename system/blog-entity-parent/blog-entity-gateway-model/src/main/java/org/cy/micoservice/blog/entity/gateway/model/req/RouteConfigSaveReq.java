@@ -30,4 +30,12 @@ public class RouteConfigSaveReq implements Serializable {
    * @see AuthTypeEnum
    */
   private String authType;
+
+  private String dubboInvokeParamClass;
+
+  private String providerName;
+
+  private String providerInterface;
+
+  private String providerInterfaceMethod;
 }

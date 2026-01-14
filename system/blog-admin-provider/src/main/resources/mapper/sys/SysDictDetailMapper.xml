@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="org.cy.micoservice.blog.admin.dao.SysDictDetailMapper">
+<mapper namespace="org.cy.micoservice.blog.admin.provider.dao.SysDictDetailMapper">
 
 	<!-- 通用查询结果列 -->
 	<sql id="Table_Name">
@@ -12,7 +12,7 @@
 		surrogate_id, parent_id, `name`, `type`, remark
 	</sql>
 
-	<select id="getDictDetailListByParentId" resultType="org.cy.micoservice.blog.entity.admin.model.resp.dic.SysDictDetailResp">
+	<select id="getDictDetailListByParentId" resultType="org.cy.micoservice.blog.entity.admin.model.resp.sys.dic.SysDictDetailResp">
 		select
 		<include refid="Base_Column_List"/>
 		from sys_dict_detail
@@ -20,7 +20,7 @@
 	</select>
 
 	<!--  -->
-	<select id="pageDictDetailListById" resultType="org.cy.micoservice.blog.entity.admin.model.resp.dic.SysDictDetailResp">
+	<select id="pageDictDetailListById" resultType="org.cy.micoservice.blog.entity.admin.model.resp.sys.dic.SysDictDetailResp">
 		select
 		<include refid="Base_Column_List"/>
 		from sys_dict_detail
@@ -67,7 +67,7 @@
 		</where>
 	</select>
 
-	<select id="dictDetailList" resultType="org.cy.micoservice.blog.entity.admin.model.resp.dic.SysDictDetailResp">
+	<select id="dictDetailList" resultType="org.cy.micoservice.blog.entity.admin.model.resp.sys.dic.SysDictDetailResp">
 		select a.name as 'parentName',
 		       b.surrogate_id,
 		       b.parent_id,

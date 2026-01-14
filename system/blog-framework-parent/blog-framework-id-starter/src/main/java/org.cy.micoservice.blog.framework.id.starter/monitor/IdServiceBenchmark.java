@@ -28,11 +28,11 @@ public final class IdServiceBenchmark {
   /**
    * 对 IdService#getId() 进行压测。
    *
-   * @param idService       IdService 实例（例如通过 Spring 注入）
-   * @param threads         并发线程数（>=1）
-   * @param durationSeconds 压测持续时间（秒, >=1）
-   * @param warmupSeconds   预热时间（秒, >=0）
-   * @return BenchmarkResult 结果数据（总请求、耗时、QPS 等）
+   * @param idService       IdService 实例(例如通过 Spring 注入)
+   * @param threads         并发线程数(>=1)
+   * @param durationSeconds 压测持续时间(秒, >=1)
+   * @param warmupSeconds   预热时间(秒, >=0)
+   * @return BenchmarkResult 结果数据(总请求、耗时、QPS 等)
    */
   public static BenchmarkResult benchmarkGetId(IdService idService,
                                                int threads,

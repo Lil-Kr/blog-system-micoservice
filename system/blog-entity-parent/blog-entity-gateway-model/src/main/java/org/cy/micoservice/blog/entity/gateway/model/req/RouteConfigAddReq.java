@@ -33,4 +33,10 @@ public class RouteConfigAddReq implements Serializable {
   private String authType;
 
   private String dubboInvokeParamClass;
+
+  private String providerName;
+
+  private String providerInterface;
+
+  private String providerInterfaceMethod;
 }

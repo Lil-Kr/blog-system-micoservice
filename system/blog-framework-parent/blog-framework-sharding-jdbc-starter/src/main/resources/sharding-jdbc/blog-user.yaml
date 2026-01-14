@@ -1,0 +1,31 @@
+dataSources:
+  blog_user_ds:
+    dataSourceClassName: com.zaxxer.hikari.HikariDataSource
+    driverClassName: com.mysql.cj.jdbc.Driver
+    jdbcUrl: jdbc:mysql://localhost:3306/mico_blog_user?useUnicode=true&characterEncoding=UTF-8&rewriteBatchedStatements=true&serverTimezone=Asia/Shanghai&allowMultiQueries=true
+    username: root
+    password: 123456
+rules:
+  # 配置分片规则
+  - !SHARDING
+    tables:
+      t_login_record:
+        actualDataNodes: blog_user_ds.t_login_record
+      # 配置 t_user 分表的规则
+      t_user:
+        actualDataNodes: blog_user_ds.t_user_${(0..99).collect(){it.toString().padLeft(1,'0')}}
+        tableStrategy:
+          standard:
+            shardingColumn: user_id
+            shardingAlgorithmName: t_user_inline
+    shardingAlgorithms:
+      t_user_inline:
+        type: INLINE
+        props:
+          algorithm-expression: t_user_${(user_id % 100).toString().padLeft(1,'0')}
+
+#props:
+#  sql-show: true
+#  # 是否在日志中打印简单风格的 SQL. false
+#  sql-simple: true
+#  max-connections-size-per-query: 3

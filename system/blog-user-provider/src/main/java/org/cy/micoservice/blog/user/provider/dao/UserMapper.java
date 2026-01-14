@@ -1,0 +1,19 @@
+package org.cy.micoservice.blog.user.provider.dao;
+
+import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import org.cy.micoservice.blog.entity.user.model.provider.po.User;
+import org.cy.micoservice.blog.entity.user.model.provider.resp.UserResp;
+import org.springframework.stereotype.Repository;
+
+/**
+ * @Author: Lil-K
+ * @Date: 2025/3/7
+ * @Description:
+ */
+@Repository
+public interface UserMapper extends BaseMapper<User> {
+
+  User getUserById(Long userId);
+
+  UserResp getUserBySurrogateId(Long surrogateId);
+}

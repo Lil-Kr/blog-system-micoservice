@@ -61,7 +61,7 @@ management:
   # 可选：健康检查详细程度
   endpoint:
     health:
-      show-details: always  # 始终显示健康检查详细信息，按需配置（never/when_authorized/always）
+      show-details: always  # 始终显示健康检查详细信息, 按需配置（never/when_authorized/always）
 
 infra:
   console:
@@ -80,3 +80,9 @@ identify:
     expire-time: 604800
 auth:
   template: jwt
+
+
+## gateway
+gateway:
+  decrypty:
+    secret-key: PxMNarWuqoNFFGJ5QGgesg==

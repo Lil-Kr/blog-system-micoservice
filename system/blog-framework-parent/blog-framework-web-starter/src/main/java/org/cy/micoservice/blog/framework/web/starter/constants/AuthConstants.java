@@ -7,6 +7,6 @@ package org.cy.micoservice.blog.framework.web.starter.constants;
  */
 public class AuthConstants {
 
-  public static final String AUTH_HEADER_NAME = "blog_token";
+  public static final String AUTH_HEADER_NAME = "tkl";
 
 }

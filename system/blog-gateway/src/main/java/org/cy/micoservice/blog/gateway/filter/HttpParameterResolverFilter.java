@@ -16,12 +16,10 @@ import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 import java.nio.charset.StandardCharsets;
 
-import static org.cy.micoservice.blog.gateway.facade.constants.GatewayConstants.AUTH_HEADER_NAME;
-
 /**
  * @Author: Lil-K
  * @Date: 2025/11/29
- * @Description: http 参数解析
+ * @Description: (2). http 参数解析
  */
 @Slf4j
 @Component
@@ -46,7 +44,7 @@ public class HttpParameterResolverFilter extends AbstractGatewayFilter implement
   @Override
   protected Mono<Void> doFilter(ServerWebExchange exchange, GatewayFilterChain chain) {
     ServerHttpRequest request = exchange.getRequest();
-    HttpCookie httpCookie = request.getCookies().getFirst(AUTH_HEADER_NAME);
+    HttpCookie httpCookie = request.getCookies().getFirst(GatewayConstants.AUTH_HEADER_NAME);
     if (httpCookie != null) {
       String authorization = httpCookie.getValue();
       exchange.getAttributes().put(GatewayConstants.GatewayAttrKey.X_AUTHORIZATION, authorization);

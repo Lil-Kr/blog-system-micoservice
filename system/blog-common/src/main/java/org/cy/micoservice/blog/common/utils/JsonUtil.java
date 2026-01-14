@@ -33,7 +33,7 @@ public class JsonUtil {
     OBJECT_MAPPER.disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS);
     // 禁用空对象转换失败
     OBJECT_MAPPER.disable(SerializationFeature.FAIL_ON_EMPTY_BEANS);
-    // 美化输出（可选, 生产环境建议关闭）
+    // 美化输出(可选, 生产环境建议关闭)
     // OBJECT_MAPPER.enable(SerializationFeature.INDENT_OUTPUT);
 
     // 反序列化配置
@@ -42,7 +42,7 @@ public class JsonUtil {
     // 允许空字符串转换为 null
     OBJECT_MAPPER.enable(DeserializationFeature.ACCEPT_EMPTY_STRING_AS_NULL_OBJECT);
 
-    // 序列化时忽略 null 值（可选）
+    // 序列化时忽略 null 值(可选)
     OBJECT_MAPPER.setSerializationInclusion(JsonInclude.Include.NON_NULL);
   }
 
@@ -144,7 +144,7 @@ public class JsonUtil {
   }
 
   /**
-   * JSON 字符串反序列化为对象（支持复杂泛型）
+   * JSON 字符串反序列化为对象(支持复杂泛型)
    * @param json JSON 字符串
    * @param typeReference 类型引用
    * @param <T> 泛型
@@ -215,7 +215,7 @@ public class JsonUtil {
   }
 
   /**
-   * 对象转换（先序列化再反序列化）
+   * 对象转换(先序列化再反序列化)
    * @param obj 源对象
    * @param clazz 目标类型
    * @param <T> 泛型

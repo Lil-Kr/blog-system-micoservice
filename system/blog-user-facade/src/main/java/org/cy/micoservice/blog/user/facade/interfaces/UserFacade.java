@@ -1,6 +1,7 @@
 package org.cy.micoservice.blog.user.facade.interfaces;
 
 import org.cy.micoservice.blog.common.base.provider.RpcResponse;
+import org.cy.micoservice.blog.entity.user.model.provider.po.User;
 import org.cy.micoservice.blog.user.facade.dto.req.TestReq;
 import org.cy.micoservice.blog.user.facade.dto.resp.SysUserDTO;
 import org.cy.micoservice.blog.user.facade.dto.resp.UserRespDTO;
@@ -14,7 +15,7 @@ import java.util.List;
  */
 public interface UserFacade {
 
-  String queryUserById(Long userId);
+  User queryUserById(Long userId);
 
   SysUserDTO getUserBySurrogateId(Long surrogateId);
 

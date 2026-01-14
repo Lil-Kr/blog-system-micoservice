@@ -366,7 +366,7 @@ public class ElasticsearchUtil {
   /**
    * 自定义条件更新文档
    * @param indexName    索引名称
-   * @param query        用户ID（被关注者）
+   * @param query        用户ID(被关注者)
    * @param updateFields 要更新的字段和值
    * @return 更新结果
    * @throws IOException 异常
@@ -442,7 +442,7 @@ public class ElasticsearchUtil {
     StringBuilder scriptBuilder = new StringBuilder();
 
     for (String fieldName : fieldNames) {
-      // 处理嵌套字段（如"user.name"、"address.city"）
+      // 处理嵌套字段(如"user.name"、"address.city")
       // Elasticsearch中访问嵌套字段使用点符号, 与字段名格式一致
       String sourceField = "ctx._source." + fieldName;
       // 参数引用格式：params.字段名

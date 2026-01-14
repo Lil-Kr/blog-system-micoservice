@@ -9,7 +9,7 @@ import java.util.concurrent.TimeUnit;
 /**
  * @Author: Lil-K
  * @Description: 秒级雪花ID生成器。
- * 位布局：时间戳29位（基于纪元秒数）, 数据中心2位, 工作节点16位, 序列号16位。
+ * 位布局：时间戳29位(基于纪元秒数), 数据中心2位, 工作节点16位, 序列号16位。
  */
 public class SnowflakeIdGenerator {
 

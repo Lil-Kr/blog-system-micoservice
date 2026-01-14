@@ -25,7 +25,7 @@ public class GatewayConstants {
 
   @Data
   public static class GatewayOrder {
-    public static int REQUEST_LOG_FILTER_ORDER = 99;
+    // public static int REQUEST_LOG_FILTER_ORDER = 99;
     public static int HTTP_REQUEST_PATH_VALID_FILTER_ORDER = 100;
     public static int HTTP_PARAMETER_RESOLVER_FILTER_ORDER = 102;
     public static int AUTH_FILTER_ORDER = 105;

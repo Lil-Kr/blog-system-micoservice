@@ -16,6 +16,7 @@ public class GatewayApplication {
 
   public static void main(String[] args) {
     SpringApplication springApplication = new SpringApplication(GatewayApplication.class);
+    //底层是采用了webflux的响应式编程
     springApplication.setWebApplicationType(WebApplicationType.REACTIVE);
     springApplication.run(args);
   }

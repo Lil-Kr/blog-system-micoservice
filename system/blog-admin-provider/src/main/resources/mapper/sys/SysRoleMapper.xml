@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="org.cy.micoservice.blog.admin.dao.SysRoleMapper">
+<mapper namespace="org.cy.micoservice.blog.admin.provider.dao.SysRoleMapper">
 	<sql id="Table_Name">
 		sys_role
 	</sql>
@@ -16,7 +16,7 @@
 		where surrogate_id = #{surrogateId}
 	</delete>
 
-	<select id="pageRoleList" resultType="org.cy.micoservice.blog.entity.admin.model.resp.role.SysRoleResp">
+	<select id="pageRoleList" resultType="org.cy.micoservice.blog.entity.admin.model.resp.sys.role.SysRoleResp">
 		select
 		<include refid="Base_Column_List"/>
 		from sys_role
@@ -68,7 +68,7 @@
 		</where>
 	</select>
 
-	<select id="selectRoleLIstByIds" resultType="org.cy.micoservice.blog.entity.admin.model.resp.role.SysRoleResp">
+	<select id="selectRoleLIstByIds" resultType="org.cy.micoservice.blog.entity.admin.model.resp.sys.role.SysRoleResp">
 		select
 		<include refid="Base_Column_List"/>
 		from sys_role
