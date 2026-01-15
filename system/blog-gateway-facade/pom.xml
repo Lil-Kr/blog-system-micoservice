@@ -16,7 +16,7 @@
 		<maven.compiler.source>17</maven.compiler.source>
 		<maven.compiler.target>17</maven.compiler.target>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-		<blog-entity.version>1.0.0</blog-entity.version>
+		<blog-entity-parent.version>1.0.0</blog-entity-parent.version>
 	</properties>
 
 	<dependencies>
@@ -37,7 +37,8 @@
 		<dependency>
 			<groupId>org.cy.micoservice.blog</groupId>
 			<artifactId>blog-entity-gateway-model</artifactId>
-			<version>${blog-entity.version}</version>
+			<version>${blog-entity-parent.version}</version>
+			<optional>true</optional>
 		</dependency>
 	</dependencies>
 </project>

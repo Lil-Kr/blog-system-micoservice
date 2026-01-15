@@ -22,7 +22,7 @@
 			and password = #{param.oldPassword}
 	</update>
 
-	<select id="selectUserPage" resultType="org.cy.micoservice.blog.entity.admin.model.resp.sys.admin.SysAdminResp">
+	<select id="selectUserPage" resultType="org.cy.micoservice.blog.entity.infra.console.model.resp.sys.admin.SysAdminResp">
 		select
 		<include refid="Base_Column_List"/>
 		from sys_admin
@@ -37,7 +37,7 @@
 		</if>
 	</select>
 
-	<select id="getAdminById" resultType="org.cy.micoservice.blog.entity.admin.model.entity.sys.SysAdmin">
+	<select id="getAdminById" resultType="org.cy.micoservice.blog.entity.infra.console.model.entity.sys.SysAdmin">
 		select
 		<include refid="Base_Column_List"/>
 		from sys_admin
@@ -46,9 +46,9 @@
 		</where>
 	</select>
 
-	<select id="getAdminBySurrogateId" resultType="org.cy.micoservice.blog.entity.admin.model.resp.sys.admin.SysAdminResp">
+	<select id="getAdminBySurrogateId" resultType="org.cy.micoservice.blog.entity.infra.console.model.resp.sys.admin.SysAdminResp">
 		select
-			a.surrogate_id,
+			a.id,
 			a.token,
 			a.`number`,
 			a.account,
@@ -72,7 +72,7 @@
 		</where>
 	</select>
 
-	<select id="getAdminByToken" resultType="org.cy.micoservice.blog.entity.admin.model.entity.sys.SysAdmin">
+	<select id="getAdminByToken" resultType="org.cy.micoservice.blog.entity.infra.console.model.entity.sys.SysAdmin">
 		select
 		<include refid="Base_Column_List"/>
 		from sys_admin
@@ -81,7 +81,7 @@
 		</where>
 	</select>
 
-	<select id="getAdminByKeyword" resultType="org.cy.micoservice.blog.entity.admin.model.entity.sys.SysAdmin">
+	<select id="getAdminByKeyword" resultType="org.cy.micoservice.blog.entity.infra.console.model.entity.sys.SysAdmin">
 		select surrogate_id, token, account, user_name, email
 		from sys_admin
 		<where>
@@ -101,7 +101,7 @@
 	</select>
 
 	<!-- 根据账号查询用户 -->
-	<select id="getAdminByAccount" resultType="org.cy.micoservice.blog.entity.admin.model.entity.sys.SysAdmin">
+	<select id="getAdminByAccount" resultType="org.cy.micoservice.blog.entity.infra.console.model.entity.sys.SysAdmin">
 		select
 		<include refid="Base_Column_List"/>
 		from sys_admin
@@ -162,7 +162,7 @@
 		</where>
 	</update>
 
-	<select id="loginAdmin" resultType="org.cy.micoservice.blog.entity.admin.model.entity.sys.SysAdmin">
+	<select id="loginAdmin" resultType="org.cy.micoservice.blog.entity.infra.console.model.entity.sys.SysAdmin">
 		select <include refid="Base_Column_List"/>
 		from <include refid="Table_Name"/>
 		<where>
@@ -175,7 +175,7 @@
 		</where>
 	</select>
 
-	<select id="pageUserListByOrgId1" resultType="org.cy.micoservice.blog.entity.admin.model.resp.sys.admin.SysAdminResp">
+	<select id="pageUserListByOrgId1" resultType="org.cy.micoservice.blog.entity.infra.console.model.resp.sys.admin.SysAdminResp">
 		select
 			a.id,
 			a.token,
@@ -210,7 +210,7 @@
 		</where>
 	</select>
 
-	<select id="pageAdminList" resultType="org.cy.micoservice.blog.entity.admin.model.resp.sys.admin.SysAdminResp">
+	<select id="pageAdminList" resultType="org.cy.micoservice.blog.entity.infra.console.model.resp.sys.admin.SysAdminResp">
 		select
 			a.id,
 			a.token,
@@ -233,11 +233,11 @@
 			d.account as 'operatorName'
 		from sys_admin as a
 		inner join sys_org as b on (a.org_id = b.surrogate_id)
-		inner join sys_admin as c on (a.creator_id = c.surrogate_id)
-		inner join sys_admin as d on (a.operator = d.surrogate_id)
+		inner join sys_admin as c on (a.creator_id = c.id)
+		inner join sys_admin as d on (a.operator = d.id)
 		<where>
-			<if test="param.surrogateId != null and param.surrogateId != ''">
-				and a.org_id = #{param.surrogateId}
+			<if test="param.id != null and param.id != ''">
+				and a.org_id = #{param.id}
 			</if>
 			<if test="param.userName != null and param.userName != ''">
 				and a.user_name = #{param.userName}
@@ -264,11 +264,11 @@
 		select count(1)
 		from sys_admin as a
 		inner join sys_org as b on (a.org_id = b.surrogate_id)
-		inner join sys_admin as c on (a.creator_id = c.surrogate_id)
-		inner join sys_admin as d on (a.operator = d.surrogate_id)
+		inner join sys_admin as c on (a.creator_id = c.id)
+		inner join sys_admin as d on (a.operator = d.id)
 		<where>
-			<if test="param.surrogateId != null and param.surrogateId != ''">
-				and a.org_id = #{param.surrogateId}
+			<if test="param.id != null and param.id != ''">
+				and a.org_id = #{param.id}
 			</if>
 			<if test="param.userName != null and param.userName != ''">
 				and a.user_name = #{param.userName}
@@ -292,7 +292,7 @@
 		</where>
 	</select>
 
-	<select id="selectAdminInfoExist" resultType="org.cy.micoservice.blog.entity.admin.model.resp.sys.admin.SysAdminResp">
+	<select id="selectAdminInfoExist" resultType="org.cy.micoservice.blog.entity.infra.console.model.resp.sys.admin.SysAdminResp">
 		SELECT account,
 		       email,
 		       user_name,
@@ -305,7 +305,7 @@
 	</select>
 
 	<!--  根据 adminId, 查询用户列表  -->
-	<select id="selectAdminListByIds" resultType="org.cy.micoservice.blog.entity.admin.model.resp.sys.admin.SysAdminResp">
+	<select id="selectAdminListByIds" resultType="org.cy.micoservice.blog.entity.infra.console.model.resp.sys.admin.SysAdminResp">
 		select
 			a.id,
 			a.account,
@@ -326,7 +326,7 @@
 	</select>
 
 	<!--  查询所有用户列表, 与上一条sql一起使用  -->
-	<select id="selectAdminList" resultType="org.cy.micoservice.blog.entity.admin.model.resp.sys.admin.SysAdminResp">
+	<select id="selectAdminList" resultType="org.cy.micoservice.blog.entity.infra.console.model.resp.sys.admin.SysAdminResp">
 		select
 			a.id,
 			a.account,
@@ -342,7 +342,7 @@
 	</select>
 
 	<!--  no need order by create_time -->
-	<select id="selectAdminAllList" resultType="org.cy.micoservice.blog.entity.admin.model.entity.sys.SysAdmin">
+	<select id="selectAdminAllList" resultType="org.cy.micoservice.blog.entity.infra.console.model.entity.sys.SysAdmin">
 		select
 			a.id,
 			a.account,

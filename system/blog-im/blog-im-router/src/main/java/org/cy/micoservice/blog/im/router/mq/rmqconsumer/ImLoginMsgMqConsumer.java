@@ -18,6 +18,8 @@ import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import java.util.List;
+
 /**
  * @Author: Lil-K
  * @Date: 2025/12/16
@@ -60,15 +62,12 @@ public class ImLoginMsgMqConsumer implements InitializingBean {
     mqPushConsumer.setConsumeFromWhere(ConsumeFromWhere.CONSUME_FROM_FIRST_OFFSET);
     mqPushConsumer.setConsumeMessageBatchMaxSize(imRouterProperties.getImLoginConsumerBatchSize());
     mqPushConsumer.subscribe(imRouterProperties.getImLoginConsumerTopic(), "");
-
     mqPushConsumer.setMessageListener((MessageListenerConcurrently) (messages, context) -> {
       try {
-        for (MessageExt msg : messages) {
           /**
            * 审核需根据内容决定走不同类型的判断: 视频, 图片, 音频, 文字的审核耗时不太一样
            */
-          this.doImLoginMqHandler(msg);
-        }
+          this.doImLoginMqHandler(messages);
       } catch (Exception e) {
         log.error("consumer message has error,", e);
       }
@@ -80,19 +79,21 @@ public class ImLoginMsgMqConsumer implements InitializingBean {
 
   /**
    * 处理登录消息, 写入 redis
-   * @param ext
+   * @param messages
    */
-  private void doImLoginMqHandler(MessageExt ext) {
-    try {
-      String bodyJson = new String(ext.getBody());
-      ImMessageDTO dto = JSON.parseObject(bodyJson, ImMessageDTO.class);
-      log.info("receive login info: {}", dto);
-      String imLoginMsgBodyJson = dto.getBody();
-      ImLoginBody imLoginBody = JSON.parseObject(imLoginMsgBodyJson, ImLoginBody.class);
-      userConnectorMappingService.saveMapping(imLoginBody.getUserId(), imLoginBody.getImConnectorAddress());
-      log.info("login mq handler: {}", bodyJson);
-    }catch (Exception e) {
-      log.error("do im login mq handler error", e);
+  private void doImLoginMqHandler(List<MessageExt> messages) {
+    for (MessageExt msg : messages) {
+      try {
+        String bodyJson = new String(msg.getBody());
+        ImMessageDTO dto = JSON.parseObject(bodyJson, ImMessageDTO.class);
+        log.info("receive login info: {}", dto);
+        String imLoginMsgBodyJson = dto.getBody();
+        ImLoginBody imLoginBody = JSON.parseObject(imLoginMsgBodyJson, ImLoginBody.class);
+        userConnectorMappingService.saveAddressByUserId(imLoginBody.getUserId(), imLoginBody.getImConnectorAddress());
+        log.info("login mq handler: {}", bodyJson);
+      }catch (Exception e) {
+        log.error("do im login mq handler error", e);
+      }
     }
   }
 }

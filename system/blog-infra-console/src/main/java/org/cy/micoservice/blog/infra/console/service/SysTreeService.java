@@ -1,9 +1,9 @@
 package org.cy.micoservice.blog.infra.console.service;
 
-import org.cy.micoservice.blog.entity.admin.model.dto.acl.AclDto;
-import org.cy.micoservice.blog.entity.admin.model.dto.aclmodule.AclModuleDto;
-import org.cy.micoservice.blog.entity.admin.model.dto.org.OrgLevelDto;
-import org.cy.micoservice.blog.entity.admin.model.req.sys.role.RoleSaveReq;
+import org.cy.micoservice.blog.infra.facade.dto.acl.AclDto;
+import org.cy.micoservice.blog.infra.facade.dto.aclmodule.AclModuleDto;
+import org.cy.micoservice.blog.infra.facade.dto.org.OrgLevelDto;
+import org.cy.micoservice.blog.entity.infra.console.model.req.sys.role.RoleSaveReq;
 
 import java.util.List;
 

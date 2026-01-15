@@ -29,7 +29,7 @@ public class UserConnectorMappingServiceImpl implements UserConnectorMappingServ
    * @return
    */
   @Override
-  public boolean saveMapping(Long userId, String connectorAddress) {
+  public boolean saveAddressByUserId(Long userId, String connectorAddress) {
     if (userId == null || StringUtils.isBlank(connectorAddress)) {
       return false;
     }

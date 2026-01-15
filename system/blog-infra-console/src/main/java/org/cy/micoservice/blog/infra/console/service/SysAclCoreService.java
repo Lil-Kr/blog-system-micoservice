@@ -1,6 +1,6 @@
 package org.cy.micoservice.blog.infra.console.service;
 
-import org.cy.micoservice.blog.entity.admin.model.entity.sys.SysAcl;
+import org.cy.micoservice.blog.entity.infra.console.model.entity.sys.SysAcl;
 
 import java.util.List;
 

@@ -18,7 +18,7 @@
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<blog-framework-parent.version>1.0.0</blog-framework-parent.version>
 		<blog-common.version>1.0.0</blog-common.version>
-		<blog-entity.version>1.0.0</blog-entity.version>
+		<blog-entity-parent.version>1.0.0</blog-entity-parent.version>
 	</properties>
 
 	<dependencies>
@@ -46,7 +46,6 @@
 			<groupId>org.springframework.cloud</groupId>
 			<artifactId>spring-cloud-starter-bootstrap</artifactId>
 		</dependency>
-		
 		
 		<!-- 用于限流 -->
 		<dependency>
@@ -85,6 +84,12 @@
 			<groupId>org.cy.micoservice.blog</groupId>
 			<artifactId>blog-gateway-facade</artifactId>
 			<version>${blog-framework-parent.version}</version>
+		</dependency>
+		
+		<dependency>
+			<groupId>org.cy.micoservice.blog</groupId>
+			<artifactId>blog-entity-gateway-model</artifactId>
+			<version>${blog-entity-parent.version}</version>
 		</dependency>
 		
 		<dependency>

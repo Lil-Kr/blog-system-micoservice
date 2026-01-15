@@ -1,9 +1,9 @@
 package org.cy.micoservice.blog.infra.console.service;
 
-import org.cy.micoservice.blog.entity.admin.model.entity.sys.SysAcl;
-import org.cy.micoservice.blog.entity.admin.model.entity.sys.SysAdmin;
-import org.cy.micoservice.blog.entity.admin.model.entity.sys.SysDict;
-import org.cy.micoservice.blog.entity.admin.model.entity.sys.SysDictDetail;
+import org.cy.micoservice.blog.entity.infra.console.model.entity.sys.SysAcl;
+import org.cy.micoservice.blog.entity.infra.console.model.entity.sys.SysAdmin;
+import org.cy.micoservice.blog.entity.infra.console.model.entity.sys.SysDict;
+import org.cy.micoservice.blog.entity.infra.console.model.entity.sys.SysDictDetail;
 
 import java.util.List;
 

@@ -4,11 +4,11 @@ import jakarta.validation.constraints.NotNull;
 import lombok.extern.slf4j.Slf4j;
 import org.cy.micoservice.blog.common.base.api.ApiResp;
 import org.cy.micoservice.blog.common.base.api.PageResult;
-import org.cy.micoservice.blog.entity.admin.model.dto.org.OrgLevelDto;
-import org.cy.micoservice.blog.entity.admin.model.req.sys.org.OrgListAllReq;
-import org.cy.micoservice.blog.entity.admin.model.req.sys.org.OrgPageReq;
-import org.cy.micoservice.blog.entity.admin.model.req.sys.org.OrgReq;
-import org.cy.micoservice.blog.entity.admin.model.resp.sys.org.SysOrgResp;
+import org.cy.micoservice.blog.infra.facade.dto.org.OrgLevelDto;
+import org.cy.micoservice.blog.entity.infra.console.model.req.sys.org.OrgListAllReq;
+import org.cy.micoservice.blog.entity.infra.console.model.req.sys.org.OrgPageReq;
+import org.cy.micoservice.blog.entity.infra.console.model.req.sys.org.OrgReq;
+import org.cy.micoservice.blog.entity.infra.console.model.resp.sys.org.SysOrgResp;
 import org.cy.micoservice.blog.entity.base.model.api.BasePageReq;
 import org.cy.micoservice.blog.infra.console.service.SysOrgService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -71,7 +71,7 @@ public class OrgController {
     return ApiResp.success(list);
   }
 
-  @PostMapping("list")
+  @PostMapping("/list")
   public ApiResp<List<SysOrgResp>> list(@RequestBody OrgListAllReq req) {
     List<SysOrgResp> list = orgService.list(req);
     return ApiResp.success(list);
@@ -83,7 +83,7 @@ public class OrgController {
    * @return
    * @throws Exception
    */
-  @DeleteMapping("delete")
+  @DeleteMapping("/delete")
   public ApiResp<String> delete(@RequestParam("surrogateId") @NotNull(message = "surrogateId是必须的") Long surrogateId) {
     return orgService.delete(surrogateId);
   }

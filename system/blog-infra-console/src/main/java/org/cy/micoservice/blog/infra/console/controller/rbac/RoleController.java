@@ -5,13 +5,13 @@ import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.collections4.CollectionUtils;
 import org.cy.micoservice.blog.common.base.api.ApiResp;
 import org.cy.micoservice.blog.common.base.api.PageResult;
-import org.cy.micoservice.blog.entity.admin.model.dto.aclmodule.AclModuleDto;
-import org.cy.micoservice.blog.entity.admin.model.req.sys.role.RoleListPageReq;
-import org.cy.micoservice.blog.entity.admin.model.req.sys.role.RoleSaveReq;
-import org.cy.micoservice.blog.entity.admin.model.req.sys.roleacl.RoleAclSaveReq;
-import org.cy.micoservice.blog.entity.admin.model.req.sys.roleuser.RoleAdminReq;
-import org.cy.micoservice.blog.entity.admin.model.resp.sys.role.RoleAdminResp;
-import org.cy.micoservice.blog.entity.admin.model.resp.sys.role.SysRoleResp;
+import org.cy.micoservice.blog.infra.facade.dto.aclmodule.AclModuleDto;
+import org.cy.micoservice.blog.entity.infra.console.model.req.sys.role.RoleListPageReq;
+import org.cy.micoservice.blog.entity.infra.console.model.req.sys.role.RoleSaveReq;
+import org.cy.micoservice.blog.entity.infra.console.model.req.sys.roleacl.RoleAclSaveReq;
+import org.cy.micoservice.blog.entity.infra.console.model.req.sys.roleuser.RoleAdminReq;
+import org.cy.micoservice.blog.entity.infra.console.model.resp.sys.role.RoleAdminResp;
+import org.cy.micoservice.blog.entity.infra.console.model.resp.sys.role.SysRoleResp;
 import org.cy.micoservice.blog.entity.base.model.api.BasePageReq;
 import org.cy.micoservice.blog.framework.web.starter.web.RequestContext;
 import org.cy.micoservice.blog.infra.console.service.*;
@@ -40,7 +40,7 @@ public class RoleController {
   private SysTreeService treeService;
 
   @Autowired
-  private SysRoleAdminService roleUserService;
+  private SysRoleAdminService roleAdminService;
 
   @Autowired
   private SysRoleAclService roleAclService;
@@ -77,7 +77,7 @@ public class RoleController {
    * @throws Exception
    */
   @PostMapping("/edit")
-  public ApiResp<String> edit (@RequestBody @Validated({RoleSaveReq.GroupEdite.class}) RoleSaveReq req) {
+  public ApiResp<String> edit(@RequestBody @Validated({RoleSaveReq.GroupEdite.class}) RoleSaveReq req) {
     return roleService.edit(req);
   }
 
@@ -87,7 +87,7 @@ public class RoleController {
    * @return
    */
   @PostMapping("/freeze")
-  public ApiResp<String> freeze (@RequestBody @Validated({RoleSaveReq.GroupFreeze.class}) RoleSaveReq req) {
+  public ApiResp<String> freeze(@RequestBody @Validated({RoleSaveReq.GroupFreeze.class}) RoleSaveReq req) {
     return roleService.freeze(req);
   }
 
@@ -101,13 +101,13 @@ public class RoleController {
   }
 
   /**
-   * retrieve current user have [role-acl] tree
+   * retrieve current admin have [role-acl] tree
    * @param req
    * @return
    * @throws Exception
    */
   @PostMapping("/roleAclTree")
-  public ApiResp<List<AclModuleDto>> roleAclTree (@RequestBody @Validated({RoleSaveReq.GroupTreeOrDel.class}) RoleSaveReq req) {
+  public ApiResp<List<AclModuleDto>> roleAclTree(@RequestBody @Validated({RoleSaveReq.GroupTreeOrDel.class}) RoleSaveReq req) {
     req.setAdminId(RequestContext.getUserId());
     List<AclModuleDto> aclModuleDtoList = treeService.roleAclTree(req);
     if (CollectionUtils.isEmpty(aclModuleDtoList)) {
@@ -117,14 +117,14 @@ public class RoleController {
   }
 
   /**
-   * query[role-user] list
+   * query[role-admin] list
    * @param req
    * @return
    * @throws Exception
    */
-  @PostMapping("/roleUserList")
-  public ApiResp<RoleAdminResp> roleUserList(@RequestBody @Validated({RoleAdminReq.GroupRoleUserPageList.class}) RoleAdminReq req) {
-    return roleUserService.roleAdminList(req);
+  @PostMapping("/roleAdminList")
+  public ApiResp<RoleAdminResp> roleAdminList(@RequestBody @Validated({RoleAdminReq.GroupRoleUserPageList.class}) RoleAdminReq req) {
+    return roleAdminService.roleAdminList(req);
   }
 
   /**
@@ -139,13 +139,13 @@ public class RoleController {
   }
 
   /**
-   * update[role-user]
+   * update[role-admin]
    * @param req
    * @return
    * @throws Exception
    */
-  @PostMapping("/updateRoleUsers")
-  public ApiResp<String> updateRoleUsers(@RequestBody @Validated({RoleAdminReq.GroupChangeRoleUsers.class}) RoleAdminReq req) {
-    return roleUserService.updateRoleAdmins(req);
+  @PostMapping("/updateRoleAdmins")
+  public ApiResp<String> updateRoleAdmins(@RequestBody @Validated({RoleAdminReq.GroupChangeRoleUsers.class}) RoleAdminReq req) {
+    return roleAdminService.updateRoleAdmins(req);
   }
 }

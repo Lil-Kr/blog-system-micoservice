@@ -8,6 +8,7 @@ import org.cy.micoservice.blog.common.base.api.ApiResp;
 import org.cy.micoservice.blog.common.exception.BizException;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.converter.HttpMessageNotReadableException;
+import org.springframework.validation.BindException;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
@@ -30,6 +31,22 @@ import java.util.List;
 @Configuration
 @Slf4j
 public class GlobalExceptionHandlerConfig {
+
+  /**
+   * catch BusinessException exception
+   * @param exception
+   * @return
+   */
+  @ExceptionHandler(BindException.class)
+  public ApiResp<?> handleBusinessException(BindException exception) {
+    BindingResult bindingResult = exception.getBindingResult();
+    List<String> errorMsgList = new ArrayList<>();
+    List<FieldError> fieldErrors = bindingResult.getFieldErrors();
+    for (FieldError fieldError : fieldErrors) {
+      errorMsgList.add(fieldError.getField() + ": " + fieldError.getDefaultMessage());
+    }
+    return ApiResp.warning(errorMsgList.toString());
+  }
 
   /**
    * com.fasterxml.jackson.databind.exc.InvalidFormatException
@@ -70,13 +87,11 @@ public class GlobalExceptionHandlerConfig {
   public ApiResp<String> validateException(HttpServletRequest request,
                                            MethodArgumentNotValidException exception) throws Exception {
     BindingResult bindingResult = exception.getBindingResult();
-
-    List<String> errorMsgList = new ArrayList<>();
     List<FieldError> fieldErrors = bindingResult.getFieldErrors();
-    for (int i = 0; i < fieldErrors.size(); i++) {
-      errorMsgList.add(fieldErrors.get(i).getField() + ": " + fieldErrors.get(i).getDefaultMessage());
+    List<String> errorMsgList = new ArrayList<>();
+    for (FieldError fieldError : fieldErrors) {
+      errorMsgList.add(fieldError.getField() + ": " + fieldError.getDefaultMessage());
     }
-
     return ApiResp.warning(errorMsgList.toString());
   }
 
@@ -92,8 +107,6 @@ public class GlobalExceptionHandlerConfig {
   public ApiResp<String> validateException(HttpServletRequest request,
                                            HttpMessageNotReadableException exception) throws Exception {
     String message = exception.getMessage();
-        /*Map errorMesssageMap = Maps.newHashMap();
-        errorMesssageMap.put(msg, message);*/
     return ApiResp.warning(message);
   }
 
@@ -129,44 +142,4 @@ public class GlobalExceptionHandlerConfig {
   public ApiResp<?> handleBusinessException(BizException exception) {
     return ApiResp.failure(exception.getReturnCodeEnum().getCode(), exception.getMessage());
   }
-
-//  @ExceptionHandler(MethodArgumentNotValidException.class)
-//  public ApiResp<?> handleMethodArgumentNotValidException(MethodArgumentNotValidException exception) {
-////    Map<String, String> errors = new HashMap<>();
-////    exception.getBindingResult().getAllErrors().forEach((error) -> {
-////      String field = ((FieldError) error).getField();
-////      String message = error.getDefaultMessage();
-////      errors.put(field, message);
-////    });
-//    return ApiResp.failure(exception.getMessage());
-//  }
-
-//    /**
-//     * 目前不生效, 使用AOP解决
-//     * 捕捉Controller全局异常
-//     * @param req
-//     * @param e
-//     * @return
-//     */
-//    @ExceptionHandler(Exception.class)
-//    @ResponseBody
-//    public ApiResp<String> defaultExceptionHandler(HttpServletRequest req, Exception e) throws Exception {
-//        log.error("global exception msg: {}", e.getLocalizedMessage());
-//        e.printStackTrace();
-//        return ApiResp.error( e.getLocalizedMessage());
-//    }
-//
-//    /**
-//     * 目前不生效, 使用AOP解决
-//     * 捕捉Controller全局自定义异常
-//     * @param req
-//     * @param e
-//     * @return
-//     */
-//    @ExceptionHandler(BusinessException.class)
-//    @ResponseBody
-//    public ApiResp<String> businessExceptionHandler(HttpServletRequest req, BusinessException e) throws Exception {
-//        log.warn("business exception msg: {}", e.getLocalizedMessage());
-//        return ApiResp.error(e.getReturnCodeEnum().getCode() , e.getReturnCodeEnum().getMessage());
-//    }
 }

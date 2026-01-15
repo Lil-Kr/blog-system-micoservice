@@ -3,7 +3,7 @@
 <mapper namespace="org.cy.micoservice.blog.infra.console.dao.rbac.SysOrgMapper">
 
 	<!-- 通用查询映射结果 -->
-	<resultMap id="BaseResultMap" type="org.cy.micoservice.blog.entity.admin.model.entity.sys.SysOrg">
+	<resultMap id="BaseResultMap" type="org.cy.micoservice.blog.entity.infra.console.model.entity.sys.SysOrg">
 		<id column="id" property="id"/>
 		<result column="surrogate_id" property="surrogateId"/>
 		<result column="number" property="number"/>
@@ -46,7 +46,7 @@
 		where parent_id = #{parentId}
 	</select>
 
-	<select id="pageList" resultType="org.cy.micoservice.blog.entity.admin.model.resp.sys.org.SysOrgResp">
+	<select id="pageList" resultType="org.cy.micoservice.blog.entity.infra.console.model.resp.sys.org.SysOrgResp">
 		select
 		a.id,
 		a.surrogate_id,
@@ -114,7 +114,7 @@
 		</where>
 	</select>
 
-	<select id="retrieveAllList" resultType="org.cy.micoservice.blog.entity.admin.model.resp.sys.org.SysOrgResp">
+	<select id="retrieveAllList" resultType="org.cy.micoservice.blog.entity.infra.console.model.resp.sys.org.SysOrgResp">
 		select
 		<include refid="Base_Column_List"/>
 		from sys_org

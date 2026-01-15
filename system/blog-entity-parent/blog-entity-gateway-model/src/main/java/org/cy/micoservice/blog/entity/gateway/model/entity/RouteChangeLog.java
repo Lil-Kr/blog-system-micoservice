@@ -1,13 +1,13 @@
 package org.cy.micoservice.blog.entity.gateway.model.entity;
 
 import com.baomidou.mybatisplus.annotation.TableName;
-import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
+import org.cy.micoservice.blog.entity.base.model.api.BaseEntity;
 
 import java.io.Serial;
 import java.io.Serializable;
-import java.time.LocalDateTime;
 
 /**
  * @Author: Lil-K
@@ -16,8 +16,9 @@ import java.time.LocalDateTime;
  */
 @Data
 @JsonInclude(JsonInclude.Include.NON_NULL)
-@TableName("t_route_change_log")
-public class RouteChangeLog implements Serializable {
+@EqualsAndHashCode(callSuper = true)
+@TableName("sys_route_change_log")
+public class RouteChangeLog extends BaseEntity implements Serializable {
 
   @Serial
   private static final long serialVersionUID = -5964400619741497369L;
@@ -35,14 +36,6 @@ public class RouteChangeLog implements Serializable {
 
   /**
    * {"before":"xxx", "after":"xxxxx"}
-   *
    */
   private String changeBody;
-
-  private String createBy;
-
-  @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
-  private LocalDateTime createTime;
-
-  private Integer deleted;
 }

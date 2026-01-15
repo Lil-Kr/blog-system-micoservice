@@ -60,20 +60,18 @@ public class ChatRelationServiceImpl implements ChatRelationService {
 
   /**
    * 分页查询会话关系列表
-   * @param chatRelationPageReq
+   * @param req
    * @return
    */
   @Override
-  public PageResponseDTO<ChatRelationResp> pageChatRelationList(ChatRelationPageReq chatRelationPageReq) {
+  public PageResponseDTO<ChatRelationResp> pageChatRelationList(ChatRelationPageReq req) {
     // 对话关系查询请求
-    ChatRelationPageReqDTO chatRelationPageReqDTO = BeanCopyUtils.convert(chatRelationPageReq, ChatRelationPageReqDTO.class);
+    ChatRelationPageReqDTO chatRelationPageReqDTO = BeanCopyUtils.convert(req, ChatRelationPageReqDTO.class);
     RpcResponse<PageResponseDTO<ChatRelationRespDTO>> rpcResponse = chatRelationFacade.queryInPage(chatRelationPageReqDTO);
     RpcResponse.isRespSuccess(rpcResponse);
     PageResponseDTO<ChatRelationRespDTO> chatRelationPageResp = rpcResponse.getData();
     if (chatRelationPageResp.getDataList().isEmpty()) return PageResponseDTO.emptyPage();
-    // Long currentUserId = RequestContext.getUserId();
-    // todo: 测试id, 后续删除
-    Long currentUserId = chatRelationPageReq.getUserId();
+    Long currentUserId = req.getUserId();
 
     /**
      * 用户信息请求查询

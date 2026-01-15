@@ -3,8 +3,6 @@ package org.cy.micoservice.blog.message.api.controller;
 import jakarta.validation.Valid;
 import org.cy.micoservice.blog.common.base.api.ApiResp;
 import org.cy.micoservice.blog.common.base.provider.PageResponseDTO;
-import org.cy.micoservice.blog.common.enums.exception.BizErrorEnum;
-import org.cy.micoservice.blog.common.utils.AssertUtil;
 import org.cy.micoservice.blog.entity.base.model.api.BasePageReq;
 import org.cy.micoservice.blog.entity.message.model.provider.req.*;
 import org.cy.micoservice.blog.entity.message.model.provider.resp.ChatRecordResp;
@@ -41,52 +39,50 @@ public class ChatController {
 
   /**
    * 新增 [聊天会话关系] 信息
-   * @param chatRelationReq
+   * @param req
    * @return
    */
   @NoAuthCheck
   @PostMapping("/relation/add")
-  public ApiResp<Boolean> addChatRelation(@RequestBody @Valid ChatRelationReq chatRelationReq) {
-    return ApiResp.success(chatRelationService.add(chatRelationReq));
+  public ApiResp<Boolean> addChatRelation(@RequestBody @Valid ChatRelationReq req) {
+    return ApiResp.success(chatRelationService.add(req));
   }
 
   /**
    * 分页查询 用户 -> [会话关系列表]
    * 用户切换到会话列表, 从聊天窗口后退至会话列表, 这两种情况需要调用这个api进行更新
-   * @param chatRelationPageReq
+   * @param req
    * @return
    */
   @NoAuthCheck
   @PostMapping("/relation/pageList")
-  public ApiResp<PageResponseDTO<ChatRelationResp>> pageList(@RequestBody @Validated({BasePageReq.GroupPageQuery.class, ChatRelationPageReq.GroupPageQuery.class}) ChatRelationPageReq chatRelationPageReq) {
-    // todo: 测试id, 后续删除, 用上面注释的代码
-    // chatRelationPageReq.setUserId(RequestContext.getUserId());
-    chatRelationPageReq.setUserId(chatRelationPageReq.getUserId());
-    return ApiResp.success(chatRelationService.pageChatRelationList(chatRelationPageReq));
+  public ApiResp<PageResponseDTO<ChatRelationResp>> pageList(@RequestBody @Validated({BasePageReq.GroupPageQuery.class, ChatRelationPageReq.GroupPageQuery.class}) ChatRelationPageReq req) {
+    req.setUserId(req.getUserId());
+    return ApiResp.success(chatRelationService.pageChatRelationList(req));
   }
 
   /**
    * 查询单个 用户 -> [会话关系信息]
-   * @param chatRelationPageReq
+   * @param req
    * @return
    */
   @NoAuthCheck
   @GetMapping("/relation/getRelationInfo")
-  public ApiResp<ChatRelationResp> getRelationInfo(ChatRelationPageReq chatRelationPageReq) {
-    AssertUtil.isNotNull(chatRelationPageReq, BizErrorEnum.PARAM_ERROR);
-    AssertUtil.isNotBlank(chatRelationPageReq.getRelationId(), BizErrorEnum.PARAM_ERROR);
-    return ApiResp.success(chatRelationService.getRelationInfo(chatRelationPageReq));
+  public ApiResp<ChatRelationResp> getRelationInfo(@Validated({BasePageReq.GroupPageQuery.class, BasePageReq.GroupPageQuery.class}) ChatRelationPageReq req) {
+    req.setUserId(req.getUserId());
+    return ApiResp.success(chatRelationService.getRelationInfo(req));
   }
 
   /**
    * 分页查询 用户 -> [具体聊天信息记录]
-   * @param chatRecordPageReq
+   * @param req
    * @return
    */
   @NoAuthCheck
   @PostMapping("/record/pageList")
-  public ApiResp<PageResponseDTO<ChatRecordResp>> pageList(@RequestBody @Validated({BasePageReq.GroupPageQuery.class}) ChatRecordPageReq chatRecordPageReq) {
-    return ApiResp.success(chatRecordService.pageList(chatRecordPageReq));
+  public ApiResp<PageResponseDTO<ChatRecordResp>> pageList(@RequestBody @Validated({BasePageReq.GroupPageQuery.class}) ChatRecordPageReq req) {
+    req.setUserId(RequestContext.getUserId());
+    return ApiResp.success(chatRecordService.pageList(req));
   }
 
   /**
@@ -96,8 +92,7 @@ public class ChatController {
    */
   @NoAuthCheck
   @PostMapping("/record/sendMsg")
-  public ApiResp<Boolean> sendMsg(@RequestBody ChatRecordReq req) {
-    AssertUtil.isTrue(req != null && req.getRelationId() != null && req.getContent() != null, BizErrorEnum.PARAM_ERROR);
+  public ApiResp<Boolean> sendMsg(@RequestBody @Valid ChatRecordReq req) {
     req.setUserId(RequestContext.getUserId());
     req.setType(ChatRecordTypeEnum.TEXT.getCode());
     return ApiResp.success(chatRecordService.add(req));
@@ -111,19 +106,18 @@ public class ChatController {
    */
   @NoAuthCheck
   @PostMapping("/open")
-  public ApiResp<Boolean> open(@RequestBody @Valid OpenChatReq openChatReq) {
+  public ApiResp<Boolean> open(@RequestBody @Valid OpenChatReq req) {
     /**
      * 这里的并发量可能会非常庞大, 建议用mq来削峰
      */
-    // openChatReq.setUserId(RequestContext.getUserId());
-    return ApiResp.success(openChatService.reportInfo(openChatReq));
+    req.setUserId(RequestContext.getUserId());
+    return ApiResp.success(openChatService.reportInfo(req));
   }
 
   /**
    * 获取im的配置信息
    * @return
    */
-  @NoAuthCheck
   @GetMapping("/getImConfig")
   public ApiResp<ImConfigResp> getImConfig() {
     return ApiResp.success(imConfigService.getImChatConfig(RequestContext.getUserId()));

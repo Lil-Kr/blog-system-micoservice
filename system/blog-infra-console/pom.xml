@@ -20,7 +20,7 @@
 		<blog-framework-parent.version>1.0.0</blog-framework-parent.version>
 		<blog-entity-parent.version>1.0.0</blog-entity-parent.version>
 		<blog-gateway-facade.version>1.0.0</blog-gateway-facade.version>
-		<blog-admin-facade.version>1.0.0</blog-admin-facade.version>
+		<blog-infra-facade.version>1.0.0</blog-infra-facade.version>
 	</properties>
 	
 	<dependencies>
@@ -78,26 +78,24 @@
 		
 		<dependency>
 			<groupId>org.cy.micoservice.blog</groupId>
+			<artifactId>blog-gateway-facade</artifactId>
+			<version>${blog-gateway-facade.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.cy.micoservice.blog</groupId>
 			<artifactId>blog-entity-gateway-model</artifactId>
 			<version>${blog-entity-parent.version}</version>
 		</dependency>
 		
 		<dependency>
 			<groupId>org.cy.micoservice.blog</groupId>
-			<artifactId>blog-entity-admin-model</artifactId>
+			<artifactId>blog-infra-facade</artifactId>
+			<version>${blog-infra-facade.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.cy.micoservice.blog</groupId>
+			<artifactId>blog-entity-infra-console-model</artifactId>
 			<version>${blog-entity-parent.version}</version>
-		</dependency>
-		
-		<dependency>
-			<groupId>org.cy.micoservice.blog</groupId>
-			<artifactId>blog-gateway-facade</artifactId>
-			<version>${blog-gateway-facade.version}</version>
-		</dependency>
-		
-		<dependency>
-			<groupId>org.cy.micoservice.blog</groupId>
-			<artifactId>blog-admin-facade</artifactId>
-			<version>${blog-admin-facade.version}</version>
 		</dependency>
 	</dependencies>
 	

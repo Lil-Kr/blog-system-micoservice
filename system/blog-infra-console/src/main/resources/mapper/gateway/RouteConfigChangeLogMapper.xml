@@ -3,12 +3,12 @@
 <mapper namespace="org.cy.micoservice.blog.infra.console.dao.gateway.RouteChangeLogMapper">
 
 	<sql id="Table_Name">
-		t_route_change_log
+		sys_route_change_log
 	</sql>
 
 	<!-- 通用查询结果列 -->
 	<sql id="Base_Column_List">
-		id, config_id, version, change_body, change_event, create_by, create_time, deleted
+		id, config_id, version, change_body, change_event, create_id, create_time, deleted
 	</sql>
 	
 	<select id="findGtVersion" resultType="org.cy.micoservice.blog.entity.gateway.model.entity.RouteChangeLog">

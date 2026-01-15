@@ -18,6 +18,8 @@ public class RouteConfigQueryPageReq extends BasePageReq {
   @Serial
   private static final long serialVersionUID = -8705160607285281987L;
 
+  private String appName;
+
   private String schema;
 
   private String method;

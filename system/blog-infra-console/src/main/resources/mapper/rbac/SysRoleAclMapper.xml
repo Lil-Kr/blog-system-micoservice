@@ -3,7 +3,7 @@
 <mapper namespace="org.cy.micoservice.blog.infra.console.dao.rbac.SysRoleAclMapper">
 
 	<!-- 通用查询映射结果 -->
-	<resultMap id="BaseResultMap" type="org.cy.micoservice.blog.entity.admin.model.entity.sys.SysRoleAcl">
+	<resultMap id="BaseResultMap" type="org.cy.micoservice.blog.entity.infra.console.model.entity.sys.SysRoleAcl">
 		<id column="id" property="id"/>
 		<result column="surrogate_id" property="surrogateId"/>
 		<result column="role_id" property="roleId"/>

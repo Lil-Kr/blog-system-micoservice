@@ -22,6 +22,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.nio.charset.StandardCharsets;
+import java.util.List;
 
 /**
  * @Author: Lil-K
@@ -67,9 +68,7 @@ public class ImBizMsgMqConsumer implements InitializingBean {
     mqPushConsumer.subscribe(imRouterProperties.getImBizMessageConsumerTopic(), "");
     mqPushConsumer.setMessageListener((MessageListenerConcurrently) (messages, context) -> {
       try {
-        for (MessageExt msg : messages) {
-          this.doBizMsgHandler(msg);
-        }
+          this.doBizMsgHandler(messages);
       } catch (Exception e) {
         log.error("consumer message has error,", e);
       }
@@ -82,22 +81,24 @@ public class ImBizMsgMqConsumer implements InitializingBean {
   }
 
   /**
-   * 执行业务消息处理逻辑
-   * @param msg
+   * 处理业务消息
+   * @param messages
    */
-  private void doBizMsgHandler(MessageExt msg) {
-    ImSingleMessageDTO imSingleMessageDTO = JSON.parseObject(msg.getBody(), ImSingleMessageDTO.class);
-    Message message = new Message();
-    message.setBody(JSONObject.toJSONString(imSingleMessageDTO).getBytes(StandardCharsets.UTF_8));
-    // 发送消息给到路由层服务
-    message.setTopic(imRouterProperties.getImRouteTopic());
-    try {
-      SendResult sendResult = producerClient.send(message);
-      if (! SendStatus.SEND_OK.equals(sendResult.getSendStatus())) {
-        log.error("send message error, msg: {}", JSON.toJSONString(msg));
+  private void doBizMsgHandler(List<MessageExt> messages) {
+    for (MessageExt message : messages) {
+      ImSingleMessageDTO imSingleMessageDTO = JSON.parseObject(message.getBody(), ImSingleMessageDTO.class);
+      Message sendMsg = new Message();
+      sendMsg.setBody(JSONObject.toJSONString(imSingleMessageDTO).getBytes(StandardCharsets.UTF_8));
+      // 发送消息给到路由层服务
+      sendMsg.setTopic(imRouterProperties.getImRouteTopic());
+      try {
+        SendResult sendResult = producerClient.send(sendMsg);
+        if (! SendStatus.SEND_OK.equals(sendResult.getSendStatus())) {
+          log.error("send message error, msg: {}", JSON.toJSONString(sendMsg));
+        }
+      } catch (Exception e) {
+        log.error("send route message error", e);
       }
-    } catch (Exception e) {
-      log.error("send route message error", e);
     }
   }
 }

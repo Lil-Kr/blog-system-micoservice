@@ -1,7 +1,7 @@
 package org.cy.micoservice.blog.infra.console.dao.rbac;
 
 import org.apache.ibatis.annotations.Param;
-import org.cy.micoservice.blog.entity.admin.model.entity.sys.SysAclData;
+import org.cy.micoservice.blog.entity.infra.console.model.entity.sys.SysAclData;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;

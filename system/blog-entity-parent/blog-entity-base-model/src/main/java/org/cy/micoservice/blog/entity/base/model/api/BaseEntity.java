@@ -19,23 +19,19 @@ public class BaseEntity implements Serializable {
   @Serial
   private static final long serialVersionUID = -3071591161451842453L;
 
-  private Long userId;
-
-  private Long adminId;
-
   private Integer deleted;
 
   /**
    * 创建人
    */
   @JsonSerialize(using = ToStringSerializer.class)
-  private Long creatorId;
+  private Long createId;
 
   /**
    * 修改人
    */
   @JsonSerialize(using = ToStringSerializer.class)
-  private Long operatorId;
+  private Long updateId;
 
   /**
    * 创建时间

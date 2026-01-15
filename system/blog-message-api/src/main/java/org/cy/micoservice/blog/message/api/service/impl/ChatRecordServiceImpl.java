@@ -53,13 +53,13 @@ public class ChatRecordServiceImpl implements ChatRecordService {
 
   /**
    * 插入发送记录
-   * @param chatRecordReq
+   * @param req
    * @return
    */
   @Override
-  public Boolean add(ChatRecordReq chatRecordReq) {
-    AssertUtil.isNotNull(chatRecordReq.getReceiverId(), PARAM_ERROR);
-    ChatRelationReqDTO chatRelationReqDTO = BeanCopyUtils.convert(chatRecordReq, ChatRelationReqDTO.class);
+  public Boolean add(ChatRecordReq req) {
+    AssertUtil.isNotNull(req.getReceiverId(), PARAM_ERROR);
+    ChatRelationReqDTO chatRelationReqDTO = BeanCopyUtils.convert(req, ChatRelationReqDTO.class);
     chatRelationReqDTO.setUserId(RequestContext.getUserId());
     RpcResponse<Boolean> addStatus = chatRelationFacade.addRecordAndUpdateRelation(chatRelationReqDTO);
     return addStatus.isSuccess() && addStatus.getData();
@@ -67,19 +67,17 @@ public class ChatRecordServiceImpl implements ChatRecordService {
 
   /**
    * 分页查询聊天记录
-   * @param chatRecordPageReq
+   * @param req
    * @return
    */
   @Override
-  public PageResponseDTO<ChatRecordResp> pageList(ChatRecordPageReq chatRecordPageReq) {
-    AssertUtil.isNotNull(chatRecordPageReq.getRelationId(), PARAM_ERROR);
-    Long currentUserId = RequestContext.getUserId();
-    // todo: 测试id, 后续删除
-    currentUserId = chatRecordPageReq.getUserId();
+  public PageResponseDTO<ChatRecordResp> pageList(ChatRecordPageReq req) {
+    AssertUtil.isNotNull(req.getRelationId(), PARAM_ERROR);
+    Long currentUserId = req.getUserId();
 
-    ChatRecordPageReqDTO reqDTO = BeanCopyUtils.convert(chatRecordPageReq, ChatRecordPageReqDTO.class);
-    reqDTO.setRelationId(chatRecordPageReq.getRelationId());
-    reqDTO.setSearchOffset(chatRecordPageReq.getSearchOffset());
+    ChatRecordPageReqDTO reqDTO = BeanCopyUtils.convert(req, ChatRecordPageReqDTO.class);
+    reqDTO.setRelationId(req.getRelationId());
+    reqDTO.setSearchOffset(req.getSearchOffset());
     RpcResponse<PageResponseDTO<ChatRecordRespDTO>> resp = chatRecordFacade.queryRecordInPage(reqDTO);
     AssertUtil.isTrue(resp.isSuccess(), SYSTEM_ERROR);
     PageResponseDTO<ChatRecordRespDTO> pageResponseDTO = resp.getData();
@@ -93,8 +91,7 @@ public class ChatRecordServiceImpl implements ChatRecordService {
     mergeIdList.addAll(receiverIdList);
     RpcResponse<List<UserRespDTO>> userRpcResp = userFacade.queryInUserIds(mergeIdList);
     AssertUtil.isTrue(userRpcResp.isSuccess(), SYSTEM_ERROR);
-    // todo: 测试id, 后续取消注释
-    // if (CollectionUtils.isEmpty(userRpcResp.getData())) return PageResponseDTO.emptyPage();
+    if (CollectionUtils.isEmpty(userRpcResp.getData())) return PageResponseDTO.emptyPage();
 
     Map<Long, UserRespDTO> userMap = userRpcResp.getData().stream().collect(Collectors.toMap(UserRespDTO::getUserId, item -> item));
     List<ChatRecordResp> chatRecordRespList = Lists.newArrayListWithExpectedSize(recordList.size());

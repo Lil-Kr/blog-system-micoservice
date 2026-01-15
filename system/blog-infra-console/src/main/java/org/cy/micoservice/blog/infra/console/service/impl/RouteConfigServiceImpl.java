@@ -18,6 +18,7 @@ import org.cy.micoservice.blog.entity.gateway.model.req.RouteConfigEditReq;
 import org.cy.micoservice.blog.entity.gateway.model.req.RouteConfigQueryPageReq;
 import org.cy.micoservice.blog.entity.gateway.model.req.RouteConfigQueryReq;
 import org.cy.micoservice.blog.framework.id.starter.service.IdService;
+import org.cy.micoservice.blog.framework.web.starter.web.RequestContext;
 import org.cy.micoservice.blog.gateway.facade.dto.ChangeBodyDTO;
 import org.cy.micoservice.blog.gateway.facade.enums.GatewayRouterChangeEventEnum;
 import org.cy.micoservice.blog.gateway.facade.enums.GatewayRouterDeletedEnum;
@@ -102,8 +103,8 @@ public class RouteConfigServiceImpl implements RouteConfigService, InitializingB
     RouteConfig routeConfig = BeanCopyUtils.convert(req, RouteConfig.class);
     routeConfig.setId(idService.getId());
     routeConfig.setStatus(GatewayRouterStatusEnum.INVALID.getCode());
-    routeConfig.setCreateBy("admin");
-    routeConfig.setUpdateBy("admin");
+    routeConfig.setCreateId(req.getAdminId());
+    routeConfig.setUpdateId(req.getAdminId());
 
     LocalDateTime nowDate = DateUtil.localDateTimeNow();
     routeConfig.setCreateTime(nowDate);
@@ -116,10 +117,10 @@ public class RouteConfigServiceImpl implements RouteConfigService, InitializingB
     routeChangeLog.setId(idService.getId());
     routeChangeLog.setConfigId(routeConfig.getId());
     routeChangeLog.setChangeEvent(GatewayRouterChangeEventEnum.INSERT.getCode());
-
+    routeChangeLog.setVersion(0L);
     ChangeBodyDTO changeBodyDTO = new ChangeBodyDTO(new RouteConfig(), routeConfig);
     routeChangeLog.setChangeBody(JSONObject.toJSONString(changeBodyDTO));
-    routeChangeLog.setCreateBy("admin");
+    routeChangeLog.setCreateId(1330756438846476314L);
     routeChangeLog.setCreateTime(nowDate);
     routeChangeLog.setDeleted(GatewayRouterDeletedEnum.ACTIVE.getCode());
     Integer insertLog = routeConfigChangeLogService.create(routeChangeLog);
@@ -147,7 +148,7 @@ public class RouteConfigServiceImpl implements RouteConfigService, InitializingB
     BeanUtils.copyProperties(before, after);
     BeanUtils.copyProperties(req, after);
     after.setId(before.getId());
-    after.setUpdateBy("admin");
+    after.setUpdateId(req.getAdminId());
     after.setUpdateTime(DateUtil.localDateTimeNow());
     int update = routeConfigMapper.updateById(after);
 
@@ -161,7 +162,7 @@ public class RouteConfigServiceImpl implements RouteConfigService, InitializingB
 
     ChangeBodyDTO changeBodyDTO = new ChangeBodyDTO(before, after);
     routeChangeLog.setChangeBody(JSONObject.toJSONString(changeBodyDTO));
-    routeChangeLog.setCreateBy("admin");
+    routeChangeLog.setCreateId(req.getAdminId());
     routeChangeLog.setCreateTime(DateUtil.localDateTimeNow());
     routeChangeLog.setDeleted(GatewayRouterDeletedEnum.ACTIVE.getCode());
     // 触发 nacos 更新版本
@@ -201,7 +202,7 @@ public class RouteConfigServiceImpl implements RouteConfigService, InitializingB
     ChangeBodyDTO changeBodyDTO = new ChangeBodyDTO(before, new RouteConfig());
     routeChangeLog.setChangeBody(JSONObject.toJSONString(changeBodyDTO));
 
-    routeChangeLog.setCreateBy("admin");
+    routeChangeLog.setCreateId(RequestContext.getUserId());
     routeChangeLog.setCreateTime(DateUtil.localDateTimeNow());
     routeChangeLog.setDeleted(GatewayRouterDeletedEnum.ACTIVE.getCode());
     int insertLog = routeConfigChangeLogService.create(routeChangeLog);

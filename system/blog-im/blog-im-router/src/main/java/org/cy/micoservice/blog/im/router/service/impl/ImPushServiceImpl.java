@@ -38,6 +38,7 @@ public class ImPushServiceImpl implements ImPushService {
       // 对方不在线, 需要做离线的消息处理
       return;
     }
+    // 设置目标用户当前连接的 im-connector 地址到dubbo上下文
     RpcContext.getServiceContext().setAttachment(ImRouterConstants.IM_ROUTER_DUBBO_CONSTANTS, address);
 
     // 消息通过rpc推到 im-connector 层

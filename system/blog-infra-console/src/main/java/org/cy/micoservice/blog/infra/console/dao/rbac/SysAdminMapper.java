@@ -2,12 +2,12 @@ package org.cy.micoservice.blog.infra.console.dao.rbac;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import org.apache.ibatis.annotations.Param;
-import org.cy.micoservice.blog.entity.admin.model.entity.sys.SysAdmin;
-import org.cy.micoservice.blog.entity.admin.model.req.sys.admin.AdminListPageReq;
-import org.cy.micoservice.blog.entity.admin.model.req.sys.admin.AdminLoginReq;
-import org.cy.micoservice.blog.entity.admin.model.req.sys.admin.AdminSaveReq;
-import org.cy.micoservice.blog.entity.admin.model.req.sys.admin.AvatarUploadReq;
-import org.cy.micoservice.blog.entity.admin.model.resp.sys.admin.SysAdminResp;
+import org.cy.micoservice.blog.entity.infra.console.model.entity.sys.SysAdmin;
+import org.cy.micoservice.blog.entity.infra.console.model.req.sys.admin.AdminListPageReq;
+import org.cy.micoservice.blog.entity.infra.console.model.req.sys.admin.AdminLoginReq;
+import org.cy.micoservice.blog.entity.infra.console.model.req.sys.admin.AdminSaveReq;
+import org.cy.micoservice.blog.entity.infra.console.model.req.sys.admin.AvatarUploadReq;
+import org.cy.micoservice.blog.entity.infra.console.model.resp.sys.admin.SysAdminResp;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;

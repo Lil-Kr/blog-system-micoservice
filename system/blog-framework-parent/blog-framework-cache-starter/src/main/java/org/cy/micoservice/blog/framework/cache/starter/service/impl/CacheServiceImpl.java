@@ -108,7 +108,7 @@ public class CacheServiceImpl<T> implements CacheService<T> {
     //缺失缓存的部分查询db补充
     if (!CollectionUtils.isEmpty(missCacheKeys)) {
       synchronized (CacheServiceImpl.class) {
-        //todo missCache的二次查询命中确认
+        // todo: missCache的二次查询命中确认
         Map<String, T> queryObjs = function.apply(missCacheKeys);
         Map<String, String> cacheMap = new HashMap<>();
         for (String cacheKey : queryObjs.keySet()) {

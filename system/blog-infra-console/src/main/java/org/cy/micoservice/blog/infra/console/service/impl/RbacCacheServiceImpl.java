@@ -3,10 +3,10 @@ package org.cy.micoservice.blog.infra.console.service.impl;
 import com.google.common.cache.Cache;
 import com.google.common.cache.CacheBuilder;
 import org.apache.commons.collections4.CollectionUtils;
-import org.cy.micoservice.blog.entity.admin.model.entity.sys.SysAcl;
-import org.cy.micoservice.blog.entity.admin.model.entity.sys.SysAdmin;
-import org.cy.micoservice.blog.entity.admin.model.entity.sys.SysDict;
-import org.cy.micoservice.blog.entity.admin.model.entity.sys.SysDictDetail;
+import org.cy.micoservice.blog.entity.infra.console.model.entity.sys.SysAcl;
+import org.cy.micoservice.blog.entity.infra.console.model.entity.sys.SysAdmin;
+import org.cy.micoservice.blog.entity.infra.console.model.entity.sys.SysDict;
+import org.cy.micoservice.blog.entity.infra.console.model.entity.sys.SysDictDetail;
 import org.cy.micoservice.blog.infra.console.service.RbacCacheService;
 import org.springframework.stereotype.Service;
 

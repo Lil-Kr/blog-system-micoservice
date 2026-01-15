@@ -3,10 +3,10 @@ package org.cy.micoservice.blog.infra.console.service;
 import com.baomidou.mybatisplus.extension.service.IService;
 import org.cy.micoservice.blog.common.base.api.ApiResp;
 import org.cy.micoservice.blog.common.base.api.PageResult;
-import org.cy.micoservice.blog.entity.admin.model.entity.sys.SysAcl;
-import org.cy.micoservice.blog.entity.admin.model.req.sys.acl.AclPageReq;
-import org.cy.micoservice.blog.entity.admin.model.req.sys.acl.AclReq;
-import org.cy.micoservice.blog.entity.admin.model.resp.sys.acl.SysAclResp;
+import org.cy.micoservice.blog.entity.infra.console.model.entity.sys.SysAcl;
+import org.cy.micoservice.blog.entity.infra.console.model.req.sys.acl.AclPageReq;
+import org.cy.micoservice.blog.entity.infra.console.model.req.sys.acl.AclReq;
+import org.cy.micoservice.blog.entity.infra.console.model.resp.sys.acl.SysAclResp;
 
 import java.util.concurrent.ConcurrentHashMap;
 

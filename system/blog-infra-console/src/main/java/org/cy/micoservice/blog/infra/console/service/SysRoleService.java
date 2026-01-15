@@ -2,9 +2,9 @@ package org.cy.micoservice.blog.infra.console.service;
 
 import org.cy.micoservice.blog.common.base.api.ApiResp;
 import org.cy.micoservice.blog.common.base.api.PageResult;
-import org.cy.micoservice.blog.entity.admin.model.req.sys.role.RoleListPageReq;
-import org.cy.micoservice.blog.entity.admin.model.req.sys.role.RoleSaveReq;
-import org.cy.micoservice.blog.entity.admin.model.resp.sys.role.SysRoleResp;
+import org.cy.micoservice.blog.entity.infra.console.model.req.sys.role.RoleListPageReq;
+import org.cy.micoservice.blog.entity.infra.console.model.req.sys.role.RoleSaveReq;
+import org.cy.micoservice.blog.entity.infra.console.model.resp.sys.role.SysRoleResp;
 
 /**
  * @Author: Lil-K

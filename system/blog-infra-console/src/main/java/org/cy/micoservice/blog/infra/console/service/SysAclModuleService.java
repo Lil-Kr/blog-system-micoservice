@@ -2,11 +2,11 @@ package org.cy.micoservice.blog.infra.console.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
 import org.cy.micoservice.blog.common.base.api.ApiResp;
-import org.cy.micoservice.blog.entity.admin.model.dto.aclmodule.AclModuleDto;
-import org.cy.micoservice.blog.entity.admin.model.entity.sys.SysAclModule;
-import org.cy.micoservice.blog.entity.admin.model.req.sys.aclmodule.AclModuleListReq;
-import org.cy.micoservice.blog.entity.admin.model.req.sys.aclmodule.AclModuleReq;
-import org.cy.micoservice.blog.entity.admin.model.resp.sys.aclmodule.SysAclModuleResp;
+import org.cy.micoservice.blog.infra.facade.dto.aclmodule.AclModuleDto;
+import org.cy.micoservice.blog.entity.infra.console.model.entity.sys.SysAclModule;
+import org.cy.micoservice.blog.entity.infra.console.model.req.sys.aclmodule.AclModuleListReq;
+import org.cy.micoservice.blog.entity.infra.console.model.req.sys.aclmodule.AclModuleReq;
+import org.cy.micoservice.blog.entity.infra.console.model.resp.sys.aclmodule.SysAclModuleResp;
 
 import java.util.List;
 

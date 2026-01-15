@@ -14,7 +14,7 @@ import org.springframework.context.annotation.Configuration;
 public class ImRouterProperties {
 
   /**
-   * topic: 消费 im-connector 发送来的登录消息
+   * topic: 消费 im-connector 发送来的登录认证消息
    */
   @Value("${im.chat.message.login.consumer-topic:}")
   private String imLoginConsumerTopic;

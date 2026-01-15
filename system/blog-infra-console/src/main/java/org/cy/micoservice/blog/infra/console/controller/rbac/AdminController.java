@@ -1,14 +1,14 @@
 package org.cy.micoservice.blog.infra.console.controller.rbac;
 
 import jakarta.validation.Valid;
-import jakarta.validation.constraints.NotNull;
 import lombok.extern.slf4j.Slf4j;
 import org.cy.micoservice.blog.common.base.api.ApiResp;
 import org.cy.micoservice.blog.common.base.api.PageResult;
-import org.cy.micoservice.blog.entity.admin.model.entity.sys.SysAdmin;
-import org.cy.micoservice.blog.entity.admin.model.req.sys.admin.*;
-import org.cy.micoservice.blog.entity.admin.model.resp.sys.admin.SysAdminResp;
 import org.cy.micoservice.blog.entity.base.model.api.BasePageReq;
+import org.cy.micoservice.blog.entity.infra.console.model.entity.sys.SysAdmin;
+import org.cy.micoservice.blog.entity.infra.console.model.req.sys.admin.*;
+import org.cy.micoservice.blog.entity.infra.console.model.resp.sys.admin.SysAdminResp;
+import org.cy.micoservice.blog.framework.web.starter.annotations.NoAuthCheck;
 import org.cy.micoservice.blog.framework.web.starter.web.RequestContext;
 import org.cy.micoservice.blog.infra.console.service.MessageLangService;
 import org.cy.micoservice.blog.infra.console.service.SysAdminService;
@@ -32,7 +32,7 @@ public class AdminController {
   private MessageLangService msgLangService;
 
   @Autowired
-  private SysAdminService userService;
+  private SysAdminService adminService;
 
   /**
    * admin login
@@ -41,7 +41,7 @@ public class AdminController {
    */
   @PutMapping("/login")
   public ApiResp<SysAdmin> login(@RequestBody @Validated({AdminLoginReq.AdminLogin.class}) AdminLoginReq req) {
-    return userService.adminLogin(req);
+    return adminService.adminLogin(req);
   }
 
   /**
@@ -51,7 +51,8 @@ public class AdminController {
    */
   @PostMapping("/register")
   public ApiResp<Integer> register(@RequestBody @Valid AdminRegisterReq req) {
-    return userService.registerAdmin(req);
+    req.setAdminId(RequestContext.getUserId());
+    return adminService.registerAdmin(req);
   }
 
   /**
@@ -60,8 +61,6 @@ public class AdminController {
    */
   @DeleteMapping("/logout")
   public ApiResp<Integer> logout() {
-    // remove user
-    RequestContext.remove();
     return ApiResp.success(msgLangService.getMessage(LANG_ZH, "admin.logout.success"));
   }
 
@@ -70,30 +69,41 @@ public class AdminController {
    * @param req
    * @return
    */
+  @NoAuthCheck
   @PostMapping("/pageList")
   public ApiResp<PageResult<SysAdminResp>> pageList(@RequestBody @Validated({BasePageReq.GroupPageQuery.class}) AdminListPageReq req) {
-    PageResult<SysAdminResp> result = userService.pageList(req);
+    PageResult<SysAdminResp> result = adminService.pageList(req);
     return ApiResp.success(result);
   }
 
   /**
-   * create admin-user
+   * create admin
    * @param req
    * @return
    */
   @PostMapping("/add")
-  public ApiResp<String> add(@RequestBody @Validated({AdminSaveReq.GroupAddUser.class}) AdminSaveReq req) {
-    return userService.add(req);
+  public ApiResp<String> add(@RequestBody @Validated({AdminSaveReq.GroupAddAdmin.class}) AdminSaveReq req) {
+    return adminService.add(req);
   }
 
+  /**
+   * edit role info
+   * @param req
+   * @return
+   * @throws Exception
+   */
   @PostMapping("/edit")
-  public ApiResp<String> edit(@RequestBody @Validated({AdminSaveReq.GroupEditUser.class}) AdminSaveReq req) {
-    return userService.edit(req);
+  public ApiResp<String> edit(@RequestBody @Validated({AdminSaveReq.GroupEditAdmin.class}) AdminSaveReq req) {
+    return adminService.edit(req);
   }
 
-  @DeleteMapping("/delete/{userId}")
-  public ApiResp<String> delete(@PathVariable("userId") @NotNull(message = "用户id是必须的") Long userId) {
-    return userService.delete(userId);
+  /**
+   * delete role info
+   */
+  @NoAuthCheck
+  @DeleteMapping("/delete")
+  public ApiResp<String> delete(@Valid AdminDeleteReq req) {
+    return adminService.delete(req.getAdminId());
   }
 
   /**
@@ -112,6 +122,6 @@ public class AdminController {
    */
   @PostMapping("/avatar")
   public ApiResp<String> avatar(@ModelAttribute AvatarUploadReq req) throws Exception {
-    return userService.uploadAvatar(req);
+    return adminService.uploadAvatar(req);
   }
 }

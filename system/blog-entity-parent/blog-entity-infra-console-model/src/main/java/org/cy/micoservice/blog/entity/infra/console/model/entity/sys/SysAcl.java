@@ -1,0 +1,125 @@
+package org.cy.micoservice.blog.entity.infra.console.model.entity.sys;
+
+import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableId;
+import com.baomidou.mybatisplus.annotation.TableName;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
+import lombok.*;
+
+import java.io.Serial;
+import java.io.Serializable;
+import java.util.Date;
+
+/**
+ * @Author: Lil-K
+ * @Date: 2025/3/8
+ * @Description:
+ */
+@Data
+@EqualsAndHashCode(callSuper = false)
+@ToString
+@AllArgsConstructor
+@NoArgsConstructor
+@Builder
+@TableName("sys_acl")
+public class SysAcl implements Serializable {
+
+	@Serial
+	private static final long serialVersionUID = 4265979647827463721L;
+
+	/**
+	 * 自增主键
+	 */
+	@TableId(value = "id", type = IdType.AUTO)
+	private Long id;
+
+	/**
+	 * 权限id唯一主键
+	 */
+	@JsonSerialize(using = ToStringSerializer.class)
+	private Long surrogateId;
+
+	/**
+	 * 权限编码
+	 */
+	private String number;
+
+	/**
+	 * 权限名
+	 */
+	private String name;
+
+	/**
+	 * 权限模块id
+	 */
+	@JsonSerialize(using = ToStringSerializer.class)
+	private Long aclModuleId;
+
+	/**
+	 * 请求的url
+	 */
+	private String url;
+
+	/**
+	 * 1:菜单权限, 2按钮, 3其他
+	 */
+	private Integer type;
+
+	/**
+	 * 菜单名
+	 */
+	private String menuName;
+
+	/**
+	 * 菜单url, 对应路由
+	 */
+	private String menuUrl;
+
+	/**
+	 * 按钮权限标识
+	 */
+	private String btnSign;
+
+	/**
+	 * 状态
+	 */
+	private Integer status;
+
+	/**
+	 * 排序
+	 */
+	private Integer seq;
+
+	/**
+	 * 备注
+	 */
+	private String remark;
+
+	/**
+	 *
+	 */
+	@JsonSerialize(using = ToStringSerializer.class)
+	private Long creatorId;
+
+	/**
+	 * 操作人
+	 */
+	@JsonSerialize(using = ToStringSerializer.class)
+	private Long operator;
+
+	/**
+	 * 操作ip
+	 */
+	private String operateIp;
+
+	/**
+	 * 创建时间
+	 */
+	private Date createTime;
+
+	/**
+	 * 更改时间
+	 */
+	private Date updateTime;
+}

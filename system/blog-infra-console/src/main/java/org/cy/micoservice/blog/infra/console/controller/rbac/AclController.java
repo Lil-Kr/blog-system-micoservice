@@ -1,14 +1,14 @@
 package org.cy.micoservice.blog.infra.console.controller.rbac;
 
 import jakarta.validation.Valid;
-import jakarta.validation.constraints.NotNull;
 import lombok.extern.slf4j.Slf4j;
 import org.cy.micoservice.blog.common.base.api.ApiResp;
 import org.cy.micoservice.blog.common.base.api.PageResult;
-import org.cy.micoservice.blog.entity.admin.model.req.sys.acl.AclPageReq;
-import org.cy.micoservice.blog.entity.admin.model.req.sys.acl.AclReq;
-import org.cy.micoservice.blog.entity.admin.model.resp.sys.acl.SysAclResp;
 import org.cy.micoservice.blog.entity.base.model.api.BasePageReq;
+import org.cy.micoservice.blog.entity.infra.console.model.req.sys.acl.AclDeleteReq;
+import org.cy.micoservice.blog.entity.infra.console.model.req.sys.acl.AclPageReq;
+import org.cy.micoservice.blog.entity.infra.console.model.req.sys.acl.AclReq;
+import org.cy.micoservice.blog.entity.infra.console.model.resp.sys.acl.SysAclResp;
 import org.cy.micoservice.blog.infra.console.service.SysAclService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
@@ -61,12 +61,12 @@ public class AclController {
 
   /**
    * 删除权限点
-   * @param aclId
+   * @param req
    * @return
    */
-  @DeleteMapping("/delete/{aclId}")
-  public ApiResp<String> delete(@PathVariable("aclId") @NotNull(message = "surrogateId是必须的") Long aclId) {
-    return aclService.delete(aclId);
+  @DeleteMapping("/delete")
+  public ApiResp<String> delete(@Valid AclDeleteReq req) {
+    return aclService.delete(req.getAclId());
   }
 
 }

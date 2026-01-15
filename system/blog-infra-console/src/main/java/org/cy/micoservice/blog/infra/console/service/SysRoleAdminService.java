@@ -2,8 +2,8 @@ package org.cy.micoservice.blog.infra.console.service;
 
 
 import org.cy.micoservice.blog.common.base.api.ApiResp;
-import org.cy.micoservice.blog.entity.admin.model.req.sys.roleuser.RoleAdminReq;
-import org.cy.micoservice.blog.entity.admin.model.resp.sys.role.RoleAdminResp;
+import org.cy.micoservice.blog.entity.infra.console.model.req.sys.roleuser.RoleAdminReq;
+import org.cy.micoservice.blog.entity.infra.console.model.resp.sys.role.RoleAdminResp;
 
 /**
  * role-user service

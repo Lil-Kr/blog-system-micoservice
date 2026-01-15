@@ -1,8 +1,8 @@
 package org.cy.micoservice.blog.infra.console.utils.orgUtil;
 
 
-import org.cy.micoservice.blog.entity.admin.model.dto.org.OrgLevelDto;
-import org.cy.micoservice.blog.entity.admin.model.entity.sys.SysOrg;
+import org.cy.micoservice.blog.infra.facade.dto.org.OrgLevelDto;
+import org.cy.micoservice.blog.entity.infra.console.model.entity.sys.SysOrg;
 
 import java.util.Comparator;
 

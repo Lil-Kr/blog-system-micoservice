@@ -1,16 +1,12 @@
 package org.cy.micoservice.blog.infra.console.controller.route;
 
 import jakarta.validation.Valid;
-import jakarta.validation.constraints.NotNull;
 import org.cy.micoservice.blog.common.base.api.ApiResp;
 import org.cy.micoservice.blog.common.base.api.PageResult;
 import org.cy.micoservice.blog.entity.base.model.api.BasePageReq;
-import org.cy.micoservice.blog.entity.gateway.model.entity.RouteConfig;
 import org.cy.micoservice.blog.entity.gateway.model.entity.RouteChangeLog;
-import org.cy.micoservice.blog.entity.gateway.model.req.RouteConfigAddReq;
-import org.cy.micoservice.blog.entity.gateway.model.req.RouteConfigEditReq;
-import org.cy.micoservice.blog.entity.gateway.model.req.RouteConfigQueryPageReq;
-import org.cy.micoservice.blog.entity.gateway.model.req.RouteConfigQueryReq;
+import org.cy.micoservice.blog.entity.gateway.model.entity.RouteConfig;
+import org.cy.micoservice.blog.entity.gateway.model.req.*;
 import org.cy.micoservice.blog.framework.web.starter.annotations.NoAuthCheck;
 import org.cy.micoservice.blog.infra.console.service.RouteConfigService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -57,14 +53,14 @@ public class RouteConfigController {
   }
 
   @NoAuthCheck
-  @DeleteMapping("/delete/{configId}")
-  public ApiResp<String> delete(@PathVariable("configId") @NotNull(message = "configId 是必须的") Long configId) throws Exception {
-    return routeConfigService.delete(configId);
+  @DeleteMapping("/delete")
+  public ApiResp<String> delete(@Valid RouteConfigDelReq req) throws Exception {
+    return routeConfigService.delete(req.getConfigId());
   }
 
   @NoAuthCheck
-  @GetMapping("/getConfigLog/{configId}")
-  public ApiResp<List<RouteChangeLog>> getConfigLog(@PathVariable("configId") @NotNull(message = "configId 是必须的") Long configId) {
-    return routeConfigService.getConfigLog(configId);
+  @GetMapping("/getConfigLog")
+  public ApiResp<List<RouteChangeLog>> getConfigLog(@Valid RouteConfigGetReq req) {
+    return routeConfigService.getConfigLog(req.getConfigId());
   }
 }

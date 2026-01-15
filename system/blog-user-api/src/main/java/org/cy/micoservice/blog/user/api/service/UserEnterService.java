@@ -13,5 +13,5 @@ public interface UserEnterService {
    * 发送MQ通知, 用户进入程序时触发
    * @param userEnterInitReqDTO
    */
-  boolean enter(UserEnterInitReqDTO userEnterInitReqDTO);
+  boolean enter(UserEnterInitReqDTO req);
 }

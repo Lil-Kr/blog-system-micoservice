@@ -16,7 +16,6 @@
 	<modules>
 		<module>blog-entity-base-model</module>
 		<module>blog-entity-gateway-model</module>
-		<module>blog-entity-admin-model</module>
 		<module>blog-entity-infra-console-model</module>
 		<module>blog-entity-im-model</module>
 		<module>blog-entity-message-model</module>

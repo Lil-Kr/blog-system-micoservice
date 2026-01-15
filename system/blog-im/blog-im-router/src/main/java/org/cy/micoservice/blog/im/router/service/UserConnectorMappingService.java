@@ -13,7 +13,7 @@ public interface UserConnectorMappingService {
    * @param connectorAddress
    * @return
    */
-  boolean saveMapping(Long userId,String connectorAddress);
+  boolean saveAddressByUserId(Long userId, String connectorAddress);
 
   /**
    * 移除指定用户id所在的机器ip地址记录

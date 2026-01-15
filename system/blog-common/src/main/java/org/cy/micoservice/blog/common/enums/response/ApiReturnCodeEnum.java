@@ -12,6 +12,7 @@ public enum ApiReturnCodeEnum implements BaseEnum {
   SUCCESS(200, "操作成功"),
   REQUEST_SUCCESS(200, "请求成功"),
   HTTP_SUCCESS(200, "HTTP 调用成功"),
+  WARNING(401, "系统警告"),
   REQUEST_ERROR(404, "资源不存在"),
   USER_INFO_NO_EXIST(411, "用户不存在"),
   USER_INFO_ERROR(412, "用户名或密码错误"),

@@ -40,6 +40,7 @@ public class RequestMappingConfiguration implements CommandLineRunner {
 
   @Autowired
   private RequestMappingHandlerMapping requestMappingHandlerMapping;
+
   @Autowired
   private InfraConsoleClient infraConsoleClient;
 
@@ -72,6 +73,7 @@ public class RequestMappingConfiguration implements CommandLineRunner {
         String requestPath = requestMappingInfo.getPathPatternsCondition().getPatternValues().stream().findAny().map(String::toString).orElse("");
         String requestMethod = requestMappingInfo.getMethodsCondition().getMethods().stream().findFirst().map(Enum::name).orElse("");
         RouteConfigSaveReq routeConfigSaveReq = new RouteConfigSaveReq();
+        routeConfigSaveReq.setAppName(appName);
         routeConfigSaveReq.setSchema(GatewayInfraConsoleSdkConstants.HTTP_PROTOCOL);
         routeConfigSaveReq.setMethod(requestMethod);
         routeConfigSaveReq.setUri(GatewayInfraConsoleSdkConstants.LB_SERVICE_PREFIX + appName);

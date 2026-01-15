@@ -59,7 +59,7 @@ public class ImLoginMessageHandler extends AbstractImMessageHandlerTemplate {
     ImLoginBody imLoginBody = JSON.parseObject(dto.getBody(), ImLoginBody.class);
     String token = imLoginBody.getToken();
     boolean isTokenValid = this.validateToken(token);
-    // token 合法, 可以进行登录处理
+    // token 不合法, 不能进行登录认证处理
     if (! isTokenValid) {
       log.error("jwt error: {}", dto.getBody());
       // 强制关闭连接
@@ -67,7 +67,7 @@ public class ImLoginMessageHandler extends AbstractImMessageHandlerTemplate {
       return;
     }
 
-    // 根据ctx绑定的uri获取不同的topic
+    // 根据ctx绑定的uri获取不同的topic, blog-im-login-topic
     String topic = this.getCurrentChannelTopic(ctx);
     if (StringUtils.isBlank(topic)) {
       log.error("login not match im msg here.");

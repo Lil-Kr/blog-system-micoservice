@@ -1,13 +1,15 @@
 package org.cy.micoservice.blog.infra.console.controller.rbac;
 
 
-import jakarta.validation.constraints.NotNull;
+import jakarta.validation.Valid;
 import org.cy.micoservice.blog.common.base.api.ApiResp;
-import org.cy.micoservice.blog.entity.admin.model.dto.aclmodule.AclModuleDto;
-import org.cy.micoservice.blog.entity.admin.model.req.sys.aclmodule.AclModuleListReq;
-import org.cy.micoservice.blog.entity.admin.model.req.sys.aclmodule.AclModuleReq;
-import org.cy.micoservice.blog.entity.admin.model.resp.sys.aclmodule.SysAclModuleResp;
+import org.cy.micoservice.blog.entity.infra.console.model.req.sys.aclmodule.AclModuleDelReq;
+import org.cy.micoservice.blog.entity.infra.console.model.req.sys.aclmodule.AclModuleGetReq;
+import org.cy.micoservice.blog.entity.infra.console.model.req.sys.aclmodule.AclModuleListReq;
+import org.cy.micoservice.blog.entity.infra.console.model.req.sys.aclmodule.AclModuleReq;
+import org.cy.micoservice.blog.entity.infra.console.model.resp.sys.aclmodule.SysAclModuleResp;
 import org.cy.micoservice.blog.infra.console.service.SysAclModuleService;
+import org.cy.micoservice.blog.infra.facade.dto.aclmodule.AclModuleDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
@@ -50,19 +52,19 @@ public class AclModuleController {
 
   /**
    * get one record acl module
-   * @param surrogateId
+   * @param req
    * @return
    */
-  @GetMapping("/getAclModule/{surrogateId}")
-  public ApiResp<SysAclModuleResp> getAclModule(@PathVariable("surrogateId") @NotNull(message = "surrogateId是必须的") Long surrogateId) {
-    return aclModuleService.getAclModule(surrogateId);
+  @GetMapping("/getAclModule")
+  public ApiResp<SysAclModuleResp> getAclModule(@Valid AclModuleGetReq req) {
+    return aclModuleService.getAclModule(req.getSurrogateId());
   }
 
   /**
    * retrieve acl module tree
    * @throws Exception
    */
-  @PostMapping("aclModuleTree")
+  @PostMapping("/aclModuleTree")
   public ApiResp<List<AclModuleDto>> aclModuleTree() {
     return aclModuleService.aclModuleTree();
   }
@@ -72,9 +74,9 @@ public class AclModuleController {
    * @return
    * @throws Exception
    */
-  @DeleteMapping("/delete/{surrogateId}")
-  public ApiResp<String> delete(@PathVariable("surrogateId") @NotNull(message = "surrogateId是必须的") Long surrogateId) {
-    return aclModuleService.delete(surrogateId);
+  @DeleteMapping("/delete")
+  public ApiResp<String> delete(@Valid AclModuleDelReq req) {
+    return aclModuleService.delete(req.getSurrogateId());
   }
 
   /**

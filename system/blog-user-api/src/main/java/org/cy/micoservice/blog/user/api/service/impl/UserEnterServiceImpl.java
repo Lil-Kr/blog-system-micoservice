@@ -31,14 +31,14 @@ public class UserEnterServiceImpl implements UserEnterService {
 
   /**
    * 发送MQ通知, 用户进入程序时触发
-   * @param userEnterInitReqDTO
+   * @param req
    * @return
    */
   @Override
-  public boolean enter(UserEnterInitReqDTO userEnterInitReqDTO) {
+  public boolean enter(UserEnterInitReqDTO req) {
     Message message = new Message();
     message.setTopic(applicationConfig.getUserEnterTopic());
-    message.setBody(JSONObject.toJSONString(userEnterInitReqDTO).getBytes(StandardCharsets.UTF_8));
+    message.setBody(JSONObject.toJSONString(req).getBytes(StandardCharsets.UTF_8));
     try {
       SendResult sendResult = producerClient.send(message);
       if(! SendStatus.SEND_OK.equals(sendResult.getSendStatus())) {

@@ -21,15 +21,24 @@ public class ImConfigServiceImpl implements ImConfigService {
 
   @Autowired
   private ApplicationProperties applicationProperties;
-
   @Autowired
   private AuthProperties authProperties;
 
+  /**
+   * 获取im的服务器配置信息地址
+   * @param userId
+   * @return
+   */
   @Override
   public ImConfigResp getImChatConfig(Long userId) {
     // im token的有效期-7天
-    String loginToken = JWTUtil.generateToken(String.valueOf(userId), new HashMap<>(),
-      authProperties.getSecretKey(), TimeUnit.DAYS.toMillis(7));
+    String loginToken = JWTUtil.generateToken(
+      String.valueOf(userId),
+      new HashMap<>(),
+      authProperties.getSecretKey(),
+      TimeUnit.DAYS.toMillis(7)
+    );
+
     return ImConfigResp
       .builder()
       .imServerAddress(applicationProperties.getImServerAddress())

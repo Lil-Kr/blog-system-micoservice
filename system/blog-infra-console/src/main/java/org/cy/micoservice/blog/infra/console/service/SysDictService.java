@@ -3,12 +3,12 @@ package org.cy.micoservice.blog.infra.console.service;
 import com.baomidou.mybatisplus.extension.service.IService;
 import org.cy.micoservice.blog.common.base.api.ApiResp;
 import org.cy.micoservice.blog.common.base.api.PageResult;
-import org.cy.micoservice.blog.entity.admin.model.entity.sys.SysDict;
-import org.cy.micoservice.blog.entity.admin.model.req.sys.dict.DictDetailReq;
-import org.cy.micoservice.blog.entity.admin.model.req.sys.dict.DictListPageReq;
-import org.cy.micoservice.blog.entity.admin.model.req.sys.dict.DictSaveReq;
-import org.cy.micoservice.blog.entity.admin.model.resp.sys.dic.SysDictDetailResp;
-import org.cy.micoservice.blog.entity.admin.model.resp.sys.dic.SysDictResp;
+import org.cy.micoservice.blog.entity.infra.console.model.entity.sys.SysDict;
+import org.cy.micoservice.blog.entity.infra.console.model.req.sys.dict.DictDetailReq;
+import org.cy.micoservice.blog.entity.infra.console.model.req.sys.dict.DictListPageReq;
+import org.cy.micoservice.blog.entity.infra.console.model.req.sys.dict.DictSaveReq;
+import org.cy.micoservice.blog.entity.infra.console.model.resp.sys.dic.SysDictDetailResp;
+import org.cy.micoservice.blog.entity.infra.console.model.resp.sys.dic.SysDictResp;
 
 import java.util.List;
 import java.util.Map;

@@ -3,25 +3,24 @@ package org.cy.micoservice.blog.entity.gateway.model.entity;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
-import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.Data;
-import lombok.ToString;
+import lombok.EqualsAndHashCode;
+import org.cy.micoservice.blog.entity.base.model.api.BaseEntity;
 
 import java.io.Serial;
 import java.io.Serializable;
-import java.time.LocalDateTime;
 
 /**
  * @Author: Lil-K
  * @Date: 2025/11/27
  * @Description:
  */
+@EqualsAndHashCode(callSuper = true)
 @Data
-@ToString
 @JsonInclude(JsonInclude.Include.NON_NULL)
-@TableName("t_route_config")
-public class RouteConfig implements Serializable {
+@TableName("sys_route_config")
+public class RouteConfig extends BaseEntity implements Serializable {
 
   @Serial
   private static final long serialVersionUID = -5156026782213949765L;
@@ -31,6 +30,11 @@ public class RouteConfig implements Serializable {
    */
   @TableId(value = "id")
   private Long id;
+
+  /**
+   * 服务名
+   */
+  private String appName;
 
   /**
    * 留给后续做rpc转发扩展用
@@ -75,20 +79,5 @@ public class RouteConfig implements Serializable {
    */
   @TableField("`status`")
   private Integer status;
-
-  /**
-   * 删除状态
-   */
-  private Integer deleted;
-
-  @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
-  private LocalDateTime createTime;
-
-  @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
-  private LocalDateTime updateTime;
-
-  private String createBy;
-
-  private String updateBy;
 
 }

@@ -2,9 +2,9 @@ package org.cy.micoservice.blog.infra.console.service;
 
 import org.cy.micoservice.blog.common.base.api.ApiResp;
 import org.cy.micoservice.blog.common.base.api.PageResult;
-import org.cy.micoservice.blog.entity.admin.model.entity.sys.SysAdmin;
-import org.cy.micoservice.blog.entity.admin.model.req.sys.admin.*;
-import org.cy.micoservice.blog.entity.admin.model.resp.sys.admin.SysAdminResp;
+import org.cy.micoservice.blog.entity.infra.console.model.entity.sys.SysAdmin;
+import org.cy.micoservice.blog.entity.infra.console.model.resp.sys.admin.SysAdminResp;
+import org.cy.micoservice.blog.entity.infra.console.model.req.sys.admin.*;
 
 /**
  * @Author: Lil-K

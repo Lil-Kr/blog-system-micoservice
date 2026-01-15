@@ -33,5 +33,6 @@ public class GatewayConstants {
     public static int RATE_LIMIT_ORDER = 108;
     public static int EXCEPTION_HANDLER_FILTER_ORDER = 109;
     public static int DUBBO_INVOKE_FILTER_ORDER = 110;
+    public static int HTTP_RESPONSE_FILTER_ORDER = -1000;
   }
 }

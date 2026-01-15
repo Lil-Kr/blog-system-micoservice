@@ -4,6 +4,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.cy.micoservice.blog.common.base.api.ApiResp;
 import org.cy.micoservice.blog.entity.user.model.provider.po.User;
 import org.cy.micoservice.blog.framework.web.starter.annotations.NoAuthCheck;
+import org.cy.micoservice.blog.framework.web.starter.web.RequestContext;
 import org.cy.micoservice.blog.user.api.service.UserEnterService;
 import org.cy.micoservice.blog.user.api.service.UserProfileService;
 import org.cy.micoservice.blog.user.api.vo.resp.SysUserResp;
@@ -27,9 +28,9 @@ public class UserController {
   private UserEnterService userEnterService;
 
   @NoAuthCheck
-  @GetMapping("/profile/{userId}")
-  public ApiResp<User> profile(@PathVariable("userId") Long userId) {
-    User user = userProfileService.profile(userId);
+  @GetMapping("/profile")
+  public ApiResp<User> profile() {
+    User user = userProfileService.profile(RequestContext.getUserId());
     return ApiResp.success(user);
   }
 
@@ -46,10 +47,8 @@ public class UserController {
    */
   @NoAuthCheck
   @PostMapping("/init")
-  public ApiResp<Boolean> init(@RequestBody UserEnterInitReqDTO reqDTO) {
-    // todo: 测试id, 后续删除
-    // reqDTO.setUserId(RequestContext.getUserId());
-
-    return ApiResp.success(userEnterService.enter(reqDTO));
+  public ApiResp<Boolean> init(@RequestBody UserEnterInitReqDTO req) {
+    req.setUserId(RequestContext.getUserId());
+    return ApiResp.success(userEnterService.enter(req));
   }
 }

@@ -60,7 +60,7 @@ public class AuthInterceptor implements HandlerInterceptor, InitializingBean {
       JSONObject jsonObject = JSON.parseObject(decryptBody);
       RequestContext.set(RequestEnum.USER_ID, jsonObject.getLongValue("userId"));
     } catch (Exception e) {
-      log.info("login error msg: ", e);
+      log.error("login error msg: ", e);
       throw new BizException(ApiReturnCodeEnum.NO_ACCESS);
     }
     return true;

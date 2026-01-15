@@ -2,10 +2,10 @@ package org.cy.micoservice.blog.infra.console.dao.rbac;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import org.apache.ibatis.annotations.Param;
-import org.cy.micoservice.blog.entity.admin.model.entity.sys.SysOrg;
-import org.cy.micoservice.blog.entity.admin.model.req.sys.org.OrgListAllReq;
-import org.cy.micoservice.blog.entity.admin.model.req.sys.org.OrgPageReq;
-import org.cy.micoservice.blog.entity.admin.model.resp.sys.org.SysOrgResp;
+import org.cy.micoservice.blog.entity.infra.console.model.entity.sys.SysOrg;
+import org.cy.micoservice.blog.entity.infra.console.model.req.sys.org.OrgListAllReq;
+import org.cy.micoservice.blog.entity.infra.console.model.req.sys.org.OrgPageReq;
+import org.cy.micoservice.blog.entity.infra.console.model.resp.sys.org.SysOrgResp;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;

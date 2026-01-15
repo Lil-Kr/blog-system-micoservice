@@ -2,6 +2,8 @@ package org.cy.micoservice.blog.entity.gateway.model.req;
 
 import jakarta.validation.constraints.NotBlank;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
+import org.cy.micoservice.blog.entity.base.model.api.BaseReq;
 
 import java.io.Serial;
 import java.io.Serializable;
@@ -11,11 +13,15 @@ import java.io.Serializable;
  * @Date: 2025/11/24
  * @Description:
  */
+@EqualsAndHashCode(callSuper = true)
 @Data
-public class RouteConfigAddReq implements Serializable {
+public class RouteConfigAddReq extends BaseReq implements Serializable {
 
   @Serial
   private static final long serialVersionUID = -835774868779349693L;
+
+  @NotBlank(message = "appName 不能为空")
+  private String appName;
 
   @NotBlank(message = "schema 不能为空")
   private String schema;

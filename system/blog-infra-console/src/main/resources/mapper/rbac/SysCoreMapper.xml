@@ -3,7 +3,7 @@
 <mapper namespace="org.cy.micoservice.blog.infra.console.dao.rbac.SysCoreMapper">
 
 	<!-- 通用查询映射结果 -->
-	<resultMap id="BaseResultMap" type="org.cy.micoservice.blog.admin.pojo.entity.sys.SysAcl">
+	<resultMap id="BaseResultMap" type="org.cy.micoservice.blog.entity.infra.console.model.entity.sys.SysAcl">
 		<id column="id" property="id"/>
 		<result column="surrogate_id" property="surrogateId"/>
 		<result column="number" property="number"/>
@@ -21,7 +21,7 @@
 	</resultMap>
 
 	<!-- Vo查询映射结果 -->
-	<resultMap id="BaseResulVotMap" type="org.cy.micoservice.blog.admin.pojo.resp.sys.acl.SysAclResp">
+	<resultMap id="BaseResulVotMap" type="org.cy.micoservice.blog.entity.infra.console.model.resp.sys.acl.SysAclResp">
 		<id column="id" property="id"/>
 		<result column="surrogate_id" property="surrogateId"/>
 		<result column="number" property="number"/>

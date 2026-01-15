@@ -15,7 +15,7 @@ import java.io.Serial;
  * @Description: 网关日志打印策略
  */
 @Data
-@TableName("t_log_print_strategy")
+@TableName("sys_route_log_print_strategy")
 @EqualsAndHashCode(callSuper = true)
 public class LogPrintStrategy extends BaseEntity {
 

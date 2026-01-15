@@ -17,6 +17,8 @@ public class RouteConfigSaveReq implements Serializable {
   @Serial
   private static final long serialVersionUID = 1743189351674108284L;
 
+  private String appName;
+
   private String schema;
 
   private String method;

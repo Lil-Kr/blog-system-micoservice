@@ -2,7 +2,7 @@ package org.cy.micoservice.blog.infra.console.dao.rbac;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import org.apache.ibatis.annotations.Param;
-import org.cy.micoservice.blog.entity.admin.model.entity.sys.SysRoleAcl;
+import org.cy.micoservice.blog.entity.infra.console.model.entity.sys.SysRoleAcl;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;

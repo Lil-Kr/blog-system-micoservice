@@ -17,6 +17,7 @@ public class CommonConstants {
    * image
    */
   public static final String IMAGE_TYPE_SUFFIX = "webp";
+
   /**
    * bus type
    */

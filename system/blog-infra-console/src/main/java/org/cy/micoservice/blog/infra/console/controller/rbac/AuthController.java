@@ -1,7 +1,7 @@
 package org.cy.micoservice.blog.infra.console.controller.rbac;
 
 import org.cy.micoservice.blog.common.base.api.ApiResp;
-import org.cy.micoservice.blog.entity.admin.model.req.sys.permission.PermissionReq;
+import org.cy.micoservice.blog.entity.infra.console.model.req.sys.permission.PermissionReq;
 import org.cy.micoservice.blog.framework.web.starter.web.RequestContext;
 import org.cy.micoservice.blog.infra.console.service.SysPermissionService;
 import org.springframework.beans.factory.annotation.Autowired;

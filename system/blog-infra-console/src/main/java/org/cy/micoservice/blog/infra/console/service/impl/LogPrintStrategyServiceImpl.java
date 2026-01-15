@@ -59,8 +59,8 @@ public class LogPrintStrategyServiceImpl implements LogPrintStrategyService {
     convert.setStatus(ValidStatusEnum.ACTIVE.getCode());
     convert.setDeleted(DeleteStatusEnum.ACTIVE.getCode());
     // todo: 这里修改为当前操作人
-    convert.setCreatorId(convert.getId());
-    convert.setOperatorId(convert.getId());
+    convert.setCreateId(convert.getId());
+    convert.setUpdateId(convert.getId());
 
     LocalDateTime now = DateUtil.localDateTimeNow();
     convert.setCreateTime(now);
@@ -80,7 +80,7 @@ public class LogPrintStrategyServiceImpl implements LogPrintStrategyService {
     LogPrintStrategy convert = BeanCopyUtils.convert(req, LogPrintStrategy.class);
     convert.setId(before.getId());
     // todo: 这里修改为当前操作人
-    convert.setOperatorId(convert.getId());
+    convert.setUpdateId(convert.getId());
     convert.setUpdateTime(DateUtil.localDateTimeNow());
     int update = logPrintStrategyMapper.updateById(convert);
     return update > 0 ? ApiResp.success() : ApiResp.failure(ApiReturnCodeEnum.UPDATE_ERROR);

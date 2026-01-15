@@ -145,11 +145,19 @@ public final class ApiResp<T> implements Serializable {
     return create(ApiReturnCodeEnum.SYSTEM_ERROR.getCode(), ApiReturnCodeEnum.SYSTEM_ERROR.getMessage(),data);
   }
 
+  /**
+   * 警告
+   * @param code
+   * @param msg
+   * @return
+   * @param <T>
+   */
   public static <T> ApiResp<T> warning(int code, String msg) {
     return create(code, msg, null);
   }
+
   /**
-   *
+   * 警告
    * @param code
    * @param msg
    * @param data
@@ -161,16 +169,25 @@ public final class ApiResp<T> implements Serializable {
   }
 
   /**
-   * 错误
+   * 警告
    * @param msg
    * @return
    */
   public static <T> ApiResp<T> warning(String msg) {
-    return create(401, msg, null);
+    return create(ApiReturnCodeEnum.WARNING.getCode(), msg, null);
   }
 
   /**
-   * 错误
+   * 警告
+   * @param data
+   * @return
+   */
+  public static <T> ApiResp<T> warning(T data) {
+    return create(ApiReturnCodeEnum.WARNING.getCode(), ApiReturnCodeEnum.WARNING.getMessage(), data);
+  }
+
+  /**
+   * 警告
    * @return
    */
   public static <T> ApiResp<T> warning() {

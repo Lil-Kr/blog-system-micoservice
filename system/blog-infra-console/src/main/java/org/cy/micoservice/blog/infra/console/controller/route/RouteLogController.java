@@ -1,7 +1,6 @@
 package org.cy.micoservice.blog.infra.console.controller.route;
 
 import jakarta.validation.Valid;
-import jakarta.validation.constraints.NotNull;
 import org.cy.micoservice.blog.common.base.api.ApiResp;
 import org.cy.micoservice.blog.common.base.api.PageResult;
 import org.cy.micoservice.blog.entity.base.model.api.BasePageReq;
@@ -9,6 +8,7 @@ import org.cy.micoservice.blog.entity.gateway.model.entity.LogPrintStrategy;
 import org.cy.micoservice.blog.entity.gateway.model.req.LogPrintStrategyAddReq;
 import org.cy.micoservice.blog.entity.gateway.model.req.LogPrintStrategyEditReq;
 import org.cy.micoservice.blog.entity.gateway.model.req.LogPrintStrategyPageReq;
+import org.cy.micoservice.blog.entity.gateway.model.req.RouteConfigLogDelReq;
 import org.cy.micoservice.blog.framework.web.starter.annotations.NoAuthCheck;
 import org.cy.micoservice.blog.infra.console.service.LogPrintStrategyService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -47,8 +47,8 @@ public class RouteLogController {
   }
 
   @NoAuthCheck
-  @DeleteMapping("/delete/{id}")
-  public ApiResp<String> delete(@PathVariable("id") @NotNull Long id) {
-    return logPrintStrategyService.delete(id);
+  @DeleteMapping("/delete")
+  public ApiResp<String> delete(@Valid RouteConfigLogDelReq req) {
+    return logPrintStrategyService.delete(req.getId());
   }
 }

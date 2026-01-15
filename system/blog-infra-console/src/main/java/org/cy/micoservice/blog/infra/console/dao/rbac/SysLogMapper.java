@@ -1,7 +1,7 @@
 package org.cy.micoservice.blog.infra.console.dao.rbac;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
-import org.cy.micoservice.blog.entity.admin.model.entity.sys.SysLog;
+import org.cy.micoservice.blog.entity.infra.console.model.entity.sys.SysLog;
 import org.springframework.stereotype.Repository;
 
 /**

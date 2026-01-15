@@ -15,16 +15,16 @@ public interface ChatRecordService {
 
   /**
    * 插入发送记录
-   * @param chatRecordReq
+   * @param req
    * @return
    */
-  Boolean add(ChatRecordReq chatRecordReq);
+  Boolean add(ChatRecordReq req);
 
   /**
    * 分页查询聊天记录
-   * @param chatRecordPageReq
+   * @param req
    * @return
    */
-  PageResponseDTO<ChatRecordResp> pageList(ChatRecordPageReq chatRecordPageReq);
+  PageResponseDTO<ChatRecordResp> pageList(ChatRecordPageReq req);
 
 }

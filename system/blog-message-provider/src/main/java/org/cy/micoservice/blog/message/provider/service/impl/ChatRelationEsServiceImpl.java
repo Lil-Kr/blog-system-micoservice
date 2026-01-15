@@ -67,17 +67,17 @@ public class ChatRelationEsServiceImpl implements ChatRelationEsService {
   /**
    * 新增 [聊天会话关系] 信息, 关注 + 打招呼
    * 新增成功时, 发送一条系统通知: [xxx 与 xxx 已成为好友, 可以开始聊天]
-   * @param chatRelationReqDTO
+   * @param req
    * @return
    */
   @Override
-  public boolean add(ChatRelationReqDTO chatRelationReqDTO) {
+  public boolean add(ChatRelationReqDTO req) {
     // todo: 加分布式 lock 保护
-    ChatRelationEs chatRelationEs = BeanCopyUtils.convert(chatRelationReqDTO, ChatRelationEs.class);
-    chatRelationEs.setUserId(chatRelationReqDTO.getUserId());
-    chatRelationEs.setReceiverId(chatRelationReqDTO.getReceiverId());
+    ChatRelationEs chatRelationEs = BeanCopyUtils.convert(req, ChatRelationEs.class);
+    chatRelationEs.setUserId(req.getUserId());
+    chatRelationEs.setReceiverId(req.getReceiverId());
     chatRelationEs.setRelationId(String.format(MessageChatRelationConstants.RELATION_ID_FORMAT, chatRelationEs.getUserId(), chatRelationEs.getReceiverId()));
-    chatRelationEs.setContent(Content.builder().type(chatRelationReqDTO.getType()).body(chatRelationReqDTO.getContent()).build());
+    chatRelationEs.setContent(Content.builder().type(req.getType()).body(req.getContent()).build());
     chatRelationEs.setStatus(ChatRelationStatusEnum.VALID.getCode());
     // 第一次建立会话, msgCount: 0
     chatRelationEs.setMsgCount(0L);
@@ -89,17 +89,17 @@ public class ChatRelationEsServiceImpl implements ChatRelationEsService {
     Result result = chatRelationEsMapper.indexWithResult(chatRelationEs);
 
     // 发送打招呼逻辑
-    if (result.equals(Result.Created) && chatRelationReqDTO.getContent() != null) {
+    if (result.equals(Result.Created) && req.getContent() != null) {
       ImChatContentDTO contentBody = new ImChatContentDTO();
-      contentBody.setBody(chatRelationReqDTO.getContent());
+      contentBody.setBody(req.getContent());
       contentBody.setType(AuditTypeEnum.TEXT.getCode());
 
       ImChatReqDTO imChatReqDTO = new ImChatReqDTO();
-      imChatReqDTO.setReceiverId(chatRelationReqDTO.getReceiverId());
+      imChatReqDTO.setReceiverId(req.getReceiverId());
       imChatReqDTO.setContent(JSONObject.toJSONString(contentBody));
       // 第一次建立会话, seqNo: 0
       imChatReqDTO.setSeqNo(0L);
-      imChatReqDTO.setSenderId(chatRelationReqDTO.getUserId());
+      imChatReqDTO.setSenderId(req.getUserId());
       imChatReqDTO.setRelationId(chatRelationEs.getRelationId());
 
       // 保存聊天记录
@@ -109,22 +109,22 @@ public class ChatRelationEsServiceImpl implements ChatRelationEsService {
   }
 
   @Override
-  public boolean edit(ChatRelationReqDTO chatRelationReqDTO) {
-    ChatRelationEs chatRelationEs = BeanCopyUtils.convert(chatRelationReqDTO, ChatRelationEs.class);
+  public boolean edit(ChatRelationReqDTO req) {
+    ChatRelationEs chatRelationEs = BeanCopyUtils.convert(req, ChatRelationEs.class);
     return false;
   }
 
   /**
    * 批量保存会话关系记录
-   * @param imChatReqDTOMap
+   * @param reqDTOMap
    * @return
    */
   @Override
-  public boolean bulkMap(Map<String, ImChatReqDTO> imChatReqDTOMap) {
+  public boolean bulkMap(Map<String, ImChatReqDTO> reqDTOMap) {
     long now = System.nanoTime();
-    List<Map<String, Object>> eachChatRelationList = imChatReqDTOMap.keySet().stream()
+    List<Map<String, Object>> eachChatRelationList = reqDTOMap.keySet().stream()
       .map(relationId -> {
-        ImChatReqDTO imChatReqDTO = imChatReqDTOMap.get(relationId);
+        ImChatReqDTO imChatReqDTO = reqDTOMap.get(relationId);
         ImChatContentDTO imChatContentDTO = JSON.parseObject(imChatReqDTO.getContent(), ImChatContentDTO.class);
 
         ChatRelationEs chatRelationEs = new ChatRelationEs();
@@ -151,13 +151,13 @@ public class ChatRelationEsServiceImpl implements ChatRelationEsService {
 
   /**
    * chat-relation: 分页查询会话关系列表
-   * @param request
+   * @param reqDTO
    * @return
    */
   @Override
-  public PageResponseDTO<ChatRelationRespDTO> listChatRelationFromPage(ChatRelationPageReqDTO request) {
-    AssertUtil.isNotNull(request.getUserId(), BizErrorEnum.PARAM_ERROR);
-    PageResponseDTO<ChatRelationRespDTO> chatRelationsPageResp = chatRelationEsMapper.listChatRelationFromPage(request);
+  public PageResponseDTO<ChatRelationRespDTO> listChatRelationFromPage(ChatRelationPageReqDTO reqDTO) {
+    AssertUtil.isNotNull(reqDTO.getUserId(), BizErrorEnum.PARAM_ERROR);
+    PageResponseDTO<ChatRelationRespDTO> chatRelationsPageResp = chatRelationEsMapper.listChatRelationFromPage(reqDTO);
     if (CollectionUtils.isEmpty(chatRelationsPageResp.getDataList())) return chatRelationsPageResp;
 
     List<ChatRelationRespDTO> chatRelationRespDTOList = chatRelationsPageResp.getDataList();
@@ -165,7 +165,7 @@ public class ChatRelationEsServiceImpl implements ChatRelationEsService {
     /**
      * 根据用户id查询对话记录集合
      */
-    List<ChatBoxEs> chatBoxEsList = chatBoxEsService.listByUserId(request.getUserId());
+    List<ChatBoxEs> chatBoxEsList = chatBoxEsService.listByUserId(reqDTO.getUserId());
     Map<String, ChatBoxEs> chatBoxEsMap = chatBoxEsList.stream()
       // Function.identity(): 防止map中的key重复报异常
       .collect(Collectors.toMap(ChatBoxEs::getRelationId, Function.identity(), (oldVal, newVal) -> oldVal));
@@ -187,14 +187,14 @@ public class ChatRelationEsServiceImpl implements ChatRelationEsService {
         chatRelationRespDTO.setUnReadCount(Math.max(chatRelationRespDTO.getMsgCount() - chatBoxEs.getMsgOffset(), 0));
       }
     }
-    String chatBoxKey = messageCacheKeyBuilder.buildChatBoxSeqNoKey(request.getUserId());
+    String chatBoxKey = messageCacheKeyBuilder.buildChatBoxSeqNoKey(reqDTO.getUserId());
     redisTemplate.opsForHash().putAll(chatBoxKey, msgOffsetMap);
 
     /**
      * 顺带将消息总数给放入缓存中, 减少后续im处理下游的压力
      */
-    String cacheKey = messageCacheKeyBuilder.chatRelationMsgCountKey(request.getUserId());
-    String relationCountKey = messageCacheKeyBuilder.chatRelationSeqNoKey(request.getRelationId());
+    String cacheKey = messageCacheKeyBuilder.chatRelationMsgCountKey(reqDTO.getUserId());
+    String relationCountKey = messageCacheKeyBuilder.chatRelationSeqNoKey(reqDTO.getRelationId());
     chatRelationRespDTOList.stream()
       .filter(chatRelationRespDTO -> Objects.nonNull(chatRelationRespDTO.getMsgCount()))
       .forEach(chatRelationRespDTO -> {
@@ -212,12 +212,12 @@ public class ChatRelationEsServiceImpl implements ChatRelationEsService {
 
   /**
    * chat-relation: 根据用户id查询会话关系详情
-   * @param chatRelationPageReqDTO
+   * @param reqDTO
    * @return
    */
   @Override
-  public ChatRelationRespDTO queryRelationInfo(ChatRelationPageReqDTO chatRelationPageReqDTO) {
-    ChatRelationEs chatRelationEs = chatRelationEsMapper.queryRelationInfo(chatRelationPageReqDTO);
+  public ChatRelationRespDTO queryRelationInfo(ChatRelationPageReqDTO reqDTO) {
+    ChatRelationEs chatRelationEs = chatRelationEsMapper.queryRelationInfo(reqDTO);
     if (chatRelationEs == null) return null;
 
     ChatRelationRespDTO chatRelationRespDTO = BeanCopyUtils.convert(chatRelationEs, ChatRelationRespDTO.class);

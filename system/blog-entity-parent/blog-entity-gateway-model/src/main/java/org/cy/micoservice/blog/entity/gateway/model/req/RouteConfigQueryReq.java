@@ -17,6 +17,8 @@ public class RouteConfigQueryReq implements Serializable {
   @Serial
   private static final long serialVersionUID = -300910912389613060L;
 
+  private String appName;
+
   private String schema;
 
   private String method;

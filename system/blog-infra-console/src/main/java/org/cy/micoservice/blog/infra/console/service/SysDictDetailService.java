@@ -3,10 +3,10 @@ package org.cy.micoservice.blog.infra.console.service;
 import com.baomidou.mybatisplus.extension.service.IService;
 import org.cy.micoservice.blog.common.base.api.ApiResp;
 import org.cy.micoservice.blog.common.base.api.PageResult;
-import org.cy.micoservice.blog.entity.admin.model.entity.sys.SysDictDetail;
-import org.cy.micoservice.blog.entity.admin.model.req.sys.dict.DictDetailPageListReq;
-import org.cy.micoservice.blog.entity.admin.model.req.sys.dict.SaveDictDetailReq;
-import org.cy.micoservice.blog.entity.admin.model.resp.sys.dic.SysDictDetailResp;
+import org.cy.micoservice.blog.entity.infra.console.model.entity.sys.SysDictDetail;
+import org.cy.micoservice.blog.entity.infra.console.model.req.sys.dict.DictDetailPageListReq;
+import org.cy.micoservice.blog.entity.infra.console.model.req.sys.dict.SaveDictDetailReq;
+import org.cy.micoservice.blog.entity.infra.console.model.resp.sys.dic.SysDictDetailResp;
 
 /**
  * @Author: Lil-K

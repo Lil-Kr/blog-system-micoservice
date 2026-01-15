@@ -22,14 +22,12 @@
 		<module>blog-gateway</module>
 		<module>blog-gateway-facade</module>
 		<module>blog-infra-console</module>
+		<module>blog-infra-facade</module>
 		<module>blog-infra-console-sdk</module>
 		<module>blog-im</module>
 		<module>blog-picture-provider</module>
 		<module>blog-picture-facade</module>
 		<module>blog-picture-api</module>
-		<!--<module>blog-admin-api</module>
-		<module>blog-admin-facade</module>
-		<module>blog-admin-provider</module>-->
 		<module>blog-user-provider</module>
 		<module>blog-user-facade</module>
 		<module>blog-user-api</module>

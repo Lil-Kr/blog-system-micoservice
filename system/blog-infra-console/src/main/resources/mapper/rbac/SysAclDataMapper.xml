@@ -10,7 +10,7 @@
 		id, acl_id, `status`, param, `operation`, value1, value2, next_param_op, seq, remark
 	</sql>
 
-	<select id="selectByPrimaryKey" parameterType="java.lang.Long" resultType="org.cy.micoservice.blog.entity.admin.model.entity.sys.SysAclData">
+	<select id="selectByPrimaryKey" parameterType="java.lang.Long" resultType="org.cy.micoservice.blog.entity.infra.console.model.entity.sys.SysAclData">
 		select <include refid="Base_Column_List"/>
 		from <include refid="Table_Name" />
 		where id = #{id,jdbcType=BIGINT}
@@ -22,7 +22,7 @@
 		where id = #{id,jdbcType=BIGINT}
 	</delete>
 
-	<insert id="insert" parameterType="org.cy.micoservice.blog.entity.admin.model.entity.sys.SysAclData">
+	<insert id="insert" parameterType="org.cy.micoservice.blog.entity.infra.console.model.entity.sys.SysAclData">
 		insert into sys_acl_data (id, acl_id, `status`,
 		                          param, `operation`, value1,
 		                          value2, next_param_op, seq)
@@ -31,7 +31,7 @@
 		        #{value2,jdbcType=VARCHAR}, #{nextParamOp,jdbcType=INTEGER}, #{seq,jdbcType=INTEGER})
 	</insert>
 
-	<insert id="insertSelective" parameterType="org.cy.micoservice.blog.entity.admin.model.entity.sys.SysAclData">
+	<insert id="insertSelective" parameterType="org.cy.micoservice.blog.entity.infra.console.model.entity.sys.SysAclData">
 		insert into sys_acl_data
 		<trim prefix="(" suffix=")" suffixOverrides=",">
 			<if test="id != null">
@@ -93,7 +93,7 @@
 		</trim>
 	</insert>
 
-	<update id="updateByPrimaryKeySelective" parameterType="org.cy.micoservice.blog.entity.admin.model.entity.sys.SysAclData">
+	<update id="updateByPrimaryKeySelective" parameterType="org.cy.micoservice.blog.entity.infra.console.model.entity.sys.SysAclData">
 		update sys_acl_data
 		<set>
 			<if test="aclId != null">
@@ -124,7 +124,7 @@
 		where id = #{id,jdbcType=BIGINT}
 	</update>
 
-	<update id="updateByPrimaryKey" parameterType="org.cy.micoservice.blog.entity.admin.model.entity.sys.SysAclData">
+	<update id="updateByPrimaryKey" parameterType="org.cy.micoservice.blog.entity.infra.console.model.entity.sys.SysAclData">
 		update sys_acl_data
 		set acl_id        = #{aclId,jdbcType=BIGINT},
 		    `status`      = #{status,jdbcType=INTEGER},
@@ -137,7 +137,7 @@
 		where id = #{id,jdbcType=BIGINT}
 	</update>
 
-	<select id="selectAclDataListByAclIds" resultType="org.cy.micoservice.blog.entity.admin.model.entity.sys.SysAclData">
+	<select id="selectAclDataListByAclIds" resultType="org.cy.micoservice.blog.entity.infra.console.model.entity.sys.SysAclData">
 		select <include refid="Base_Column_List"/>
 		from <include refid="Table_Name" />
 		<where>

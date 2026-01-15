@@ -9,10 +9,10 @@ import org.apache.commons.collections4.CollectionUtils;
 import org.cy.micoservice.blog.common.base.api.ApiResp;
 import org.cy.micoservice.blog.common.exception.BizException;
 import org.cy.micoservice.blog.common.utils.DateUtil;
-import org.cy.micoservice.blog.entity.admin.model.entity.sys.SysRoleAdmin;
-import org.cy.micoservice.blog.entity.admin.model.req.sys.roleuser.RoleAdminReq;
-import org.cy.micoservice.blog.entity.admin.model.resp.sys.admin.SysAdminResp;
-import org.cy.micoservice.blog.entity.admin.model.resp.sys.role.RoleAdminResp;
+import org.cy.micoservice.blog.entity.infra.console.model.entity.sys.SysRoleAdmin;
+import org.cy.micoservice.blog.entity.infra.console.model.req.sys.roleuser.RoleAdminReq;
+import org.cy.micoservice.blog.entity.infra.console.model.resp.sys.admin.SysAdminResp;
+import org.cy.micoservice.blog.entity.infra.console.model.resp.sys.role.RoleAdminResp;
 import org.cy.micoservice.blog.framework.id.starter.service.IdService;
 import org.cy.micoservice.blog.infra.console.dao.rbac.SysAdminMapper;
 import org.cy.micoservice.blog.infra.console.dao.rbac.SysRoleAdminMapper;
@@ -44,10 +44,10 @@ public class SysRoleAdminServiceImpl extends ServiceImpl<SysRoleAdminMapper, Sys
 	private MessageLangService msgService;
 
 	@Autowired
-	private SysRoleAdminMapper roleUserMapper;
+	private SysRoleAdminMapper roleAdminMapper;
 
 	@Autowired
-	private SysAdminMapper userMapper;
+	private SysAdminMapper adminMapper;
 
 	@Autowired
 	private RbacCacheService rbacCacheService;
@@ -64,7 +64,7 @@ public class SysRoleAdminServiceImpl extends ServiceImpl<SysRoleAdminMapper, Sys
 		/**
 		 * 查询当前角色id已分配的用户信息
 		 */
-		List<Long> originUserIdList = roleUserMapper.selectAdminIdListByRoleId(req.getRoleId());
+		List<Long> originUserIdList = roleAdminMapper.selectAdminIdListByRoleId(req.getRoleId());
 		if (CollectionUtils.isEmpty(originUserIdList)) {
 			return ApiResp.warning(msgService.getMessage(LANG_ZH, "sys.role.user.resp.msg1"));
 		}
@@ -114,7 +114,7 @@ public class SysRoleAdminServiceImpl extends ServiceImpl<SysRoleAdminMapper, Sys
 		// 删除旧的 [角色-用户] 对应关系数据
 		QueryWrapper<SysRoleAdmin> wrapper = new QueryWrapper<>();
 		wrapper.eq("role_id",roleId);
-		int delete = roleUserMapper.delete(wrapper);
+		int delete = roleAdminMapper.delete(wrapper);
 		if (delete < 1) {
 			throw new BizException(msgService.getMessage(LANG_ZH, "sys.role.user.resp.msg5"));
 		}
@@ -144,28 +144,28 @@ public class SysRoleAdminServiceImpl extends ServiceImpl<SysRoleAdminMapper, Sys
 	@Override
 	public ApiResp<RoleAdminResp> roleAdminList(RoleAdminReq req) {
 		/**
-		 * query user id list by roleId
+		 * query admin id list by roleId
 		 */
-		List<Long> userIdList = roleUserMapper.selectAdminIdListByRoleId(req.getRoleId());
+		List<Long> adminIdList = roleAdminMapper.selectAdminIdListByRoleId(req.getRoleId());
 
 		/**
 		 * 查询角色对应分配的用户信息
 		 * 用于已选列表
 		 */
-		List<SysAdminResp> roleUserSelectList = CollectionUtils.isEmpty(userIdList) ? Lists.newArrayList() : userMapper.selectAdminListByIds(userIdList);
+		List<SysAdminResp> roleAdminSelectList = CollectionUtils.isEmpty(adminIdList) ? Lists.newArrayList() : adminMapper.selectAdminListByIds(adminIdList);
 
 		/**
 		 * 查询所有用户信息, 与 已选列表互斥
 		 * 当前角色从未分配用户时, 返回整个用户列表
 		 */
-		List<SysAdminResp> roleUserAllList = userMapper.selectAdminList();
-		if (CollectionUtils.isEmpty(userIdList)) {
-			roleUserAllList.removeIf(item -> roleUserSelectList.stream().anyMatch(i -> Objects.equals(i.getId(), item.getId())));
+		List<SysAdminResp> roleAdminAllList = adminMapper.selectAdminList();
+		if (CollectionUtils.isEmpty(adminIdList)) {
+			roleAdminAllList.removeIf(item -> roleAdminSelectList.stream().anyMatch(i -> Objects.equals(i.getId(), item.getId())));
 		}
 
 		RoleAdminResp build = RoleAdminResp.builder()
-			.selectedUserList(roleUserSelectList)
-			.unSelectedUserList(roleUserAllList)
+			.selectedUserList(roleAdminSelectList)
+			.unSelectedUserList(roleAdminAllList)
 			.build();
 		return ApiResp.success(build);
 	}

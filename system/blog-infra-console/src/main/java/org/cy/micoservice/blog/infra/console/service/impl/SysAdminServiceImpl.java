@@ -6,27 +6,29 @@ import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.collections4.CollectionUtils;
 import org.cy.micoservice.blog.common.base.api.ApiResp;
 import org.cy.micoservice.blog.common.base.api.PageResult;
+import org.cy.micoservice.blog.common.enums.biz.DeleteStatusEnum;
 import org.cy.micoservice.blog.common.enums.response.ApiReturnCodeEnum;
 import org.cy.micoservice.blog.common.utils.BeanCopyUtils;
 import org.cy.micoservice.blog.common.utils.DateUtil;
-import org.cy.micoservice.blog.entity.admin.model.entity.sys.SysAdmin;
-import org.cy.micoservice.blog.entity.admin.model.req.sys.admin.*;
-import org.cy.micoservice.blog.entity.admin.model.resp.sys.admin.SysAdminResp;
+import org.cy.micoservice.blog.entity.infra.console.model.entity.sys.SysAdmin;
+import org.cy.micoservice.blog.entity.infra.console.model.req.sys.admin.*;
+import org.cy.micoservice.blog.entity.infra.console.model.resp.sys.admin.SysAdminResp;
 import org.cy.micoservice.blog.framework.id.starter.service.IdService;
 import org.cy.micoservice.blog.infra.console.dao.rbac.SysAdminMapper;
 import org.cy.micoservice.blog.infra.console.service.MessageLangService;
 import org.cy.micoservice.blog.infra.console.service.RbacCacheService;
 import org.cy.micoservice.blog.infra.console.service.SysAdminService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+
 import static org.cy.micoservice.blog.common.constants.CommonConstants.LANG_ZH;
 import static org.cy.micoservice.blog.common.enums.response.ApiReturnCodeEnum.*;
-import static org.cy.micoservice.blog.entity.admin.model.dto.admin.AdminDTO.convertAddUserReq;
-import static org.cy.micoservice.blog.entity.admin.model.dto.admin.AdminDTO.convertEditUserReq;
+import static org.cy.micoservice.blog.infra.facade.dto.admin.AdminDTO.convertAddUserReq;
+import static org.cy.micoservice.blog.infra.facade.dto.admin.AdminDTO.convertEditUserReq;
 
 /**
  * @Author: Lil-K
@@ -37,20 +39,20 @@ import static org.cy.micoservice.blog.entity.admin.model.dto.admin.AdminDTO.conv
 @Slf4j
 public class SysAdminServiceImpl extends ServiceImpl<SysAdminMapper, SysAdmin> implements SysAdminService {
 
-	@Value("${upload.rootDir}")
-	private String rootDir;
-
-	@Value("${upload.uploadDir}")
-	private String uploadDir;
-
-	@Value("${upload.adminUserPath}")
-	private String adminUserPath;
+	// @Value("${upload.rootDir}")
+	// private String rootDir;
+	//
+	// @Value("${upload.uploadDir}")
+	// private String uploadDir;
+	//
+	// @Value("${upload.adminUserPath}")
+	// private String adminUserPath;
 
 	@Autowired
 	private MessageLangService msgService;
 
 	@Autowired
-	private SysAdminMapper userMapper;
+	private SysAdminMapper adminMapper;
 
 	@Autowired
 	private RbacCacheService rbacCacheService;
@@ -65,13 +67,19 @@ public class SysAdminServiceImpl extends ServiceImpl<SysAdminMapper, SysAdmin> i
 	 */
 	@Override
 	public ApiResp<Integer> registerAdmin(AdminRegisterReq req) {
-		SysAdmin before = userMapper.getAdminByAccount(req.getAccount());
+		SysAdmin before = adminMapper.getAdminByAccount(req.getAccount());
 		if (Objects.nonNull(before)) {
 			return ApiResp.failure(ApiReturnCodeEnum.INFO_NOT_EXIST);
 		}
 
 		SysAdmin after = BeanCopyUtils.convert(req, SysAdmin.class);
-		int count = userMapper.insert(after);
+		after.setId(idService.getId());
+		after.setDeleted(DeleteStatusEnum.ACTIVE.getCode());
+		after.setCreateId(req.getAdminId());
+		after.setUpdateId(req.getAdminId());
+		after.setCreateTime(DateUtil.localDateTimeNow());
+		after.setUpdateTime(DateUtil.localDateTimeNow());
+		int count = adminMapper.insert(after);
 		if (count < 1) {
 			return ApiResp.failure(ADD_ERROR);
 		}
@@ -89,13 +97,13 @@ public class SysAdminServiceImpl extends ServiceImpl<SysAdminMapper, SysAdmin> i
    */
   @Override
   public ApiResp<String> add(AdminSaveReq req) {
-	  List<SysAdminResp> checkRes = userMapper.selectAdminInfoExist(req);
+	  List<SysAdminResp> checkRes = adminMapper.selectAdminInfoExist(req);
 	  if (CollectionUtils.isNotEmpty(checkRes)) {
 		  return ApiResp.failure(DATA_INFO_REPEAT);
 	  }
 
 	  SysAdmin user = convertAddUserReq(req);
-	  int insert = userMapper.insert(user);
+	  int insert = adminMapper.insert(user);
 	  if (insert < 1) {
 		  return ApiResp.failure(ADD_ERROR);
 	  }
@@ -115,13 +123,13 @@ public class SysAdminServiceImpl extends ServiceImpl<SysAdminMapper, SysAdmin> i
 	public ApiResp<String> edit(AdminSaveReq req) {
     QueryWrapper<SysAdmin> wrapper = new QueryWrapper<>();
     wrapper.eq("id", req.getId());
-		SysAdmin before = userMapper.selectOne(wrapper);
+		SysAdmin before = adminMapper.selectOne(wrapper);
     if (Objects.isNull(before)) {
       return ApiResp.failure(UPDATE_ERROR);
     }
 
     SysAdmin user = convertEditUserReq(before, req);
-		int update = userMapper.updateAdminById(user);
+		int update = adminMapper.updateAdminById(user);
 		if (update < 1) {
       return ApiResp.failure(UPDATE_ERROR);
 		}
@@ -141,11 +149,11 @@ public class SysAdminServiceImpl extends ServiceImpl<SysAdminMapper, SysAdmin> i
   public ApiResp<String> delete(Long surrogateId) {
 	  QueryWrapper<SysAdmin> wrapper = new QueryWrapper<>();
 	  wrapper.eq("id", surrogateId);
-	  SysAdmin admin = userMapper.selectOne(wrapper);
+	  SysAdmin admin = adminMapper.selectOne(wrapper);
 	  if (Objects.isNull(admin)) {
 		  return ApiResp.failure(INFO_NOT_EXIST);
 	  }
-	  int delete = userMapper.delete(wrapper);
+	  int delete = adminMapper.delete(wrapper);
 	  if (delete < 1) {
       return ApiResp.failure(DEL_ERROR);
 	  }
@@ -158,23 +166,23 @@ public class SysAdminServiceImpl extends ServiceImpl<SysAdminMapper, SysAdmin> i
 
   @Override
   public SysAdmin getUserById(Long id) {
-	  return userMapper.getAdminById(id);
+	  return adminMapper.getAdminById(id);
   }
 
 	@Override
 	public SysAdminResp getUserBySurrogateId(Long surrogateId) {
-		return userMapper.getAdminBySurrogateId(surrogateId);
+		return adminMapper.getAdminBySurrogateId(surrogateId);
 	}
 
 	@Override
 	public ApiResp<SysAdmin> adminLogin(AdminLoginReq req) {
-		SysAdmin admin = userMapper.loginAdmin(req);
+		SysAdmin admin = adminMapper.loginAdmin(req);
 		if (Objects.isNull(admin)) {
 			return ApiResp.failure(USER_INFO_ERROR);
 		}
 
-		admin.setUpdateTime(DateUtil.dateTimeNow());
-		Integer update = userMapper.updateAdminById(admin);
+		admin.setUpdateTime(DateUtil.localDateTimeNow());
+		Integer update = adminMapper.updateAdminById(admin);
 		if (update < 1) {
 			return ApiResp.warning(USER_INFO_ERROR);
 		}
@@ -187,8 +195,8 @@ public class SysAdminServiceImpl extends ServiceImpl<SysAdminMapper, SysAdmin> i
 
 	@Override
 	public PageResult<SysAdminResp> pageList(AdminListPageReq req) {
-		List<SysAdminResp> list =  userMapper.pageAdminList(req);
-		Integer count = userMapper.countAdminList(req);
+		List<SysAdminResp> list =  adminMapper.pageAdminList(req);
+		Integer count = adminMapper.countAdminList(req);
 		if (CollectionUtils.isNotEmpty(list)) {
 			return new PageResult<>(list, count);
 		} else {

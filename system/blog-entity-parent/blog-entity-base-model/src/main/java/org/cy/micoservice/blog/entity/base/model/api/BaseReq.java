@@ -6,7 +6,7 @@ import lombok.Data;
 
 import java.io.Serial;
 import java.io.Serializable;
-import java.util.Date;
+import java.time.LocalDateTime;
 
 /**
  * @Author: Lil-K
@@ -31,23 +31,23 @@ public class BaseReq implements Serializable {
    * 创建人
    */
   @JsonSerialize(using = ToStringSerializer.class)
-  private Long creatorId;
+  private Long createId;
 
   /**
    * 修改人
    */
   @JsonSerialize(using = ToStringSerializer.class)
-  private Long operatorId;
+  private Long updateId;
 
   /**
    * 创建时间
    */
-  private Date createTime;
+  private LocalDateTime createTime;
 
   /**
    * 更改时间
    */
-  private Date updateTime;
+  private LocalDateTime updateTime;
 
   /**
    * 是否排序 ->  0:升序, 1:降序, null:不做排序

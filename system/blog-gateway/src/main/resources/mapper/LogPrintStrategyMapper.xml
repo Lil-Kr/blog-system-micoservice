@@ -3,13 +3,12 @@
 <mapper namespace="org.cy.micoservice.blog.gateway.dao.LogPrintStrategyMapper">
 
 	<sql id="Table_Name">
-		t_route_change_log
+		sys_route_log_print_strategy
 	</sql>
 
 	<!-- 通用查询结果列 -->
 	<sql id="Base_Column_List">
-		id, strategy_name, strategy_type, strategy_body, deleted, creator_id, operator_id, create_time, update_time
+		id, strategy_name, strategy_type, strategy_body, deleted, create_id, update_id, create_time, update_time
 	</sql>
-
 
 </mapper>

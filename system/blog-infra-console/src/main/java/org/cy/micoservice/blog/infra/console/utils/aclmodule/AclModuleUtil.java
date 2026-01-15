@@ -1,8 +1,8 @@
 package org.cy.micoservice.blog.infra.console.utils.aclmodule;
 
 
-import org.cy.micoservice.blog.entity.admin.model.dto.aclmodule.AclModuleDto;
-import org.cy.micoservice.blog.entity.admin.model.entity.sys.SysAclModule;
+import org.cy.micoservice.blog.infra.facade.dto.aclmodule.AclModuleDto;
+import org.cy.micoservice.blog.entity.infra.console.model.entity.sys.SysAclModule;
 
 import java.util.Comparator;
 

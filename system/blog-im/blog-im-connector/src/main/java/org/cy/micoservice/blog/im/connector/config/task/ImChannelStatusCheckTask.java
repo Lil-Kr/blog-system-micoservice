@@ -37,7 +37,7 @@ public class ImChannelStatusCheckTask implements InitializingBean {
       while (Thread.currentThread().isInterrupted()) {
         try {
           // 15 秒执行一次
-          TimeUnit.SECONDS.sleep(15);
+          TimeUnit.SECONDS.sleep(20);
           long nowTime = System.currentTimeMillis();
           List<ChannelHandlerContext> ctxSnapshotList = imChannelCache.getWaitingIdentifyCtxList();
           if (CollectionUtils.isEmpty(ctxSnapshotList)) continue;
@@ -51,8 +51,6 @@ public class ImChannelStatusCheckTask implements InitializingBean {
               needRemoveChannelIdList.add(needRemoveChannelId);
             }
           }
-
-          if (CollectionUtils.isEmpty(needRemoveChannelIdList)) continue;
 
           // 逐个关闭链接
           for (String channelId : needRemoveChannelIdList) {

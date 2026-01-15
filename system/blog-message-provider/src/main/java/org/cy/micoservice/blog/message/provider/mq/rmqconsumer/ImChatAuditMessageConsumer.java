@@ -91,7 +91,6 @@ public class ImChatAuditMessageConsumer implements InitializingBean {
      * todo: 1. 更改DB中的消息状态, 改为审核通过
      * todo: 2. 发送消息给router层做后续逻辑处理
      */
-    return;
   }
 
 }

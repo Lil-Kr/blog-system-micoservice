@@ -1,7 +1,7 @@
 package org.cy.micoservice.blog.infra.console.service;
 
 import org.cy.micoservice.blog.common.base.api.ApiResp;
-import org.cy.micoservice.blog.entity.admin.model.req.sys.roleacl.RoleAclSaveReq;
+import org.cy.micoservice.blog.entity.infra.console.model.req.sys.roleacl.RoleAclSaveReq;
 
 /**
  * @Author: Lil-K
