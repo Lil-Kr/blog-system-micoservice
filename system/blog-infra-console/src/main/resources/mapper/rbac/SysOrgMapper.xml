@@ -13,7 +13,7 @@
 		<result column="seq" property="seq"/>
 		<result column="status" property="status"/>
 		<result column="remark" property="remark"/>
-		<result column="operator" property="operator"/>
+		<result column="update_id" property="update_id"/>
 		<result column="operate_ip" property="operateIp"/>
 		<result column="create_time" property="createTime"/>
 		<result column="update_time" property="updateTime"/>
@@ -25,11 +25,11 @@
 
 	<!-- 通用查询结果列 -->
 	<sql id="Base_Column_List">
-		id, surrogate_id, `number`, `name`, parent_id, `level`, seq, status, remark, operator, operate_ip, create_time, update_time
+		id, surrogate_id, `number`, `name`, parent_id, `level`, seq, status, remark, update_id, operate_ip, create_time, update_time
 	</sql>
 
 	<sql id="Base_Join_Column_List">
-		a.id, a.surrogate_id, a.`number`, a.`name`, a.parent_id, a.`level`, a.seq, a.status, a.remark, a.operator, a.operate_ip, a.create_time, a.update_time
+		a.id, a.surrogate_id, a.`number`, a.`name`, a.parent_id, a.`level`, a.seq, a.status, a.remark, a.update_id, a.operate_ip, a.create_time, a.update_time
 	</sql>
 
 	<select id="selectChildOrgList" resultMap="BaseResultMap">
@@ -57,7 +57,7 @@
 		a.seq,
 		a.status,
 		a.remark,
-		a.operator,
+		a.update_id,
 		a.operate_ip,
 		a.create_time,
 		a.update_time,
@@ -65,7 +65,7 @@
 		c.`name` as 'parent_name'
 		from sys_org as a
 		left join sys_org as c on (a.parent_id = c.surrogate_id)
-		left join sys_admin as b on (a.operator = b.surrogate_id)
+		left join sys_admin as b on (a.update_id = b.id)
 		<where>
 			<if test="param.surrogateId != null">
 				and a.surrogate_id = #{param.surrogateId}

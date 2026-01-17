@@ -71,9 +71,9 @@ const transformAclListToTable = (list: AclPageListResp[]): AclTableListType[] =>
   if (!list || list.length < 1) {
     return []
   }
-  return list.map(({ surrogateId, ...rest }) => ({
-    key: surrogateId,
-    surrogateId,
+  return list.map(({ aclId, ...rest }) => ({
+    key: aclId,
+    aclId,
     ...rest
   }))
 }
@@ -111,3 +111,27 @@ const transformTypeToSeletorById = (statusDict: DictMapType[]): OptionType[] => 
 }
 
 export { transformDictTypeToSeletor, transformTypeToSeletorById }
+
+/** =================== 路由配置-转换 =================== **/
+import { RouteConfig, RouteConfigTableType } from '@/types/apis/gateway/routeType'
+
+/**
+ * 转换路由配置列表, 用于路由配置列表展示
+ * @param list
+ * @returns
+ */
+const transformRouteConfigToTable = (list: RouteConfig[]): RouteConfigTableType[] => {
+  if (!list || list.length < 1) {
+    return []
+  }
+  return list.map(({ id, appName, path, method, ...rest }) => ({
+    // 使用组合键确保唯一性：id + appName + path + method
+    key: `${id}_${appName}_${path}_${method}`,
+    id,
+    appName,
+    path,
+    method,
+    ...rest
+  }))
+}
+export { transformRouteConfigToTable }

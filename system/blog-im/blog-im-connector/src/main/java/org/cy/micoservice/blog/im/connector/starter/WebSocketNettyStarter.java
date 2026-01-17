@@ -181,7 +181,7 @@ public class WebSocketNettyStarter implements InitializingBean {
   /**
    * Spring boot 优雅关闭时候调用
    */
-  public void stopWebSocketServer() {
+  public void shutDownWebSocketServer() {
     try {
       // 修改 Nacos 上, 当前应用实例修改为 unHealth 状态, 并通知
       imConnectorNacosRegister.changeNodeToUnHealth();

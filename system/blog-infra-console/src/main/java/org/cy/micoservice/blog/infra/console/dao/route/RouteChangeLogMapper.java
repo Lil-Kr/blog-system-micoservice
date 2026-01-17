@@ -1,4 +1,4 @@
-package org.cy.micoservice.blog.infra.console.dao.gateway;
+package org.cy.micoservice.blog.infra.console.dao.route;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import org.cy.micoservice.blog.entity.gateway.model.entity.RouteChangeLog;

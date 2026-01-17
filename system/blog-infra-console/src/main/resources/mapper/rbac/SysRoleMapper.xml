@@ -7,7 +7,7 @@
 
 	<!-- 通用查询结果列 -->
 	<sql id="Base_Column_List">
-		id, surrogate_id, `name`, `type`, remark, status, deleted, operate_ip, creator_id, operator, create_time, update_time
+		id, surrogate_id, `name`, `type`, remark, status, deleted, operate_ip, create_id, update_id, create_time, update_time
 	</sql>
 
 	<delete id="deleteBySurrogateId">

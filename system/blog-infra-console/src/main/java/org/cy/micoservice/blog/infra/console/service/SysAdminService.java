@@ -17,7 +17,7 @@ public interface SysAdminService {
 
 	SysAdminResp getUserBySurrogateId(Long surrogateId);
 
-	ApiResp<SysAdmin> adminLogin(AdminLoginReq reqParam);
+	ApiResp<SysAdmin> adminLogin(AdminLoginReq reqParam) throws Exception;
 
 	ApiResp<Integer> registerAdmin(AdminRegisterReq req);
 

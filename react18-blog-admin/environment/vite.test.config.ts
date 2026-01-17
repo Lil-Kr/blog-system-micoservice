@@ -45,10 +45,10 @@ export default defineConfig({
     port: 7010,
     host: '0.0.0.0',
     proxy: {
-      '/api': {
+      '/infra': {
         target: 'http://localhost:8089',
         changeOrigin: true,
-        rewrite: path => path.replace(/^\/api/, '')
+        rewrite: path => path.replace(/^\/infra/, '')
       }
     }
   }

@@ -77,6 +77,16 @@ const sysConfig: RouterItemType[] = [
         },
         path: '/admin/sys/dict',
         element: LazyLoad(lazy(() => import('@/views/sys/dict/Dict')))
+      },
+      {
+        meta: {
+          key: '/apis/route',
+          title: '路由管理',
+          layout: false,
+          icon: <SlidersOutlined />
+        },
+        path: '/admin/apis/route',
+        element: LazyLoad(lazy(() => import('@/views/sys/apis/ApiRoute')))
       }
     ]
   }

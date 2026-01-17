@@ -34,6 +34,7 @@ import static org.springframework.cloud.gateway.handler.predicate.RoutePredicate
 public class RouteDefinitionWriterServiceImpl implements RouteDefinitionWriterService {
 
   private final String ROUTE_CONFIG_PREFIX = "route-config-";
+
   private final String REFRESH_KEY = "gateway-route-refresh";
 
   @Autowired

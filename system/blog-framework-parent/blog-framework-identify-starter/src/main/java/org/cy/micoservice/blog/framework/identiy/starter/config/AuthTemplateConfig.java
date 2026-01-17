@@ -8,7 +8,7 @@ import org.springframework.context.annotation.Bean;
 /**
  * @Author: Lil-K
  * @Date: 2025/11/29
- * @Description:
+ * @Description: 认证模板配置类
  */
 public class AuthTemplateConfig {
 

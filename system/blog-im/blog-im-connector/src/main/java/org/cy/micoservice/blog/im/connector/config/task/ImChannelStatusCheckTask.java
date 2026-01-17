@@ -36,7 +36,7 @@ public class ImChannelStatusCheckTask implements InitializingBean {
     Thread checkTask = new Thread(() -> {
       while (Thread.currentThread().isInterrupted()) {
         try {
-          // 15 秒执行一次
+          // 20 秒执行一次
           TimeUnit.SECONDS.sleep(20);
           long nowTime = System.currentTimeMillis();
           List<ChannelHandlerContext> ctxSnapshotList = imChannelCache.getWaitingIdentifyCtxList();

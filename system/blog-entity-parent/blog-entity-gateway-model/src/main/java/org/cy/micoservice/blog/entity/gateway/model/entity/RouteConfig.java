@@ -4,12 +4,16 @@ import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
+import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
+import lombok.experimental.SuperBuilder;
 import org.cy.micoservice.blog.entity.base.model.api.BaseEntity;
 
 import java.io.Serial;
-import java.io.Serializable;
 
 /**
  * @Author: Lil-K
@@ -18,9 +22,12 @@ import java.io.Serializable;
  */
 @EqualsAndHashCode(callSuper = true)
 @Data
+@SuperBuilder
+@NoArgsConstructor
+@AllArgsConstructor
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @TableName("sys_route_config")
-public class RouteConfig extends BaseEntity implements Serializable {
+public class RouteConfig extends BaseEntity {
 
   @Serial
   private static final long serialVersionUID = -5156026782213949765L;
@@ -29,6 +36,7 @@ public class RouteConfig extends BaseEntity implements Serializable {
    * 路由配置id
    */
   @TableId(value = "id")
+  @JsonSerialize(using = ToStringSerializer.class)
   private Long id;
 
   /**

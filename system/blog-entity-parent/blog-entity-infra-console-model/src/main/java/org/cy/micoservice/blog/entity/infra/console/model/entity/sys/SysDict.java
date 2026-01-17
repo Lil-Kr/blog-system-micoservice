@@ -6,10 +6,11 @@ import com.baomidou.mybatisplus.annotation.TableName;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
 import lombok.*;
+import lombok.experimental.SuperBuilder;
+import org.cy.micoservice.blog.entity.base.model.api.BaseEntity;
 
 import java.io.Serial;
 import java.io.Serializable;
-import java.util.Date;
 
 /**
  * <p>
@@ -20,13 +21,12 @@ import java.util.Date;
  * @since 2020-11-29
  */
 @Data
-@EqualsAndHashCode(callSuper = false)
-@ToString
-@Builder
+@EqualsAndHashCode(callSuper = true)
+@SuperBuilder
 @NoArgsConstructor
 @AllArgsConstructor
 @TableName("sys_dict")
-public class SysDict implements Serializable {
+public class SysDict extends BaseEntity implements Serializable {
 
   @Serial
   private static final long serialVersionUID = 3907370379306169949L;
@@ -58,24 +58,8 @@ public class SysDict implements Serializable {
   private Integer deleted;
 
   /**
-   * 操作人
-   */
-  @JsonSerialize(using = ToStringSerializer.class)
-  private Long operator;
-
-  /**
    * 操作ip
    */
   private String operateIp;
-
-  /**
-   * 创建时间
-   */
-  private Date createTime;
-
-  /**
-   * 更改时间
-   */
-  private Date  updateTime;
 
 }

@@ -1,6 +1,7 @@
 package org.cy.micoservice.blog.gateway.service.impl;
 
 import org.apache.commons.lang3.StringUtils;
+import org.cy.micoservice.blog.common.constants.CommonFormatConstants;
 import org.cy.micoservice.blog.entity.gateway.model.entity.RouteConfig;
 import org.cy.micoservice.blog.gateway.service.RouteCacheService;
 import org.springframework.stereotype.Service;
@@ -8,8 +9,6 @@ import org.springframework.stereotype.Service;
 import java.util.Map;
 import java.util.Objects;
 import java.util.concurrent.ConcurrentHashMap;
-
-import static org.cy.micoservice.blog.common.constants.CommonFormatConstants.COMMENT_FORMAT_COLON_SPLIT;
 
 /**
  * @Author: Lil-K
@@ -19,13 +18,18 @@ import static org.cy.micoservice.blog.common.constants.CommonFormatConstants.COM
 @Service
 public class RouteCacheServiceImpl implements RouteCacheService {
 
-  private Map<String, RouteConfig> routeConfigMap = new ConcurrentHashMap<>();
+  private final Map<String, RouteConfig> routeConfigMap = new ConcurrentHashMap<>();
 
+  /**
+   * /api/admin/{adminId} --> /api/admin/**
+   * @param method
+   * @param path
+   * @return
+   */
   @Override
   public RouteConfig get(String method, String path) {
     if (StringUtils.isBlank(method) || StringUtils.isBlank(path)) return null;
-
-    String key = String.format(COMMENT_FORMAT_COLON_SPLIT, method, path);
+    String key = String.format(CommonFormatConstants.COMMENT_FORMAT_COLON_SPLIT, method, path);
     return routeConfigMap.getOrDefault(key, null);
   }
 
@@ -34,7 +38,7 @@ public class RouteCacheServiceImpl implements RouteCacheService {
     if (Objects.isNull(routeConfig) || StringUtils.isBlank(routeConfig.getMethod()) || StringUtils.isBlank(routeConfig.getPath())) {
       return false;
     }
-    String key = String.format(COMMENT_FORMAT_COLON_SPLIT, routeConfig.getMethod(), routeConfig.getPath());
+    String key = String.format(CommonFormatConstants.COMMENT_FORMAT_COLON_SPLIT, routeConfig.getMethod(), routeConfig.getPath());
     routeConfigMap.put(key, routeConfig);
     return true;
   }
@@ -44,7 +48,7 @@ public class RouteCacheServiceImpl implements RouteCacheService {
     if (StringUtils.isBlank(method) || StringUtils.isBlank(path)) {
       return false;
     }
-    String key = String.format(COMMENT_FORMAT_COLON_SPLIT, method, path);
+    String key = String.format(CommonFormatConstants.COMMENT_FORMAT_COLON_SPLIT, method, path);
     return routeConfigMap.remove(key) != null;
   }
 }

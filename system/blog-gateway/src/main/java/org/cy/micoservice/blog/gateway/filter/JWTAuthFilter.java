@@ -3,13 +3,14 @@ package org.cy.micoservice.blog.gateway.filter;
 import com.alibaba.fastjson2.JSONObject;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
+import org.cy.micoservice.blog.common.constants.gateway.GatewayHeadersConstants;
 import org.cy.micoservice.blog.common.security.impl.AES128GCMCrypto;
 import org.cy.micoservice.blog.entity.gateway.model.entity.RouteConfig;
-import org.cy.micoservice.blog.common.constants.gateway.GatewayHeadersConstants;
-import org.cy.micoservice.blog.gateway.facade.enums.GatewayRouterAuthTypeEnum;
 import org.cy.micoservice.blog.framework.identiy.starter.response.TokenBodyResponse;
 import org.cy.micoservice.blog.framework.identiy.starter.template.AuthTemplate;
+import org.cy.micoservice.blog.gateway.config.GatewayApplicationProperties;
 import org.cy.micoservice.blog.gateway.facade.constants.GatewayConstants;
+import org.cy.micoservice.blog.gateway.facade.enums.GatewayRouterAuthTypeEnum;
 import org.cy.micoservice.blog.gateway.filter.abst.AbstractGatewayFilter;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,6 +33,8 @@ public class JWTAuthFilter extends AbstractGatewayFilter implements Initializing
 
   @Autowired
   private AuthTemplate authTemplate;
+  @Autowired
+  private GatewayApplicationProperties gatewayApplicationProperties;
 
   private AES128GCMCrypto aes128GCMCrypto;
 
@@ -86,7 +89,7 @@ public class JWTAuthFilter extends AbstractGatewayFilter implements Initializing
 
   @Override
   public void afterPropertiesSet() throws Exception {
-    this.aes128GCMCrypto = new AES128GCMCrypto("PxMNarWuqoNFFGJ5QGgesg==");
+    this.aes128GCMCrypto = new AES128GCMCrypto(gatewayApplicationProperties.getDecryptSecretKey());
   }
 
   @Override

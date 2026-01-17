@@ -10,8 +10,10 @@ public class CommonConstants {
   /**
    * lang
    */
-  public static final String LANG_ZH = "zh";
-  public static final String LANG_EN = "en";
+  public static final String LANG_ZH = "zh-CN";
+  public static final String LANG_EN = "en-US";
+
+  public static final String DEFAULT_AUTH_KEY_USER_ID = "userId";
 
   // /**
   //  * image

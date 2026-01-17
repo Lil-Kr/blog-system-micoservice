@@ -25,7 +25,7 @@ export interface SysAclModule {
 /** 权限点 entity */
 export interface SysAcl {
   id: string
-  surrogateId: string
+  aclId: string
   number: string
   name: string
   aclModuleId: string

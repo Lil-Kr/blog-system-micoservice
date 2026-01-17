@@ -29,7 +29,7 @@ const aclModuleApi: AclModuleApi = {
     return baseAxiosRequest.post<Result<AclModuleTreeResp[]>>(PREFIX_URL_SYS_ACL_MODULE + '/aclModuleTree', {})
   },
   getAclModule(req: AclModuleReq) {
-    return baseAxiosRequest.get<Result<SysAclModule>>(PREFIX_URL_SYS_ACL_MODULE + `/getAclModule/${req.surrogateId}`, {})
+    return baseAxiosRequest.get<Result<SysAclModule>>(PREFIX_URL_SYS_ACL_MODULE + `/getAclModule`, req)
   },
   aclModuleList(req: AclModuleListReq) {
     return baseAxiosRequest.post<Result<SysAclModuleListResp[]>>(PREFIX_URL_SYS_ACL_MODULE + '/list', req)
@@ -47,7 +47,7 @@ const aclApi: AclApi = {
     return baseAxiosRequest.post<Result<string>>(PREFIX_URL_SYS_ACL + '/edit', req)
   },
   delete(req: AclDeletReq) {
-    return baseAxiosRequest.delete<Result<string>>(PREFIX_URL_SYS_ACL + `/delete/${req.surrogateId}`, {})
+    return baseAxiosRequest.delete<Result<string>>(PREFIX_URL_SYS_ACL + `/delete`, req)
   },
   pageList(req: AclPageListReq) {
     return baseAxiosRequest.post<ResultPage<AclPageListResp>>(PREFIX_URL_SYS_ACL + '/pageList', req)

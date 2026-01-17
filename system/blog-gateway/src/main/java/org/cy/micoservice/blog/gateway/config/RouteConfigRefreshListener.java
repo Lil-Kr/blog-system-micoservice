@@ -77,7 +77,7 @@ public class RouteConfigRefreshListener {
     configService.addListener(dataId, group, new Listener() {
       @Override
       public Executor getExecutor() {
-        // 暂时为空, 如果不想用nacos的内置线程池, 可以这里注入一个
+        // 暂时为空, 如果不想用 nacos 的内置线程池, 可以这里注入一个
         return null;
       }
 

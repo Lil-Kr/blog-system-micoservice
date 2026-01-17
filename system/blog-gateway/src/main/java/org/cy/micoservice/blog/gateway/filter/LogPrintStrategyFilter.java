@@ -53,11 +53,6 @@ public class LogPrintStrategyFilter extends AbstractGatewayFilter implements Ord
     return chain.filter(exchange);
   }
 
-  @Override
-  public int getOrder() {
-    return GatewayConstants.GatewayOrder.LOG_PRINT_STRATEGY_FILTER_ORDER;
-  }
-
   /**
    * 获取日志打印请求 DTO
    * @param exchange
@@ -66,7 +61,7 @@ public class LogPrintStrategyFilter extends AbstractGatewayFilter implements Ord
   private LogRequestDTO getLogRequestDTO(ServerWebExchange exchange) {
     ServerHttpRequest request = exchange.getRequest();
     String path = exchange.getRequest().getPath().toString();
-    RouteConfig routeConfig = (RouteConfig) exchange.getAttributes().getOrDefault(GatewayConstants.GatewayAttrKey.X_ROUTE, new RouteConfig());
+    RouteConfig routeConfig = (RouteConfig) exchange.getAttributes().getOrDefault(GatewayConstants.GatewayAttrKey.X_ROUTE, RouteConfig.builder().build());
     TokenBodyResponse tokenBodyResponse = (TokenBodyResponse) exchange.getAttributes().getOrDefault(GatewayConstants.GatewayAttrKey.X_JWT_INFO, new TokenBodyResponse());
 
     LogRequestDTO logRequestDTO = new LogRequestDTO();
@@ -92,5 +87,10 @@ public class LogPrintStrategyFilter extends AbstractGatewayFilter implements Ord
       headerMap.put(headerName, list);
     }
     return headerMap;
+  }
+
+  @Override
+  public int getOrder() {
+    return GatewayConstants.GatewayOrder.LOG_PRINT_STRATEGY_FILTER_ORDER;
   }
 }

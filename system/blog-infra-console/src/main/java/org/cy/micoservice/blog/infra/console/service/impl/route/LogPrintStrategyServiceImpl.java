@@ -1,4 +1,4 @@
-package org.cy.micoservice.blog.infra.console.service.impl;
+package org.cy.micoservice.blog.infra.console.service.impl.route;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import lombok.extern.slf4j.Slf4j;
@@ -6,8 +6,8 @@ import org.apache.commons.collections4.CollectionUtils;
 import org.cy.micoservice.blog.common.base.api.ApiResp;
 import org.cy.micoservice.blog.common.base.api.PageResult;
 import org.cy.micoservice.blog.common.enums.biz.DeleteStatusEnum;
-import org.cy.micoservice.blog.common.enums.response.ApiReturnCodeEnum;
 import org.cy.micoservice.blog.common.enums.biz.ValidStatusEnum;
+import org.cy.micoservice.blog.common.enums.response.ApiReturnCodeEnum;
 import org.cy.micoservice.blog.common.utils.BeanCopyUtils;
 import org.cy.micoservice.blog.common.utils.DateUtil;
 import org.cy.micoservice.blog.common.utils.IdWorker;
@@ -15,7 +15,8 @@ import org.cy.micoservice.blog.entity.gateway.model.entity.LogPrintStrategy;
 import org.cy.micoservice.blog.entity.gateway.model.req.LogPrintStrategyAddReq;
 import org.cy.micoservice.blog.entity.gateway.model.req.LogPrintStrategyEditReq;
 import org.cy.micoservice.blog.entity.gateway.model.req.LogPrintStrategyPageReq;
-import org.cy.micoservice.blog.infra.console.dao.gateway.LogPrintStrategyMapper;
+import org.cy.micoservice.blog.entity.gateway.model.req.RouteConfigLogDelReq;
+import org.cy.micoservice.blog.infra.console.dao.route.LogPrintStrategyMapper;
 import org.cy.micoservice.blog.infra.console.service.LogPrintStrategyService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -59,8 +60,8 @@ public class LogPrintStrategyServiceImpl implements LogPrintStrategyService {
     convert.setStatus(ValidStatusEnum.ACTIVE.getCode());
     convert.setDeleted(DeleteStatusEnum.ACTIVE.getCode());
     // todo: 这里修改为当前操作人
-    convert.setCreateId(convert.getId());
-    convert.setUpdateId(convert.getId());
+    convert.setCreateId(req.getAdminId());
+    convert.setUpdateId(req.getAdminId());
 
     LocalDateTime now = DateUtil.localDateTimeNow();
     convert.setCreateTime(now);
@@ -87,10 +88,12 @@ public class LogPrintStrategyServiceImpl implements LogPrintStrategyService {
   }
 
   @Override
-  public ApiResp<String> delete(Long id) {
-    LogPrintStrategy entity = new LogPrintStrategy();
-    entity.setId(id);
-    entity.setDeleted(DeleteStatusEnum.DELETED.getCode());
+  public ApiResp<String> delete(RouteConfigLogDelReq req) {
+    LogPrintStrategy entity = LogPrintStrategy.builder()
+      .id(req.getId())
+      .updateId(req.getAdminId())
+      .deleted(DeleteStatusEnum.DELETED.getCode())
+      .build();
     int delete = logPrintStrategyMapper.updateById(entity);
     return delete > 0 ? ApiResp.success() : ApiResp.failure(ApiReturnCodeEnum.DEL_ERROR);
   }

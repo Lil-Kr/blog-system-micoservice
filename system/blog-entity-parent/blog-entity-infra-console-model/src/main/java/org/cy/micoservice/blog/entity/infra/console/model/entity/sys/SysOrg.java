@@ -7,10 +7,10 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
 import lombok.*;
+import lombok.experimental.SuperBuilder;
+import org.cy.micoservice.blog.entity.base.model.api.BaseEntity;
 
 import java.io.Serial;
-import java.io.Serializable;
-import java.util.Date;
 
 /**
  * <p>
@@ -21,14 +21,13 @@ import java.util.Date;
  * @since 2020-11-24
  */
 @Data
-@EqualsAndHashCode(callSuper = false)
-@Builder
-@ToString
+@EqualsAndHashCode(callSuper = true)
+@SuperBuilder
 @NoArgsConstructor
 @AllArgsConstructor
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @TableName("sys_org")
-public class SysOrg implements Serializable {
+public class SysOrg extends BaseEntity {
 
   @Serial
   private static final long serialVersionUID = -7550398728976097181L;
@@ -78,32 +77,33 @@ public class SysOrg implements Serializable {
   private String remark;
 
   /**
-   * 默认 0
-   */
-  @Builder.Default
-  private Integer deleted = 0;
-
-  @JsonSerialize(using = ToStringSerializer.class)
-  private Long creatorId;
-
-  /**
-   * 操作人
-   */
-  @JsonSerialize(using = ToStringSerializer.class)
-  private Long operator;
-
-  /**
    * 操作ip
    */
   private String operateIp;
 
   /**
-   * 创建时间
+   * 默认 0
    */
-  private Date createTime;
+  // @Builder.Default
+  // private Integer deleted = 0;
 
-  /**
-   * 更改时间
-   */
-  private Date updateTime;
+  // @JsonSerialize(using = ToStringSerializer.class)
+  // private Long creatorId;
+  //
+  // /**
+  //  * 操作人
+  //  */
+  // @JsonSerialize(using = ToStringSerializer.class)
+  // private Long operator;
+  //
+  //
+  // /**
+  //  * 创建时间
+  //  */
+  // private Date createTime;
+  //
+  // /**
+  //  * 更改时间
+  //  */
+  // private Date updateTime;
 }

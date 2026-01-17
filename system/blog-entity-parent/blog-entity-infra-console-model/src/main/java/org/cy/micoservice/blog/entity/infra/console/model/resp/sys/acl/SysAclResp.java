@@ -1,15 +1,19 @@
 package org.cy.micoservice.blog.entity.infra.console.model.resp.sys.acl;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
-import lombok.ToString;
+import lombok.NoArgsConstructor;
+import lombok.experimental.SuperBuilder;
 import org.cy.micoservice.blog.entity.infra.console.model.entity.sys.SysAcl;
 
 import java.io.Serial;
 
 @EqualsAndHashCode(callSuper = true)
 @Data
-@ToString
+@SuperBuilder
+@NoArgsConstructor
+@AllArgsConstructor
 public class SysAclResp extends SysAcl {
 
 	@Serial

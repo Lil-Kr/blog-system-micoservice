@@ -6,13 +6,17 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
+import org.cy.micoservice.blog.common.constants.CommonConstants;
 import org.cy.micoservice.blog.common.constants.gateway.GatewayHeadersConstants;
 import org.cy.micoservice.blog.common.enums.response.ApiReturnCodeEnum;
 import org.cy.micoservice.blog.common.exception.BizException;
 import org.cy.micoservice.blog.common.security.impl.AES128GCMCrypto;
+import org.cy.micoservice.blog.framework.identiy.starter.config.AuthProperties;
+import org.cy.micoservice.blog.framework.identiy.starter.uitls.JWTUtil;
 import org.cy.micoservice.blog.framework.web.starter.annotations.NoAuthCheck;
 import org.cy.micoservice.blog.framework.web.starter.enums.RequestEnum;
 import org.springframework.beans.factory.InitializingBean;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.method.HandlerMethod;
@@ -30,8 +34,11 @@ import java.util.Objects;
 @Configuration
 public class AuthInterceptor implements HandlerInterceptor, InitializingBean {
 
-  @Value("${gateway.decrypty.secret-key:PxMNarWuqoNFFGJ5QGgesg==}")
+  @Value("${decrypty.secret-key:}")
   private String decryptSecretKey;
+
+  @Autowired
+  private AuthProperties authProperties;
 
   private AES128GCMCrypto aes128GCMCrypto;
 
@@ -49,16 +56,16 @@ public class AuthInterceptor implements HandlerInterceptor, InitializingBean {
       return true;
     }
 
-    String identifyHeader = request.getHeader(GatewayHeadersConstants.X_GATEWAY_IDENTIFY);
-    if (StringUtils.isBlank(identifyHeader)) {
+    String decryptToken = request.getHeader(GatewayHeadersConstants.X_GATEWAY_IDENTIFY);
+    if (StringUtils.isBlank(decryptToken)) {
       throw new BizException(ApiReturnCodeEnum.NO_ACCESS);
     }
-
     try {
       // todo: 测试用, 后续需要删掉
-      String decryptBody = aes128GCMCrypto.decrypt(identifyHeader);
-      JSONObject jsonObject = JSON.parseObject(decryptBody);
-      RequestContext.set(RequestEnum.USER_ID, jsonObject.getLongValue("userId"));
+      String token = aes128GCMCrypto.decrypt(decryptToken);
+      String subject = JWTUtil.extractSubject(token, authProperties.getSecretKey());
+      JSONObject jsonObject = JSON.parseObject(subject);
+      RequestContext.set(RequestEnum.USER_ID, jsonObject.getLongValue(CommonConstants.DEFAULT_AUTH_KEY_USER_ID));
     } catch (Exception e) {
       log.error("login error msg: ", e);
       throw new BizException(ApiReturnCodeEnum.NO_ACCESS);

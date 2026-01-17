@@ -7,7 +7,7 @@ import org.cy.micoservice.blog.entity.base.model.api.BasePageReq;
 import org.cy.micoservice.blog.entity.gateway.model.entity.RouteChangeLog;
 import org.cy.micoservice.blog.entity.gateway.model.entity.RouteConfig;
 import org.cy.micoservice.blog.entity.gateway.model.req.*;
-import org.cy.micoservice.blog.framework.web.starter.annotations.NoAuthCheck;
+import org.cy.micoservice.blog.framework.web.starter.web.RequestContext;
 import org.cy.micoservice.blog.infra.console.service.RouteConfigService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
@@ -27,38 +27,40 @@ public class RouteConfigController {
   @Autowired
   private RouteConfigService routeConfigService;
 
-  @NoAuthCheck
-  @PostMapping("/page")
-  public ApiResp<PageResult<RouteConfig>> pageRouteConfigList(@RequestBody @Validated({BasePageReq.GroupPageQuery.class}) RouteConfigQueryPageReq req) {
+  @PostMapping("/pageList")
+  public ApiResp<PageResult<RouteConfig>> pageList(@RequestBody @Validated({BasePageReq.GroupPageQuery.class}) RouteConfigQueryPageReq req) {
     PageResult<RouteConfig> routeConfigPageResult = routeConfigService.pageRouteConfigList(req);
     return ApiResp.success(routeConfigPageResult);
   }
 
-  @NoAuthCheck
   @PostMapping("/list")
   public ApiResp<List<RouteConfig>> list(@RequestBody @Valid RouteConfigQueryReq req) throws Exception {
     return routeConfigService.routeConfigList(req);
   }
 
-  @NoAuthCheck
   @PostMapping("/create")
   public ApiResp<Long> create(@RequestBody @Valid RouteConfigAddReq req) throws Exception {
+    req.setAdminId(RequestContext.getUserId());
     return routeConfigService.create(req);
   }
 
-  @NoAuthCheck
   @PostMapping("/edit")
   public ApiResp<String> edit(@RequestBody @Valid RouteConfigEditReq req) throws Exception {
+    req.setAdminId(RequestContext.getUserId());
     return routeConfigService.edit(req);
   }
 
-  @NoAuthCheck
   @DeleteMapping("/delete")
   public ApiResp<String> delete(@Valid RouteConfigDelReq req) throws Exception {
-    return routeConfigService.delete(req.getConfigId());
+    req.setAdminId(RequestContext.getUserId());
+    return routeConfigService.delete(req);
   }
 
-  @NoAuthCheck
+  @GetMapping("/appNameList")
+  public ApiResp<List<RouteConfig>> getAppNameList() {
+    return routeConfigService.getAppNameList();
+  }
+
   @GetMapping("/getConfigLog")
   public ApiResp<List<RouteChangeLog>> getConfigLog(@Valid RouteConfigGetReq req) {
     return routeConfigService.getConfigLog(req.getConfigId());

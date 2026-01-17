@@ -1,7 +1,10 @@
 package org.cy.micoservice.blog.infra.facade.dto.acl;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
+import lombok.experimental.SuperBuilder;
 import org.cy.micoservice.blog.entity.infra.console.model.entity.sys.SysAcl;
 import org.springframework.beans.BeanUtils;
 
@@ -9,6 +12,9 @@ import java.io.Serial;
 
 @EqualsAndHashCode(callSuper = true)
 @Data
+@SuperBuilder
+@NoArgsConstructor
+@AllArgsConstructor
 public class AclDto extends SysAcl {
 
   @Serial
@@ -25,7 +31,7 @@ public class AclDto extends SysAcl {
   private boolean hasAcl = false;
 
   public static AclDto adapt(SysAcl acl) {
-    AclDto aclDto = new AclDto();
+    AclDto aclDto = AclDto.builder().build();
     BeanUtils.copyProperties(acl,aclDto);
     return aclDto;
   }

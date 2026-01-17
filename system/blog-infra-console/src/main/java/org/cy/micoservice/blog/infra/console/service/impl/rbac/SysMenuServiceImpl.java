@@ -1,4 +1,4 @@
-package org.cy.micoservice.blog.infra.console.service.impl;
+package org.cy.micoservice.blog.infra.console.service.impl.rbac;
 
 import com.google.common.base.Joiner;
 import com.google.common.collect.Lists;

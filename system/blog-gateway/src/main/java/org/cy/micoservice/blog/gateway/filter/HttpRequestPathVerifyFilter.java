@@ -40,6 +40,9 @@ public class HttpRequestPathVerifyFilter extends AbstractGatewayFilter implement
     String method = httpRequest.getMethod().name();
     log.info("requestPath: {}, method: {}", requestPath, method);
 
+    /**
+     * /api/admin/{adminId} --> /api/admin/**
+     */
     RouteConfig routeConfig = routeCacheService.get(method, requestPath);
     if (routeConfig == null) {
       exchange.getAttributes().put(GatewayConstants.GatewayAttrKey.X_ROUTE_ERROR_CODE, "404");

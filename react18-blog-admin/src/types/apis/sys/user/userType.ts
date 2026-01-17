@@ -76,7 +76,7 @@ export interface UserAddReq {
 }
 
 export interface UserEditReq {
-  surrogateId: string
+  id: string
   account: string
   userName: string
   email: string
@@ -93,12 +93,12 @@ export interface SysUserResp extends SysUser {
 }
 
 export interface UserListPageReq extends BaseEntityPageType {
-  surrogateId?: string
+  id?: string
   keyWords?: string
 }
 
 export interface SysUserDelReq {
-  surrogateId: string
+  id: string
 }
 
 export interface SysUserApi extends BaseApi {

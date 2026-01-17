@@ -1,6 +1,5 @@
 package org.cy.micoservice.blog.entity.gateway.model.req;
 
-import jakarta.validation.constraints.NotBlank;
 import lombok.Data;
 
 import java.io.Serial;
@@ -25,7 +24,6 @@ public class RouteConfigQueryReq implements Serializable {
 
   private String path;
 
-  @NotBlank(message = "uri 不能为空")
   private String uri;
 
 }

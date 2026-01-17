@@ -17,6 +17,9 @@ public class AuthProperties {
   @Value("${identify.access-token.expire-time:}")
   private Long accessTokenExpireTime;
 
+  /**
+   * 认证类型, 默认为JWT
+   */
   @Value("${identify.auth.template:}")
   private String authType;
 }

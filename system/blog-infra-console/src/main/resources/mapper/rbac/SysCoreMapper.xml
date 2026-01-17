@@ -5,7 +5,7 @@
 	<!-- 通用查询映射结果 -->
 	<resultMap id="BaseResultMap" type="org.cy.micoservice.blog.entity.infra.console.model.entity.sys.SysAcl">
 		<id column="id" property="id"/>
-		<result column="surrogate_id" property="surrogateId"/>
+		<result column="surrogate_id" property="aclId"/>
 		<result column="number" property="number"/>
 		<result column="name" property="name"/>
 		<result column="acl_module_id" property="aclModuleId"/>
@@ -14,7 +14,7 @@
 		<result column="status" property="status"/>
 		<result column="seq" property="seq"/>
 		<result column="remark" property="remark"/>
-		<result column="operator" property="operator"/>
+		<result column="update_id" property="update_id"/>
 		<result column="operate_ip" property="operateIp"/>
 		<result column="create_time" property="createTime"/>
 		<result column="update_time" property="updateTime"/>
@@ -23,7 +23,7 @@
 	<!-- Vo查询映射结果 -->
 	<resultMap id="BaseResulVotMap" type="org.cy.micoservice.blog.entity.infra.console.model.resp.sys.acl.SysAclResp">
 		<id column="id" property="id"/>
-		<result column="surrogate_id" property="surrogateId"/>
+		<result column="acl_id" property="aclId"/>
 		<result column="number" property="number"/>
 		<result column="name" property="name"/>
 		<result column="acl_module_id" property="aclModuleId"/>
@@ -32,7 +32,7 @@
 		<result column="status" property="status"/>
 		<result column="seq" property="seq"/>
 		<result column="remark" property="remark"/>
-		<result column="operator" property="operator"/>
+		<result column="update_id" property="update_id"/>
 		<result column="operate_ip" property="operateIp"/>
 		<result column="create_time" property="createTime"/>
 		<result column="update_time" property="updateTime"/>
@@ -44,7 +44,7 @@
 
 	<!-- 通用查询结果列 -->
 	<sql id="Base_Column_List">
-		id, surrogate_id, number, name, acl_module_id, url, type, status, seq, remark, operator, operate_ip, create_time, update_time
+		id, surrogate_id, number, name, acl_module_id, url, type, status, seq, remark, update_id, operate_ip, create_time, update_time
 	</sql>
 
 </mapper>

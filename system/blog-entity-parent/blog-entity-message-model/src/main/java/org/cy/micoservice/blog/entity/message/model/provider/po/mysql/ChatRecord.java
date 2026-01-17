@@ -1,8 +1,11 @@
 package org.cy.micoservice.blog.entity.message.model.provider.po.mysql;
 
 import com.baomidou.mybatisplus.annotation.TableName;
+import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
+import lombok.experimental.SuperBuilder;
 import org.cy.micoservice.blog.entity.base.model.api.BaseEntity;
 
 import java.io.Serial;
@@ -13,6 +16,9 @@ import java.io.Serial;
  * @Description:
  */
 @Data
+@SuperBuilder
+@NoArgsConstructor
+@AllArgsConstructor
 @EqualsAndHashCode(callSuper = true)
 @TableName("t_chat_record")
 public class ChatRecord extends BaseEntity {

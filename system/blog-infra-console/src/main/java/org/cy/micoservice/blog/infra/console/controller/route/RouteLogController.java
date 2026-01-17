@@ -10,6 +10,7 @@ import org.cy.micoservice.blog.entity.gateway.model.req.LogPrintStrategyEditReq;
 import org.cy.micoservice.blog.entity.gateway.model.req.LogPrintStrategyPageReq;
 import org.cy.micoservice.blog.entity.gateway.model.req.RouteConfigLogDelReq;
 import org.cy.micoservice.blog.framework.web.starter.annotations.NoAuthCheck;
+import org.cy.micoservice.blog.framework.web.starter.web.RequestContext;
 import org.cy.micoservice.blog.infra.console.service.LogPrintStrategyService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
@@ -37,18 +38,21 @@ public class RouteLogController {
   @NoAuthCheck
   @PostMapping("/add")
   public ApiResp<String> add(@RequestBody @Valid LogPrintStrategyAddReq req) {
+    req.setAdminId(RequestContext.getUserId());
     return logPrintStrategyService.add(req);
   }
 
   @NoAuthCheck
   @PostMapping("/edit")
   public ApiResp<String> edit(@RequestBody @Valid LogPrintStrategyEditReq req) {
+    req.setAdminId(RequestContext.getUserId());
     return logPrintStrategyService.edit(req);
   }
 
   @NoAuthCheck
   @DeleteMapping("/delete")
   public ApiResp<String> delete(@Valid RouteConfigLogDelReq req) {
-    return logPrintStrategyService.delete(req.getId());
+    req.setAdminId(RequestContext.getUserId());
+    return logPrintStrategyService.delete(req);
   }
 }

@@ -33,4 +33,7 @@ public class InfraApplicationProperties {
 
   @Value("${blog.gateway.refresh.group:}")
   private String refreshGroup;
+
+  @Value("${decrypty.secret-key:}")
+  private String decryptSecretKey;
 }

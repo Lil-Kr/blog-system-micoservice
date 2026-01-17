@@ -1,6 +1,5 @@
 package org.cy.micoservice.blog.common.security.impl;
 
-import com.alibaba.fastjson2.JSONObject;
 import org.cy.micoservice.blog.common.security.Crypto;
 
 import javax.crypto.Cipher;
@@ -10,7 +9,6 @@ import javax.crypto.spec.GCMParameterSpec;
 import javax.crypto.spec.SecretKeySpec;
 import java.nio.charset.StandardCharsets;
 import java.util.Base64;
-import java.util.Map;
 
 /**
  * @Author: Lil-K
@@ -84,14 +82,5 @@ public class AES128GCMCrypto implements Crypto {
     keyGen.init(AES_KEY_SIZE);
     SecretKey secretKey = keyGen.generateKey();
     return Base64.getEncoder().encodeToString(secretKey.getEncoded());
-  }
-
-  //生成可使用的密钥
-  public static void main(String[] args) throws Exception {
-    Crypto crypto = new AES128GCMCrypto("PxMNarWuqoNFFGJ5QGgesg==");
-    Map<String, Long> map = Map.of("userId", 1330756438846476314L);
-    String encryptStr = crypto.encrypt(JSONObject.toJSONString(map));
-    System.out.println(encryptStr);
-    System.out.println(crypto.decrypt(encryptStr));
   }
 }

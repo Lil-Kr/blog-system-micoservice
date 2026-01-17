@@ -2,7 +2,10 @@ package org.cy.micoservice.blog.entity.base.model.api;
 
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
+import lombok.experimental.SuperBuilder;
 
 import java.io.Serial;
 import java.io.Serializable;
@@ -14,6 +17,9 @@ import java.time.LocalDateTime;
  * @Description: BaseEntity
  */
 @Data
+@NoArgsConstructor
+@AllArgsConstructor
+@SuperBuilder
 public class BaseEntity implements Serializable {
 
   @Serial

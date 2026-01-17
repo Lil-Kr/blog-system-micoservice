@@ -101,7 +101,7 @@ const convertAclModuleToEnhancedTree = (aclModules: AclModuleTreeResp[]): Enhanc
     children: [
       // 处理权限点
       ...module.aclDtoList.map(acl => ({
-        key: acl.surrogateId,
+        key: acl.aclId,
         title: acl.name,
         checked: acl.checked,
         hasAcl: acl.hasAcl

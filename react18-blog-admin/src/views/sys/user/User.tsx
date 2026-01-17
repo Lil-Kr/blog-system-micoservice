@@ -260,7 +260,7 @@ const User = () => {
    * @returns
    */
   const deleteUserConfirm = async (record: UserTableType) => {
-    const res = await userApi.delete({ surrogateId: record.key ?? '' })
+    const res = await userApi.delete({ id: record.key ?? '' })
     if (res.code !== 200) {
       return
     }
@@ -291,7 +291,7 @@ const User = () => {
    */
   const onChangePageInfo: PaginationProps['onChange'] = (currentPageNum, pageSize) => {
     const values = form.getFieldsValue()
-    retirevePageUserList({ ...values, surrogateId: selectedKeys[0], currentPageNum, pageSize })
+    retirevePageUserList({ ...values, id: selectedKeys[0], currentPageNum, pageSize })
   }
 
   /**
@@ -372,7 +372,7 @@ const User = () => {
     setSelectedInfo({ label: node.title, value: node.key })
 
     await retirevePageUserList({
-      surrogateId: node.key,
+      id: node.key,
       currentPageNum: tablePageInfo.currentPageNum,
       pageSize: tablePageInfo.pageSize
     })

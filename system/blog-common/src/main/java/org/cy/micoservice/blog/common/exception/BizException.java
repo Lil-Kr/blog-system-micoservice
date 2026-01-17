@@ -1,7 +1,7 @@
 package org.cy.micoservice.blog.common.exception;
 
 
-import org.cy.micoservice.blog.common.enums.BaseEnum;
+import org.cy.micoservice.blog.common.enums.response.ApiReturnCodeEnum;
 import org.cy.micoservice.blog.common.exception.interfacese.BaseError;
 
 import java.io.Serial;
@@ -17,14 +17,15 @@ public class BizException extends RuntimeException implements BaseError, Seriali
   @Serial
   private static final long serialVersionUID = 4812984750725110363L;
 
-  private BaseEnum baseEnum;
+  private ApiReturnCodeEnum apiReturnCodeEnum;
 
   private Integer errorCode;
 
   private String errorMsg;
 
-  public BizException(String message){
+  public BizException(String message) {
     super(message);
+    this.errorMsg = message;
   }
 
   public BizException(BaseError baseError) {
@@ -33,33 +34,39 @@ public class BizException extends RuntimeException implements BaseError, Seriali
     this.errorMsg = baseError.getErrorMsg();
   }
 
-  public BizException(BaseEnum baseEnum) {
-    super(baseEnum.getMessage());
-    this.baseEnum = baseEnum;
+  public BizException(ApiReturnCodeEnum apiReturnCodeEnum) {
+    super(apiReturnCodeEnum.getMessage());
+    this.apiReturnCodeEnum = apiReturnCodeEnum;
   }
 
-  public BizException(Integer errorCode, String errorMsg) {
-    super(errorMsg);
-    this.errorCode = errorCode;
-    this.errorMsg = errorMsg;
-  }
-
-  public BizException(String message, BaseEnum baseEnum) {
+  public BizException(String message, ApiReturnCodeEnum apiReturnCodeEnum) {
     super(message);
-    this.baseEnum = baseEnum;
+    this.apiReturnCodeEnum = apiReturnCodeEnum;
   }
 
-  public BaseEnum getReturnCodeEnum() {
-    return baseEnum;
+  public BizException(Integer code, String msg) {
+    super(msg);
+    this.errorCode = code;
+    this.errorMsg = msg;
+  }
+
+  public ApiReturnCodeEnum getReturnCodeEnum() {
+    return apiReturnCodeEnum;
   }
 
   @Override
   public Integer getErrorCode() {
-    return this.baseEnum.getErrorCode();
+    if (apiReturnCodeEnum != null) {
+      return apiReturnCodeEnum.getCode();
+    }
+    return errorCode;
   }
 
   @Override
   public String getErrorMsg() {
-    return this.baseEnum.getErrorMsg();
+    if (apiReturnCodeEnum != null) {
+      return apiReturnCodeEnum.getMessage();
+    }
+    return errorMsg;
   }
 }

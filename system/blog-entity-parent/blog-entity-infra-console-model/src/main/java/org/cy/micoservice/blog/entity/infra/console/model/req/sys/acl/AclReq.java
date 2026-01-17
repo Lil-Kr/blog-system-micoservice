@@ -31,7 +31,7 @@ public class AclReq extends BaseReq implements Serializable {
 	 * 权限id唯一主键
 	 */
 	@NotNull(groups = {GroupAcls.class}, message = "surrogateId不能为空")
-	private Long surrogateId;
+	private Long aclId;
 
 	/**
 	 * 权限名

@@ -257,7 +257,7 @@ const Acl = () => {
   const initAclModuleTreeList = async () => {
     await retrieveAclModuleTreeList()
 
-    // 加载所有信息
+    // 加载所有权限信息
     await retrieveAclPageList({
       status: 0,
       currentPageNum: tablePageInfo.currentPageNum,
@@ -657,7 +657,7 @@ const Acl = () => {
                       hideOnSinglePage: false,
                       pageSizeOptions: [10, 20, 50],
                       onChange: onChangePageInfo,
-                      // onShowSizeChange: onShowSizeChange,
+                      current: tablePageInfo.currentPageNum, // 当前页码
                       pageSize: tablePageInfo.pageSize, // 每页条数
                       total: tablePageInfo.totalSize // 总条数
                     }}

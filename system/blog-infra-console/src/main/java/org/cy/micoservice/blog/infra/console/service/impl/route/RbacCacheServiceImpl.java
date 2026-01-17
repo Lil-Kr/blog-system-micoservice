@@ -1,4 +1,4 @@
-package org.cy.micoservice.blog.infra.console.service.impl;
+package org.cy.micoservice.blog.infra.console.service.impl.route;
 
 import com.google.common.cache.Cache;
 import com.google.common.cache.CacheBuilder;
@@ -126,7 +126,7 @@ public class RbacCacheServiceImpl implements RbacCacheService, Serializable {
 	}
 
 	@Override
-	public List<SysAcl> getUserAclListCache(Long userId) {
+	public List<SysAcl> getAdminAclListCache(Long userId) {
 		return adminAclCache.getIfPresent(userId);
 	}
 

@@ -1,4 +1,4 @@
-package org.cy.micoservice.blog.infra.console.service.impl;
+package org.cy.micoservice.blog.infra.console.service.impl.rbac;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;

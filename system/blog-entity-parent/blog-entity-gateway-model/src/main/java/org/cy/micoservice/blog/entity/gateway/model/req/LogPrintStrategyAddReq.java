@@ -1,7 +1,10 @@
 package org.cy.micoservice.blog.entity.gateway.model.req;
 
-import jakarta.validation.constraints.*;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Size;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
+import org.cy.micoservice.blog.entity.base.model.api.BaseReq;
 
 import java.io.Serial;
 import java.io.Serializable;
@@ -12,7 +15,8 @@ import java.io.Serializable;
  * @Description:
  */
 @Data
-public class LogPrintStrategyAddReq implements Serializable {
+@EqualsAndHashCode(callSuper = true)
+public class LogPrintStrategyAddReq extends BaseReq implements Serializable {
 
   @Serial
   private static final long serialVersionUID = 8880213747916963501L;

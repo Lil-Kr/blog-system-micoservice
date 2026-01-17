@@ -1,4 +1,4 @@
-package org.cy.micoservice.blog.infra.console.service.impl;
+package org.cy.micoservice.blog.infra.console.service.impl.rbac;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
@@ -8,7 +8,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.collections4.CollectionUtils;
 import org.cy.micoservice.blog.common.base.api.ApiResp;
 import org.cy.micoservice.blog.common.enums.biz.ValidStatusEnum;
-import org.cy.micoservice.blog.common.exception.BizException;
 import org.cy.micoservice.blog.common.utils.DateUtil;
 import org.cy.micoservice.blog.entity.infra.console.model.entity.sys.SysAcl;
 import org.cy.micoservice.blog.entity.infra.console.model.entity.sys.SysRoleAcl;
@@ -26,12 +25,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.Date;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
-
-import static org.cy.micoservice.blog.common.constants.CommonConstants.LANG_ZH;
 
 /**
  * @Author: Lil-K
@@ -99,10 +96,10 @@ public class SysRoleAclServiceImpl extends ServiceImpl<SysRoleAclMapper, SysRole
 		 * 判断将要修改的权限点是否超过了当前用户所拥有的最大权限范围
 		 * 如果 includeAclIds 没有剩余, 说明在当前用户的修改范围内
 		 */
-		List<SysAcl> currentUserAclList = aclCoreService.getCurrentAdminAclList(req.getAdminId());
-		Set<Long> currentUserAclIdSet = currentUserAclList.stream().map(SysAcl::getSurrogateId).collect(Collectors.toSet());
+		List<SysAcl> currentAdminAclList = aclCoreService.getCurrentAdminAclList(req.getAdminId());
+		Set<Long> currentAdminAclIdSet = currentAdminAclList.stream().map(SysAcl::getAclId).collect(Collectors.toSet());
 
-		includeAclIds.removeAll(currentUserAclIdSet);
+		includeAclIds.removeAll(currentAdminAclIdSet);
 		if (CollectionUtils.isNotEmpty(includeAclIds)) {
 			return ApiResp.warning("待更新的权限点超过已有权限");
 		}
@@ -123,8 +120,8 @@ public class SysRoleAclServiceImpl extends ServiceImpl<SysRoleAclMapper, SysRole
 		/**
 		 * 缓存失效: 用户的权限点失效
 		 */
-		List<Long> userIdList = roleUserMapper.selectAdminIdListByRoleId(req.getRoleId());
-		rbacCacheService.invalidUserAclCache(userIdList);
+		List<Long> adminIdList = roleUserMapper.selectAdminIdListByRoleId(req.getRoleId());
+		rbacCacheService.invalidUserAclCache(adminIdList);
 		return ApiResp.success("修改角色对应权限点成功");
 	}
 
@@ -140,20 +137,20 @@ public class SysRoleAclServiceImpl extends ServiceImpl<SysRoleAclMapper, SysRole
 		}
 		// 删除旧 [角色-权限] 对应关系数据
 		QueryWrapper<SysRoleAcl> wrapper = new QueryWrapper<>();
-		wrapper.eq("role_id",roleId);
+		wrapper.eq("role_id", roleId);
 		int delete = roleAclMapper.delete(wrapper);
-		if (delete < 1) {
-			throw new BizException(msgService.getMessage(LANG_ZH, "sys.role.acl.resp.msg5"));
-		}
+		// if (delete < 1) {
+		// 	throw new BizException(BizErrorEnum.PARAM_ERROR);
+		// }
 
 		// 构建新的角色-权限点对象, 然后批量插入
-		Date currentTime = DateUtil.dateTimeNow();
+		LocalDateTime currentTime = DateUtil.localDateTimeNow();
 		List<SysRoleAcl> roleAclList = aclIdList.stream()
 			.map(aclId -> SysRoleAcl.builder()
 				.surrogateId(idService.getId())
 				.roleId(roleId)
 				.aclId(aclId)
-				.operator(adminId)
+				.updateId(adminId)
 				.operateIp("127.0.0.1")
 				.createTime(currentTime)
 				.updateTime(currentTime)

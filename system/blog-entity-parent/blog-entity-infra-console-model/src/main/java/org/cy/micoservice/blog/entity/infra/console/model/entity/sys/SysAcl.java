@@ -6,24 +6,23 @@ import com.baomidou.mybatisplus.annotation.TableName;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
 import lombok.*;
+import lombok.experimental.SuperBuilder;
+import org.cy.micoservice.blog.entity.base.model.api.BaseEntity;
 
 import java.io.Serial;
-import java.io.Serializable;
-import java.util.Date;
 
 /**
  * @Author: Lil-K
  * @Date: 2025/3/8
  * @Description:
  */
+@EqualsAndHashCode(callSuper = true)
 @Data
-@EqualsAndHashCode(callSuper = false)
-@ToString
-@AllArgsConstructor
+@SuperBuilder
 @NoArgsConstructor
-@Builder
+@AllArgsConstructor
 @TableName("sys_acl")
-public class SysAcl implements Serializable {
+public class SysAcl extends BaseEntity {
 
 	@Serial
 	private static final long serialVersionUID = 4265979647827463721L;
@@ -38,7 +37,7 @@ public class SysAcl implements Serializable {
 	 * 权限id唯一主键
 	 */
 	@JsonSerialize(using = ToStringSerializer.class)
-	private Long surrogateId;
+	private Long aclId;
 
 	/**
 	 * 权限编码
@@ -97,29 +96,7 @@ public class SysAcl implements Serializable {
 	private String remark;
 
 	/**
-	 *
-	 */
-	@JsonSerialize(using = ToStringSerializer.class)
-	private Long creatorId;
-
-	/**
-	 * 操作人
-	 */
-	@JsonSerialize(using = ToStringSerializer.class)
-	private Long operator;
-
-	/**
 	 * 操作ip
 	 */
 	private String operateIp;
-
-	/**
-	 * 创建时间
-	 */
-	private Date createTime;
-
-	/**
-	 * 更改时间
-	 */
-	private Date updateTime;
 }

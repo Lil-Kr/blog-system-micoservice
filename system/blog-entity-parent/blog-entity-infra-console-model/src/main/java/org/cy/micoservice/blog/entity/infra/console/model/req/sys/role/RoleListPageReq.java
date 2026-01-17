@@ -2,7 +2,6 @@ package org.cy.micoservice.blog.entity.infra.console.model.req.sys.role;
 
 import lombok.Data;
 import lombok.EqualsAndHashCode;
-import lombok.ToString;
 import org.cy.micoservice.blog.entity.base.model.api.BasePageReq;
 
 import java.io.Serial;
@@ -14,7 +13,6 @@ import java.io.Serial;
  */
 @EqualsAndHashCode(callSuper = true)
 @Data
-@ToString
 public class RoleListPageReq extends BasePageReq {
 
 	@Serial

@@ -1,4 +1,4 @@
-package org.cy.micoservice.blog.infra.console.service.impl;
+package org.cy.micoservice.blog.infra.console.service.impl.rbac;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
@@ -8,7 +8,6 @@ import org.apache.commons.lang3.StringUtils;
 import org.cy.micoservice.blog.common.base.api.ApiResp;
 import org.cy.micoservice.blog.common.utils.DateUtil;
 import org.cy.micoservice.blog.common.utils.IdWorker;
-import org.cy.micoservice.blog.infra.facade.dto.aclmodule.AclModuleDto;
 import org.cy.micoservice.blog.entity.infra.console.model.entity.sys.SysAclModule;
 import org.cy.micoservice.blog.entity.infra.console.model.req.sys.aclmodule.AclModuleListReq;
 import org.cy.micoservice.blog.entity.infra.console.model.req.sys.aclmodule.AclModuleReq;
@@ -19,12 +18,13 @@ import org.cy.micoservice.blog.infra.console.service.SysAclModuleService;
 import org.cy.micoservice.blog.infra.console.service.SysAclService;
 import org.cy.micoservice.blog.infra.console.service.SysTreeService;
 import org.cy.micoservice.blog.infra.console.utils.orgUtil.LevelUtil;
+import org.cy.micoservice.blog.infra.facade.dto.aclmodule.AclModuleDto;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.Date;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
@@ -82,7 +82,7 @@ public class SysAclModuleServiceImpl extends ServiceImpl<SysAclModuleMapper, Sys
     String parentName = LevelUtil.ROOT.equals(level) ? "0" : parentAclModule.getName();
 
     Long surrogateId = IdWorker.getSnowFlakeId(); // surrogateId
-    Date currentTime = DateUtil.dateTimeNow();// 当前时间
+    LocalDateTime currentTime = DateUtil.localDateTimeNow();// 当前时间
     SysAclModule aclModule = SysAclModule.builder()
       .surrogateId(surrogateId)
       .number(ACLM_PREV_NUMBER_INFO + surrogateId)
@@ -96,8 +96,8 @@ public class SysAclModuleServiceImpl extends ServiceImpl<SysAclModuleMapper, Sys
       .remark(req.getRemark())
       .createTime(currentTime)
       .updateTime(currentTime)
-      .operator(req.getAdminId())
-      .creatorId(req.getAdminId())
+      .createId(req.getAdminId())
+      .updateId(req.getAdminId())
       .operateIp("127.0.0.1")
       .build();
     int insert = aclModuleMapper.insert(aclModule);
@@ -190,8 +190,8 @@ public class SysAclModuleServiceImpl extends ServiceImpl<SysAclModuleMapper, Sys
       .menuUrl(StringUtils.isBlank(req.getMenuUrl()) ? "-" : req.getMenuUrl())
       .status(req.getStatus())
       .remark(req.getRemark())
-      .updateTime(DateUtil.dateTimeNow())
-      .operator(req.getAdminId())
+      .updateTime(DateUtil.localDateTimeNow())
+      .updateId(req.getAdminId())
       .operateIp("127.0.0.1")
       .build();
 
@@ -234,7 +234,7 @@ public class SysAclModuleServiceImpl extends ServiceImpl<SysAclModuleMapper, Sys
     aclModuleList.forEach(aclModule -> {
 //			aclModule.setParentName(aclModule.getParentName());
       aclModule.setLevel(LevelUtil.calculateLevel(afterAclModule.getLevel(), afterAclModule.getId()));
-      aclModule.setUpdateTime(DateUtil.dateTimeNow());
+      aclModule.setUpdateTime(DateUtil.localDateTimeNow());
       updateChildAclModuleTree(aclModule);
     });
     // 操作db

@@ -1,4 +1,4 @@
-package org.cy.micoservice.blog.infra.console.service.impl;
+package org.cy.micoservice.blog.infra.console.service.impl.rbac;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
@@ -26,6 +26,7 @@ import org.cy.micoservice.blog.infra.console.service.SysDictService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -64,15 +65,15 @@ public class SysDictServiceImpl extends ServiceImpl<SysDictMapper, SysDict> impl
 		}
 
 		Long surrogateId = idService.getId(); // surrogateId
-		Date currentTime = DateUtil.dateTimeNow();// 当前时间
+		LocalDateTime currentTime = DateUtil.localDateTimeNow();// 当前时间
 
 		SysDict dict = SysDict.builder()
 			.surrogateId(surrogateId)
 			.name(req.getName())
 			.remark(req.getRemark())
 			.deleted(DeleteStatusEnum.ACTIVE.getCode()) // default 0
-			.operator(req.getAdminId())
-			.operateIp("127.0.0.1")
+			.createId(req.getAdminId())
+			.updateId(req.getAdminId())
 			.createTime(currentTime)
 			.updateTime(currentTime)
 			.build();
@@ -121,9 +122,8 @@ public class SysDictServiceImpl extends ServiceImpl<SysDictMapper, SysDict> impl
 			.name(req.getName())
 			.remark(req.getRemark())
 			.deleted(0)
-			.operateIp("127.0.0.1")
-			.operator(req.getAdminId())
-			.updateTime(DateUtil.dateTimeNow())
+			.updateId(req.getAdminId())
+			.updateTime(DateUtil.localDateTimeNow())
 			.build();
 
 		try {

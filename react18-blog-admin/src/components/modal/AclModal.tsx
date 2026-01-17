@@ -146,7 +146,7 @@ const AclModal = (props: ModalType.CustomModal) => {
       messageApi?.success(msg)
     } else if (action === 'edit') {
       const editReq: AclEditReq = {
-        surrogateId: params.key,
+        aclId: params.key,
         aclModuleId: modalSelector?.aclModuleInfo?.value,
         status: modalSelector?.statusInfo?.value,
         type: modalSelector?.aclTypeInfo?.value,

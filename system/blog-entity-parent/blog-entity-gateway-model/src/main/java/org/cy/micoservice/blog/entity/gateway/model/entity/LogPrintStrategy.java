@@ -2,8 +2,11 @@ package org.cy.micoservice.blog.entity.gateway.model.entity;
 
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
+import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
+import lombok.experimental.SuperBuilder;
 import org.cy.micoservice.blog.common.enums.biz.ValidStatusEnum;
 import org.cy.micoservice.blog.entity.base.model.api.BaseEntity;
 
@@ -15,6 +18,9 @@ import java.io.Serial;
  * @Description: 网关日志打印策略
  */
 @Data
+@SuperBuilder
+@NoArgsConstructor
+@AllArgsConstructor
 @TableName("sys_route_log_print_strategy")
 @EqualsAndHashCode(callSuper = true)
 public class LogPrintStrategy extends BaseEntity {

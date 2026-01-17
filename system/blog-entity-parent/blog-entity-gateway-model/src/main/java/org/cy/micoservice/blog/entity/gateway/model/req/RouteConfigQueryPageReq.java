@@ -28,4 +28,5 @@ public class RouteConfigQueryPageReq extends BasePageReq {
 
   private String uri;
 
+  private Integer status;
 }

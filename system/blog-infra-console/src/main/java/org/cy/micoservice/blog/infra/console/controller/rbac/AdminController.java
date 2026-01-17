@@ -39,8 +39,9 @@ public class AdminController {
    * @param req
    * @return
    */
+  @NoAuthCheck
   @PutMapping("/login")
-  public ApiResp<SysAdmin> login(@RequestBody @Validated({AdminLoginReq.AdminLogin.class}) AdminLoginReq req) {
+  public ApiResp<SysAdmin> login(@RequestBody @Validated({AdminLoginReq.AdminLogin.class}) AdminLoginReq req) throws Exception {
     return adminService.adminLogin(req);
   }
 
@@ -49,6 +50,7 @@ public class AdminController {
    * @param req
    * @return
    */
+  @NoAuthCheck
   @PostMapping("/register")
   public ApiResp<Integer> register(@RequestBody @Valid AdminRegisterReq req) {
     req.setAdminId(RequestContext.getUserId());
@@ -69,7 +71,6 @@ public class AdminController {
    * @param req
    * @return
    */
-  @NoAuthCheck
   @PostMapping("/pageList")
   public ApiResp<PageResult<SysAdminResp>> pageList(@RequestBody @Validated({BasePageReq.GroupPageQuery.class}) AdminListPageReq req) {
     PageResult<SysAdminResp> result = adminService.pageList(req);
@@ -100,7 +101,6 @@ public class AdminController {
   /**
    * delete role info
    */
-  @NoAuthCheck
   @DeleteMapping("/delete")
   public ApiResp<String> delete(@Valid AdminDeleteReq req) {
     return adminService.delete(req.getAdminId());
@@ -113,7 +113,7 @@ public class AdminController {
   @GetMapping("/get")
   public ApiResp<SysAdmin> get() {
     // SysAdmin currentUser = RequestHolder.getCurrentUser();
-    return ApiResp.success(new SysAdmin());
+    return ApiResp.success(SysAdmin.builder().build());
   }
 
   /**

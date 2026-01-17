@@ -7,10 +7,11 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
 import lombok.*;
+import lombok.experimental.SuperBuilder;
+import org.cy.micoservice.blog.entity.base.model.api.BaseEntity;
 
 import java.io.Serial;
 import java.io.Serializable;
-import java.util.Date;
 
 
 @Data
@@ -18,10 +19,10 @@ import java.util.Date;
 @ToString
 @AllArgsConstructor
 @NoArgsConstructor
-@Builder
+@SuperBuilder
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @TableName("sys_acl_module")
-public class SysAclModule implements Serializable {
+public class SysAclModule extends BaseEntity implements Serializable {
 
 	@Serial
 	private static final long serialVersionUID = 1099503839184382674L;
@@ -87,23 +88,23 @@ public class SysAclModule implements Serializable {
 	 * 操作ip
 	 */
 	private String operateIp;
-
-	/**
-	 * 操作人
-	 */
-	@JsonSerialize(using = ToStringSerializer.class)
-	private Long operator;
-
-	@JsonSerialize(using = ToStringSerializer.class)
-	private Long creatorId;
-
-	/**
-	 * 创建时间
-	 */
-	private Date createTime;
-
-	/**
-	 * 更改时间
-	 */
-	private Date updateTime;
+	//
+	// /**
+	//  * 操作人
+	//  */
+	// @JsonSerialize(using = ToStringSerializer.class)
+	// private Long operator;
+	//
+	// @JsonSerialize(using = ToStringSerializer.class)
+	// private Long creatorId;
+	//
+	// /**
+	//  * 创建时间
+	//  */
+	// private Date createTime;
+	//
+	// /**
+	//  * 更改时间
+	//  */
+	// private Date updateTime;
 }

@@ -1,4 +1,4 @@
-package org.cy.micoservice.blog.infra.console.service.impl;
+package org.cy.micoservice.blog.infra.console.service.impl.rbac;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.google.common.collect.Lists;
@@ -205,13 +205,13 @@ public class SysTreeServiceImpl implements SysTreeService {
 		List<SysAcl> userAclList = coreService.getCurrentAdminAclList(req.getAdminId());
 
 		// 2. 获取用户所属角色的已分配的权限id(AclId), [去重, 比较时性能优于list]
-		Set<Long> userAclIdSet = userAclList.stream().map(SysAcl::getSurrogateId).collect(Collectors.toSet());
+		Set<Long> userAclIdSet = userAclList.stream().map(SysAcl::getAclId).collect(Collectors.toSet());
 
 		// 3. 获取当前角色分配过的权限点(此处为当前)
 		List<SysAcl> roleAclList = coreService.getRoleAclList(req.getRoleId());
 
 		// 4. 当前角色已分配的权限id集合, [此处转为set是为了比较时的性能考虑, 比较时性能优于list]
-		Set<Long> roleAclIdSet = roleAclList.stream().map(SysAcl::getSurrogateId).collect(Collectors.toSet());
+		Set<Long> roleAclIdSet = roleAclList.stream().map(SysAcl::getAclId).collect(Collectors.toSet());
 
 		// 5. 获取所有的权限点列表 list
 		QueryWrapper<SysAcl> query2 = new QueryWrapper<>();
@@ -224,12 +224,12 @@ public class SysTreeServiceImpl implements SysTreeService {
 			.map(AclDto::adapt)
 			.forEach(aclDto -> {
 				// 当前用户已拥有的权限点, 可操作
-				if (userAclIdSet.contains(aclDto.getSurrogateId())) {
+				if (userAclIdSet.contains(aclDto.getAclId())) {
 					aclDto.setHasAcl(true);
 				}
 
 				// 是否在前端显示为"选中", 选中状态取决于角色所分配的权限点, 分配过的权限点就为选中状态
-				if (roleAclIdSet.contains(aclDto.getSurrogateId())) {
+				if (roleAclIdSet.contains(aclDto.getAclId())) {
 					aclDto.setChecked(true);
 				}
 				aclDtoList.add(aclDto);

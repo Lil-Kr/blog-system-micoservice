@@ -90,7 +90,7 @@ public class ChatMessageAsyncTaskSubmitter {
     new ArrayBlockingQueue<>(BLOCKING_QUEUE_SIZE_2),
     r -> {
       Thread t = new Thread(r);
-      t.setName("chat-message-sync-" + t.getId());
+      t.setName("thread-pool" + t.getId());
       t.setDaemon(false);
       return t;
     },

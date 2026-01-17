@@ -1,5 +1,4 @@
 import React from 'react'
-// import { useRoutes, Outlet } from 'react-router-dom'
 import { Outlet } from 'oh-router-react'
 import { Layout } from 'antd/lib'
 
@@ -11,13 +10,17 @@ const ContentLayout = () => {
       <Content
         className='site-layout-background content-layout'
         style={{
-          padding: 15,
+          padding: 0,
           margin: 0,
-          maxHeight: 'calc(100vh - 160px)',
-          overflow: 'auto'
+          height: '100%',
+          overflow: 'hidden',
+          display: 'flex',
+          flexDirection: 'column'
         }}
       >
-        <Outlet />
+        <div style={{ flex: 1, overflow: 'hidden' }}>
+          <Outlet />
+        </div>
       </Content>
     </>
   )

@@ -1,15 +1,16 @@
 package org.cy.micoservice.blog.entity.infra.console.model.resp.sys.admin;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
-import lombok.ToString;
+import lombok.*;
+import lombok.experimental.SuperBuilder;
 import org.cy.micoservice.blog.entity.infra.console.model.entity.sys.SysAdmin;
 import java.io.Serial;
 
 @EqualsAndHashCode(callSuper = true)
 @Data
-@ToString
+@SuperBuilder
+@NoArgsConstructor
+@AllArgsConstructor
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class SysAdminResp extends SysAdmin {
 

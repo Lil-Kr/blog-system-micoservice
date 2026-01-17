@@ -1,6 +1,8 @@
 package org.cy.micoservice.blog.entity.gateway.model.req;
 
 import lombok.Data;
+import lombok.EqualsAndHashCode;
+import org.cy.micoservice.blog.entity.base.model.api.BaseReq;
 
 import java.io.Serial;
 import java.io.Serializable;
@@ -11,7 +13,8 @@ import java.io.Serializable;
  * @Description:
  */
 @Data
-public class RouteConfigLogDelReq implements Serializable {
+@EqualsAndHashCode(callSuper = true)
+public class RouteConfigLogDelReq extends BaseReq implements Serializable {
 
   @Serial
   private static final long serialVersionUID = -3812154315344047111L;

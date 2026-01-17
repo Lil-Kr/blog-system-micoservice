@@ -25,6 +25,7 @@ const LoginForm = () => {
     const { code, data, msg } = res
     if (code === 200) {
       const { token } = data
+      console.log('--> token:', token)
       setToken(token, true)
       messageApi?.success(msg)
     } else {

@@ -1,11 +1,9 @@
 package org.cy.micoservice.blog.entity.user.model.provider.req;
 
 import lombok.Data;
-import lombok.ToString;
 
 //import jakarta.validation.constraints.NotNull;
 
-@ToString
 @Data
 public class UserDeleteReq {
 

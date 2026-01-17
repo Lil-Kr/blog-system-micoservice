@@ -3,7 +3,7 @@
 <mapper namespace="org.cy.micoservice.blog.infra.console.dao.rbac.SysRoleAdminMapper">
 
 	<!-- 通用查询映射结果 -->
-	<resultMap id="BaseResultMap" type="org.cy.micoservice.blog.entity.infra.console.model.entity.sys.SysRoleAdmin">
+<!--	<resultMap id="BaseResultMap" type="org.cy.micoservice.blog.entity.infra.console.model.entity.sys.SysRoleAdmin">
 		<id column="id" property="id"/>
 		<result column="surrogate_id" property="surrogateId"/>
 		<result column="role_id" property="roleId"/>
@@ -11,7 +11,7 @@
 		<result column="operate_ip" property="operateIp"/>
 		<result column="create_time" property="createTime"/>
 		<result column="update_time" property="updateTime"/>
-	</resultMap>
+	</resultMap>-->
 
 	<!--表名-->
 	<sql id="Table_Name">

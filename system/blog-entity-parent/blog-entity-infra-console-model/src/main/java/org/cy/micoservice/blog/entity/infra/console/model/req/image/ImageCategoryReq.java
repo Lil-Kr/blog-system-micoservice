@@ -4,7 +4,8 @@ import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import jakarta.validation.groups.Default;
 import lombok.Data;
-import org.cy.micoservice.blog.entity.base.model.api.BaseEntity;
+import lombok.EqualsAndHashCode;
+import org.cy.micoservice.blog.entity.base.model.api.BaseReq;
 
 import java.io.Serial;
 import java.util.List;
@@ -14,8 +15,9 @@ import java.util.List;
  * @Date: 2024/5/29
  * @Description:
  */
+@EqualsAndHashCode(callSuper = true)
 @Data
-public class ImageCategoryReq extends BaseEntity {
+public class ImageCategoryReq extends BaseReq {
 
   @Serial
   private static final long serialVersionUID = -7098820922267077321L;

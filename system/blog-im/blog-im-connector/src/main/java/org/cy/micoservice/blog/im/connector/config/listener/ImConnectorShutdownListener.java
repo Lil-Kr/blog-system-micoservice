@@ -23,7 +23,7 @@ public class ImConnectorShutdownListener implements ApplicationListener<ContextC
   public void onApplicationEvent(ContextClosedEvent event) {
     long now = System.currentTimeMillis();
     log.info("websocket netty server is closing!!");
-    webSocketNettyStarter.stopWebSocketServer();
+    webSocketNettyStarter.shutDownWebSocketServer();
     log.info("websocket netty server is closed!! time cost: {} ms", System.currentTimeMillis() - now);
   }
 }

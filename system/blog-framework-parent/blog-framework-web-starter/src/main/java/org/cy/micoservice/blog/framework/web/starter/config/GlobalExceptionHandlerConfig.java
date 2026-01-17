@@ -140,6 +140,12 @@ public class GlobalExceptionHandlerConfig {
    */
   @ExceptionHandler(BizException.class)
   public ApiResp<?> handleBusinessException(BizException exception) {
-    return ApiResp.failure(exception.getReturnCodeEnum().getCode(), exception.getMessage());
+    if (exception.getReturnCodeEnum() != null) {
+      return ApiResp.failure(exception.getReturnCodeEnum());
+    } else if (exception.getErrorCode() != null) {
+      return ApiResp.failure(exception.getErrorCode(), exception.getErrorMsg());
+    } else {
+      return ApiResp.failure(exception.getMessage());
+    }
   }
 }

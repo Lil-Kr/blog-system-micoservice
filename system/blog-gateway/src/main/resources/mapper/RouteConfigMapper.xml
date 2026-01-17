@@ -8,7 +8,7 @@
 
 	<!-- 通用查询结果列 -->
 	<sql id="Base_Column_List">
-		id, `schema`, `method`, `path`, uri, dubbo_invoke_param_class, auth_type, `status`, deleted, create_id, update_id, create_time, update_time
+		id, app_name, `schema`, `method`, `path`, uri, dubbo_invoke_param_class, auth_type, `status`, deleted, create_id, update_id, create_time, update_time
 	</sql>
 	
 	<select id="routeConfigAllValidaList" resultType="org.cy.micoservice.blog.entity.gateway.model.entity.RouteConfig">

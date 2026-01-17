@@ -3,8 +3,11 @@ package org.cy.micoservice.blog.entity.user.model.provider.po;
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
+import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
+import lombok.experimental.SuperBuilder;
 import org.cy.micoservice.blog.entity.base.model.api.BaseEntity;
 
 import java.io.Serial;
@@ -19,6 +22,9 @@ import java.util.Date;
  */
 @EqualsAndHashCode(callSuper = true)
 @Data
+@SuperBuilder
+@NoArgsConstructor
+@AllArgsConstructor
 @TableName("t_user")
 public class User extends BaseEntity {
   @Serial

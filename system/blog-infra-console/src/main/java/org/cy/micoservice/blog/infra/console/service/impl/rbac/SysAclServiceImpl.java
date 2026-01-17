@@ -1,4 +1,4 @@
-package org.cy.micoservice.blog.infra.console.service.impl;
+package org.cy.micoservice.blog.infra.console.service.impl.rbac;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
@@ -15,13 +15,13 @@ import org.cy.micoservice.blog.entity.infra.console.model.entity.sys.*;
 import org.cy.micoservice.blog.entity.infra.console.model.req.sys.acl.AclPageReq;
 import org.cy.micoservice.blog.entity.infra.console.model.req.sys.acl.AclReq;
 import org.cy.micoservice.blog.entity.infra.console.model.resp.sys.acl.SysAclResp;
-import org.cy.micoservice.blog.entity.infra.console.model.entity.sys.*;
 import org.cy.micoservice.blog.infra.console.dao.rbac.*;
 import org.cy.micoservice.blog.infra.console.service.RbacCacheService;
 import org.cy.micoservice.blog.infra.console.service.SysAclService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.stream.Collectors;
@@ -51,7 +51,7 @@ public class SysAclServiceImpl extends ServiceImpl<SysAclMapper, SysAcl> impleme
   private SysRoleMapper roleMapper;
 
   @Autowired
-  private SysAdminMapper userMapper;
+  private SysAdminMapper adminMapper;
 
   @Autowired
   private RbacCacheService rbacCacheService;
@@ -87,9 +87,9 @@ public class SysAclServiceImpl extends ServiceImpl<SysAclMapper, SysAcl> impleme
     }
 
     Long surrogateId = IdWorker.getSnowFlakeId(); // surrogateId
-    Date currentTime = DateUtil.dateTimeNow();// 当前时间
+    LocalDateTime currentTime = DateUtil.localDateTimeNow();// 当前时间
     SysAcl build = SysAcl.builder()
-      .surrogateId(surrogateId)
+      .aclId(surrogateId)
       .number(ACLM_PREV_INFO + surrogateId)
       .name(req.getName())
       .aclModuleId(req.getAclModuleId())
@@ -101,8 +101,8 @@ public class SysAclServiceImpl extends ServiceImpl<SysAclMapper, SysAcl> impleme
       .status(req.getStatus())
       .seq(req.getSeq())
       .remark(req.getRemark())
-      .creatorId(req.getAdminId())
-      .operator(req.getAdminId())
+      .createId(req.getAdminId())
+      .updateId(req.getAdminId())
       .operateIp("127.0.0.1")
       .createTime(currentTime)
       .updateTime(currentTime)
@@ -127,7 +127,7 @@ public class SysAclServiceImpl extends ServiceImpl<SysAclMapper, SysAcl> impleme
   @Override
   public ApiResp<String> edit(AclReq req) {
     QueryWrapper<SysAcl> query = new QueryWrapper<>();
-    query.eq("surrogate_id", req.getSurrogateId());
+    query.eq("acl_id", req.getAclId());
     SysAcl before = aclMapper.selectOne(query);
     if (Objects.isNull(before)) {
       return ApiResp.warning(INFO_NOT_EXIST);
@@ -148,7 +148,7 @@ public class SysAclServiceImpl extends ServiceImpl<SysAclMapper, SysAcl> impleme
     }
 
     // 当前时间
-    Date currentTime = DateUtil.dateTimeNow();
+    LocalDateTime currentTime = DateUtil.localDateTimeNow();
     SysAcl build = SysAcl.builder()
       .name(req.getName())
       .aclModuleId(req.getAclModuleId())
@@ -160,13 +160,13 @@ public class SysAclServiceImpl extends ServiceImpl<SysAclMapper, SysAcl> impleme
       .menuUrl(StringUtils.isBlank(req.getMenuUrl()) ? "-" : req.getMenuUrl())
       .btnSign(StringUtils.isBlank(req.getBtnSign()) ? "-" : req.getBtnSign())
       .remark(req.getRemark())
-      .operator(req.getAdminId())
+      .updateId(req.getAdminId())
       .operateIp("127.0.0.1")
       .updateTime(currentTime)
       .build();
 
     UpdateWrapper<SysAcl> updateWrapper = new UpdateWrapper<>();
-    updateWrapper.eq("surrogate_id", req.getSurrogateId());
+    updateWrapper.eq("acl_id", req.getAclId());
     int update = aclMapper.update(build, updateWrapper);
     if (update < 1) {
       return ApiResp.warning(UPDATE_ERROR);
@@ -207,7 +207,7 @@ public class SysAclServiceImpl extends ServiceImpl<SysAclMapper, SysAcl> impleme
     // 查询权限对应的角色id
     QueryWrapper<SysRoleAcl> query1 = new QueryWrapper<>();
     query1.select("role_id")
-      .eq("acl_id", req.getSurrogateId());
+      .eq("acl_id", req.getAclId());
     List<SysRoleAcl> roleIdList = roleAclMapper.selectList(query1);
     Set<Long> roleIdSet = roleIdList.stream().map(SysRoleAcl::getAclId).collect(Collectors.toSet());
     if (CollectionUtils.isEmpty(roleIdSet)) {
@@ -232,7 +232,7 @@ public class SysAclServiceImpl extends ServiceImpl<SysAclMapper, SysAcl> impleme
     // 根据用户id查询用户详细信息
     QueryWrapper<SysAdmin> query4 = new QueryWrapper<>();
     query4.in("surrogate_id", Lists.newArrayList(userIdSet));
-    List<SysAdmin> userList = userMapper.selectList(query4);
+    List<SysAdmin> userList = adminMapper.selectList(query4);
 
     resMap.put("users", userList);
     resMap.put("roles", roleList);

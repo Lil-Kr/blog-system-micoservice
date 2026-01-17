@@ -8,14 +8,14 @@
 
 	<!-- 通用查询结果列 -->
 	<sql id="Base_Column_List">
-		id, surrogate_id, `number`, `name`, acl_module_id, url, `type`, menu_name, menu_url, btn_sign, status, seq, remark, operate_ip, creator_id, operator, create_time, update_time
+		id, acl_id, `number`, `name`, acl_module_id, url, `type`, menu_name, menu_url, btn_sign, status, seq, remark, operate_ip, deleted, create_id, update_id, create_time, update_time
 	</sql>
 
 	<!-- 根据权限id列表查询权限点列表 -->
 	<select id="selectAclListByAclIdList" resultType="org.cy.micoservice.blog.entity.infra.console.model.entity.sys.SysAcl">
 		select
 		a.id,
-		a.surrogate_id,
+		a.acl_id,
 		a.`number`,
 		a.`name`,
 		a.acl_module_id,
@@ -28,19 +28,19 @@
 		a.seq,
 		a.remark,
 		a.operate_ip,
-		a.creator_id,
-		a.operator,
+		a.create_id,
+		a.update_id,
 		a.create_time,
 		a.update_time,
 		d.name as 'acl_module_name',
 		b.user_name as 'creator_name',
-		c.operator as 'operator_name'
+		c.update_id as 'operator_name'
 		from sys_acl as a
 		left join sys_acl_module as d on (a.acl_module_id = d.surrogate_id)
-		left join sys_admin as b on (a.creator_id = b.surrogate_id)
-		left join sys_admin as c on (a.operator = c.surrogate_id)
+		left join sys_admin as b on (a.create_id = b.id)
+		left join sys_admin as c on (a.update_id = c.id)
 		<where>
-			a.surrogate_id in (
+			a.acl_id in (
 			<foreach collection="userAclIdList" index="index" item="aclId" separator=",">
 				#{aclId}
 			</foreach>
@@ -52,7 +52,7 @@
 	<select id="pageAclList" resultType="org.cy.micoservice.blog.entity.infra.console.model.resp.sys.acl.SysAclResp">
 		select
 		a.id,
-		a.surrogate_id,
+		a.acl_id,
 		a.`number`,
 		a.`name`,
 		a.acl_module_id,
@@ -65,8 +65,8 @@
 		a.seq,
 		a.remark,
 		a.operate_ip,
-		a.creator_id,
-		a.operator,
+		a.create_id,
+		a.update_id,
 		a.create_time,
 		a.update_time,
 		b.name as 'acl_module_name',
@@ -75,8 +75,8 @@
 		d.user_name as 'nick_name'
 		from sys_acl as a
 		left join sys_acl_module as b on (a.acl_module_id = b.surrogate_id)
-		left join sys_admin as c on (a.creator_id = c.surrogate_id)
-		left join sys_admin as d on (a.operator = d.surrogate_id)
+		left join sys_admin as c on (a.create_id = c.id)
+		left join sys_admin as d on (a.update_id = d.id)
 		<where>
 			<if test="param.aclModuleId != null">
 				a.acl_module_id = #{param.aclModuleId}
@@ -102,8 +102,8 @@
 		count(1)
 		from sys_acl as a
 		left join sys_acl_module as d on (a.acl_module_id = d.surrogate_id)
-		left join sys_admin as b on (a.creator_id = b.surrogate_id)
-		left join sys_admin as c on (a.operator = c.surrogate_id)
+		left join sys_admin as b on (a.create_id = b.id)
+		left join sys_admin as c on (a.update_id = c.id)
 		<where>
 			<if test="param.aclModuleId != null">
 				a.acl_module_id = #{param.aclModuleId}
@@ -125,7 +125,7 @@
 
 	<!-- 查询所有有效的权限点id -->
 	<select id="selectAclIdAllList" resultType="java.lang.Long">
-		select surrogate_id
+		select acl_id
 		from sys_acl
 		<where>
 			status = #{param.status}
@@ -138,8 +138,8 @@
 		<include refid="Base_Column_List"/>
 		from sys_acl
 		<where>
-			<if test="param.surrogateId != null">
-				surrogate_id = #{param.surrogateId}
+			<if test="param.aclId != null">
+				acl_id = #{param.aclId}
 			</if>
 			<if test="param.aclModuleId != null">
 				acl_module_id = #{param.aclModuleId}

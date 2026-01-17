@@ -1,4 +1,4 @@
-package org.cy.micoservice.blog.infra.console.service.impl;
+package org.cy.micoservice.blog.infra.console.service.impl.rbac;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.google.common.base.Joiner;
@@ -51,7 +51,7 @@ public class SysAclCoreServiceImpl implements SysAclCoreService {
 		 * retrieve from cache for [user - acl]
 		 * if cache not exist, then get from DB
 		 */
-		return Optional.ofNullable(rbacCacheService.getUserAclListCache(adminId))
+		return Optional.ofNullable(rbacCacheService.getAdminAclListCache(adminId))
 			.filter(CollectionUtils::isNotEmpty)
 			.orElseGet(() -> {
 				List<SysAcl> aclList = this.getAdminAclList(adminId);
@@ -203,7 +203,7 @@ public class SysAclCoreServiceImpl implements SysAclCoreService {
 				}
 				return false;
 			})
-			.map(SysAcl::getSurrogateId)
+			.map(SysAcl::getAclId)
 			.collect(Collectors.toList());
 
 		if (CollectionUtils.isEmpty(hasAclIdList)) {
@@ -270,7 +270,7 @@ public class SysAclCoreServiceImpl implements SysAclCoreService {
 
 		// 获取当前用户信息
 		// SysAdmin adminUser = RequestHolder.getCurrentUser();
-		SysAdmin admin = new SysAdmin();
+		SysAdmin admin = SysAdmin.builder().build();
 		Long orgId = admin.getOrgId();
 
 		/**

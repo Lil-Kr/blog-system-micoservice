@@ -22,12 +22,21 @@ public class JWTUtil {
   /**
    * 密钥, 建议使用至少256位长度
    */
-  private static final String SECRET_KEY = "8276hkhuy0HUgKJBYq08y12kHUYVBK17gkLUQ24cxqwetsEDDfx";
+  // private static final String SECRET_KEY = "8276hkhuy0HUgKJBYq08y12kHUYVBK17gkLUQ24cxqwetsEDDfx";
 
   /**
-   * 过期时间
+   * 过期时间: 默认1小时
    */
-  private static final long EXPIRATION_TIME = 500 * 1000;
+  private static final long EXPIRATION_TIME = 60 * 60 * 1000;
+
+  /**
+   * 生成JWT, 如果不需要claims的话
+   * @param subject
+   * @return
+   */
+  public static String generateToken(String subject, String secretKey) {
+    return generateToken(subject, new HashMap<>(), secretKey, EXPIRATION_TIME);
+  }
 
   /**
    * 生成JWT, 如果不需要claims的话
@@ -130,5 +139,9 @@ public class JWTUtil {
   private static Key getSigningKey(String secretKey) {
     byte[] keyBytes = secretKey.getBytes(StandardCharsets.UTF_8);
     return Keys.hmacShaKeyFor(keyBytes);
+  }
+
+  public static void main(String[] args) {
+    System.out.println(System.currentTimeMillis());
   }
 }

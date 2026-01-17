@@ -6,6 +6,7 @@ import org.cy.micoservice.blog.entity.gateway.model.entity.LogPrintStrategy;
 import org.cy.micoservice.blog.entity.gateway.model.req.LogPrintStrategyAddReq;
 import org.cy.micoservice.blog.entity.gateway.model.req.LogPrintStrategyEditReq;
 import org.cy.micoservice.blog.entity.gateway.model.req.LogPrintStrategyPageReq;
+import org.cy.micoservice.blog.entity.gateway.model.req.RouteConfigLogDelReq;
 
 /**
  * @Author: Lil-K
@@ -34,8 +35,8 @@ public interface LogPrintStrategyService {
 
   /**
    * 删除 路由日志打印策略
-   * @param id
+   * @param req
    * @return
    */
-  ApiResp<String> delete(Long id);
+  ApiResp<String> delete(RouteConfigLogDelReq req);
 }

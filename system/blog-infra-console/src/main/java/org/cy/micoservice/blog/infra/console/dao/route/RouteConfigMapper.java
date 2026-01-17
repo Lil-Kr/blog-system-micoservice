@@ -1,4 +1,4 @@
-package org.cy.micoservice.blog.infra.console.dao.gateway;
+package org.cy.micoservice.blog.infra.console.dao.route;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import org.apache.ibatis.annotations.Param;
@@ -24,7 +24,9 @@ public interface RouteConfigMapper extends BaseMapper<RouteConfig> {
 
   List<RouteConfig> pageRouteConfigList(@Param("param") RouteConfigQueryPageReq req);
 
-  Integer pageRouteConfigListCount(@Param("param") RouteConfigQueryPageReq req);
+  Integer countPageRouteConfigList(@Param("param") RouteConfigQueryPageReq req);
 
   List<RouteConfig> routeConfigList(@Param("param") RouteConfigQueryReq req);
+
+  List<RouteConfig> getAppNameList();
 }

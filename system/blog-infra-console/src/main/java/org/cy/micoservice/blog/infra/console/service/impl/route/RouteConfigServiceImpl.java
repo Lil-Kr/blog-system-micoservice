@@ -1,4 +1,4 @@
-package org.cy.micoservice.blog.infra.console.service.impl;
+package org.cy.micoservice.blog.infra.console.service.impl.route;
 
 import com.alibaba.fastjson2.JSONObject;
 import com.alibaba.nacos.api.exception.NacosException;
@@ -13,12 +13,8 @@ import org.cy.micoservice.blog.common.utils.BeanCopyUtils;
 import org.cy.micoservice.blog.common.utils.DateUtil;
 import org.cy.micoservice.blog.entity.gateway.model.entity.RouteChangeLog;
 import org.cy.micoservice.blog.entity.gateway.model.entity.RouteConfig;
-import org.cy.micoservice.blog.entity.gateway.model.req.RouteConfigAddReq;
-import org.cy.micoservice.blog.entity.gateway.model.req.RouteConfigEditReq;
-import org.cy.micoservice.blog.entity.gateway.model.req.RouteConfigQueryPageReq;
-import org.cy.micoservice.blog.entity.gateway.model.req.RouteConfigQueryReq;
+import org.cy.micoservice.blog.entity.gateway.model.req.*;
 import org.cy.micoservice.blog.framework.id.starter.service.IdService;
-import org.cy.micoservice.blog.framework.web.starter.web.RequestContext;
 import org.cy.micoservice.blog.gateway.facade.dto.ChangeBodyDTO;
 import org.cy.micoservice.blog.gateway.facade.enums.GatewayRouterChangeEventEnum;
 import org.cy.micoservice.blog.gateway.facade.enums.GatewayRouterDeletedEnum;
@@ -26,11 +22,10 @@ import org.cy.micoservice.blog.gateway.facade.enums.GatewayRouterSchemaEnum;
 import org.cy.micoservice.blog.gateway.facade.enums.GatewayRouterStatusEnum;
 import org.cy.micoservice.blog.infra.console.config.InfraCacheKeyBuilder;
 import org.cy.micoservice.blog.infra.console.constant.InfraConstants;
-import org.cy.micoservice.blog.infra.console.dao.gateway.RouteConfigMapper;
+import org.cy.micoservice.blog.infra.console.dao.route.RouteConfigMapper;
 import org.cy.micoservice.blog.infra.console.service.NacosService;
 import org.cy.micoservice.blog.infra.console.service.RouteConfigChangeLogService;
 import org.cy.micoservice.blog.infra.console.service.RouteConfigService;
-import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
@@ -69,10 +64,10 @@ public class RouteConfigServiceImpl implements RouteConfigService, InitializingB
   @Override
   public PageResult<RouteConfig> pageRouteConfigList(RouteConfigQueryPageReq req) {
     List<RouteConfig> pageList = routeConfigMapper.pageRouteConfigList(req);
+    Integer count = routeConfigMapper.countPageRouteConfigList(req);
     if (CollectionUtils.isEmpty(pageList)) {
       return PageResult.emptyPage();
     }
-    Integer count = routeConfigMapper.pageRouteConfigListCount(req);
     return new PageResult<>(pageList, count);
   }
 
@@ -113,15 +108,19 @@ public class RouteConfigServiceImpl implements RouteConfigService, InitializingB
     int insert = routeConfigMapper.insert(routeConfig);
 
     // insert route change log
-    RouteChangeLog routeChangeLog = new RouteChangeLog();
-    routeChangeLog.setId(idService.getId());
-    routeChangeLog.setConfigId(routeConfig.getId());
-    routeChangeLog.setChangeEvent(GatewayRouterChangeEventEnum.INSERT.getCode());
-    routeChangeLog.setVersion(0L);
-    ChangeBodyDTO changeBodyDTO = new ChangeBodyDTO(new RouteConfig(), routeConfig);
+    RouteChangeLog routeChangeLog = RouteChangeLog.builder()
+      .id(idService.getId())
+      .configId(routeConfig.getId())
+      .changeEvent(GatewayRouterChangeEventEnum.INSERT.getCode())
+      .version(0L)
+      .build();
+
+    ChangeBodyDTO changeBodyDTO = new ChangeBodyDTO(RouteConfig.builder().build(), routeConfig);
     routeChangeLog.setChangeBody(JSONObject.toJSONString(changeBodyDTO));
-    routeChangeLog.setCreateId(1330756438846476314L);
+    routeChangeLog.setCreateId(req.getAdminId());
+    routeChangeLog.setUpdateId(req.getAdminId());
     routeChangeLog.setCreateTime(nowDate);
+    routeChangeLog.setUpdateTime(nowDate);
     routeChangeLog.setDeleted(GatewayRouterDeletedEnum.ACTIVE.getCode());
     Integer insertLog = routeConfigChangeLogService.create(routeChangeLog);
 
@@ -144,17 +143,14 @@ public class RouteConfigServiceImpl implements RouteConfigService, InitializingB
       return ApiResp.failure(ApiReturnCodeEnum.INFO_NOT_EXIST);
     }
 
-    RouteConfig after = new RouteConfig();
-    BeanUtils.copyProperties(before, after);
-    BeanUtils.copyProperties(req, after);
+    RouteConfig after = BeanCopyUtils.convert(req, RouteConfig.class);
     after.setId(before.getId());
     after.setUpdateId(req.getAdminId());
     after.setUpdateTime(DateUtil.localDateTimeNow());
     int update = routeConfigMapper.updateById(after);
 
     // insert route change log
-    RouteChangeLog routeChangeLog = new RouteChangeLog();
-    BeanUtils.copyProperties(after, routeChangeLog);
+    RouteChangeLog routeChangeLog = BeanCopyUtils.convert(after, RouteChangeLog.class);
 
     routeChangeLog.setId(idService.getId());
     routeChangeLog.setConfigId(before.getId());
@@ -163,7 +159,10 @@ public class RouteConfigServiceImpl implements RouteConfigService, InitializingB
     ChangeBodyDTO changeBodyDTO = new ChangeBodyDTO(before, after);
     routeChangeLog.setChangeBody(JSONObject.toJSONString(changeBodyDTO));
     routeChangeLog.setCreateId(req.getAdminId());
-    routeChangeLog.setCreateTime(DateUtil.localDateTimeNow());
+    routeChangeLog.setUpdateId(req.getAdminId());
+    LocalDateTime now = DateUtil.localDateTimeNow();
+    routeChangeLog.setCreateTime(now);
+    routeChangeLog.setUpdateTime(now);
     routeChangeLog.setDeleted(GatewayRouterDeletedEnum.ACTIVE.getCode());
     // 触发 nacos 更新版本
     Long version = nacosService.incrVersion();
@@ -177,34 +176,39 @@ public class RouteConfigServiceImpl implements RouteConfigService, InitializingB
 
   @Override
   @Transactional(rollbackFor = Exception.class)
-  public ApiResp<String> delete(Long configId) throws NacosException {
+  public ApiResp<String> delete(RouteConfigDelReq req) throws NacosException {
     /**
      * 加入分布式锁, 3秒释放
      */
     Boolean lockStatus = redisTemplate.opsForValue().setIfAbsent(LOCK_KEY, "1", 3, TimeUnit.SECONDS);
     AssertUtil.isTrue(lockStatus, ApiReturnCodeEnum.SYSTEM_ERROR);
 
-    RouteConfig before = routeConfigMapper.selectById(configId);
+    RouteConfig before = routeConfigMapper.selectById(req.getId());
     if (Objects.isNull(before)) {
       return ApiResp.failure(ApiReturnCodeEnum.DEL_ERROR);
     }
-    int del = routeConfigMapper.deleteById(before.getId());
+    before.setDeleted(GatewayRouterDeletedEnum.DELETED.getCode());
+    int del = routeConfigMapper.updateById(before);
 
     // insert route change log
-    RouteChangeLog routeChangeLog = new RouteChangeLog();
-    routeChangeLog.setId(idService.getId());
-    routeChangeLog.setConfigId(before.getId());
+    RouteChangeLog routeChangeLog = RouteChangeLog.builder()
+      .id(idService.getId())
+      .configId(before.getId())
+      .build();
     // 触发 nacos 更新版本
     Long version = nacosService.incrVersion();
     routeChangeLog.setVersion(version);
     routeChangeLog.setChangeEvent(GatewayRouterChangeEventEnum.DELETED.getCode());
 
-    ChangeBodyDTO changeBodyDTO = new ChangeBodyDTO(before, new RouteConfig());
+    ChangeBodyDTO changeBodyDTO = new ChangeBodyDTO(before, RouteConfig.builder().build());
     routeChangeLog.setChangeBody(JSONObject.toJSONString(changeBodyDTO));
 
-    routeChangeLog.setCreateId(RequestContext.getUserId());
-    routeChangeLog.setCreateTime(DateUtil.localDateTimeNow());
+    routeChangeLog.setCreateId(req.getAdminId());
+    routeChangeLog.setUpdateId(req.getAdminId());
     routeChangeLog.setDeleted(GatewayRouterDeletedEnum.ACTIVE.getCode());
+    LocalDateTime now = DateUtil.localDateTimeNow();
+    routeChangeLog.setCreateTime(now);
+    routeChangeLog.setUpdateTime(now);
     int insertLog = routeConfigChangeLogService.create(routeChangeLog);
 
     // release lock
@@ -216,6 +220,12 @@ public class RouteConfigServiceImpl implements RouteConfigService, InitializingB
   public ApiResp<List<RouteChangeLog>> getConfigLog(Long configId) {
     List<RouteChangeLog> logList = routeConfigChangeLogService.selectById(configId);
     return ApiResp.success(logList);
+  }
+
+  @Override
+  public ApiResp<List<RouteConfig>> getAppNameList() {
+    List<RouteConfig> appNameList = routeConfigMapper.getAppNameList();
+    return ApiResp.success(appNameList);
   }
 
   @Override

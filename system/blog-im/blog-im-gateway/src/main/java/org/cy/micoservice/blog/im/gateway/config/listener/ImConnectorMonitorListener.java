@@ -33,7 +33,7 @@ public class ImConnectorMonitorListener implements InitializingBean {
   private NamingService namingService;
 
   /**
-   * 订阅 nacos, nacos主动推送下线的 im-connector 服务节点
+   * 订阅 nacos, nacos 主动推送下线的 im-connector 服务节点
    * @throws Exception
    */
   @Override
@@ -51,7 +51,8 @@ public class ImConnectorMonitorListener implements InitializingBean {
         // 事件触发时的回调逻辑(实时执行)
         if (event instanceof NamingEvent) {
           Set<String> imConnectorAddressSet = ((NamingEvent) event).getInstances().stream()
-            .filter(instance -> instance.isHealthy() && instance.isEnabled()) // nacos: 过滤掉不健康的实例
+            // nacos: 过滤掉不健康的实例
+            .filter(instance -> instance.isHealthy() && instance.isEnabled())
             .map(instance -> String.format(CommonFormatConstants.COMMENT_FORMAT_COLON_SPLIT, instance.getIp(), instance.getPort())) // 转为 ip:port 格式
             .collect(Collectors.toSet());
 

@@ -13,7 +13,7 @@ import {
   UnorderedListOutlined,
   UsergroupAddOutlined,
   UserOutlined,
-  UserSwitchOutlined
+  GatewayOutlined
 } from '@ant-design/icons/lib/icons'
 import { lazy } from 'react'
 
@@ -41,11 +41,12 @@ export const componentMap = {
   _admin_sys_role: lazy(() => import('@/views/sys/role/Role')),
   _admin_sys_acl: lazy(() => import('@/views/sys/acl/Acl')),
   _admin_sys_acl_data: lazy(() => import('@/views/sys/acl_data/AclData')),
-  _admin_sys_dict: lazy(() => import('@/views/sys/dict/Dict'))
+  _admin_sys_dict: lazy(() => import('@/views/sys/dict/Dict')),
+  _admin_sys_apis_route: lazy(() => import('@/views/sys/apis/ApiRoute'))
 } as const
 
 /**
- * 图片
+ * 菜单图标
  */
 export const iconMap = {
   _admin_home: <HomeOutlined />,
@@ -72,4 +73,5 @@ export const iconMap = {
   _admin_sys_acl: <MergeCellsOutlined />,
   _admin_sys_acl_data: <DatabaseOutlined />,
   _admin_sys_dict: <AppstoreOutlined />,
+  _admin_sys_apis_route: <GatewayOutlined />
 } as const

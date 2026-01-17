@@ -1,4 +1,4 @@
-package org.cy.micoservice.blog.infra.console.service.impl;
+package org.cy.micoservice.blog.infra.console.service.impl.rbac;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
@@ -6,7 +6,6 @@ import org.apache.commons.collections4.CollectionUtils;
 import org.cy.micoservice.blog.common.base.api.ApiResp;
 import org.cy.micoservice.blog.common.base.api.PageResult;
 import org.cy.micoservice.blog.common.utils.DateUtil;
-import org.cy.micoservice.blog.infra.facade.dto.org.OrgLevelDto;
 import org.cy.micoservice.blog.entity.infra.console.model.entity.sys.SysAdmin;
 import org.cy.micoservice.blog.entity.infra.console.model.entity.sys.SysOrg;
 import org.cy.micoservice.blog.entity.infra.console.model.req.sys.org.OrgListAllReq;
@@ -19,13 +18,13 @@ import org.cy.micoservice.blog.infra.console.dao.rbac.SysOrgMapper;
 import org.cy.micoservice.blog.infra.console.service.MessageLangService;
 import org.cy.micoservice.blog.infra.console.service.SysOrgService;
 import org.cy.micoservice.blog.infra.console.utils.orgUtil.LevelUtil;
+import org.cy.micoservice.blog.infra.facade.dto.org.OrgLevelDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import java.util.Objects;
 
@@ -73,7 +72,7 @@ public class SysOrgServiceImpl extends ServiceImpl<SysOrgMapper, SysOrg> impleme
 		 * build entity for add
 		 */
 		Long surrogateId = idService.getId(); // surrogateId
-		Date currentTime = DateUtil.localDateTimeToDate(LocalDateTime.now());// current time
+		LocalDateTime currentTime = DateUtil.localDateTimeNow();// current time
 		SysOrg org = SysOrg.builder()
 			.surrogateId(surrogateId)
 			.number(ORG_PREV_NUMBER_INFO + surrogateId)
@@ -86,7 +85,7 @@ public class SysOrgServiceImpl extends ServiceImpl<SysOrgMapper, SysOrg> impleme
 			.deleted(0) // default 0
 			.createTime(currentTime)
 			.updateTime(currentTime)
-			.operator(req.getAdminId())
+			.updateId(req.getAdminId())
 			.operateIp("127.0.0.1")
 			.build();
 
@@ -162,8 +161,8 @@ public class SysOrgServiceImpl extends ServiceImpl<SysOrgMapper, SysOrg> impleme
 			.seq(req.getSeq())
 			.level(LevelUtil.calculateLevel(Objects.isNull(orgTemp) ? null : orgTemp.getLevel(), orgTemp.getId()))
 			.remark(req.getRemark())
-			.updateTime(DateUtil.localDateTimeToDate(LocalDateTime.now()))
-			.operator(req.getAdminId())
+			.updateTime(DateUtil.localDateTimeNow())
+			.updateId(req.getAdminId())
 			.operateIp("127.0.0.1")
 			.build();
 
@@ -197,11 +196,10 @@ public class SysOrgServiceImpl extends ServiceImpl<SysOrgMapper, SysOrg> impleme
 		if (CollectionUtils.isEmpty(orgList)) {
 			return;
 		}
-		Date now = DateUtil.dateTimeNow();
+		LocalDateTime now = DateUtil.localDateTimeNow();
 		orgList.forEach(org -> {
 			org.setLevel(LevelUtil.calculateLevel(afterOrg.getLevel(), afterOrg.getId()));
-			org.setUpdateTime(DateUtil.localDateTimeToDate(LocalDateTime.now()));
-			org.setOperator(afterOrg.getOperator());
+			org.setUpdateId(afterOrg.getUpdateId());
 			org.setUpdateTime(now);
 			updateChildOrgTree(org);
 		});

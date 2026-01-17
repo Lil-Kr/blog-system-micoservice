@@ -1,4 +1,4 @@
-package org.cy.micoservice.blog.infra.console.service.impl;
+package org.cy.micoservice.blog.infra.console.service.impl.route;
 
 import com.alibaba.nacos.api.NacosFactory;
 import com.alibaba.nacos.api.config.ConfigService;
@@ -17,7 +17,7 @@ import java.util.Properties;
 /**
  * @Author: Lil-K
  * @Date: 2025/11/25
- * @Description:
+ * @Description: nacos 对网关版本配置文件做修改
  */
 @Slf4j
 @Service

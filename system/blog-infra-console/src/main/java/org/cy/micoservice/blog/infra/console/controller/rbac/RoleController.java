@@ -135,6 +135,7 @@ public class RoleController {
    */
   @PostMapping("/updateRoleAcls")
   public ApiResp<String> updateRoleAcls(@RequestBody @Validated({RoleAclSaveReq.GroupUpdateRoleAcls.class}) RoleAclSaveReq req) {
+    req.setAdminId(RequestContext.getUserId());
     return roleAclService.updateRoleAcls(req);
   }
 
@@ -146,6 +147,7 @@ public class RoleController {
    */
   @PostMapping("/updateRoleAdmins")
   public ApiResp<String> updateRoleAdmins(@RequestBody @Validated({RoleAdminReq.GroupChangeRoleUsers.class}) RoleAdminReq req) {
+    req.setAdminId(RequestContext.getUserId());
     return roleAdminService.updateRoleAdmins(req);
   }
 }

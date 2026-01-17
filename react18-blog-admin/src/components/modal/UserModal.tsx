@@ -70,8 +70,8 @@ const UserModal = (props: ModalType.CustomModal) => {
       return
     }
 
-    let list: OptionType[] = data.map(({ surrogateId, name }) => ({
-      value: surrogateId,
+    let list: OptionType[] = data.map(({ id, name }) => ({
+      value: id,
       label: name
     }))
     setOrgList(list)
@@ -95,7 +95,7 @@ const UserModal = (props: ModalType.CustomModal) => {
       update()
     } else if (action === 'edit') {
       const param = {
-        surrogateId: params.key,
+        id: params.key,
         orgId: selectedValue,
         account: params.account,
         userName: params.userName,

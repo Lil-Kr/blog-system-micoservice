@@ -6,10 +6,10 @@ import com.baomidou.mybatisplus.annotation.TableName;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
 import lombok.*;
+import lombok.experimental.SuperBuilder;
+import org.cy.micoservice.blog.entity.base.model.api.BaseEntity;
 
 import java.io.Serial;
-import java.io.Serializable;
-import java.util.Date;
 
 /**
  * <p>
@@ -21,12 +21,12 @@ import java.util.Date;
  */
 @Data
 @ToString
-@Builder
+@SuperBuilder
 @NoArgsConstructor
 @AllArgsConstructor
 @EqualsAndHashCode(callSuper = false)
 @TableName("sys_role_acl")
-public class SysRoleAcl implements Serializable {
+public class SysRoleAcl extends BaseEntity {
 
   @Serial
   private static final long serialVersionUID = 4016064140658055929L;
@@ -54,24 +54,23 @@ public class SysRoleAcl implements Serializable {
   @JsonSerialize(using = ToStringSerializer.class)
   private Long aclId;
 
-  /**
-   * 操作人
-   */
-  private Long operator;
+  // /**
+  //  * 操作人
+  //  */
+  // private Long operator;
+  // /**
+  //  * 创建时间
+  //  */
+  // private Date createTime;
+  //
+  // /**
+  //  * 更改时间
+  //  */
+  // private Date updateTime;
 
   /**
    * 操作ip
    */
   private String operateIp;
-
-  /**
-   * 创建时间
-   */
-  private Date createTime;
-
-  /**
-   * 更改时间
-   */
-  private Date updateTime;
 
 }

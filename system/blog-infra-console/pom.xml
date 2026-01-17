@@ -39,6 +39,23 @@
 			<artifactId>spring-cloud-starter-bootstrap</artifactId>
 		</dependency>
 		
+		<!-- test start -->
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+		</dependency>
+		
+		<dependency>
+			<groupId>org.junit.jupiter</groupId>
+			<artifactId>junit-jupiter-api</artifactId>
+		</dependency>
+		
+		<dependency>
+			<groupId>org.junit.jupiter</groupId>
+			<artifactId>junit-jupiter-engine</artifactId>
+		</dependency>
+		<!-- test end -->
+		
 		<!-- 自定义组件 -->
 		<dependency>
 			<groupId>org.cy.micoservice.blog</groupId>
@@ -73,6 +90,12 @@
 		<dependency>
 			<groupId>org.cy.micoservice.blog</groupId>
 			<artifactId>blog-framework-cache-starter</artifactId>
+			<version>${blog-framework-parent.version}</version>
+		</dependency>
+		
+		<dependency>
+			<groupId>org.cy.micoservice.blog</groupId>
+			<artifactId>blog-framework-identify-starter</artifactId>
 			<version>${blog-framework-parent.version}</version>
 		</dependency>
 		

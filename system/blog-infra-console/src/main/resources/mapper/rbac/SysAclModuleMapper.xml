@@ -8,7 +8,7 @@
 
 	<!-- 通用查询结果列 -->
 	<sql id="Base_Column_List">
-		id, surrogate_id, `name`, parent_id, parent_name, `level`, seq, menu_url, status, remark, operate_ip, creator_id, operator, create_time, update_time
+		id, surrogate_id, `name`, parent_id, parent_name, `level`, seq, menu_url, status, remark, operate_ip, deleted, create_id, update_id, create_time, update_time
 	</sql>
 
 	<select id="selectChildAclModuleListByParentId" resultType="org.cy.micoservice.blog.entity.infra.console.model.entity.sys.SysAclModule">

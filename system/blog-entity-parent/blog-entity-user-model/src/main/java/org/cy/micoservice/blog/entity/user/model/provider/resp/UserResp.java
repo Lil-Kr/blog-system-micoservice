@@ -1,15 +1,17 @@
 package org.cy.micoservice.blog.entity.user.model.provider.resp;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
-import lombok.ToString;
+import lombok.*;
+import lombok.experimental.SuperBuilder;
 import org.cy.micoservice.blog.entity.user.model.provider.po.User;
 
 import java.io.Serial;
 
 @EqualsAndHashCode(callSuper = true)
 @Data
+@SuperBuilder
+@NoArgsConstructor
+@AllArgsConstructor
 @ToString
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class UserResp extends User {

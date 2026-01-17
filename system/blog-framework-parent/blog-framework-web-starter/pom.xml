@@ -37,7 +37,6 @@
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-aop</artifactId>
-<!--			<optional>true</optional>-->
 		</dependency>
 		
 		<!-- validation -->
@@ -61,6 +60,13 @@
 			<groupId>org.cy.micoservice.blog</groupId>
 			<artifactId>blog-entity-gateway-model</artifactId>
 			<version>1.0.0</version>
+		</dependency>
+		
+		<dependency>
+			<groupId>org.cy.micoservice.blog</groupId>
+			<artifactId>blog-framework-identify-starter</artifactId>
+			<version>1.0.0</version>
+			<optional>true</optional>
 		</dependency>
 	</dependencies>
 </project>

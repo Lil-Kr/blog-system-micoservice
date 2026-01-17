@@ -6,10 +6,10 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
 import lombok.*;
+import lombok.experimental.SuperBuilder;
 import org.cy.micoservice.blog.entity.base.model.api.BaseEntity;
 
 import java.io.Serial;
-import java.io.Serializable;
 
 /**
  * <p>
@@ -21,13 +21,13 @@ import java.io.Serializable;
  */
 @EqualsAndHashCode(callSuper = false)
 @ToString
-@Builder
+@SuperBuilder
 @NoArgsConstructor
 @AllArgsConstructor
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @Data
 @TableName("sys_admin")
-public class SysAdmin extends BaseEntity implements Serializable {
+public class SysAdmin extends BaseEntity {
 
   @Serial
   private static final long serialVersionUID = -4434221871546216598L;

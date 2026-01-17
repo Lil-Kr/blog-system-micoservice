@@ -1,4 +1,4 @@
-package org.cy.micoservice.blog.infra.console.service.impl;
+package org.cy.micoservice.blog.infra.console.service.impl.rbac;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
@@ -19,7 +19,6 @@ import org.cy.micoservice.blog.infra.console.service.SysRoleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Objects;
@@ -54,7 +53,7 @@ public class SysRoleServiceImpl implements SysRoleService {
 		List<SysRoleResp> roleList = roleMapper.pageRoleList(req);
 		Integer count = roleMapper.countRolePage(req);
 		if (CollectionUtils.isEmpty(roleList)) {
-			return new PageResult<>(new ArrayList<>(0), 0);
+			return PageResult.emptyPage();
 		}else {
 			return new PageResult<>(roleList, count);
 		}

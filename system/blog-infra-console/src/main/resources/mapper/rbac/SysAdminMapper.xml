@@ -8,11 +8,11 @@
 
 	<!-- 通用查询结果列 -->
 	<sql id="Base_Column_List">
-		id, token, `number`, `account`, `password`, user_name, telephone, email, avatar, org_id, `status`, deleted, remark, operate_ip, creator_id, operator, create_time, update_time
+		id, token, `number`, `account`, `password`, user_name, telephone, email, avatar, org_id, `status`, deleted, remark, operate_ip, create_id, update_id, create_time, update_time
 	</sql>
 
 	<sql id="Base_Join_Column_List">
-		a.id, a.token, a.`number`, a.account, a.password, a.user_name, a.telephone, a.email, a.avatar, a.org_id, a.status, a.deleted, a.remark, a.operate_ip, a.creator_id, a.operator, a.create_time, a.update_time
+		a.id, a.token, a.`number`, a.account, a.password, a.user_name, a.telephone, a.email, a.avatar, a.org_id, a.status, a.deleted, a.remark, a.operate_ip, a.create_id, a.update_id, a.create_time, a.update_time
 	</sql>
 
 	<update id="updatePasswordById">
@@ -60,15 +60,15 @@
 			a.deleted,
 			a.remark,
 			a.operate_ip,
-			a.creator_id,
-			a.operator,
+			a.create_id,
+			a.update_id,
 			a.create_time,
 			a.update_time,
 			b.name as 'orgName'
 		from sys_admin as a
 		left join sys_org as b on (a.org_id = b.surrogate_id)
 		<where>
-			a.surrogate_id = #{surrogateId}
+			a.id = #{id}
 		</where>
 	</select>
 
@@ -138,17 +138,17 @@
 			<if test="param.remark != null and param.remark != ''">
 				remark = #{param.remark},
 			</if>
-			<if test="param.deleted != null and param.deleted != ''">
+			<if test="param.deleted != null">
 				deleted = #{param.deleted},
 			</if>
 			<if test="param.operateIp != null and param.operateIp != ''">
 				operate_ip = #{param.operateIp},
 			</if>
-			<if test="param.creatorId != null and param.creatorId != ''">
-				creator_id = #{param.creatorId},
+			<if test="param.createId != null and param.createId != ''">
+				create_id = #{param.createId},
 			</if>
-			<if test="param.operator != null and param.operator != ''">
-				operator = #{param.operator},
+			<if test="param.updateId != null and param.updateId != ''">
+				update_id = #{param.updateId},
 			</if>
 			<if test="param.createTime != null">
 				create_time = #{param.createTime},
@@ -158,7 +158,7 @@
 			</if>
 		</set>
 		<where>
-			surrogate_id = #{param.surrogateId}
+			id = #{param.id}
 		</where>
 	</update>
 
@@ -167,10 +167,10 @@
 		from <include refid="Table_Name"/>
 		<where>
 			<if test="param.account != null and param.account != ''">
-				account = #{param.account}
+				and account = #{param.account}
 			</if>
 			<if test="param.password != null and param.password != ''">
-				password = #{param.password}
+				and password = #{param.password}
 			</if>
 		</where>
 	</select>
@@ -189,8 +189,8 @@
 			a.deleted,
 			a.remark,
 			a.operate_ip,
-			a.creator_id,
-			a.operator,
+			a.create_id,
+			a.update_id,
 			a.create_time,
 			a.update_time,
 			b.name as 'orgName'
@@ -224,8 +224,8 @@
 			a.deleted,
 			a.remark,
 			a.operate_ip,
-			a.creator_id,
-			a.operator,
+			a.create_id,
+			a.update_id,
 			a.create_time,
 			a.update_time,
 			b.name as 'orgName',
@@ -233,8 +233,8 @@
 			d.account as 'operatorName'
 		from sys_admin as a
 		inner join sys_org as b on (a.org_id = b.surrogate_id)
-		inner join sys_admin as c on (a.creator_id = c.id)
-		inner join sys_admin as d on (a.operator = d.id)
+		inner join sys_admin as c on (a.create_id = c.id)
+		inner join sys_admin as d on (a.update_id = d.id)
 		<where>
 			<if test="param.id != null and param.id != ''">
 				and a.org_id = #{param.id}
@@ -264,8 +264,8 @@
 		select count(1)
 		from sys_admin as a
 		inner join sys_org as b on (a.org_id = b.surrogate_id)
-		inner join sys_admin as c on (a.creator_id = c.id)
-		inner join sys_admin as d on (a.operator = d.id)
+		inner join sys_admin as c on (a.create_id = c.id)
+		inner join sys_admin as d on (a.update_id = d.id)
 		<where>
 			<if test="param.id != null and param.id != ''">
 				and a.org_id = #{param.id}

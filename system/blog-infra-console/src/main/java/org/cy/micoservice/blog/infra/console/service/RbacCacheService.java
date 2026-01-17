@@ -49,7 +49,7 @@ public interface RbacCacheService {
 	 */
 	void saveUserAclCache(Long surrogateId, List<SysAcl> aclList);
 
-	List<SysAcl> getUserAclListCache(Long userId);
+	List<SysAcl> getAdminAclListCache(Long userId);
 
 	void invalidUserAclCache(List<Long> userIdList);
 
