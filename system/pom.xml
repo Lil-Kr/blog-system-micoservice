@@ -38,6 +38,7 @@
 		<module>blog-message-provider</module>
 		<module>blog-audit-facade</module>
 		<module>blog-audit-provider</module>
+		<module>blog-flink</module>
 	</modules>
 
 	<properties>

@@ -6,7 +6,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.apache.dubbo.config.annotation.DubboService;
 import org.cy.micoservice.blog.common.base.provider.RpcResponse;
 import org.cy.micoservice.blog.common.utils.BeanCopyUtils;
-import org.cy.micoservice.blog.entity.user.model.provider.po.User;
+import org.cy.micoservice.blog.entity.user.model.provider.pojo.User;
 import org.cy.micoservice.blog.entity.user.model.provider.resp.UserResp;
 import org.cy.micoservice.blog.user.facade.dto.req.TestReq;
 import org.cy.micoservice.blog.user.facade.dto.resp.SysUserDTO;

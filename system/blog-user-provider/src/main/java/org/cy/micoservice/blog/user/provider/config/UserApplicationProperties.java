@@ -10,11 +10,14 @@ import org.springframework.context.annotation.Configuration;
  * @Date: 2025/12/26
  * @Description:
  */
+@Data
 @Configuration
 @RefreshScope
-@Data
 public class UserApplicationProperties {
 
   @Value("${es.user.follower.index:blog.user.user-follower-relation}")
   private String userFollowerEsIndexName;
+
+  @Value("${es.user.phone.index:blog.user.user-phone-relation}")
+  private String userPhoneEsIndexName;
 }

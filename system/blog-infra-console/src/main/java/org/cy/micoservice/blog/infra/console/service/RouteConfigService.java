@@ -17,8 +17,11 @@ public interface RouteConfigService {
   PageResult<RouteConfig> pageRouteConfigList(RouteConfigQueryPageReq req);
 
   ApiResp<List<RouteConfig>> routeConfigList(RouteConfigQueryReq req);
+  ApiResp<List<RouteConfig>> routeConfigInternalList(RouteConfigQueryReq req);
 
   ApiResp<Long> create(RouteConfigAddReq req) throws Exception;
+
+  ApiResp<Long> createInternal(RouteConfigAddReq req) throws Exception;
 
   ApiResp<String> edit(RouteConfigEditReq req) throws Exception;
 

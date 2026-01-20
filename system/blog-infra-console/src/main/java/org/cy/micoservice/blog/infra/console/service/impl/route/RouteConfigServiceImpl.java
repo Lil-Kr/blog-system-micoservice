@@ -77,6 +77,11 @@ public class RouteConfigServiceImpl implements RouteConfigService, InitializingB
     return ApiResp.success(configs);
   }
 
+  @Override
+  public ApiResp<List<RouteConfig>> routeConfigInternalList(RouteConfigQueryReq req) {
+    return this.routeConfigList(req);
+  }
+
   /**
    * insert --> config statue is invalid
    * @param req
@@ -127,6 +132,17 @@ public class RouteConfigServiceImpl implements RouteConfigService, InitializingB
     // release lock
     redisTemplate.delete(LOCK_KEY);
     return insert > 0 && insertLog > 0 ? ApiResp.success(routeConfig.getId()) : ApiResp.failure(ApiReturnCodeEnum.ADD_ERROR);
+  }
+
+  /**
+   * 内部调用
+   * @param req
+   * @return
+   * @throws Exception
+   */
+  @Override
+  public ApiResp<Long> createInternal(RouteConfigAddReq req) throws Exception {
+    return this.create(req);
   }
 
   @Override

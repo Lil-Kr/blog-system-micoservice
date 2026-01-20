@@ -9,10 +9,11 @@ import org.cy.micoservice.blog.infra.console.sdk.config.FeignClientFactory;
 import org.cy.micoservice.blog.infra.console.sdk.config.NacosServiceDiscovery;
 import org.cy.micoservice.blog.infra.console.sdk.config.SdkProperties;
 import org.cy.micoservice.blog.infra.console.sdk.http.InfraConsoleFacade;
-import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Component;
 
+import java.util.Collections;
 import java.util.List;
+import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -67,12 +68,12 @@ public class InfraConsoleClient {
    * @param req
    * @return
    */
-  public Set<RouteConfigSaveReq> routeList(RouteConfigQueryListReq req) {
+  public Set<String> routeList(RouteConfigQueryListReq req) {
     ApiResp<List<RouteConfig>> resp = this.getInfraConsoleFacade().routeList(req);
-    return resp.getData().stream().map(routeConfig -> {
-      RouteConfigSaveReq request = new RouteConfigSaveReq();
-      BeanUtils.copyProperties(routeConfig, request);
-      return request;
-    }).collect(Collectors.toSet());
+    return Optional.ofNullable(resp.getData())
+      .orElse(Collections.emptyList())
+      .stream()
+      .map(RouteConfig::getPath)
+      .collect(Collectors.toSet());
   }
 }

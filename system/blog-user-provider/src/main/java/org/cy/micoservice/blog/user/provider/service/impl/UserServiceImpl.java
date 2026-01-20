@@ -2,7 +2,7 @@ package org.cy.micoservice.blog.user.provider.service.impl;
 
 import org.cy.micoservice.blog.common.base.api.ApiResp;
 import org.cy.micoservice.blog.common.base.api.PageResult;
-import org.cy.micoservice.blog.entity.user.model.provider.po.User;
+import org.cy.micoservice.blog.entity.user.model.provider.pojo.User;
 import org.cy.micoservice.blog.entity.user.model.provider.req.*;
 import org.cy.micoservice.blog.entity.user.model.provider.resp.UserResp;
 import org.cy.micoservice.blog.user.provider.config.UserRedisKeyBuilder;

@@ -2,6 +2,7 @@ package org.cy.micoservice.blog.message.provider.dao.es;
 
 import co.elastic.clients.elasticsearch._types.Result;
 import co.elastic.clients.elasticsearch._types.query_dsl.Query;
+import co.elastic.clients.elasticsearch.core.BulkResponse;
 import co.elastic.clients.elasticsearch.core.IndexResponse;
 import jakarta.annotation.Resource;
 import lombok.extern.slf4j.Slf4j;
@@ -12,7 +13,6 @@ import org.cy.micoservice.blog.framework.elasticsearch.starter.utils.Elasticsear
 import org.cy.micoservice.blog.message.provider.config.MessageApplicationProperties;
 import org.springframework.stereotype.Repository;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -39,7 +39,7 @@ public class ChatBoxEsMapper {
    */
   public boolean index(ChatBoxEs chatBoxEs) {
     IndexResponse indexResponse = elasticsearchUtil.indexDocument(applicationProperties.getEsChatBoxIndex(),
-      String.valueOf(chatBoxEs.getId()),chatBoxEs);
+      String.valueOf(chatBoxEs.getId()), chatBoxEs);
     return Result.Created.equals(indexResponse.result()) || Result.Updated.equals(indexResponse.result());
   }
 
@@ -49,11 +49,9 @@ public class ChatBoxEsMapper {
    * @return
    */
   public boolean bulk(List<Map<String, Object>> eachRecord) {
-    try {
-      elasticsearchUtil.bulkIndexDocuments(applicationProperties.getEsChatBoxIndex(), eachRecord);
+    BulkResponse response = elasticsearchUtil.bulkIndexDocuments(applicationProperties.getEsChatBoxIndex(), eachRecord);
+    if (!response.errors()) {
       return true;
-    } catch (IOException e) {
-      log.error("bulk chat-box error: ", e);
     }
     return false;
   }

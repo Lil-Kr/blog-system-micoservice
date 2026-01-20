@@ -16,11 +16,11 @@ import java.util.List;
  */
 public interface InfraConsoleFacade {
 
-  @RequestLine("POST /api/route/config/create")
+  @RequestLine("POST /api/route/config/createInternal")
   @Headers("Content-Type: application/json")
   ApiResp<Long> createRouteConfig(RouteConfigSaveReq req);
 
-  @RequestLine("POST /api/route/config/list")
+  @RequestLine("POST /api/route/config/listInternal")
   @Headers("Content-Type: application/json")
   ApiResp<List<RouteConfig>> routeList(RouteConfigQueryListReq req);
 }

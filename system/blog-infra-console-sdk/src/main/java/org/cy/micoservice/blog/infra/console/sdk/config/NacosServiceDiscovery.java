@@ -23,10 +23,10 @@ public class NacosServiceDiscovery {
 
     public NacosServiceDiscovery(String serverAddr, String namespace, String user, String pwd) throws NacosException {
         Properties props = new Properties();
+        props.put("namespace", namespace);
         props.put("serverAddr", serverAddr);
         props.put("username", user);
         props.put("password", pwd);
-        props.put("namespace", namespace);
         this.namingService = NacosFactory.createNamingService(props);
     }
 

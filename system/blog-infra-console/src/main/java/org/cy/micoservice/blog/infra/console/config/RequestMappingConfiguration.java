@@ -21,9 +21,7 @@ import org.springframework.web.method.HandlerMethod;
 import org.springframework.web.servlet.mvc.method.RequestMappingInfo;
 import org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping;
 
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 import java.util.stream.Collectors;
 
 /**
@@ -56,7 +54,9 @@ public class RequestMappingConfiguration implements CommandLineRunner {
     req.setUri(GatewayInfraConsoleSdkConstants.LB_SERVICE_PREFIX + appName);
     ApiResp<List<RouteConfig>> listApiResp = routeConfigService.routeConfigList(req);
 
-    Set<String> routeConfigs = listApiResp.getData().stream()
+    Set<String> routeConfigs = Optional.ofNullable(listApiResp.getData())
+      .orElse(Collections.emptyList())
+      .stream()
       .map(RouteConfig::getPath)
       .collect(Collectors.toSet());
 

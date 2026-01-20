@@ -26,10 +26,6 @@ spring:
         server-addr: 192.168.9.200:8848
         # 读取配置的 nacos 的名空间
         namespace: blog-mico-service-dev
-    # sentinel 配置
-    sentinel:
-      transport:
-        dashboard: localhost:9992
       datasource:
         test-app-flow:
           nacos:
@@ -41,6 +37,10 @@ spring:
             group-id: SENTINEL_GROUP
             rule-type: flow
             data-type: json
+    # sentinel 配置
+  #    sentinel:
+  #      transport:
+  #        dashboard: localhost:9992
   config:
     import:
       - optional:nacos:test-app.yaml

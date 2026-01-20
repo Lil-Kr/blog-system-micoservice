@@ -1,6 +1,6 @@
 package org.cy.micoservice.blog.user.provider.service.impl;
 
-import org.cy.micoservice.blog.entity.user.model.provider.po.User;
+import org.cy.micoservice.blog.entity.user.model.provider.pojo.User;
 import org.cy.micoservice.blog.user.provider.service.UserShardService;
 import org.springframework.stereotype.Service;
 

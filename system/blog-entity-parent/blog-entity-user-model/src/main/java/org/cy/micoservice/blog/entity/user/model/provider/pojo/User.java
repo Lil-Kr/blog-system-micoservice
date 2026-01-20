@@ -1,4 +1,4 @@
-package org.cy.micoservice.blog.entity.user.model.provider.po;
+package org.cy.micoservice.blog.entity.user.model.provider.pojo;
 
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;

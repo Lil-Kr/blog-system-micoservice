@@ -18,7 +18,6 @@ import org.springframework.web.method.HandlerMethod;
 import org.springframework.web.servlet.mvc.method.RequestMappingInfo;
 import org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping;
 
-import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -47,20 +46,17 @@ public class RequestMappingConfiguration implements CommandLineRunner {
   @Override
   public void run(String... args) throws Exception {
     RouteConfigQueryListReq req = new RouteConfigQueryListReq();
+    req.setAppName(appName);
     req.setUri(GatewayInfraConsoleSdkConstants.LB_SERVICE_PREFIX + appName);
-    Set<RouteConfigSaveReq> routeConfigs = infraConsoleClient.routeList(req);
-
-    Set<String> invalidUrls = new HashSet<>();
-    invalidUrls.add(GatewayInfraConsoleSdkConstants.API_ERROR_SIGN_PATH);
+    Set<String> routeConfigs = infraConsoleClient.routeList(req);
+    routeConfigs.add(GatewayInfraConsoleSdkConstants.API_ERROR_SIGN_PATH);
 
     Map<RequestMappingInfo, HandlerMethod> handlerMethods = requestMappingHandlerMapping.getHandlerMethods();
     Set<RouteConfigSaveReq> routeConfigSaveReqSet = handlerMethods.keySet().stream()
       .filter(requestMappingInfo -> {
         String requestPath = requestMappingInfo.getPathPatternsCondition().getPatternValues().stream().findAny().map(String::toString).orElse("");
-        if (StringUtils.isBlank(requestPath)) {
-          return false;
-        }
-        if (invalidUrls.contains(requestPath)) {
+        String fullRequestPath = servletPath + requestPath;
+        if (StringUtils.isBlank(requestPath) || routeConfigs.contains(fullRequestPath)) {
           return false;
         }
 
@@ -83,7 +79,6 @@ public class RequestMappingConfiguration implements CommandLineRunner {
       }).collect(Collectors.toSet());
 
     // 获取增量更新记录
-    routeConfigSaveReqSet.removeAll(routeConfigs);
     if (CollectionUtils.isEmpty(routeConfigSaveReqSet)) {
       log.info("don't need update route config anymore");
       return;

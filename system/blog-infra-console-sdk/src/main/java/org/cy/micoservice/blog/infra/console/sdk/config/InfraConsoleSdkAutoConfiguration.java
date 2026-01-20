@@ -25,9 +25,4 @@ public class InfraConsoleSdkAutoConfiguration {
     client.init();
     return client;
   }
-
-  // @Bean
-  // public RequestMappingConfiguration requestMappingConfiguration() {
-  //   return new RequestMappingConfiguration();
-  // }
 }

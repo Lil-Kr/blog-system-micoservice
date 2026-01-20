@@ -38,11 +38,15 @@ public class ElasticsearchUtil {
    * @param request   请求查询
    * @throws IOException ES 客户端异常
    */
-  public <T> SearchResponse<T> searchAfter(SearchPageRequest request, Class<T> clazz) throws IOException {
-    return esClient.search(
-      request.getSearchRequest(),
-      clazz
-    );
+  public <T> SearchResponse<T> searchAfter(SearchPageRequest request, Class<T> clazz){
+    try {
+      return esClient.search(
+        request.getSearchRequest(),
+        clazz
+      );
+    } catch (IOException e) {
+      throw new RuntimeException(e);
+    }
   }
 
   /**
@@ -408,7 +412,7 @@ public class ElasticsearchUtil {
    * @return 批量操作结果
    * @throws IOException 异常
    */
-  public BulkResponse bulkIndexDocuments(String indexName, List<Map<String, Object>> documents) throws IOException {
+  public BulkResponse bulkIndexDocuments(String indexName, List<Map<String, Object>> documents) {
     List<BulkOperation> operations = new ArrayList<>();
 
     for (Map<String, Object> doc : documents) {
@@ -428,7 +432,11 @@ public class ElasticsearchUtil {
       ));
     }
 
-    return esClient.bulk(b -> b.operations(operations));
+    try {
+      return esClient.bulk(b -> b.operations(operations));
+    } catch (IOException e) {
+      throw new RuntimeException(e);
+    }
   }
 
   /**

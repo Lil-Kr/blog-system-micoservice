@@ -7,6 +7,7 @@ import org.cy.micoservice.blog.entity.base.model.api.BasePageReq;
 import org.cy.micoservice.blog.entity.gateway.model.entity.RouteChangeLog;
 import org.cy.micoservice.blog.entity.gateway.model.entity.RouteConfig;
 import org.cy.micoservice.blog.entity.gateway.model.req.*;
+import org.cy.micoservice.blog.framework.web.starter.annotations.NoAuthCheck;
 import org.cy.micoservice.blog.framework.web.starter.web.RequestContext;
 import org.cy.micoservice.blog.infra.console.service.RouteConfigService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,10 +39,23 @@ public class RouteConfigController {
     return routeConfigService.routeConfigList(req);
   }
 
+  @NoAuthCheck
+  @PostMapping("/listInternal")
+  public ApiResp<List<RouteConfig>> listInternal(@RequestBody @Valid RouteConfigQueryReq req) throws Exception {
+    return routeConfigService.routeConfigInternalList(req);
+  }
+
   @PostMapping("/create")
-  public ApiResp<Long> create(@RequestBody @Valid RouteConfigAddReq req) throws Exception {
+  public ApiResp<Long> create(@RequestBody @Validated({RouteConfigAddReq.GroupRouteConfigAdd.class}) RouteConfigAddReq req) throws Exception {
     req.setAdminId(RequestContext.getUserId());
     return routeConfigService.create(req);
+  }
+
+  @NoAuthCheck
+  @PostMapping("/createInternal")
+  public ApiResp<Long> createInternal(@RequestBody @Validated({RouteConfigAddReq.GroupRouteConfigAddInternal.class}) RouteConfigAddReq req) throws Exception {
+    req.setAdminId(RequestContext.getUserId());
+    return routeConfigService.createInternal(req);
   }
 
   @PostMapping("/edit")

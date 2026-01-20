@@ -2,7 +2,7 @@ package org.cy.micoservice.blog.user.api.service.impl;
 
 import org.apache.dubbo.config.annotation.DubboReference;
 import org.cy.micoservice.blog.common.base.api.ApiResp;
-import org.cy.micoservice.blog.entity.user.model.provider.po.User;
+import org.cy.micoservice.blog.entity.user.model.provider.pojo.User;
 import org.cy.micoservice.blog.user.api.service.UserProfileService;
 import org.cy.micoservice.blog.user.api.vo.resp.SysUserResp;
 import org.cy.micoservice.blog.user.facade.dto.resp.SysUserDTO;

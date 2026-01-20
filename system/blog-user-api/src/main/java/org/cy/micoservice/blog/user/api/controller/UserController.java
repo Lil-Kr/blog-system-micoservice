@@ -2,7 +2,7 @@ package org.cy.micoservice.blog.user.api.controller;
 
 import lombok.extern.slf4j.Slf4j;
 import org.cy.micoservice.blog.common.base.api.ApiResp;
-import org.cy.micoservice.blog.entity.user.model.provider.po.User;
+import org.cy.micoservice.blog.entity.user.model.provider.pojo.User;
 import org.cy.micoservice.blog.framework.web.starter.annotations.NoAuthCheck;
 import org.cy.micoservice.blog.framework.web.starter.web.RequestContext;
 import org.cy.micoservice.blog.user.api.service.UserEnterService;
@@ -27,14 +27,12 @@ public class UserController {
   @Autowired
   private UserEnterService userEnterService;
 
-  @NoAuthCheck
   @GetMapping("/profile")
   public ApiResp<User> profile() {
     User user = userProfileService.profile(RequestContext.getUserId());
     return ApiResp.success(user);
   }
 
-  @NoAuthCheck
   @GetMapping("/getUser")
   public ApiResp<SysUserResp> getUser(Long userId) {
     return userProfileService.getUserBySurrogateId(userId);
@@ -45,7 +43,6 @@ public class UserController {
    * 这个接口请求量非常大
    * @return
    */
-  @NoAuthCheck
   @PostMapping("/init")
   public ApiResp<Boolean> init(@RequestBody UserEnterInitReqDTO req) {
     req.setUserId(RequestContext.getUserId());

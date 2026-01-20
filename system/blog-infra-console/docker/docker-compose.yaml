@@ -1,0 +1,30 @@
+services:
+  blog-infra-docker-1:
+    image: blog-infra-console:v1.0.0
+    container_name: blog-infra-console-docker-1
+    restart: always
+    ports:
+      - "8201:8201"
+    environment:
+      - TZ=Asia/Shanghai
+      - DUBBO_PORT_TO_REGISTRY=8299
+      - DUBBO_PORT_TO_BIND=8299
+      - JAVA_OPTS=-XX:MetaspaceSize=128m -XX:MaxMetaspaceSize=256m -Xms512m -Xmx512m -Xmn512m -Xss256k
+        -javaagent:/open/agent/opentelemetry-javaagent.jar
+        -Dotel.service.name=blog-infra
+        -Dotel.exporter.otlp.protocol=grpc
+        -Dotel.traces.exporter=otlp
+        -Dotel.exporter.otlp.endpoint=http://192.168.9.200:4319
+        -Dotel.exporter.otlp.insecure=true
+        -Dotel.instrumentation.common.default-enabled=true
+        -Dotel.logs.exporter=none
+    volumes:
+      - /opt/install/opentelemetry/agent:/app/agent
+    # 健康检查
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8201/api/actuator/health"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+    networks:
+      - app-network

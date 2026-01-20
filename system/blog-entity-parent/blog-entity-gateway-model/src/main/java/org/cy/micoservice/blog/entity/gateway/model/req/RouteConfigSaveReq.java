@@ -36,6 +36,8 @@ public class RouteConfigSaveReq extends BaseReq implements Serializable {
    */
   private String authType;
 
+  private Integer status;
+
   private String dubboInvokeParamClass;
 
   private String providerName;
