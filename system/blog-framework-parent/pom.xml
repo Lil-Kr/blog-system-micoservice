@@ -25,6 +25,7 @@
 		<module>blog-framework-id-starter</module>
 		<module>blog-framework-elasticsearch-starter</module>
 		<module>blog-framework-sharding-jdbc-starter</module>
+		<module>blog-framework-opentelemetry-starter</module>
 	</modules>
 	
 	<properties>

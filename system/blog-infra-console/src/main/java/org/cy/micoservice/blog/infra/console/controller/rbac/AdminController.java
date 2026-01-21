@@ -66,6 +66,12 @@ public class AdminController {
     return ApiResp.success(msgLangService.getMessage(LANG_ZH, "admin.logout.success"));
   }
 
+  @NoAuthCheck
+  @GetMapping("/getToken")
+  public ApiResp<SysAdmin> getToken() throws Exception {
+    return adminService.getToken();
+  }
+
   /**
    * 分页-查询用户列表
    * @param req

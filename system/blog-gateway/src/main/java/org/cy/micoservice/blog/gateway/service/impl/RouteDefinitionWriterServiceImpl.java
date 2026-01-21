@@ -51,10 +51,10 @@ public class RouteDefinitionWriterServiceImpl implements RouteDefinitionWriterSe
         return false;
       }
       RouteDefinition routeDefinition = new RouteDefinition();
-      routeDefinition.setId(ROUTE_CONFIG_PREFIX + routeConfig.getId());
       String schema = routeConfig.getSchema();
       AssertUtil.isNotBlank(GatewayRouterSchemaEnum.getByCode(schema), RpcReturnCodeEnum.RPC_PARAMETER_ERROR);
 
+      routeDefinition.setId(ROUTE_CONFIG_PREFIX + routeConfig.getId());
       routeDefinition.setUri(UriComponentsBuilder.fromUriString(routeConfig.getUri()).build().toUri());
       List<PredicateDefinition> predicateDefinitionList = new ArrayList<>();
       PredicateDefinition path = new PredicateDefinition();

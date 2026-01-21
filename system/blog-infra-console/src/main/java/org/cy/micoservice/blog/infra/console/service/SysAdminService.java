@@ -30,4 +30,10 @@ public interface SysAdminService {
 	ApiResp<String> delete(Long surrogateId);
 
   ApiResp<String> uploadAvatar(AvatarUploadReq req) throws Exception;
+
+  /**
+   * 获取token
+   * @return
+   */
+  ApiResp<SysAdmin> getToken() throws Exception;
 }

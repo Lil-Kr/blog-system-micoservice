@@ -2,4 +2,4 @@ spring:
   application:
     name: blog-gateway
   profiles:
-    active: test
+    active: dev

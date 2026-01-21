@@ -31,7 +31,7 @@ import java.util.UUID;
 /**
  * @Author: Lil-K
  * @Date: 2025/12/9
- * @Description: 处理 websocket协议 握手处理部分逻辑
+ * @Description: 处理 websocket协议握手处理部分逻辑
  * 入站
  */
 @Slf4j

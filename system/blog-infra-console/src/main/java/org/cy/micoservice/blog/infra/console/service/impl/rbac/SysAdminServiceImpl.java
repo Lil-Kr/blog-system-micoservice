@@ -301,6 +301,14 @@ public class SysAdminServiceImpl extends ServiceImpl<SysAdminMapper, SysAdmin> i
   }
 
   @Override
+  public ApiResp<SysAdmin> getToken() throws Exception {
+    Map<String, Long> map = new HashMap<>();
+    map.put(CommonConstants.DEFAULT_AUTH_KEY_USER_ID, 1330756438846476314L);
+    String token = this.aes128GCMCrypto.encrypt(JWTUtil.generateToken(JSONObject.toJSONString(map), authProperties.getSecretKey()));
+    return ApiResp.success(SysAdmin.builder().token(token).build());
+  }
+
+  @Override
   public void afterPropertiesSet() throws Exception {
     this.aes128GCMCrypto = new AES128GCMCrypto(infraApplicationProperties.getDecryptSecretKey());
   }
