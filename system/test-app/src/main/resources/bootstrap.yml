@@ -37,13 +37,46 @@ spring:
             group-id: SENTINEL_GROUP
             rule-type: flow
             data-type: json
-    # sentinel 配置
-  #    sentinel:
-  #      transport:
-  #        dashboard: localhost:9992
   config:
     import:
       - optional:nacos:test-app.yaml
+
+jetcache:
+  ## 统计间隔, 单位分钟, 0 标识不统计
+  statIntervalMinutes: 15
+  ## 是否将areaName作为缓存key前缀, false更合理
+  areaInCacheName: false
+  ## 隐藏的包名前缀, 用于缩短自动生成的缓存名
+  heddenPackages: org.cy.micoservice.blog.test
+  ## 本地缓存配置
+  local:
+    default:
+      # 本地缓存类型: linked-hashmap 或 caffeine(推荐)
+      type: caffeine #other choose：caffeine
+      # 本地缓存最大元素数量
+      limit: 100
+      # key转换器
+      keyConvertor: fastjson2 #other choose：fastjson/jackson
+      # 本地缓存过期时间(毫秒)
+      expireAfterWriteInMillis: 300000
+  ## 远程缓存配置(Redis)
+  remote:
+    default:
+      # 远程缓存客户端类型: jedis or lettuce(推荐)
+      type: redis.lettuce
+      # key转换器
+      keyConvertor: fastjson2 #other choose：fastjson2/jackson
+      # 广播通道: 用于多节点缓存同步
+      # 当缓存更新 / 删除时, 通过 Redis pub/sub 通知其他节点使本地缓存失效
+      broadcastChannel: test-app-cache-sync
+      ## 值编码器 (java / kryo / kryo5)
+      valueEncoder: java #other choose：kryo/kryo5
+      ## 值解码器
+      valueDecoder: java #other choose：kryo/kryo5
+      # 本地缓存过期时间(毫秒)
+      expireAfterWriteInMillis: 1800000
+      ## remote 缓存连接地址
+      uri: redis://green-123!%40qj@192.168.9.200:6606/
 
 # spring boot 3.x 专属 Actuator + prometheus 配置
 management:

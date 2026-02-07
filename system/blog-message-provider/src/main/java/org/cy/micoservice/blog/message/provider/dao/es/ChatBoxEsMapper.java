@@ -8,7 +8,7 @@ import jakarta.annotation.Resource;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.collections4.CollectionUtils;
 import org.cy.micoservice.blog.common.enums.biz.DeleteStatusEnum;
-import org.cy.micoservice.blog.entity.message.model.provider.po.es.ChatBoxEs;
+import org.cy.micoservice.blog.entity.message.model.provider.pojo.es.ChatBoxEs;
 import org.cy.micoservice.blog.framework.elasticsearch.starter.utils.ElasticsearchUtil;
 import org.cy.micoservice.blog.message.provider.config.MessageApplicationProperties;
 import org.springframework.stereotype.Repository;

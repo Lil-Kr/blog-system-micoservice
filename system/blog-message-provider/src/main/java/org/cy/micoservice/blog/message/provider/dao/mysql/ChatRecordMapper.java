@@ -1,7 +1,7 @@
 package org.cy.micoservice.blog.message.provider.dao.mysql;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
-import org.cy.micoservice.blog.entity.message.model.provider.po.mysql.ChatRecord;
+import org.cy.micoservice.blog.entity.message.model.provider.pojo.mysql.ChatRecord;
 import org.springframework.stereotype.Repository;
 
 /**

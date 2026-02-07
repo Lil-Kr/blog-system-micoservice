@@ -16,8 +16,8 @@ import java.util.Map;
  */
 @Slf4j
 @RestController
-@RequestMapping("/test")
-public class TestController {
+@RequestMapping("/demo")
+public class DemoController {
 
   // @Autowired
   // private InfraConsoleClient infraConsoleClient;
@@ -54,4 +54,6 @@ public class TestController {
   //   req.setAuthType("jwt");
   //   return infraConsoleClient.createRouteConfig(req);
   // }
+
+
 }

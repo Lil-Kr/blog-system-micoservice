@@ -8,7 +8,7 @@ import org.apache.commons.collections4.CollectionUtils;
 import org.cy.micoservice.blog.common.base.provider.PageResponseDTO;
 import org.cy.micoservice.blog.common.utils.BeanCopyUtils;
 import org.cy.micoservice.blog.common.utils.IdGenerateUtil;
-import org.cy.micoservice.blog.entity.message.model.provider.po.mysql.ChatRecord;
+import org.cy.micoservice.blog.entity.message.model.provider.pojo.mysql.ChatRecord;
 import org.cy.micoservice.blog.message.facade.dto.req.ChatRecordPageReqDTO;
 import org.cy.micoservice.blog.message.facade.dto.req.ChatRecordReqDTO;
 import org.cy.micoservice.blog.message.facade.dto.req.ChatRelationReqDTO;

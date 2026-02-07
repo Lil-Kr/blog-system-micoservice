@@ -11,7 +11,7 @@ services:
       - DUBBO_PORT_TO_BIND=8299
       - JAVA_OPTS=-XX:MetaspaceSize=128m -XX:MaxMetaspaceSize=256m -Xms512m -Xmx512m -Xmn512m -Xss256k
         -javaagent:/open/agent/opentelemetry-javaagent.jar
-        -Dotel.service.name=blog-infra
+        -Dotel.service.name=blog-infra-console
         -Dotel.exporter.otlp.protocol=grpc
         -Dotel.traces.exporter=otlp
         -Dotel.exporter.otlp.endpoint=http://192.168.9.200:4319

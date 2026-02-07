@@ -1,4 +1,4 @@
-package org.cy.micoservice.blog.entity.message.model.provider.po.es;
+package org.cy.micoservice.blog.entity.message.model.provider.pojo.es;
 
 import lombok.Data;
 

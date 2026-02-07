@@ -10,7 +10,7 @@ import org.apache.rocketmq.common.consumer.ConsumeFromWhere;
 import org.apache.rocketmq.common.message.MessageExt;
 import org.cy.micoservice.blog.common.constants.CommonFormatConstants;
 import org.cy.micoservice.blog.common.enums.biz.DeleteStatusEnum;
-import org.cy.micoservice.blog.entity.message.model.provider.po.es.ChatBoxEs;
+import org.cy.micoservice.blog.entity.message.model.provider.pojo.es.ChatBoxEs;
 import org.cy.micoservice.blog.entity.message.model.provider.req.OpenChatReq;
 import org.cy.micoservice.blog.framework.rocketmq.starter.consumer.RocketMQConsumerProperties;
 import org.cy.micoservice.blog.message.provider.config.MessageApplicationProperties;

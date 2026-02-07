@@ -1,6 +1,6 @@
 package org.cy.micoservice.blog.message.provider.service;
 
-import org.cy.micoservice.blog.entity.message.model.provider.po.es.ChatBoxEs;
+import org.cy.micoservice.blog.entity.message.model.provider.pojo.es.ChatBoxEs;
 import org.cy.micoservice.blog.message.facade.dto.req.im.ImChatReqDTO;
 
 import java.util.List;

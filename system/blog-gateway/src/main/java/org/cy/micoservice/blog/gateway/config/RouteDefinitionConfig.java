@@ -44,14 +44,14 @@ public class RouteDefinitionConfig {
   @PostConstruct
   public void initRouteDefinition() throws ExecutionException, InterruptedException {
     log.info("first loading route config from db start");
-    // 异步读取DB中的route config 数据
+    // 异步读取DB中的 route config 数据
     CompletableFuture<List<RouteConfig>> routeConfigListFuture = taskSubmitter.supplyAsync("query-route-config-data",
         () -> routerConfigService.routeConfigAllValidaList(),
         Collections::emptyList,
-        200L);
+        500L);
 
     // 异步执行dubbo初始化配置
-    CompletableFuture<Void> initDubboInvoke = taskSubmitter.runAsync("init-dubbo-nacos-config", this::initDubboInvoke, () -> {}, 100L);
+    CompletableFuture<Void> initDubboInvoke = taskSubmitter.runAsync("init-dubbo-nacos-config", this::initDubboInvoke, () -> {}, 500L);
     CompletableFuture.allOf(routeConfigListFuture, initDubboInvoke).join();
 
     List<RouteConfig> routeConfigList = routeConfigListFuture.get();

@@ -21,6 +21,7 @@
 		<module>blog-entity-message-model</module>
 		<module>blog-entity-audit-model</module>
 		<module>blog-entity-user-model</module>
+		<module>blog-entity-goods-model</module>
 	</modules>
 	
 	<properties>

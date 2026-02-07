@@ -11,7 +11,7 @@ import org.cy.micoservice.blog.common.enums.biz.DeleteStatusEnum;
 import org.cy.micoservice.blog.common.enums.exception.BizErrorEnum;
 import org.cy.micoservice.blog.common.utils.AssertUtil;
 import org.cy.micoservice.blog.common.utils.BeanCopyUtils;
-import org.cy.micoservice.blog.entity.message.model.provider.po.es.ChatRecordEs;
+import org.cy.micoservice.blog.entity.message.model.provider.pojo.es.ChatRecordEs;
 import org.cy.micoservice.blog.framework.elasticsearch.starter.constant.BulkIndexDocumentConstants;
 import org.cy.micoservice.blog.framework.id.starter.service.IdService;
 import org.cy.micoservice.blog.message.facade.dto.req.ChatRecordPageReqDTO;

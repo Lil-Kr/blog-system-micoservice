@@ -1,4 +1,4 @@
-package org.cy.micoservice.blog.entity.message.model.provider.po.mysql;
+package org.cy.micoservice.blog.entity.message.model.provider.pojo.mysql;
 
 import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.AllArgsConstructor;
@@ -9,6 +9,7 @@ import lombok.experimental.SuperBuilder;
 import org.cy.micoservice.blog.entity.base.model.api.BaseEntity;
 
 import java.io.Serial;
+import java.time.LocalDateTime;
 
 /**
  * @Author: Lil-K
@@ -19,11 +20,12 @@ import java.io.Serial;
 @SuperBuilder
 @NoArgsConstructor
 @AllArgsConstructor
+@TableName("t_chat_relation")
 @EqualsAndHashCode(callSuper = true)
-@TableName("t_chat_record")
-public class ChatRecord extends BaseEntity {
+public class ChatRelation extends BaseEntity {
+
   @Serial
-  private static final long serialVersionUID = -3660330681250827415L;
+  private static final long serialVersionUID = -4094699873134825685L;
 
   // 主键id
   private Long id;
@@ -31,16 +33,15 @@ public class ChatRecord extends BaseEntity {
   // 关系id
   private Long relationId;
 
-  // 对话id
-  private Long chatId;
-
   // 用户id
   private Long userId;
 
   // 接收对话的用户id
   private Long receiverId;
 
-  // 对话内容
+  /**
+   * 对话内容, 用于展示最后一条记录
+   */
   private String content;
 
   // 对话类型
@@ -49,6 +50,9 @@ public class ChatRecord extends BaseEntity {
   // 对话状态
   private Integer status;
 
-  // 对话序号
-  private Long seqNo;
+  // 已对话条数, 前端展示使用
+  private Long msgCount;
+
+  // 最新对话时间
+  private LocalDateTime latestMsgTime;
 }

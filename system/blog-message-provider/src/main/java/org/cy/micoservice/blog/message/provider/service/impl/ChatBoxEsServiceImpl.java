@@ -2,7 +2,7 @@ package org.cy.micoservice.blog.message.provider.service.impl;
 
 import jakarta.annotation.Resource;
 import org.cy.micoservice.blog.common.enums.biz.DeleteStatusEnum;
-import org.cy.micoservice.blog.entity.message.model.provider.po.es.ChatBoxEs;
+import org.cy.micoservice.blog.entity.message.model.provider.pojo.es.ChatBoxEs;
 import org.cy.micoservice.blog.framework.elasticsearch.starter.constant.BulkIndexDocumentConstants;
 import org.cy.micoservice.blog.message.facade.dto.req.im.ImChatReqDTO;
 import org.cy.micoservice.blog.message.provider.constant.MessageChatRelationConstants;

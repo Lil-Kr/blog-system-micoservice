@@ -14,7 +14,7 @@ import co.elastic.clients.json.JsonData;
 import jakarta.annotation.Resource;
 import lombok.extern.slf4j.Slf4j;
 import org.cy.micoservice.blog.common.enums.biz.DeleteStatusEnum;
-import org.cy.micoservice.blog.entity.message.model.provider.po.es.ChatRecordEs;
+import org.cy.micoservice.blog.entity.message.model.provider.pojo.es.ChatRecordEs;
 import org.cy.micoservice.blog.framework.elasticsearch.starter.dto.SearchPageRequest;
 import org.cy.micoservice.blog.framework.elasticsearch.starter.utils.ElasticsearchUtil;
 import org.cy.micoservice.blog.message.facade.dto.req.ChatRecordPageReqDTO;
