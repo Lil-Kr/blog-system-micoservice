@@ -19,7 +19,7 @@
 		<app-common.version>1.0.0</app-common.version>
 		<app-entity-parent.version>1.0.0</app-entity-parent.version>
 		<app-framework-parent.version>1.0.0</app-framework-parent.version>
-		<blog-im-facade.version>1.0.0</blog-im-facade.version>
+		<app-im-facade.version>1.0.0</app-im-facade.version>
 	</properties>
 	
 	<dependencies>
@@ -96,7 +96,7 @@
 		<dependency>
 			<groupId>org.cy.micoservice.app</groupId>
 			<artifactId>app-im-facade</artifactId>
-			<version>${blog-im-facade.version}</version>
+			<version>${app-im-facade.version}</version>
 		</dependency>
 	</dependencies>
 </project>

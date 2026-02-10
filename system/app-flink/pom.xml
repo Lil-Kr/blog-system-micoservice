@@ -12,7 +12,7 @@
 	<packaging>pom</packaging>
 	
 	<modules>
-<!--		<module>blog-flink-cdc</module>-->
+<!--		<module>app-flink-cdc</module>-->
 	</modules>
 	
 	<properties>

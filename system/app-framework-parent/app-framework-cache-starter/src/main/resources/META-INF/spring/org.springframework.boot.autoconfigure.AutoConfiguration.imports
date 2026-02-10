@@ -1,2 +1,2 @@
-org.cy.micoservice.blog.framework.cache.starter.config.RedisConfig
-org.cy.micoservice.blog.framework.cache.starter.service.impl.CacheServiceImpl
+org.cy.micoservice.app.framework.cache.starter.config.RedisConfig
+org.cy.micoservice.app.framework.cache.starter.service.impl.CacheServiceImpl

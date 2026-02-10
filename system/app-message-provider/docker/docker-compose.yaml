@@ -1,7 +1,7 @@
 services:
-  blog-message-provider-docker-1:
-    image: blog-infra-console:v1.0.0
-    container_name: blog-message-provider-docker-1
+  app-message-provider-docker-1:
+    image: app-infra-console:v1.0.0
+    container_name: app-message-provider-docker-1
     restart: always
     environment:
       - TZ=Asia/Shanghai

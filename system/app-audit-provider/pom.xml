@@ -17,8 +17,8 @@
 		<maven.compiler.target>17</maven.compiler.target>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<app-common.version>1.0.0</app-common.version>
-		<blog-entity-model.version>1.0.0</blog-entity-model.version>
-		<blog-audit-facade.version>1.0.0</blog-audit-facade.version>
+		<app-entity-model.version>1.0.0</app-entity-model.version>
+		<app-audit-facade.version>1.0.0</app-audit-facade.version>
 		<app-framework-parent.version>1.0.0</app-framework-parent.version>
 	</properties>
 	
@@ -86,13 +86,13 @@
 		<dependency>
 			<groupId>org.cy.micoservice.app</groupId>
 			<artifactId>app-audit-facade</artifactId>
-			<version>${blog-audit-facade.version}</version>
+			<version>${app-audit-facade.version}</version>
 		</dependency>
 		
 		<dependency>
 			<groupId>org.cy.micoservice.app</groupId>
 			<artifactId>app-entity-audit-model</artifactId>
-			<version>${blog-entity-model.version}</version>
+			<version>${app-entity-model.version}</version>
 		</dependency>
 	</dependencies>
 	

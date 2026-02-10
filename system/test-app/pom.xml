@@ -18,7 +18,7 @@
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<app-framework-parent.version>1.0.0</app-framework-parent.version>
 		<app-common.version>1.0.0</app-common.version>
-		<blog-infra-console-sdk.version>1.0.0</blog-infra-console-sdk.version>
+		<app-infra-console-sdk.version>1.0.0</app-infra-console-sdk.version>
 	</properties>
 
 	<dependencies>
@@ -101,7 +101,7 @@
 		<dependency>
 			<groupId>org.cy.micoservice.app</groupId>
 			<artifactId>app-infra-console-sdk</artifactId>
-			<version>${blog-infra-console-sdk.version}</version>
+			<version>${app-infra-console-sdk.version}</version>
 		</dependency>
 		
 		<dependency>
@@ -131,7 +131,7 @@
 		<dependency>
 			<groupId>org.cy.micoservice.app</groupId>
 			<artifactId>app-infra-console-sdk</artifactId>
-			<version>${blog-infra-console-sdk.version}</version>
+			<version>${app-infra-console-sdk.version}</version>
 		</dependency>
 	</dependencies>
 	

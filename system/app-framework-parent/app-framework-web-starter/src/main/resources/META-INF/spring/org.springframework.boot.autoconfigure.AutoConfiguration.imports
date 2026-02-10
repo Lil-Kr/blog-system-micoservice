@@ -1,3 +1,3 @@
-org.cy.micoservice.blog.framework.web.starter.config.ApplicationContextHelper
-org.cy.micoservice.blog.framework.web.starter.config.GlobalExceptionHandlerConfig
-org.cy.micoservice.blog.framework.web.starter.web.WebAutoConfiguration
+org.cy.micoservice.app.framework.web.starter.config.ApplicationContextHelper
+org.cy.micoservice.app.framework.web.starter.config.GlobalExceptionHandlerConfig
+org.cy.micoservice.app.framework.web.starter.web.WebAutoConfiguration

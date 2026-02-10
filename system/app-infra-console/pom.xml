@@ -19,8 +19,8 @@
 		<app-common.version>1.0.0</app-common.version>
 		<app-framework-parent.version>1.0.0</app-framework-parent.version>
 		<app-entity-parent.version>1.0.0</app-entity-parent.version>
-		<blog-gateway-facade.version>1.0.0</blog-gateway-facade.version>
-		<blog-infra-facade.version>1.0.0</blog-infra-facade.version>
+		<app-gateway-facade.version>1.0.0</app-gateway-facade.version>
+		<app-infra-facade.version>1.0.0</app-infra-facade.version>
 	</properties>
 	
 	<dependencies>
@@ -102,7 +102,7 @@
 		<dependency>
 			<groupId>org.cy.micoservice.app</groupId>
 			<artifactId>app-gateway-facade</artifactId>
-			<version>${blog-gateway-facade.version}</version>
+			<version>${app-gateway-facade.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>org.cy.micoservice.app</groupId>
@@ -113,7 +113,7 @@
 		<dependency>
 			<groupId>org.cy.micoservice.app</groupId>
 			<artifactId>app-infra-facade</artifactId>
-			<version>${blog-infra-facade.version}</version>
+			<version>${app-infra-facade.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>org.cy.micoservice.app</groupId>

@@ -23,10 +23,10 @@
 		<app-framework-parent.version>1.0.0</app-framework-parent.version>
 		
 		<!-- facade -->
-		<blog-message-facade.version>1.0.0</blog-message-facade.version>
-		<blog-audit-facade.version>1.0.0</blog-audit-facade.version>
-		<blog-user-facade.version>1.0.0</blog-user-facade.version>
-		<blog-im-facade.version>1.0.0</blog-im-facade.version>
+		<app-message-facade.version>1.0.0</app-message-facade.version>
+		<app-audit-facade.version>1.0.0</app-audit-facade.version>
+		<app-user-facade.version>1.0.0</app-user-facade.version>
+		<app-im-facade.version>1.0.0</app-im-facade.version>
 	</properties>
 	
 	<dependencies>
@@ -117,26 +117,26 @@
 		<dependency>
 			<groupId>org.cy.micoservice.app</groupId>
 			<artifactId>app-message-facade</artifactId>
-			<version>${blog-message-facade.version}</version>
+			<version>${app-message-facade.version}</version>
 			<scope>compile</scope>
 		</dependency>
 		
 		<dependency>
 			<groupId>org.cy.micoservice.app</groupId>
 			<artifactId>app-audit-facade</artifactId>
-			<version>${blog-audit-facade.version}</version>
+			<version>${app-audit-facade.version}</version>
 		</dependency>
 		
 		<dependency>
 			<groupId>org.cy.micoservice.app</groupId>
 			<artifactId>app-user-facade</artifactId>
-			<version>${blog-user-facade.version}</version>
+			<version>${app-user-facade.version}</version>
 		</dependency>
 		
 		<dependency>
 			<groupId>org.cy.micoservice.app</groupId>
 			<artifactId>app-im-facade</artifactId>
-			<version>${blog-im-facade.version}</version>
+			<version>${app-im-facade.version}</version>
 		</dependency>
 	</dependencies>
 	

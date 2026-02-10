@@ -1,7 +1,7 @@
 services:
-  blog-gateway-docker-1:
-    image: blog-gateway:v1.0.0
-    container_name: blog-gateway-docker-1
+  app-gateway-docker-1:
+    image: app-gateway:v1.0.0
+    container_name: app-gateway-docker-1
     restart: always
     ports:
       - "6101:6101"

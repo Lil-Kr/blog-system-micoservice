@@ -4,7 +4,7 @@ VOLUME /tmp
 WORKDIR /
 
 # 应用 Jar
-ADD ./target/blog-gateway-1.0.0.jar app.jar
+ADD ./target/app-gateway-1.0.0.jar app.jar
 
 ENV JAVA_OPTS="\
 -server \
