@@ -5,16 +5,33 @@
 	<modelVersion>4.0.0</modelVersion>
 	<parent>
 		<groupId>org.cy.micoservice.app</groupId>
-		<artifactId>system</artifactId>
+		<artifactId>app-entity-parent</artifactId>
 		<version>1.0.0</version>
 	</parent>
 	
-	<artifactId>app-goods-facade</artifactId>
+	<artifactId>app-entity-goods-model</artifactId>
 	<packaging>jar</packaging>
 	
 	<properties>
 		<maven.compiler.source>17</maven.compiler.source>
 		<maven.compiler.target>17</maven.compiler.target>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<app-entity-parent.version>1.0.0</app-entity-parent.version>
 	</properties>
+	
+	<dependencies>
+		<dependency>
+			<groupId>org.cy.micoservice.app</groupId>
+			<artifactId>app-entity-base-model</artifactId>
+			<version>${app-entity-parent.version}</version>
+		</dependency>
+		
+		<!--mybatis plus-->
+		<dependency>
+			<groupId>com.baomidou</groupId>
+			<artifactId>mybatis-plus-spring-boot3-starter</artifactId>
+			<scope>compile</scope>
+			<optional>true</optional>
+		</dependency>
+	</dependencies>
 </project>

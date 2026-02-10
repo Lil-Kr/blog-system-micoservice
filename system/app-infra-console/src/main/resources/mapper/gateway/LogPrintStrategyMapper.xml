@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.cy.micoservice.app.infra.console.dao.route.LogPrintStrategyMapper">
+
+	<sql id="Table_Name">
+		sys_route_log_print_strategy
+	</sql>
+
+	<!-- 通用查询结果列 -->
+	<sql id="Base_Column_List">
+		id, strategy_name, strategy_type, strategy_body, status, deleted, create_id, update_id, create_time, update_time
+	</sql>
+	
+	<select id="pagePrintStrategyList" resultType="org.cy.micoservice.app.entity.gateway.model.entity.LogPrintStrategy">
+		SELECT <include refid="Base_Column_List"/>
+		from <include refid="Table_Name"/>
+		<where>
+			<if test="param.strategyName != null and param.strategyName != ''">
+				strategy_name = #{param.strategyName}
+			</if>
+			<if test="param.strategyType != null and param.strategyType != ''">
+				strategy_type = #{param.strategyType}
+			</if>
+			<if test="param.status != null">
+				status = #{param.status}
+			</if>
+			<if test="param.deleted != null">
+				deleted = #{param.deleted}
+			</if>
+		</where>
+	</select>
+	
+	<select id="pagePrintStrategyCount" resultType="java.lang.Integer">
+		SELECT count(1)
+		from <include refid="Table_Name"/>
+		<where>
+			<if test="param.deleted != null">
+				deleted = #{param.deleted}
+			</if>
+		</where>
+	</select>
+
+
+</mapper>

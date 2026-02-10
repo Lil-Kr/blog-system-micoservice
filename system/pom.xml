@@ -10,37 +10,37 @@
 		<relativePath/> <!-- lookup parent from repository -->
   </parent>
 
-	<groupId>org.cy.micoservice.blog</groupId>
+	<groupId>org.cy.micoservice.app</groupId>
 	<artifactId>system</artifactId>
 	<version>1.0.0</version>
 	<packaging>pom</packaging>
 
 	<modules>
-		<module>blog-framework-parent</module>
-		<module>blog-entity-parent</module>
-		<module>blog-common</module>
-		<module>blog-gateway</module>
-		<module>blog-gateway-facade</module>
-		<module>blog-infra-console</module>
-		<module>blog-infra-facade</module>
-		<module>blog-infra-console-sdk</module>
-		<module>blog-im</module>
-		<module>blog-picture-provider</module>
-		<module>blog-picture-facade</module>
-		<module>blog-picture-api</module>
-		<module>blog-user-provider</module>
-		<module>blog-user-facade</module>
-		<module>blog-user-api</module>
-		<module>test-app</module>
-		<module>blog-message-api</module>
-		<module>blog-message-facade</module>
-		<module>blog-message-provider</module>
-		<module>blog-audit-facade</module>
-		<module>blog-audit-provider</module>
-		<module>blog-flink</module>
+		<module>app-framework-parent</module>
+		<module>app-entity-parent</module>
+		<module>app-common</module>
+		<module>app-gateway</module>
+		<module>app-gateway-facade</module>
+		<module>app-infra-console</module>
+		<module>app-infra-facade</module>
+		<module>app-infra-console-sdk</module>
+		<module>app-im</module>
+		<module>app-picture-provider</module>
+		<module>app-picture-facade</module>
+		<module>app-picture-api</module>
+		<module>app-user-provider</module>
+		<module>app-user-facade</module>
+		<module>app-user-api</module>
+		<module>app-message-api</module>
+		<module>app-message-facade</module>
+		<module>app-message-provider</module>
+		<module>app-audit-facade</module>
+		<module>app-audit-provider</module>
+		<module>app-flink</module>
 		<module>app-goods-api</module>
 		<module>app-goods-facade</module>
 		<module>app-goods-provider</module>
+		<module>test-app</module>
 	</modules>
 
 	<properties>

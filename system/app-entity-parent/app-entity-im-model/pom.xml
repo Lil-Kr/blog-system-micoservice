@@ -5,11 +5,11 @@
 	<modelVersion>4.0.0</modelVersion>
 	<parent>
 		<groupId>org.cy.micoservice.app</groupId>
-		<artifactId>system</artifactId>
+		<artifactId>app-entity-parent</artifactId>
 		<version>1.0.0</version>
 	</parent>
 	
-	<artifactId>app-goods-facade</artifactId>
+	<artifactId>app-entity-im-model</artifactId>
 	<packaging>jar</packaging>
 	
 	<properties>
@@ -17,4 +17,13 @@
 		<maven.compiler.target>17</maven.compiler.target>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 	</properties>
+	
+	<dependencies>
+		<!-- netty -->
+		<dependency>
+			<groupId>io.netty</groupId>
+			<artifactId>netty-all</artifactId>
+			<optional>true</optional>
+		</dependency>
+	</dependencies>
 </project>

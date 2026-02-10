@@ -9,12 +9,25 @@
 		<version>1.0.0</version>
 	</parent>
 	
-	<artifactId>app-goods-facade</artifactId>
-	<packaging>jar</packaging>
+	<artifactId>app-entity-parent</artifactId>
+	<version>1.0.0</version>
+	<packaging>pom</packaging>
+	
+	<modules>
+		<module>app-entity-base-model</module>
+		<module>app-entity-gateway-model</module>
+		<module>app-entity-infra-console-model</module>
+		<module>app-entity-im-model</module>
+		<module>app-entity-message-model</module>
+		<module>app-entity-audit-model</module>
+		<module>app-entity-user-model</module>
+		<module>app-entity-goods-model</module>
+	</modules>
 	
 	<properties>
 		<maven.compiler.source>17</maven.compiler.source>
 		<maven.compiler.target>17</maven.compiler.target>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 	</properties>
+
 </project>

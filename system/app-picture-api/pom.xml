@@ -9,21 +9,17 @@
 		<version>1.0.0</version>
 	</parent>
 	
-	<artifactId>app-goods-provider</artifactId>
+	<artifactId>app-picture-api</artifactId>
 	<packaging>jar</packaging>
 	
 	<properties>
 		<maven.compiler.source>17</maven.compiler.source>
 		<maven.compiler.target>17</maven.compiler.target>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-		<!---->
-		<app-common.version>1.0.0</app-common.version>
-		<app-entity-parent.version>1.0.0</app-entity-parent.version>
-		<app-framework-parent.version>1.0.0</app-framework-parent.version>
-		
 	</properties>
 	
 	<dependencies>
+		
 		<dependency>
 			<groupId>com.alibaba.cloud</groupId>
 			<artifactId>spring-cloud-starter-alibaba-nacos-discovery</artifactId>
@@ -39,37 +35,21 @@
 			<artifactId>spring-cloud-starter-bootstrap</artifactId>
 		</dependency>
 		
-		<!-- test start -->
-		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-test</artifactId>
-			<scope>test</scope>
-		</dependency>
-		
-		<dependency>
-			<groupId>junit</groupId>
-			<artifactId>junit</artifactId>
-			<scope>test</scope>
-		</dependency>
-		<!-- test end -->
-		
 		<!-- 自研组件 -->
 		<dependency>
 			<groupId>org.cy.micoservice.app</groupId>
-			<artifactId>app-framework-dubbo-starter</artifactId>
-			<version>${app-framework-parent.version}</version>
+			<artifactId>app-common</artifactId>
+			<version>1.0.0</version>
 		</dependency>
 		
 		<dependency>
 			<groupId>org.cy.micoservice.app</groupId>
-			<artifactId>app-framework-mybatis-starter</artifactId>
-			<version>${app-framework-parent.version}</version>
+			<artifactId>app-framework-web-starter</artifactId>
+			<version>1.0.0</version>
 		</dependency>
-		
 	</dependencies>
 	
 	<build>
-		<finalName>${artifactId}</finalName>
 		<plugins>
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
@@ -93,4 +73,5 @@
 			</plugin>
 		</plugins>
 	</build>
+	
 </project>

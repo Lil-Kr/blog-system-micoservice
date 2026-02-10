@@ -9,12 +9,33 @@
 		<version>1.0.0</version>
 	</parent>
 	
-	<artifactId>app-goods-facade</artifactId>
+	<artifactId>app-message-facade</artifactId>
 	<packaging>jar</packaging>
 	
 	<properties>
 		<maven.compiler.source>17</maven.compiler.source>
 		<maven.compiler.target>17</maven.compiler.target>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<app-common.version>1.0.0</app-common.version>
+		<app-entity-parent.version>1.0.0</app-entity-parent.version>
 	</properties>
+	
+	<dependencies>
+		
+		<dependency>
+			<groupId>org.cy.micoservice.app</groupId>
+			<artifactId>app-common</artifactId>
+			<version>${app-common.version}</version>
+			<optional>true</optional>
+			<scope>compile</scope>
+		</dependency>
+		
+		<dependency>
+			<groupId>org.cy.micoservice.app</groupId>
+			<artifactId>app-entity-message-model</artifactId>
+			<version>${app-entity-parent.version}</version>
+			<optional>true</optional>
+			<scope>compile</scope>
+		</dependency>
+	</dependencies>
 </project>

@@ -9,7 +9,7 @@
 		<version>1.0.0</version>
 	</parent>
 	
-	<artifactId>test-app</artifactId>
+	<artifactId>app-gateway</artifactId>
 	<packaging>jar</packaging>
 	
 	<properties>
@@ -18,10 +18,20 @@
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<app-framework-parent.version>1.0.0</app-framework-parent.version>
 		<app-common.version>1.0.0</app-common.version>
-		<blog-infra-console-sdk.version>1.0.0</blog-infra-console-sdk.version>
+		<app-entity-parent.version>1.0.0</app-entity-parent.version>
 	</properties>
 
 	<dependencies>
+		<dependency>
+			<groupId>org.springframework.cloud</groupId>
+			<artifactId>spring-cloud-starter-gateway</artifactId>
+		</dependency>
+		
+		<dependency>
+			<groupId>org.springframework.cloud</groupId>
+			<artifactId>spring-cloud-starter-loadbalancer</artifactId>
+		</dependency>
+		
 		<dependency>
 			<groupId>com.alibaba.cloud</groupId>
 			<artifactId>spring-cloud-starter-alibaba-nacos-discovery</artifactId>
@@ -37,77 +47,49 @@
 			<artifactId>spring-cloud-starter-bootstrap</artifactId>
 		</dependency>
 		
-		<dependency>
-			<groupId>com.alicp.jetcache</groupId>
-			<artifactId>jetcache-starter-redis-lettuce</artifactId>
-			<version>2.7.8</version>
-		</dependency>
-		
-		<!--<dependency>
-			<groupId>com.alibaba.cloud</groupId>
-			<artifactId>spring-cloud-starter-alibaba-sentinel</artifactId>
-		</dependency>
-		
-		<dependency>
-			<groupId>com.alibaba.csp</groupId>
-			<artifactId>sentinel-datasource-nacos</artifactId>
-		</dependency>-->
-		<!--
+		<!-- 用于限流 -->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-actuator</artifactId>
-		</dependency>-->
+			<artifactId>spring-boot-starter-data-redis-reactive</artifactId>
+		</dependency>
 		
-		<!-- prometheus -->
-		<!--<dependency>
-			<groupId>io.micrometer</groupId>
-			<artifactId>micrometer-registry-prometheus</artifactId>
-		</dependency>-->
+		<!-- test start -->
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-test</artifactId>
+			<scope>test</scope>
+		</dependency>
 		
 		<dependency>
 			<groupId>junit</groupId>
 			<artifactId>junit</artifactId>
-			<scope>compile</scope>
-			<optional>true</optional>
+			<scope>test</scope>
 		</dependency>
 		
 		<dependency>
 			<groupId>org.junit.jupiter</groupId>
 			<artifactId>junit-jupiter-api</artifactId>
-			<scope>compile</scope>
-			<optional>true</optional>
+			<scope>test</scope>
 		</dependency>
 		
 		<dependency>
 			<groupId>org.junit.jupiter</groupId>
 			<artifactId>junit-jupiter-engine</artifactId>
-			<scope>compile</scope>
-			<optional>true</optional>
+			<scope>test</scope>
 		</dependency>
+		<!-- test end -->
 		
-		<!--自研组件-->
+		<!-- 自研组件 -->
 		<dependency>
 			<groupId>org.cy.micoservice.app</groupId>
-			<artifactId>app-common</artifactId>
-			<version>${app-common.version}</version>
-		</dependency>
-		
-		<dependency>
-			<groupId>org.cy.micoservice.app</groupId>
-			<artifactId>app-framework-web-starter</artifactId>
+			<artifactId>app-gateway-facade</artifactId>
 			<version>${app-framework-parent.version}</version>
 		</dependency>
 		
 		<dependency>
 			<groupId>org.cy.micoservice.app</groupId>
-			<artifactId>app-infra-console-sdk</artifactId>
-			<version>${blog-infra-console-sdk.version}</version>
-		</dependency>
-		
-		<dependency>
-			<groupId>org.cy.micoservice.app</groupId>
-			<artifactId>app-framework-identify-starter</artifactId>
-			<version>${app-framework-parent.version}</version>
+			<artifactId>app-entity-gateway-model</artifactId>
+			<version>${app-entity-parent.version}</version>
 		</dependency>
 		
 		<dependency>
@@ -118,20 +100,14 @@
 		
 		<dependency>
 			<groupId>org.cy.micoservice.app</groupId>
-			<artifactId>app-framework-cache-starter</artifactId>
+			<artifactId>app-framework-dubbo-starter</artifactId>
 			<version>${app-framework-parent.version}</version>
 		</dependency>
 		
 		<dependency>
 			<groupId>org.cy.micoservice.app</groupId>
-			<artifactId>app-framework-elasticsearch-starter</artifactId>
+			<artifactId>app-framework-identify-starter</artifactId>
 			<version>${app-framework-parent.version}</version>
-		</dependency>
-		
-		<dependency>
-			<groupId>org.cy.micoservice.app</groupId>
-			<artifactId>app-infra-console-sdk</artifactId>
-			<version>${blog-infra-console-sdk.version}</version>
 		</dependency>
 	</dependencies>
 	
@@ -140,22 +116,13 @@
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
-				<configuration>
-					<excludes>
-						<exclude>
-							<groupId>org.projectlombok</groupId>
-							<artifactId>lombok</artifactId>
-						</exclude>
-					</excludes>
-				</configuration>
-			</plugin>
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-surefire-plugin</artifactId>
-				<version>2.4.1</version>
-				<configuration>
-					<skipTests>true</skipTests>
-				</configuration>
+				<executions>
+					<execution>
+						<goals>
+							<goal>repackage</goal>
+						</goals>
+					</execution>
+				</executions>
 			</plugin>
 		</plugins>
 	</build>

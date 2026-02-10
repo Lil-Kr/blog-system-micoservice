@@ -5,25 +5,33 @@
 	<modelVersion>4.0.0</modelVersion>
 	<parent>
 		<groupId>org.cy.micoservice.app</groupId>
-		<artifactId>system</artifactId>
+		<artifactId>app-im</artifactId>
 		<version>1.0.0</version>
 	</parent>
 	
-	<artifactId>app-goods-provider</artifactId>
+	<artifactId>app-im-gateway</artifactId>
 	<packaging>jar</packaging>
 	
 	<properties>
 		<maven.compiler.source>17</maven.compiler.source>
 		<maven.compiler.target>17</maven.compiler.target>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-		<!---->
 		<app-common.version>1.0.0</app-common.version>
-		<app-entity-parent.version>1.0.0</app-entity-parent.version>
 		<app-framework-parent.version>1.0.0</app-framework-parent.version>
-		
+		<blog-im-facade.version>1.0.0</blog-im-facade.version>
 	</properties>
 	
 	<dependencies>
+		<dependency>
+			<groupId>org.springframework.cloud</groupId>
+			<artifactId>spring-cloud-starter-gateway</artifactId>
+		</dependency>
+		
+		<dependency>
+			<groupId>org.springframework.cloud</groupId>
+			<artifactId>spring-cloud-starter-loadbalancer</artifactId>
+		</dependency>
+		
 		<dependency>
 			<groupId>com.alibaba.cloud</groupId>
 			<artifactId>spring-cloud-starter-alibaba-nacos-discovery</artifactId>
@@ -41,56 +49,41 @@
 		
 		<!-- test start -->
 		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-test</artifactId>
-			<scope>test</scope>
-		</dependency>
-		
-		<dependency>
 			<groupId>junit</groupId>
 			<artifactId>junit</artifactId>
 			<scope>test</scope>
 		</dependency>
+		
+		<dependency>
+			<groupId>org.junit.jupiter</groupId>
+			<artifactId>junit-jupiter-api</artifactId>
+			<scope>test</scope>
+		</dependency>
+		
+		<dependency>
+			<groupId>org.junit.jupiter</groupId>
+			<artifactId>junit-jupiter-engine</artifactId>
+			<scope>test</scope>
+		</dependency>
 		<!-- test end -->
 		
-		<!-- 自研组件 -->
+		<!--自定义组件 -->
 		<dependency>
 			<groupId>org.cy.micoservice.app</groupId>
-			<artifactId>app-framework-dubbo-starter</artifactId>
-			<version>${app-framework-parent.version}</version>
+			<artifactId>app-common</artifactId>
+			<version>${app-common.version}</version>
 		</dependency>
 		
 		<dependency>
 			<groupId>org.cy.micoservice.app</groupId>
-			<artifactId>app-framework-mybatis-starter</artifactId>
-			<version>${app-framework-parent.version}</version>
+			<artifactId>app-im-facade</artifactId>
+			<version>${blog-im-facade.version}</version>
 		</dependency>
 		
+		<dependency>
+			<groupId>org.cy.micoservice.app</groupId>
+			<artifactId>app-framework-cache-starter</artifactId>
+			<version>${app-framework-parent.version}</version>
+		</dependency>
 	</dependencies>
-	
-	<build>
-		<finalName>${artifactId}</finalName>
-		<plugins>
-			<plugin>
-				<groupId>org.springframework.boot</groupId>
-				<artifactId>spring-boot-maven-plugin</artifactId>
-				<configuration>
-					<excludes>
-						<exclude>
-							<groupId>org.projectlombok</groupId>
-							<artifactId>lombok</artifactId>
-						</exclude>
-					</excludes>
-				</configuration>
-			</plugin>
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-surefire-plugin</artifactId>
-				<version>2.4.1</version>
-				<configuration>
-					<skipTests>true</skipTests>
-				</configuration>
-			</plugin>
-		</plugins>
-	</build>
 </project>

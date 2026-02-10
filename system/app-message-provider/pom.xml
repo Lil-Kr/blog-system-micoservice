@@ -9,18 +9,26 @@
 		<version>1.0.0</version>
 	</parent>
 	
-	<artifactId>test-app</artifactId>
+	<artifactId>app-message-provider</artifactId>
 	<packaging>jar</packaging>
 	
 	<properties>
 		<maven.compiler.source>17</maven.compiler.source>
 		<maven.compiler.target>17</maven.compiler.target>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-		<app-framework-parent.version>1.0.0</app-framework-parent.version>
+		
+		<!---->
 		<app-common.version>1.0.0</app-common.version>
-		<blog-infra-console-sdk.version>1.0.0</blog-infra-console-sdk.version>
+		<app-entity-parent.version>1.0.0</app-entity-parent.version>
+		<app-framework-parent.version>1.0.0</app-framework-parent.version>
+		
+		<!-- facade -->
+		<blog-message-facade.version>1.0.0</blog-message-facade.version>
+		<blog-audit-facade.version>1.0.0</blog-audit-facade.version>
+		<blog-user-facade.version>1.0.0</blog-user-facade.version>
+		<blog-im-facade.version>1.0.0</blog-im-facade.version>
 	</properties>
-
+	
 	<dependencies>
 		<dependency>
 			<groupId>com.alibaba.cloud</groupId>
@@ -37,55 +45,21 @@
 			<artifactId>spring-cloud-starter-bootstrap</artifactId>
 		</dependency>
 		
-		<dependency>
-			<groupId>com.alicp.jetcache</groupId>
-			<artifactId>jetcache-starter-redis-lettuce</artifactId>
-			<version>2.7.8</version>
-		</dependency>
-		
-		<!--<dependency>
-			<groupId>com.alibaba.cloud</groupId>
-			<artifactId>spring-cloud-starter-alibaba-sentinel</artifactId>
-		</dependency>
-		
-		<dependency>
-			<groupId>com.alibaba.csp</groupId>
-			<artifactId>sentinel-datasource-nacos</artifactId>
-		</dependency>-->
-		<!--
+		<!-- test start -->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-actuator</artifactId>
-		</dependency>-->
-		
-		<!-- prometheus -->
-		<!--<dependency>
-			<groupId>io.micrometer</groupId>
-			<artifactId>micrometer-registry-prometheus</artifactId>
-		</dependency>-->
+			<artifactId>spring-boot-starter-test</artifactId>
+			<scope>test</scope>
+		</dependency>
 		
 		<dependency>
 			<groupId>junit</groupId>
 			<artifactId>junit</artifactId>
-			<scope>compile</scope>
-			<optional>true</optional>
+			<scope>test</scope>
 		</dependency>
+		<!-- test end -->
 		
-		<dependency>
-			<groupId>org.junit.jupiter</groupId>
-			<artifactId>junit-jupiter-api</artifactId>
-			<scope>compile</scope>
-			<optional>true</optional>
-		</dependency>
-		
-		<dependency>
-			<groupId>org.junit.jupiter</groupId>
-			<artifactId>junit-jupiter-engine</artifactId>
-			<scope>compile</scope>
-			<optional>true</optional>
-		</dependency>
-		
-		<!--自研组件-->
+		<!-- 自研组件 -->
 		<dependency>
 			<groupId>org.cy.micoservice.app</groupId>
 			<artifactId>app-common</artifactId>
@@ -94,25 +68,7 @@
 		
 		<dependency>
 			<groupId>org.cy.micoservice.app</groupId>
-			<artifactId>app-framework-web-starter</artifactId>
-			<version>${app-framework-parent.version}</version>
-		</dependency>
-		
-		<dependency>
-			<groupId>org.cy.micoservice.app</groupId>
-			<artifactId>app-infra-console-sdk</artifactId>
-			<version>${blog-infra-console-sdk.version}</version>
-		</dependency>
-		
-		<dependency>
-			<groupId>org.cy.micoservice.app</groupId>
-			<artifactId>app-framework-identify-starter</artifactId>
-			<version>${app-framework-parent.version}</version>
-		</dependency>
-		
-		<dependency>
-			<groupId>org.cy.micoservice.app</groupId>
-			<artifactId>app-framework-mybatis-starter</artifactId>
+			<artifactId>app-framework-dubbo-starter</artifactId>
 			<version>${app-framework-parent.version}</version>
 		</dependency>
 		
@@ -124,18 +80,68 @@
 		
 		<dependency>
 			<groupId>org.cy.micoservice.app</groupId>
+			<artifactId>app-framework-mybatis-starter</artifactId>
+			<version>${app-framework-parent.version}</version>
+		</dependency>
+		
+		<dependency>
+			<groupId>org.cy.micoservice.app</groupId>
+			<artifactId>app-framework-rocketmq-starter</artifactId>
+			<version>${app-framework-parent.version}</version>
+		</dependency>
+		
+		<dependency>
+			<groupId>org.cy.micoservice.app</groupId>
+			<artifactId>app-framework-id-starter</artifactId>
+			<version>${app-framework-parent.version}</version>
+		</dependency>
+		
+		<dependency>
+			<groupId>org.cy.micoservice.app</groupId>
 			<artifactId>app-framework-elasticsearch-starter</artifactId>
 			<version>${app-framework-parent.version}</version>
 		</dependency>
 		
 		<dependency>
 			<groupId>org.cy.micoservice.app</groupId>
-			<artifactId>app-infra-console-sdk</artifactId>
-			<version>${blog-infra-console-sdk.version}</version>
+			<artifactId>app-entity-audit-model</artifactId>
+			<version>${app-entity-parent.version}</version>
+		</dependency>
+		
+		<dependency>
+			<groupId>org.cy.micoservice.app</groupId>
+			<artifactId>app-entity-message-model</artifactId>
+			<version>${app-entity-parent.version}</version>
+		</dependency>
+		
+		<dependency>
+			<groupId>org.cy.micoservice.app</groupId>
+			<artifactId>app-message-facade</artifactId>
+			<version>${blog-message-facade.version}</version>
+			<scope>compile</scope>
+		</dependency>
+		
+		<dependency>
+			<groupId>org.cy.micoservice.app</groupId>
+			<artifactId>app-audit-facade</artifactId>
+			<version>${blog-audit-facade.version}</version>
+		</dependency>
+		
+		<dependency>
+			<groupId>org.cy.micoservice.app</groupId>
+			<artifactId>app-user-facade</artifactId>
+			<version>${blog-user-facade.version}</version>
+		</dependency>
+		
+		<dependency>
+			<groupId>org.cy.micoservice.app</groupId>
+			<artifactId>app-im-facade</artifactId>
+			<version>${blog-im-facade.version}</version>
 		</dependency>
 	</dependencies>
 	
 	<build>
+		<finalName>${artifactId}</finalName>
 		<plugins>
 			<plugin>
 				<groupId>org.springframework.boot</groupId>

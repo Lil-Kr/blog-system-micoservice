@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.cy.micoservice.app.user.provider.dao.UserMapper">
+
+	<sql id="Table_Name">
+		t_user
+	</sql>
+
+	<!-- 通用查询结果列 -->
+	<sql id="Base_Column_List">
+		id, user_id, nickname, sex, salt, avatar, sign, status, deleted, last_login_time, registry_time, birthday, create_time, update_time
+	</sql>
+
+	<sql id="Base_Join_Column_List">
+		a.id, a.user_id, a.nickname, a.sex, a.salt, a.avatar, a.sign, a.status, a.deleted, a.last_login_time, a.registry_time, a.birthday, a.create_time, a.update_time
+	</sql>
+
+	<select id="getUserById" resultType="org.cy.micoservice.app.entity.user.model.provider.resp.UserResp">
+		select <include refid="Base_Column_List"/>
+		from <include refid="Table_Name"/>
+		<where>
+			user_id = #{userId}
+		</where>
+	</select>
+
+	<select id="getUserBySurrogateId" resultType="org.cy.micoservice.app.entity.user.model.provider.resp.UserResp">
+		select
+			a.id,
+			a.user_id,
+			a.nickname,
+			a.sex,
+			a.salt,
+			a.avatar,
+			a.sign,
+			a.status,
+			a.deleted,
+			a.last_login_time,
+			a.registry_time,
+			a.birthday,
+			a.create_time,
+			a.update_time,
+			b.name as 'orgName'
+		from t_user as a
+		left join sys_org as b on (a.org_id = b.surrogate_id)
+		<where>
+			a.surrogate_id = #{surrogateId}
+		</where>
+	</select>
+
+</mapper>

@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.cy.micoservice.app.infra.console.dao.route.RouteConfigMapper">
+
+	<sql id="Table_Name">
+		sys_route_config
+	</sql>
+
+	<!-- 通用查询结果列 -->
+	<sql id="Base_Column_List">
+		id, app_name, `schema`, `method`, `path`, uri, dubbo_invoke_param_class, auth_type, `status`, create_id, update_id, create_time, update_time, deleted
+	</sql>
+	
+	<select id="routeConfigAllValidaList" resultType="org.cy.micoservice.app.entity.gateway.model.entity.RouteConfig">
+		select <include refid="Base_Column_List" />
+		from <include refid="Table_Name" />
+		<where>
+			<if test="status != null and status != ''">
+				status = #{status}
+			</if>
+		</where>
+	</select>
+	
+	<select id="findInConfigIds" resultType="org.cy.micoservice.app.entity.gateway.model.entity.RouteConfig">
+		select <include refid="Base_Column_List" />
+		from <include refid="Table_Name" />
+		<where>
+			id in (
+			<foreach collection="configIds" index="index" item="configId" separator=",">
+				#{configId}
+			</foreach>
+			)
+		</where>
+	</select>
+	
+	<select id="pageRouteConfigList" resultType="org.cy.micoservice.app.entity.gateway.model.entity.RouteConfig">
+		select <include refid="Base_Column_List"/>
+		from <include refid="Table_Name"/>
+		<where>
+			<if test="param.appName != null and param.appName != ''">
+				and app_name = #{param.appName}
+			</if>
+			<if test="param.schema != null and param.schema != ''">
+				and `schema` = #{param.schema}
+			</if>
+			<if test="param.path != null and param.path != ''">
+				and `path` = #{param.path}
+			</if>
+			<if test="param.status != null">
+				and `status` = #{param.status}
+			</if>
+			<if test="param.uri != null and param.uri != ''">
+				and uri = #{param.uri}
+			</if>
+			<if test="param.deleted != null">
+				and deleted = #{param.deleted}
+			</if>
+		</where>
+		order by create_time desc
+	</select>
+	
+	<select id="countPageRouteConfigList" resultType="java.lang.Integer">
+		select count(1)
+		from <include refid="Table_Name"/>
+		<where>
+			<if test="param.appName != null and param.appName != ''">
+				and app_name = #{param.appName}
+			</if>
+			<if test="param.schema != null and param.schema != ''">
+				and `schema` = #{param.schema}
+			</if>
+			<if test="param.path != null and param.path != ''">
+				and `path` = #{param.path}
+			</if>
+			<if test="param.status != null">
+				and `status` = #{param.status}
+			</if>
+			<if test="param.uri != null and param.uri != ''">
+				and uri = #{param.uri}
+			</if>
+			<if test="param.deleted != null">
+				and deleted = #{param.deleted}
+			</if>
+		</where>
+	</select>
+	
+	<select id="routeConfigList" resultType="org.cy.micoservice.app.entity.gateway.model.entity.RouteConfig">
+		select <include refid="Base_Column_List"/>
+		from <include refid="Table_Name"/>
+		<where>
+			<if test="param.appName != null and param.appName != ''">
+				and app_name = #{param.appName}
+			</if>
+			<if test="param.schema != null and param.schema != ''">
+				and `schema` = #{param.schema}
+			</if>
+			<if test="param.method != null and param.method != ''">
+				and `method` = #{param.method}
+			</if>
+			<if test="param.path != null and param.path != ''">
+				and `path` = #{param.path}
+			</if>
+			<if test="param.uri != null and param.uri != ''">
+				and uri = #{param.uri}
+			</if>
+		</where>
+	</select>
+	
+	<select id="getAppNameList" resultType="org.cy.micoservice.app.entity.gateway.model.entity.RouteConfig">
+		select id, app_name from sys_route_config
+		GROUP BY id, app_name
+	</select>
+
+
+</mapper>
