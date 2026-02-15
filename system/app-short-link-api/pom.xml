@@ -9,7 +9,7 @@
 		<version>1.0.0</version>
 	</parent>
 	
-	<artifactId>app-user-api</artifactId>
+	<artifactId>app-short-link-api</artifactId>
 	<packaging>jar</packaging>
 	
 	<properties>
@@ -18,7 +18,6 @@
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<app-common.version>1.0.0</app-common.version>
 		<app-framework-parent.version>1.0.0</app-framework-parent.version>
-		<app-user-facade.version>1.0.0</app-user-facade.version>
 	</properties>
 	
 	<dependencies>
@@ -60,24 +59,6 @@
 			<groupId>org.cy.micoservice.app</groupId>
 			<artifactId>app-framework-dubbo-starter</artifactId>
 			<version>${app-framework-parent.version}</version>
-		</dependency>
-		
-		<dependency>
-			<groupId>org.cy.micoservice.app</groupId>
-			<artifactId>app-framework-minio-starter</artifactId>
-			<version>${app-framework-parent.version}</version>
-		</dependency>
-		
-		<dependency>
-			<groupId>org.cy.micoservice.app</groupId>
-			<artifactId>app-framework-rocketmq-starter</artifactId>
-			<version>${app-framework-parent.version}</version>
-		</dependency>
-		
-		<dependency>
-			<groupId>org.cy.micoservice.app</groupId>
-			<artifactId>app-user-facade</artifactId>
-			<version>${app-user-facade.version}</version>
 		</dependency>
 	</dependencies>
 	
