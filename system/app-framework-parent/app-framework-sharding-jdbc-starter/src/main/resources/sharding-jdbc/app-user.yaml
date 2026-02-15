@@ -1,8 +1,8 @@
 dataSources:
-  blog_user_ds:
+  app_user_ds:
     dataSourceClassName: com.zaxxer.hikari.HikariDataSource
     driverClassName: com.mysql.cj.jdbc.Driver
-    jdbcUrl: jdbc:mysql://localhost:3306/mico_blog_user?useUnicode=true&characterEncoding=UTF-8&rewriteBatchedStatements=true&serverTimezone=Asia/Shanghai&allowMultiQueries=true
+    jdbcUrl: jdbc:mysql://localhost:3306/mico_app_user?useUnicode=true&characterEncoding=UTF-8&serverTimezone=Asia/Shanghai&allowMultiQueries=true&rewriteBatchedStatements=true
     username: root
     password: 123456
 rules:
@@ -10,10 +10,10 @@ rules:
   - !SHARDING
     tables:
       t_login_record:
-        actualDataNodes: blog_user_ds.t_login_record
+        actualDataNodes: app_user_ds.t_login_record
       # 配置 t_user 分表的规则
       t_user:
-        actualDataNodes: blog_user_ds.t_user_${(0..99).collect(){it.toString().padLeft(1,'0')}}
+        actualDataNodes: app_user_ds.t_user_${(0..99).collect(){it.toString().padLeft(1,'0')}}
         tableStrategy:
           standard:
             shardingColumn: user_id

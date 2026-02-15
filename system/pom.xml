@@ -16,13 +16,14 @@
 	<packaging>pom</packaging>
 
 	<modules>
-		<module>app-framework-parent</module>
 		<module>app-entity-parent</module>
+		<module>app-framework-parent</module>
 		<module>app-common</module>
-		<module>app-gateway</module>
+		<module>app-flink</module>
 		<module>app-gateway-facade</module>
-		<module>app-infra-console</module>
+		<module>app-gateway</module>
 		<module>app-infra-facade</module>
+		<module>app-infra-console</module>
 		<module>app-infra-console-sdk</module>
 		<module>app-im</module>
 		<module>app-picture-provider</module>
@@ -36,10 +37,11 @@
 		<module>app-message-provider</module>
 		<module>app-audit-facade</module>
 		<module>app-audit-provider</module>
-		<module>app-flink</module>
 		<module>app-goods-api</module>
 		<module>app-goods-facade</module>
 		<module>app-goods-provider</module>
+		<module>app-short-link-facade</module>
+		<module>app-short-link-provider</module>
 		<module>test-app</module>
 	</modules>
 

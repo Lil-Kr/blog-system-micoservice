@@ -11,30 +11,30 @@ import java.util.Map;
 public interface CosUrlCovertService {
 
   /**
-   * 获取笔记图片url
+   * get note image url
    * @param noteCosObjectName
    * @return
    */
   String getImgUrl(String noteCosObjectName);
 
   /**
-   * 获取笔记图片集合
+   * get note image collection
    * @param noteCosObjectNames
    * @return
    */
-  Map<String,String> batchGetImgUrls(List<String> noteCosObjectNames);
+  Map<String, String> batchGetImgUrls(List<String> noteCosObjectNames);
 
   /**
-   * 转换用户头像
+   * transform user header image
    * @param userAvatarUrl
    * @return
    */
   String getUserAvatarUrl(String userAvatarUrl);
 
   /**
-   * 获取用户图片集合
+   * get user image collection
    * @param noteCosObjectNames
    * @return
    */
-  Map<String,String> batchGetUserAvatarUrls(List<String> noteCosObjectNames);
+  Map<String, String> batchGetUserAvatarUrls(List<String> noteCosObjectNames);
 }

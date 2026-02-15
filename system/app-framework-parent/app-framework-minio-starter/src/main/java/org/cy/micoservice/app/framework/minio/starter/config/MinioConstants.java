@@ -7,7 +7,7 @@ package org.cy.micoservice.app.framework.minio.starter.config;
  */
 public class MinioConstants {
 
-  public static final String BASE_IMG_PATH = "img/blog/";
+  public static final String BASE_IMG_PATH = "img/app/";
 
   public static final String BASE_AVATAR_PATH = "img/avatar/";
 }

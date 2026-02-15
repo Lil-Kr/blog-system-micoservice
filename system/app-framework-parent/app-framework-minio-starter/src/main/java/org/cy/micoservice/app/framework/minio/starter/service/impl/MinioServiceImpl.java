@@ -37,9 +37,9 @@ public class MinioServiceImpl implements MinioService {
   private static final String OBJECT_NAME_PREFIX = MINIO + ":%s";
 
   /**
-   * 上传文件
-   * @param file       要上传的文件
-   * @param objectName 对象名称
+   * upload file
+   * @param file
+   * @param objectName
    * @throws Exception
    */
   @Override

@@ -17,7 +17,7 @@
 		<maven.compiler.target>17</maven.compiler.target>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		
-		<!---->
+		<!-- component -->
 		<app-common.version>1.0.0</app-common.version>
 		<app-entity-parent.version>1.0.0</app-entity-parent.version>
 		<app-framework-parent.version>1.0.0</app-framework-parent.version>

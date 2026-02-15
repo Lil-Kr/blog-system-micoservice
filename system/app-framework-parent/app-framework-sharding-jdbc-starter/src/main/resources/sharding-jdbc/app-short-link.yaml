@@ -1,0 +1,29 @@
+dataSources:
+  app_short_link_ds:
+    dataSourceClassName: com.zaxxer.hikari.HikariDataSource
+    driverClassName: com.mysql.cj.jdbc.Driver
+    jdbcUrl: jdbc:mysql://localhost:3306/mico_app_short_link?useUnicode=true&characterEncoding=UTF-8&serverTimezone=Asia/Shanghai&allowMultiQueries=true&rewriteBatchedStatements=true
+    username: root
+    password: 123456
+rules:
+  # 配置分片规则
+  - !SHARDING
+    tables:
+      # 配置 t_short_url_mapping_? 分表的规则
+      t_user:
+        actualDataNodes: app_short_link_ds.t_short_url_mapping_${(0..99).collect(){it.toString().padLeft(1,'0')}}
+        tableStrategy:
+          standard:
+            shardingColumn: short_code
+            shardingAlgorithmName: t_short_url_mapping_inline
+    shardingAlgorithms:
+      t_user_inline:
+        type: INLINE
+        props:
+          algorithm-expression: t_short_url_mapping_${(id % 100).toString().padLeft(1,'0')}
+
+#props:
+#  sql-show: true
+#  # 是否在日志中打印简单风格的 SQL. false
+#  sql-simple: true
+#  max-connections-size-per-query: 3

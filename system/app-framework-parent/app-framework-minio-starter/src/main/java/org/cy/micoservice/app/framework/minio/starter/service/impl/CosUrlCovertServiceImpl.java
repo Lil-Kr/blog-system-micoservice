@@ -37,7 +37,7 @@ public class CosUrlCovertServiceImpl implements CosUrlCovertService {
   }
 
   @Override
-  public Map<String,String> batchGetImgUrls(List<String> noteCosObjectNames) {
+  public Map<String, String> batchGetImgUrls(List<String> noteCosObjectNames) {
     List<String> cosObjectNames = noteCosObjectNames.stream().map(objectName -> MinioConstants.BASE_IMG_PATH + objectName).toList();
     try {
       Map<String,String> resultMap = minIOService.batchGetPreSignedObjUrls(cosObjectNames,3600);
