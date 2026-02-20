@@ -1,0 +1,6 @@
+## dubbo: 7699
+spring:
+  application:
+    name: app-user-provider
+  profiles:
+    active: dev

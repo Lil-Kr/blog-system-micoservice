@@ -53,7 +53,7 @@ public class ImConnectorProperties {
 
   /**
    * 统一管理 im-connector 集群名
-   * blog-im-connector-cluster
+   * app-im-connector-cluster
    */
   @Value("${im.connector.cluster.name:}")
   private String imConnectorClusterName;

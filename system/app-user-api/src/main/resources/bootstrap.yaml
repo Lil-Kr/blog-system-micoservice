@@ -1,6 +1,6 @@
 server:
-  ## dubbo: 7399
-  port: 7301
+  ## dubbo: 7599
+  port: 7501
   tomcat:
     uri-encoding: UTF-8
   servlet:
@@ -8,6 +8,6 @@ server:
 
 spring:
   application:
-    name: blog-message-api
+    name: app-user-api
   profiles:
     active: dev

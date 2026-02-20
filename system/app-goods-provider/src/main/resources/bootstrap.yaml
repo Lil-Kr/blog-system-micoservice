@@ -1,6 +1,6 @@
-## dubbo: 7499
+## dubbo: 7599
 spring:
   application:
-    name: blog-message-provider
+    name: app-goods-provider
   profiles:
     active: dev

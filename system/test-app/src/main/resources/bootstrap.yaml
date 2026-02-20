@@ -16,7 +16,7 @@ spring:
       password: nacos
       discovery:
         server-addr: 192.168.9.200:8848
-        namespace: blog-mico-service-dev
+        namespace: app-mico-service-dev
       config:
         import-check:
           enabled: false
@@ -25,14 +25,14 @@ spring:
         # 读取配置的 nacos 地址
         server-addr: 192.168.9.200:8848
         # 读取配置的 nacos 的名空间
-        namespace: blog-mico-service-dev
+        namespace: app-mico-service-dev
       datasource:
         test-app-flow:
           nacos:
             server-addr: 192.168.9.200:8848
             username: nacos
             password: nacos
-            namespace: blog-mico-service-dev
+            namespace: app-mico-service-dev
             data-id: ${spring.application.name}-flow-rules
             group-id: SENTINEL_GROUP
             rule-type: flow
@@ -47,7 +47,7 @@ jetcache:
   ## 是否将areaName作为缓存key前缀, false更合理
   areaInCacheName: false
   ## 隐藏的包名前缀, 用于缩短自动生成的缓存名
-  heddenPackages: org.cy.micoservice.blog.test
+  heddenPackages: org.cy.micoservice.app.test
   ## 本地缓存配置
   local:
     default:
@@ -98,11 +98,11 @@ management:
 
 infra:
   console:
-    service-name: blog-infra-console
+    service-name: app-infra-console
     service-group: DEFAULT_GROUP
     sdk:
       nacos:
-        namespace: blog-mico-service-dev
+        namespace: app-mico-service-dev
         address: 192.168.9.200:8848
         user: nacos
         pwd: nacos

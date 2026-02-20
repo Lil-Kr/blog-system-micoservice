@@ -1,0 +1,6 @@
+## dubbo: 7499
+spring:
+  application:
+    name: app-message-provider
+  profiles:
+    active: dev

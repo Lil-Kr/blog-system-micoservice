@@ -1,0 +1,6 @@
+## dubbo: 7899
+spring:
+  application:
+    name: app-audit-provide
+  profiles:
+    active: dev

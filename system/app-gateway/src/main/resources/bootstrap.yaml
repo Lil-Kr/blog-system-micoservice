@@ -1,5 +1,9 @@
+server:
+  ## dubbo: 6199
+  port: 6101
+
 spring:
   application:
-    name: blog-gateway
+    name: app-gateway
   profiles:
     active: dev

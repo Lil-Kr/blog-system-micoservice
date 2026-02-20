@@ -1,0 +1,6 @@
+## dubbo: 7499
+spring:
+  application:
+    name: app-picture-provider
+  profiles:
+    active: dev

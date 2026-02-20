@@ -1,0 +1,6 @@
+## dubbo: 8299
+spring:
+  application:
+    name: app-short-link-provider
+  profiles:
+    active: dev

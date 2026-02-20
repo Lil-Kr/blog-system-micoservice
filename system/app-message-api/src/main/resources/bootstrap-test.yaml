@@ -5,7 +5,7 @@ spring:
       password: nacos
       discovery:
         server-addr: 192.168.9.200:8848
-        namespace: blog-mico-service-test
+        namespace: app-mico-service-test
       config:
         import-check:
           enabled: false
@@ -14,7 +14,7 @@ spring:
         # 读取配置的 nacos 地址
         server-addr: 192.168.9.200:8848
         # 读取配置的 nacos 的名空间
-        namespace: blog-mico-service-test
+        namespace: app-mico-service-test
   config:
     import:
-      - optional:nacos:blog-message-api.yaml
+      - optional:nacos:app-message-api.yaml

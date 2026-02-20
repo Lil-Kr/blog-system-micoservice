@@ -1,18 +1,11 @@
-server:
-  port: 8101
-  tomcat:
-    uri-encoding: UTF-8
-
 spring:
-  application:
-    name: blog-picture-service
   cloud:
     nacos:
       username: nacos
       password: nacos
       discovery:
         server-addr: 192.168.9.200:8848
-        namespace: blog-mico-service-dev
+        namespace: app-mico-service-test
       config:
         import-check:
           enabled: false
@@ -21,7 +14,7 @@ spring:
         # 读取配置的 nacos 地址
         server-addr: 192.168.9.200:8848
         # 读取配置的 nacos 的名空间
-        namespace: blog-mico-service-dev
+        namespace: app-mico-service-test
   config:
     import:
-      - optional:nacos:blog-picture-service-provider.yaml
+      - optional:nacos:app-short-link-api.yaml

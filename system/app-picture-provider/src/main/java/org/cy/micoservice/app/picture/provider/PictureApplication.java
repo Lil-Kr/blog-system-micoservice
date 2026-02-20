@@ -1,4 +1,4 @@
-package org.cy.micoservice.app.framework.dubbo.starter.picture;
+package org.cy.micoservice.app.picture.provider;
 
 import org.apache.dubbo.config.spring.context.annotation.EnableDubbo;
 import org.springframework.boot.SpringApplication;

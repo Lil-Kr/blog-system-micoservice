@@ -1,19 +1,19 @@
 server:
-  ## dubbo: 8599
-  port: 8501
+  ## dubbo: 8699
+  port: 8601
   tomcat:
     uri-encoding: UTF-8
 
 spring:
   application:
-    name: blog-im-router
+    name: app-im-router
   cloud:
     nacos:
       username: nacos
       password: nacos
       discovery:
         server-addr: 192.168.9.200:8848
-        namespace: blog-mico-service-dev
+        namespace: app-mico-service-dev
       config:
         import-check:
           enabled: false
@@ -22,7 +22,7 @@ spring:
         # 读取配置的 nacos 地址
         server-addr: 192.168.9.200:8848
         # 读取配置的 nacos 的名空间
-        namespace: blog-mico-service-dev
+        namespace: app-mico-service-dev
   config:
     import:
-      - optional:nacos:blog-im-router.yaml
+      - optional:nacos:app-im-router.yaml
